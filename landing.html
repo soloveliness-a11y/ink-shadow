@@ -209,13 +209,14 @@
     .highlight-card.featured {
       grid-column: 1 / -1;
       background: linear-gradient(135deg, var(--bg-card), rgba(201, 169, 110, 0.04));
-      display: grid; grid-template-columns: 1fr 320px; gap: 32px; align-items: center;
+      flex-direction: row; align-items: center; gap: 32px;
     }
+    .highlight-card.featured .highlight-text { flex: 1; }
     .mobile-showcase {
-      display: flex; gap: 12px; justify-content: center;
+      display: flex; gap: 12px; flex-shrink: 0;
     }
     .mobile-showcase img {
-      width: 140px; height: auto; border-radius: 12px;
+      width: 160px; height: auto; border-radius: 12px;
       border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
     .highlight-icon {
@@ -294,8 +295,8 @@
       .hero { padding: 100px 20px 60px; }
       .hero-desc .main-line { white-space: normal; }
       .highlights-grid { grid-template-columns: 1fr; }
-      .highlight-card.featured { grid-column: auto; grid-template-columns: 1fr; }
-      .mobile-showcase { margin-top: 16px; }
+      .highlight-card.featured { flex-direction: column; }
+      .mobile-showcase { justify-content: center; margin-top: 16px; }
     }
   </style>
 </head>
@@ -458,8 +459,8 @@
         </div>
       </div>
       <div class="highlight-card featured">
-        <div class="highlight-icon">📱</div>
-        <div>
+        <div class="highlight-text">
+          <div class="highlight-icon">📱</div>
           <h3>移动端适配</h3>
           <p>完整响应式设计，手机浏览器即可游玩。嫌疑人面板自动收起为底部抽屉，触控操作流畅。随时随地开一局。</p>
         </div>
