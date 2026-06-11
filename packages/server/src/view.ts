@@ -59,6 +59,11 @@ export function buildView(
       if (c.visibility !== 'searchable') return false;
       if (!state.flags[`unlocked:${c.id}`]) return false;
       if (anyoneAcquired.has(c.id)) return false;
+      // 技能门控线索：只有拥有所需技能的玩家才能看到
+      if (c.requiredSkill && charId) {
+        const playerChar = script.characters.find((ch) => ch.id === charId);
+        if (!playerChar?.skills?.includes(c.requiredSkill)) return false;
+      }
       return true;
     })
     .map((c) => ({ id: c.id, title: c.title, sceneId: c.sceneId }));
@@ -214,7 +219,7 @@ function buildPhaseProgress(script: Script, state: RuntimeState): ClientStateVie
 
 function buildSelfView(script: Script, state: RuntimeState, charId: string): NonNullable<ClientStateView['self']> {
   const ch = script.characters.find((c) => c.id === charId);
-  if (!ch) return { charId, privateScript: '', storyUnlocked: [], unlockedNarratives: [], unlockedPhaseBlocks: [], objectives: [], myClues: [] };
+  if (!ch) return { charId, privateScript: '', storyUnlocked: [], unlockedNarratives: [], unlockedPhaseBlocks: [], objectives: [], myClues: [], skills: [], passiveClueGivers: [] };
 
   // 已获取的线索(含内容)
   const myClueIds = state.acquiredClues[charId] ?? [];
@@ -255,6 +260,8 @@ function buildSelfView(script: Script, state: RuntimeState, charId: string): Non
     objectives: ch.objectives,
     myClues,
     relationships: ch.relationships, // 包含玩家自己的完整关系（含私有关系和 sharedSecret）
+    skills: ch.skills ?? [],
+    passiveClueGivers: ch.passiveClueGivers ?? [],
   };
 }
 

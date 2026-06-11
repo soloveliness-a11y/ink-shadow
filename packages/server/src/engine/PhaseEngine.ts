@@ -250,6 +250,13 @@ export class PhaseEngine {
       case 'searchClue': {
         const clue = this.script.clues.find((c) => c.id === intent.clueId);
         if (!clue) return reject('clue_not_found');
+        // 技能门控检查
+        if (clue.requiredSkill) {
+          const playerChar = this.script.characters.find((c) => c.id === charId);
+          if (!playerChar?.skills?.includes(clue.requiredSkill)) {
+            return reject(`skill_required:${clue.requiredSkill}`);
+          }
+        }
         // 已获取过（自己）
         if (this.state.acquiredClues[charId]?.includes(clue.id)) return reject('already_acquired');
         // ★ 线索独占：已被其他玩家获取
@@ -309,6 +316,13 @@ export class PhaseEngine {
           rt.searchCount[charId] = (rt.searchCount[charId] ?? 0) + 1;
         }
         const clue = this.script.clues.find((c) => c.id === intent.clueId);
+        // 技能触发秘密线索解锁
+        if (clue?.linkedSecretClueId && clue.requiredSkill) {
+          const playerChar = this.script.characters.find((c) => c.id === charId);
+          if (playerChar?.skills?.includes(clue.requiredSkill)) {
+            this.state.flags[`unlocked:${clue.linkedSecretClueId}`] = true;
+          }
+        }
         this.bus.event({ type: 'search_clue', actorCharId: charId, payload: { clueId: intent.clueId, clueTitle: clue?.title } });
         break;
       }

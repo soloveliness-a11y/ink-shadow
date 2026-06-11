@@ -119,6 +119,11 @@ export const zClientStateView = z.object({
         isPublic: z.boolean(),
         sharedSecret: z.string().optional(),
       })).optional(),
+      skills: z.array(z.string()).optional(),
+      passiveClueGivers: z.array(z.object({
+        targetCharId: z.string(),
+        clueId: z.string(),
+      })).optional(),
     })
     .optional(),
   currentPhase: z
