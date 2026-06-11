@@ -8,3 +8,7 @@ content/*/.gen/
 content/*/.visual-progress.json
 .DS_Store
 豪门系列/
+
+# 开发期遗留
+_archive/
+_audio-drafts/
