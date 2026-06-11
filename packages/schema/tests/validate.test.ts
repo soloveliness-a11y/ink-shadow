@@ -53,3 +53,22 @@ test('非剧本对象 → 结构层 schema error', () => {
   assert.equal(result.ok, false);
   assert.ok(result.issues.every((i) => i.code === 'schema'));
 });
+
+test('线索需要技能但无角色拥有该技能 → 报 skillBalance error', () => {
+  const raw = loadMock();
+  const rawObj = JSON.parse(JSON.stringify(raw));
+  rawObj.characters = rawObj.characters.map((c: { skills?: string[]; [k: string]: unknown }) => ({ ...c, skills: [] }));
+  rawObj.clues = rawObj.clues.map((c: { requiredSkill?: string; [k: string]: unknown }) => ({ ...c, requiredSkill: 'lockpick' }));
+  const result = validateScript(rawObj);
+  assert.equal(result.ok, false);
+  assert.ok(result.issues.some((i) => i.code === 'skillBalance'), '应报告 skillBalance 类错误');
+});
+
+test('线索需要技能且有角色拥有该技能 → 不报 skillBalance error', () => {
+  const raw = loadMock();
+  const rawObj = JSON.parse(JSON.stringify(raw));
+  rawObj.characters[0].skills = ['lockpick'];
+  rawObj.clues[0].requiredSkill = 'lockpick';
+  const result = validateScript(rawObj);
+  assert.ok(!result.issues.some((i) => i.code === 'skillBalance'), '不应报告 skillBalance 错误');
+});

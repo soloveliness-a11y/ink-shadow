@@ -43,6 +43,7 @@ export function validateScript(input: unknown): ValidationResult {
   checkGameplayStructure(s, issues);
   checkVisuals(s, issues);
   checkBalance(s, issues);
+  checkSkillBalance(s, issues);
 
   return { ok: !issues.some((i) => i.level === 'error'), issues };
 }
@@ -220,5 +221,15 @@ function checkBalance(s: Script, out: ValidationIssue[]): void {
     if (c.timeline.length < 3) warn(out, 'balance', `characters.${c.id}.timeline`, '时间线少于 3 条');
     if (c.secrets.length < 1) warn(out, 'balance', `characters.${c.id}.secrets`, '缺少秘密');
     if (!ownedBy.has(c.id)) warn(out, 'balance', `characters.${c.id}`, '不持有任何线索(可能打酱油)');
+  }
+}
+
+/** 技能平衡:线索需要的技能至少有一个角色拥有 */
+function checkSkillBalance(s: Script, out: ValidationIssue[]): void {
+  const allSkills = new Set(s.characters.flatMap((c) => c.skills ?? []));
+  for (const c of s.clues) {
+    if (c.requiredSkill && !allSkills.has(c.requiredSkill)) {
+      err(out, 'skillBalance', `clues.${c.id}.requiredSkill`, `线索 "${c.title}" (${c.id}) 需要技能 "${c.requiredSkill}"，但没有任何角色拥有此技能`);
+    }
   }
 }
