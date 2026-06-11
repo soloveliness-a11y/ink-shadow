@@ -1,0 +1,316 @@
+[
+  {
+    "id": "p_brief",
+    "kind": "briefing",
+    "title": "开场·发本",
+    "instruction": "请各位阅读自己的角色剧本，了解身份与目标。准备好后点击就绪。",
+    "participants": "all",
+    "allowedActions": [
+      "readScript",
+      "ready"
+    ],
+    "exit": {
+      "kind": "allReady"
+    }
+  },
+  {
+    "id": "p_backstory",
+    "kind": "briefing",
+    "title": "案前风云",
+    "instruction": "每个人眼中的公馆都不一样。阅读属于你的那一段往事。",
+    "participants": "all",
+    "allowedActions": [
+      "readScript",
+      "ready"
+    ],
+    "unlocks": {
+      "storyKey": "backstory"
+    },
+    "exit": {
+      "kind": "allReady"
+    },
+    "narrativeText": "民国二十四年深秋，沈公馆晚宴散席。六个人，六种心思。"
+  },
+  {
+    "id": "p_prologue",
+    "kind": "briefing",
+    "title": "命案前夕",
+    "instruction": "暴风雨前的最后一刻。在公馆的不同角落里，每个人做着最后一件事。",
+    "participants": "all",
+    "allowedActions": [
+      "readScript",
+      "ready"
+    ],
+    "unlocks": {
+      "storyKey": "prologue"
+    },
+    "exit": {
+      "kind": "allReady"
+    },
+    "narrativeText": "夜里十点，沈公馆的走廊上只剩下壁灯昏黄的光。每个人都在自己的角落里，做着最后一件事。"
+  },
+  {
+    "id": "p_intro",
+    "kind": "sequential",
+    "title": "自我介绍",
+    "instruction": "按顺序进行自我介绍，公开你愿意透露的身份信息。",
+    "participants": "all",
+    "allowedActions": [
+      "speak"
+    ],
+    "turnOrder": [
+      "c_wife",
+      "c_butler",
+      "c_doctor",
+      "c_singer",
+      "c_nephew",
+      "c_secretary"
+    ],
+    "exit": {
+      "kind": "allActed"
+    }
+  },
+  {
+    "id": "p_search1",
+    "kind": "free",
+    "title": "第一轮搜证",
+    "instruction": "自由搜证、查看与共享线索，亦可私下交谈。每人限搜2次，先搜先得。",
+    "participants": "all",
+    "allowedActions": [
+      "searchClue",
+      "revealClue",
+      "speak",
+      "privateMessage"
+    ],
+    "unlocks": {
+      "clueIds": [
+        "cl_will",
+        "cl_teacup",
+        "cl_banquet_menu",
+        "cl_broken_glass",
+        "cl_cigarette_butts",
+        "cl_cold_tea",
+        "cl_gramophone",
+        "cl_door_scratch",
+        "cl_singer_quarrel",
+        "cl_singer_pregnancy",
+        "cl_wife_oldwill"
+      ]
+    },
+    "exit": {
+      "kind": "timer",
+      "timerSec": 600
+    },
+    "maxSearches": 2
+  },
+  {
+    "id": "p_discuss1",
+    "kind": "free",
+    "title": "第一轮讨论",
+    "instruction": "圆桌讨论，分享你的发现与推断。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "revealClue",
+      "privateMessage"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    }
+  },
+  {
+    "id": "p_guided",
+    "kind": "briefing",
+    "title": "迷雾重重",
+    "instruction": "第一轮讨论结束。你开始重新审视每一个人——包括你自己。",
+    "participants": "all",
+    "allowedActions": [
+      "readScript",
+      "ready"
+    ],
+    "unlocks": {
+      "storyKey": "guided"
+    },
+    "exit": {
+      "kind": "allReady"
+    },
+    "narrativeText": "第一轮搜证与讨论结束。新的疑点浮现，旧的假设动摇。你开始重新审视每一个人。"
+  },
+  {
+    "id": "p_search2",
+    "kind": "free",
+    "title": "第二轮搜证",
+    "instruction": "新的线索已开放，继续搜证。部分角色将解锁新的记忆。每人限搜2次。",
+    "participants": "all",
+    "allowedActions": [
+      "searchClue",
+      "revealClue",
+      "speak",
+      "privateMessage"
+    ],
+    "unlocks": {
+      "clueIds": [
+        "cl_butler_alibi",
+        "cl_poison_manual",
+        "cl_garden_footprint",
+        "cl_torn_note",
+        "cl_vomit_stain",
+        "cl_burned_papers",
+        "cl_shed_lock",
+        "cl_nephew_debt",
+        "cl_secretary_ledger",
+        "cl_doctor_silence"
+      ]
+    },
+    "exit": {
+      "kind": "timer",
+      "timerSec": 600
+    },
+    "maxSearches": 2
+  },
+  {
+    "id": "p_discuss2",
+    "kind": "free",
+    "title": "第二轮讨论",
+    "instruction": "最后的讨论，锁定你心中的真凶。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "revealClue",
+      "privateMessage"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    }
+  },
+  {
+    "id": "p_narrow",
+    "kind": "briefing",
+    "title": "最后推论",
+    "instruction": "所有线索已在眼前。是时候锁定你心中的那个人了。",
+    "participants": "all",
+    "allowedActions": [
+      "readScript",
+      "ready"
+    ],
+    "unlocks": {
+      "storyKey": "narrow"
+    },
+    "exit": {
+      "kind": "allReady"
+    },
+    "narrativeText": "第二轮讨论结束。投票之前，请把一切再梳理一遍。\n\n你掌握的每一条线索、听到的每一句陈述、注意到的每一个反常——都需要一个合理的解释。把能拼到同一个人身上的碎片归到一起，再把怎么也拼不上的也摆出来——缺口往往藏在拼不上的那几块里。\n\n想一想：动机、机会、破绽——这三件事是否指向同一个人？\n\n想一想：今晚有没有什么事和平时不一样？如果你发现了变化，变化的原因是什么？\n\n想一想：你身边有没有人看到了什么却没有说？为什么不说？\n\n现在，把你手里的线索重新排列。不是因为没有怀疑对象——而是因为有太多。在混乱中找到唯一不可辩驳的那一个。"
+  },
+  {
+    "id": "p_vote",
+    "kind": "vote",
+    "title": "投票指认",
+    "instruction": "请投票指认你认为的凶手。",
+    "participants": "all",
+    "allowedActions": [
+      "castVote"
+    ],
+    "exit": {
+      "kind": "voteComplete"
+    }
+  },
+  {
+    "id": "p_vote_tiebreak",
+    "kind": "vote",
+    "title": "平票决胜",
+    "instruction": "票数相同，请在以下嫌疑人中再次投票。",
+    "participants": "all",
+    "allowedActions": [
+      "castVote"
+    ],
+    "exit": {
+      "kind": "voteComplete"
+    },
+    "resetVotes": true,
+    "restrictVoteTargets": "tied"
+  },
+  {
+    "id": "p_end_justice",
+    "kind": "reveal",
+    "title": "结局·正义伸张",
+    "instruction": "法网恢恢，疏而不漏。真相终于浮出水面。",
+    "participants": "all",
+    "allowedActions": [],
+    "exit": {
+      "kind": "timer",
+      "timerSec": 15
+    }
+  },
+  {
+    "id": "p_end_scapegoat",
+    "kind": "reveal",
+    "title": "结局·替罪羔羊",
+    "instruction": "猜疑落在了错的人身上。无辜者背负了不属于他的罪名。",
+    "participants": "all",
+    "allowedActions": [],
+    "exit": {
+      "kind": "timer",
+      "timerSec": 15
+    }
+  },
+  {
+    "id": "p_end_mistaken",
+    "kind": "reveal",
+    "title": "结局·错失真凶",
+    "instruction": "舆论与偏见主导了审判。真正的凶手仍在暗处。",
+    "participants": "all",
+    "allowedActions": [],
+    "exit": {
+      "kind": "timer",
+      "timerSec": 15
+    }
+  },
+  {
+    "id": "p_end_awakening",
+    "kind": "reveal",
+    "title": "结局·良知觉醒",
+    "instruction": "当无辜者即将替罪，真正的凶手做出了一个出人意料的决定。",
+    "participants": "all",
+    "allowedActions": [],
+    "exit": {
+      "kind": "timer",
+      "timerSec": 15
+    }
+  },
+  {
+    "id": "p_end_comedy",
+    "kind": "reveal",
+    "title": "结局·啼笑皆非",
+    "instruction": "一个怀孕歌女被当成凶手——这个故事从一开始就写歪了。但结局可能比任何人想象的都离奇。",
+    "participants": "all",
+    "allowedActions": [],
+    "exit": {
+      "kind": "timer",
+      "timerSec": 15
+    }
+  },
+  {
+    "id": "p_end_secretary",
+    "kind": "reveal",
+    "title": "结局·纸上无声",
+    "instruction": "最精确的人，成了最沉默的替罪羊。",
+    "participants": "all",
+    "allowedActions": [],
+    "exit": {
+      "kind": "timer",
+      "timerSec": 15
+    }
+  },
+  {
+    "id": "p_end_oblivion",
+    "kind": "reveal",
+    "title": "结局·真相湮灭",
+    "instruction": "无人能达成共识。案件悬而未决，但每个人的命运已被今夜改变。",
+    "participants": "all",
+    "allowedActions": [],
+    "exit": {
+      "kind": "timer",
+      "timerSec": 15
+    }
+  }
+]
