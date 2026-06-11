@@ -101,8 +101,9 @@
     }
     .hero-desc {
       font-size: 16px; color: var(--text-muted); max-width: 720px;
-      margin-bottom: 48px; line-height: 1.8; white-space: nowrap;
+      margin-bottom: 48px; line-height: 1.8;
     }
+    .hero-desc .main-line { white-space: nowrap; }
     .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
     .btn {
       display: inline-flex; align-items: center; gap: 8px;
@@ -208,6 +209,14 @@
     .highlight-card.featured {
       grid-column: 1 / -1;
       background: linear-gradient(135deg, var(--bg-card), rgba(201, 169, 110, 0.04));
+      display: grid; grid-template-columns: 1fr 320px; gap: 32px; align-items: center;
+    }
+    .mobile-showcase {
+      display: flex; gap: 12px; justify-content: center;
+    }
+    .mobile-showcase img {
+      width: 140px; height: auto; border-radius: 12px;
+      border: 1px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
     .highlight-icon {
       width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
@@ -283,9 +292,10 @@
       .screenshot-flow { grid-template-columns: 1fr; }
       .screenshot-item.featured { grid-column: auto; }
       .hero { padding: 100px 20px 60px; }
-      .hero-desc { white-space: normal; font-size: 15px; }
+      .hero-desc .main-line { white-space: normal; }
       .highlights-grid { grid-template-columns: 1fr; }
-      .highlight-card.featured { grid-column: auto; }
+      .highlight-card.featured { grid-column: auto; grid-template-columns: 1fr; }
+      .mobile-showcase { margin-top: 16px; }
     }
   </style>
 </head>
@@ -311,7 +321,8 @@
   <h1>墨 影</h1>
   <p class="hero-sub">INK SHADOW · 推理与谎言的舞台</p>
   <p class="hero-desc">
-    AI 创作完整剧本 → 自动配套油画风视觉素材 → 4~8 人浏览器端联机游玩。全流程闭环，浏览器即玩。
+    <span class="main-line">AI 创作完整剧本 → 自动配套油画风视觉素材 → 4~8 人浏览器端联机游玩。</span><br>
+    全流程闭环，浏览器即玩。
   </p>
   <div class="hero-actions">
     <a href="#quickstart" class="btn btn-primary">快速开始</a>
@@ -451,6 +462,10 @@
         <div>
           <h3>移动端适配</h3>
           <p>完整响应式设计，手机浏览器即可游玩。嫌疑人面板自动收起为底部抽屉，触控操作流畅。随时随地开一局。</p>
+        </div>
+        <div class="mobile-showcase">
+          <img src="_screenshots/mobile-lobby.png" alt="移动端大厅" loading="lazy">
+          <img src="_screenshots/mobile-suspect-panel.png" alt="移动端嫌疑人面板" loading="lazy">
         </div>
       </div>
     </div>
