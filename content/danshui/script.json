@@ -12,7 +12,12 @@
     "synopsis": "民国三年，山西晋城角山上矗立着一座富丽堂皇的丹水山庄。山庄主人赵万雷在午饭后被人毒杀于卧室，胸口还被人插了一把金龙刀。七位在场之人各怀心事——管家冯双骥、少爷赵卫、小姐赵洛意、丫鬟赵秋儿、护院齐岳、矿商郭望山、神秘来客尹少鸣。谁是凶手？谁在说谎？",
     "styleGuide": "1914 Shanxi, realistic oil painting, warm sepia tones, traditional Chinese mountain mansion, Republican era",
     "schemaVersion": "1.0.0",
-    "status": "draft"
+    "status": "draft",
+    "cover": {
+      "kind": "cover",
+      "prompt": "Vertical poster for a 1914 Shanxi mountain mansion murder mystery. A grand traditional Chinese compound on a misty mountainside, warm sepia tones, oil painting style, dramatic lighting, vintage film grain, seven silhouettes gathered in a grand hall",
+      "aspect": "3:4"
+    }
   },
   "characters": [
     {
@@ -1077,7 +1082,12 @@
       "visibility": "searchable",
       "isKey": false,
       "pointsTo": [],
-      "linkedSecretClueId": "sc_09"
+      "linkedSecretClueId": "sc_09",
+      "visual": {
+        "kind": "clue",
+        "prompt": "A weathered paper list with handwritten Chinese nicknames scrawled in ink, one name circled in red, placed on a dusty wooden desk, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_servant_02",
@@ -1086,7 +1096,12 @@
       "sceneId": "s_servant",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A small hand-carved wooden figurine found on a simple shelf in a guard room, rough craftsmanship from common materials, warm lamplight, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_servant_03",
@@ -1096,7 +1111,12 @@
       "visibility": "searchable",
       "isKey": false,
       "pointsTo": [],
-      "linkedSecretClueId": "sc_03"
+      "linkedSecretClueId": "sc_03",
+      "visual": {
+        "kind": "clue",
+        "prompt": "A dimly lit guard room corner with scattered personal items and a folded note tucked under a pillow, warm lamplight casting shadows, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_servant_04",
@@ -1106,7 +1126,12 @@
       "visibility": "searchable",
       "isKey": false,
       "pointsTo": [],
-      "linkedSecretClueId": "sc_12"
+      "linkedSecretClueId": "sc_12",
+      "visual": {
+        "kind": "clue",
+        "prompt": "A burly guard Zhang Sheng gesturing while speaking in a servant quarter corridor, dim warm lighting, 1914 Republican China oil painting style, sepia tones",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_servant_05",
@@ -1116,7 +1141,12 @@
       "visibility": "searchable",
       "isKey": false,
       "pointsTo": [],
-      "linkedSecretClueId": "sc_13"
+      "linkedSecretClueId": "sc_13",
+      "visual": {
+        "kind": "clue",
+        "prompt": "A young guard Zhang An pointing toward the back courtyard where a long wooden ladder leans against a wall, servant quarter setting, 1914 Republican China oil painting style",
+        "aspect": "16:9"
+      }
     },
     {
       "id": "cl_s_servant_06",
@@ -1125,7 +1155,12 @@
       "sceneId": "s_servant",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "An elderly kitchen woman Aunt Li standing by a traditional Chinese stove, a bamboo basket with sesame pastries nearby, warm kitchen firelight, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_inner_07",
@@ -1134,7 +1169,12 @@
       "sceneId": "s_inner",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "An accounting clerk Song Qun at a wooden desk with open ledger books, ink brush and abacus, dim interior lighting, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_inner_08",
@@ -1143,7 +1183,12 @@
       "sceneId": "s_inner",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A nervous household servant Lu Qiang whispering urgently in a dimly lit storeroom corridor, worried expression, 1914 Republican China oil painting style, warm tones",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_inner_09",
@@ -1154,7 +1199,12 @@
       "isKey": true,
       "pointsTo": [
         "poison_method"
-      ]
+      ],
+      "visual": {
+        "kind": "clue",
+        "prompt": "An elderly man Wu Die standing in a storeroom surrounded by tools and a missing ladder spot, pointing toward a garden visible through the window, 1914 Republican China oil painting style",
+        "aspect": "16:9"
+      }
     },
     {
       "id": "cl_s_front_10",
@@ -1163,7 +1213,12 @@
       "sceneId": "s_front",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A lush southern garden in full bloom with exotic flowers, vibrant petals against stone walls, morning light filtering through leaves, 1914 Republican China oil painting style",
+        "aspect": "16:9"
+      }
     },
     {
       "id": "cl_s_front_11",
@@ -1172,7 +1227,12 @@
       "sceneId": "s_front",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A flowering oleander shrub in a manicured garden with a small evidence marker nearby, sunlight on colorful petals, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_front_12",
@@ -1181,7 +1241,12 @@
       "sceneId": "s_front",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "Gatekeeper Zhang Tang standing near the main entrance of a grand Chinese mansion, gesturing toward the front gate area, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_front_13",
@@ -1190,7 +1255,12 @@
       "sceneId": "s_front",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "Cai Da in a phoenix tree garden pointing toward the side of the mansion, parasol trees casting dappled shade, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_back_14",
@@ -1200,7 +1270,12 @@
       "ownerCharId": "wei",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A long wooden ladder leaning against the second floor window of a traditional Chinese mansion, hidden among bushes in the back courtyard, 1914 Republican China oil painting style",
+        "aspect": "16:9"
+      }
     },
     {
       "id": "cl_s_back_15",
@@ -1210,7 +1285,12 @@
       "ownerCharId": "wei",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "Small glass medicine bottles numbered 1 through 6 found in bushes, some empty some full, hidden in foliage, 1914 Republican China oil painting style, close-up",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_back_16",
@@ -1220,7 +1300,12 @@
       "ownerCharId": "wei",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "Two small labeled medicine bottles on a wooden nightstand, bottle 1 empty and bottle 2 half-full, in a sparse room, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_back_17",
@@ -1230,7 +1315,12 @@
       "ownerCharId": "wei",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "Two small labeled medicine bottles on a wooden desk, bottle 1 half-empty and bottle 2 full, in a sparse room, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_back_18",
@@ -1240,7 +1330,12 @@
       "ownerCharId": "wei",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A sparse rear courtyard room interior with a bed and desk, faint traces of disturbed items, 1914 Republican China oil painting style, warm dim lighting",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_guest_19",
@@ -1251,7 +1346,12 @@
       "isKey": true,
       "pointsTo": [
         "murder_weapon"
-      ]
+      ],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A close-up of a damaged knife blade with bent and deformed edge, steel catching light, resting on a dark surface, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_guest_20",
@@ -1260,7 +1360,12 @@
       "sceneId": "s_guest",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "An opened empty envelope on a guest room desk, letter removed, wax seal broken, warm lamplight, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_guest_21",
@@ -1269,7 +1374,12 @@
       "sceneId": "s_guest",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A restaurant receipt from Yuelai Inn on yellowed paper showing meal and lodging expenses, placed on a wooden desk, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_guest_22",
@@ -1278,7 +1388,12 @@
       "sceneId": "s_guest",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A guest room interior with scattered items on a desk, a half-packed suitcase and personal effects, warm lighting, 1914 Republican China oil painting style",
+        "aspect": "16:9"
+      }
     },
     {
       "id": "cl_s_guest_23",
@@ -1287,7 +1402,12 @@
       "sceneId": "s_guest",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "An official-looking letter with Beijing mining company seal and Chinese characters, stamped with red chop marks, on aged paper, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_guest_24",
@@ -1296,7 +1416,12 @@
       "sceneId": "s_guest",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A personal letter addressed to Brother Mo, invitation to meet in Suzhou, handwritten on cream paper with elegant calligraphy, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_guest_25",
@@ -1305,7 +1430,12 @@
       "sceneId": "s_guest",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A railway ticket for the Hankou to Beijing route, printed on thin paper with Chinese characters and route details, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_guest_26",
@@ -1314,7 +1444,12 @@
       "sceneId": "s_guest",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A railway ticket for the Taiyuan to Zezhou route, printed on thin paper, slightly worn edges, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_guest_27",
@@ -1323,7 +1458,12 @@
       "sceneId": "s_guest",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A small glass medicine bottle with a worn and faded label, text partially illegible, placed on a wooden surface, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_guest_28",
@@ -1332,7 +1472,12 @@
       "sceneId": "s_guest",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A guest room interior with various personal belongings on a desk, a small box and scattered papers, warm lamplight, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_butler_29",
@@ -1343,7 +1488,12 @@
       "visibility": "searchable",
       "isKey": false,
       "pointsTo": [],
-      "linkedSecretClueId": "sc_10"
+      "linkedSecretClueId": "sc_10",
+      "visual": {
+        "kind": "clue",
+        "prompt": "A young woman Feng Zhu standing in the doorway of the butler room, hesitant expression, warm interior lighting, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_butler_30",
@@ -1353,7 +1503,12 @@
       "ownerCharId": "feng",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "Feng Zhu the butler daughter speaking earnestly in a modest room, aUnsigned letter visible on the desk behind her, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_butler_31",
@@ -1363,7 +1518,12 @@
       "ownerCharId": "feng",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A Western Union telegram with Chinese characters reading a coded message, dated eight days ago from Shanghai, on yellowed paper, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_butler_32",
@@ -1374,7 +1534,12 @@
       "visibility": "searchable",
       "isKey": false,
       "pointsTo": [],
-      "linkedSecretClueId": "sc_11"
+      "linkedSecretClueId": "sc_11",
+      "visual": {
+        "kind": "clue",
+        "prompt": "Several brass wolf-head buttons scattered in an open drawer, distinctive emblem, placed on aged wood, 1914 Republican China oil painting style, close-up",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_butler_33",
@@ -1384,7 +1549,12 @@
       "ownerCharId": "feng",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A faded black-and-white group photograph in a wooden frame, two women identified with labels, on a bookshelf, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_butler_34",
@@ -1394,7 +1564,12 @@
       "ownerCharId": "feng",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "The butler room interior with a desk, personal items, and a framed photograph on the wall, warm lamplight, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_victim_room_35",
@@ -1407,7 +1582,12 @@
         "murder_weapon",
         "crime_scene"
       ],
-      "linkedSecretClueId": "sc_02"
+      "linkedSecretClueId": "sc_02",
+      "visual": {
+        "kind": "clue",
+        "prompt": "A crime scene in a bedroom: a body on the bed with a golden dragon knife in the chest, broken porcelain shards on the floor with blood stains, toilet paper with blood in a basket, wardrobe rummaged, 1914 Republican China oil painting style",
+        "aspect": "16:9"
+      }
     },
     {
       "id": "cl_s_victim_room_36",
@@ -1418,7 +1598,12 @@
       "isKey": true,
       "pointsTo": [
         "crime_scene"
-      ]
+      ],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A broken wooden chair in a bedroom, the victim Zhao Wanlei lying on the bed with a pained expression, blood at the corners of his eyes, clenched fists, medicine bottles missing from the nightstand, 1914 Republican China oil painting style",
+        "aspect": "16:9"
+      }
     },
     {
       "id": "cl_s_qiuer_room_37",
@@ -1428,7 +1613,12 @@
       "ownerCharId": "luoyi",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A young woman bedroom with a bookshelf and personal items, warm feminine decor, soft lighting, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_qiuer_room_38",
@@ -1438,7 +1628,12 @@
       "ownerCharId": "luoyi",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A copy of The Lady of the Camellias translation novel on a shelf next to a small hand-carved wooden figurine, in a young woman bedroom, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_qiuer_room_39",
@@ -1448,7 +1643,12 @@
       "ownerCharId": "luoyi",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "Dried flowers carefully preserved inside a wooden keepsake box, delicate petals faded with time, warm lamplight, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_qiuer_room_40",
@@ -1458,7 +1658,12 @@
       "ownerCharId": "luoyi",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A newspaper clipping about the appointment and resignation of Lu Zhengxiang as Premier, Chinese characters on yellowed newsprint, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_qiuer_room_41",
@@ -1468,7 +1673,12 @@
       "ownerCharId": "luoyi",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A newspaper article about Liao Trading Company partnering with French merchants for a textile factory, Chinese characters on aged newsprint, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_qiuer_room_42",
@@ -1480,7 +1690,12 @@
       "isKey": true,
       "pointsTo": [
         "crime_scene"
-      ]
+      ],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A bamboo basket containing leftover pastries, half-eaten cakes visible, placed on a wooden desk, evidence of poison, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "cl_s_qiuer_room_43",
@@ -1490,7 +1705,12 @@
       "ownerCharId": "luoyi",
       "visibility": "searchable",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A young maid personal belongings on a simple wooden shelf, a long-life lock pendant and folded clothes, in a modest room, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "sc_01",
@@ -1499,7 +1719,12 @@
       "visibility": "private",
       "isKey": false,
       "pointsTo": [],
-      "requiredSkill": "赵家主人"
+      "requiredSkill": "赵家主人",
+      "visual": {
+        "kind": "clue",
+        "prompt": "A handwritten name list on yellowed paper: Zhao Wanlei, Tang Maoguang, Yu Beichen, Ren Xue, Meng Shen, with dates and locations noted, discovered during room inspection, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "sc_02",
@@ -1507,7 +1732,12 @@
       "content": "狗闻了金龙刀刀柄之后就对着郭望山叫了起来。",
       "visibility": "private",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A trained dog sniffing the handle of a golden dragon knife, then barking aggressively toward a man, in a traditional Chinese bedroom, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "sc_03",
@@ -1515,7 +1745,12 @@
       "content": "老爷曾让张盛去调查庚子年的那场爆炸。爆炸前绸缎铺掌柜收到字条写着「我要炸了这里」。",
       "visibility": "private",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A faded police investigation report about the 1900 Zezhou explosion, with a note about a warning letter, aged paper with Chinese calligraphy, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "sc_04",
@@ -1523,7 +1758,12 @@
       "content": "1、2、3、4、6瓶子上写着帮助睡眠的药物，特别标出成分含有opium（鸦片）。",
       "visibility": "private",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "Six small medicine bottles with labels reading sleeping aid containing opium, bottles numbered 1-6, some empty some full, on a wooden surface, 1914 Republican China oil painting style",
+        "aspect": "16:9"
+      }
     },
     {
       "id": "sc_05",
@@ -1531,7 +1771,12 @@
       "content": "治疗感冒着凉的常见药物——在赵卫的房间（后院）里发现。",
       "visibility": "private",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A small bottle of common cold medicine with Chinese characters on the label, on a nightstand in a sparse room, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "sc_06",
@@ -1539,7 +1784,12 @@
       "content": "赵卫把赵万雷的药和自己的药对调了，他不知道自己才是离不开药的人。",
       "visibility": "private",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "Two hands exchanging small medicine bottles in a dim room, a swapped medicine bottle visible on a windowsill, dramatic shadows, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "sc_07",
@@ -1547,7 +1797,12 @@
       "content": "张唐小时候隔壁有一个叫鲁泰的大哥，鲁泰让他去给城里的绸缎铺送一个纸条，然后绸缎铺就着火了。",
       "visibility": "private",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A young boy named Zhang Tang as a child standing outside a silk shop, holding a note, memory flashback style with soft edges, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "sc_08",
@@ -1555,7 +1810,12 @@
       "content": "老爷屋里有一把从天津带回来的金龙宝刀。少爷一直想要那把刀，老爷怕他伤人没给他。",
       "visibility": "private",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A golden dragon knife displayed on a bedroom wall in an ornate sheath, a young man reaching for it while an older man blocks him, tense scene, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "sc_09",
@@ -1563,7 +1823,12 @@
       "content": "光绪二十六年庚子年，泽州本地一家绸缎铺被投放炸弹，炸死了进店妇女和仆人。",
       "visibility": "private",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A destroyed silk shop with debris and smoke, the aftermath of a bombing in 1900 Zezhou, rubble and twisted metal, dark dramatic scene, 1914 Republican China oil painting style",
+        "aspect": "16:9"
+      }
     },
     {
       "id": "sc_10",
@@ -1572,7 +1837,12 @@
       "visibility": "private",
       "isKey": false,
       "pointsTo": [],
-      "requiredSkill": "冯竹的信任"
+      "requiredSkill": "冯竹的信任",
+      "visual": {
+        "kind": "clue",
+        "prompt": "Feng Zhu handing a small medicine bottle to a servant at the mansion entrance, secret exchange in dim light, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "sc_11",
@@ -1581,7 +1851,12 @@
       "visibility": "private",
       "isKey": false,
       "pointsTo": [],
-      "requiredSkill": "新闻"
+      "requiredSkill": "新闻",
+      "visual": {
+        "kind": "clue",
+        "prompt": "Newspaper clippings about Black Wolf Society bombings across China, with Japanese text visible, scattered on a desk, dark conspiratorial mood, 1914 Republican China oil painting style",
+        "aspect": "16:9"
+      }
     },
     {
       "id": "sc_12",
@@ -1589,7 +1864,12 @@
       "content": "张安曾被赵万雷派去北京拜访任师父，管家让他带了厚礼并转告任师父说他的大恩冯双骥一生不定。",
       "visibility": "private",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A gift package being prepared at the butler desk, fine silk and gold-trimmed box, a note about Master Ren, warm interior lighting, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "sc_13",
@@ -1598,7 +1878,12 @@
       "visibility": "private",
       "isKey": false,
       "pointsTo": [],
-      "requiredSkill": "恭维"
+      "requiredSkill": "恭维",
+      "visual": {
+        "kind": "clue",
+        "prompt": "An elderly cook Aunt Li gossiping by a kitchen stove, leaning close to share a secret about the mistress and a man named Liao, warm firelight, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "sc_14",
@@ -1606,7 +1891,12 @@
       "content": "这种植物叫夹竹桃，叶、皮、根、花、种子都有剧毒。",
       "visibility": "private",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A close-up of an oleander plant with pink flowers and green leaves, a small label marking it as toxic, in a garden setting, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "sc_15",
@@ -1614,7 +1904,12 @@
       "content": "几年前一份报纸写过太原一个集团正在和赵家各地的代理人接洽，之后没有任何后续报导。",
       "visibility": "private",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "An old newspaper clipping about a Taiyuan group secretly approaching Zezhou agents, with no follow-up article, faded ink on yellowed newsprint, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "sc_16",
@@ -1622,7 +1917,12 @@
       "content": "卢强因为抽大烟把老家的家产都卖光了，来赵家后打算老老实实过日子，但烟瘾一上来就情绪混乱。",
       "visibility": "private",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A gaunt man Lu Qiang clutching his arms in withdrawal, opium pipe visible in shadow, depicting addiction and desperation, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "sc_17",
@@ -1630,7 +1930,12 @@
       "content": "吴老爹记得大小姐出生前一年，赵万雷从农历五月底带着冯双骥去天津花天酒地了三个月。",
       "visibility": "private",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "An elderly man Wu Die recalling a memory: two men departing for Tianjin in summer, vintage flashback style, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     },
     {
       "id": "sc_18",
@@ -1638,7 +1943,12 @@
       "content": "唐茂光变卖家产筹集银两送给甲午战争阵亡将士家属，之后辞官归隐江南。",
       "visibility": "private",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A dignified official Tang Maoguang selling his estate, distributing silver to soldiers families, then walking away into misty Jiangnan landscape, 1914 Republican China oil painting style",
+        "aspect": "16:9"
+      }
     },
     {
       "id": "sc_19",
@@ -1646,7 +1956,12 @@
       "content": "你把糕饼喂给了家里养的狗，过了一会儿狗就死了。",
       "visibility": "private",
       "isKey": false,
-      "pointsTo": []
+      "pointsTo": [],
+      "visual": {
+        "kind": "clue",
+        "prompt": "A dog lying dead on the floor after eating poisoned pastries, a bamboo basket of cakes nearby, a young maid looking on in horror, dramatic lighting, 1914 Republican China oil painting style",
+        "aspect": "3:4"
+      }
     }
   ],
   "phases": [
