@@ -1,0 +1,162 @@
+{
+  "entry": "p_brief",
+  "edges": [
+    {
+      "from": "p_brief",
+      "to": "p_backstory"
+    },
+    {
+      "from": "p_backstory",
+      "to": "p_prologue"
+    },
+    {
+      "from": "p_prologue",
+      "to": "p_intro"
+    },
+    {
+      "from": "p_intro",
+      "to": "p_search1"
+    },
+    {
+      "from": "p_search1",
+      "to": "p_discuss1"
+    },
+    {
+      "from": "p_discuss1",
+      "to": "p_guided"
+    },
+    {
+      "from": "p_guided",
+      "to": "p_search2"
+    },
+    {
+      "from": "p_search2",
+      "to": "p_discuss2"
+    },
+    {
+      "from": "p_discuss2",
+      "to": "p_narrow"
+    },
+    {
+      "from": "p_narrow",
+      "to": "p_vote"
+    },
+    {
+      "from": "p_vote",
+      "to": "p_end_justice",
+      "condition": {
+        "kind": "voteResult",
+        "equalsCharId": "c_butler"
+      }
+    },
+    {
+      "from": "p_vote",
+      "to": "p_end_scapegoat",
+      "condition": {
+        "kind": "voteResult",
+        "equalsCharId": "c_nephew"
+      }
+    },
+    {
+      "from": "p_vote",
+      "to": "p_end_mistaken",
+      "condition": {
+        "kind": "voteResult",
+        "equalsCharId": "c_wife"
+      }
+    },
+    {
+      "from": "p_vote",
+      "to": "p_end_awakening",
+      "condition": {
+        "kind": "voteResult",
+        "equalsCharId": "c_doctor"
+      }
+    },
+    {
+      "from": "p_vote",
+      "to": "p_end_comedy",
+      "condition": {
+        "kind": "voteResult",
+        "equalsCharId": "c_singer"
+      }
+    },
+    {
+      "from": "p_vote",
+      "to": "p_end_secretary",
+      "condition": {
+        "kind": "voteResult",
+        "equalsCharId": "c_secretary"
+      }
+    },
+    {
+      "from": "p_vote",
+      "to": "p_vote_tiebreak",
+      "condition": {
+        "kind": "voteTie"
+      }
+    },
+    {
+      "from": "p_vote",
+      "to": "p_end_oblivion",
+      "condition": {
+        "kind": "always"
+      }
+    },
+    {
+      "from": "p_vote_tiebreak",
+      "to": "p_end_justice",
+      "condition": {
+        "kind": "voteResult",
+        "equalsCharId": "c_butler"
+      }
+    },
+    {
+      "from": "p_vote_tiebreak",
+      "to": "p_end_scapegoat",
+      "condition": {
+        "kind": "voteResult",
+        "equalsCharId": "c_nephew"
+      }
+    },
+    {
+      "from": "p_vote_tiebreak",
+      "to": "p_end_mistaken",
+      "condition": {
+        "kind": "voteResult",
+        "equalsCharId": "c_wife"
+      }
+    },
+    {
+      "from": "p_vote_tiebreak",
+      "to": "p_end_awakening",
+      "condition": {
+        "kind": "voteResult",
+        "equalsCharId": "c_doctor"
+      }
+    },
+    {
+      "from": "p_vote_tiebreak",
+      "to": "p_end_comedy",
+      "condition": {
+        "kind": "voteResult",
+        "equalsCharId": "c_singer"
+      }
+    },
+    {
+      "from": "p_vote_tiebreak",
+      "to": "p_end_secretary",
+      "condition": {
+        "kind": "voteResult",
+        "equalsCharId": "c_secretary"
+      }
+    },
+    {
+      "from": "p_vote_tiebreak",
+      "to": "p_end_oblivion",
+      "condition": {
+        "kind": "always"
+      }
+    }
+  ]
+}

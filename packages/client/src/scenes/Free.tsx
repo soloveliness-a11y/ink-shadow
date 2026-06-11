@@ -96,7 +96,7 @@ export function FreeScene() {
     ((msg.fromCharId === myCharId && msg.toCharId === pmTarget) || (msg.fromCharId === pmTarget && msg.toCharId === myCharId))
   );
   const pmTargetName = view?.publicCharacters.find((c) => c.id === pmTarget)?.name;
-  const pmCandidates = publicCharacters.filter((c) => c.id !== myCharId && !c.id.startsWith('c_victim'));
+  const pmCandidates = publicCharacters.filter((c) => c.id !== myCharId && !c.isVictim);
   const mentionCandidates = publicCharacters.filter((c) => c.id !== myCharId);
   const pmStats = new Map<string, { count: number; latestTs: number }>();
   for (const msg of privateMessages) {

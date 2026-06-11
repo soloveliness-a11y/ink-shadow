@@ -26,7 +26,7 @@ export function VoteScene() {
     : undefined;
 
   const suspects = view?.publicCharacters.filter(
-    (c) => c.id !== myCharId && !c.id.startsWith('c_victim'),
+    (c) => c.id !== myCharId && !c.isVictim,
   );
 
   const restrictTargets = view?.currentPhase?.restrictVoteTargets;

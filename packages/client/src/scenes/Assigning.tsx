@@ -15,10 +15,10 @@ export function AssigningScene() {
   );
 
   const available = allChars.filter(
-    (c) => !c.id.startsWith('c_victim') && !takenIds.has(c.id),
+    (c) => !c.isVictim && !takenIds.has(c.id),
   );
   const myChar = allChars.find((c) => c.id === myCharId);
-  const playableCount = allChars.filter((c) => !c.id.startsWith('c_victim')).length;
+  const playableCount = allChars.filter((c) => !c.isVictim).length;
   const assignedCount = players.filter((p) => p.charId).length;
   const waitingPlayers = players.filter((p) => !p.charId).map((p) => p.nickname);
   const progressPct = playableCount > 0 ? Math.min(100, Math.round((assignedCount / playableCount) * 100)) : 0;
