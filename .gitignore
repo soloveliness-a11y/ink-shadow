@@ -9,6 +9,10 @@ content/*/.visual-progress.json
 .DS_Store
 豪门系列/
 
+# 版权剧本资源（不入库）
+content/danshui/
+content/mock/
+
 # 开发期遗留
 _archive/
 _audio-drafts/
