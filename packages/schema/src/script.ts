@@ -44,6 +44,12 @@ export const zCharacter = z.object({
   secrets: z.array(z.string()),
   timeline: z.array(zTimelineEntry),
   relationships: z.array(zRelationship),
+  skills: z.array(z.string()).optional(),
+  passiveClueGivers: z.array(z.object({
+    targetCharId: z.string(),
+    clueId: z.string(),
+  })).optional(),
+  investigationReport: z.string().optional(),
   visual: zVisualSpec, // 头像(必填)
 });
 export type Character = z.infer<typeof zCharacter>;
@@ -59,6 +65,8 @@ export const zClue = z.object({
   round: z.number().int().optional(),
   isKey: z.boolean(),
   pointsTo: z.array(z.string()), // 指向真相要素 / clue.id(自洽校验用)
+  requiredSkill: z.string().optional(),
+  linkedSecretClueId: z.string().optional(),
   visual: zVisualSpec.optional(),
 });
 export type Clue = z.infer<typeof zClue>;
