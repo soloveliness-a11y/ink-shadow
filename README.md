@@ -1,6 +1,14 @@
-# 墨影 · AI 剧本杀
+# 墨影 · AI 剧本杀适配系统
 
-> AI 自动生成完整剧本 → 自动配套油画风视觉素材 → 4~8 人浏览器端联机游玩。
+> 将市场已有剧本适配为可联机游玩的数字化剧本包。AI 生成剧本结构 → 自动配套油画风视觉素材 → 4~8 人浏览器端联机。
+
+## 定位
+
+这不是一个「从零生成剧本」的工具，而是一个**剧本适配系统**——把现有的剧本杀作品（豪门系列等）转化为标准化 JSON 剧本包，配上视觉素材，跑在联机引擎上。
+
+```
+市场剧本（PDF/文字） → 人工/AI 适配 → 标准化剧本包（JSON + 素材） → 浏览器联机游玩
+```
 
 ## 快速开始
 
@@ -19,6 +27,59 @@ pnpm install
 
 **一键公网分享**：双击 `分发给朋友.command`，自动起 Cloudflare 隧道，把链接发给朋友直接玩。
 
+## 适配流程
+
+### 1. 准备剧本素材
+
+将原始剧本放入 `content/<剧本ID>/` 目录，按规范创建以下文件：
+
+```
+content/my-mystery/
+  meta.json                 ← 元信息（标题/难度/时长）
+  characters/
+    order.json              ← 角色加载顺序
+    c_victim.json           ← 死者
+    c_suspect_a.json        ← 嫌疑人（每人一个文件）
+    ...
+  clues.json                ← 所有线索
+  scenes.json               ← 搜证场景
+  props.json                ← 道具（可选）
+  phases.json               ← 环节定义
+  flow.json                 ← 环节 DAG 流程图
+  truth.json                ← 真相（仅服务端）
+```
+
+完整字段规范见 [content/SCRIPT-SPEC.md](content/SCRIPT-SPEC.md)。
+
+### 2. 适配方式
+
+| 方式 | 适用场景 | 说明 |
+|------|---------|------|
+| **AI 辅助生成** | 从文字剧本提取结构 | 用 `content/PROMPT.md` 作为 prompt 给 LLM，生成全套 JSON |
+| **人工编写** | 已有清晰结构 | 按 SCRIPT-SPEC 手动填写各 JSON 文件 |
+| **拆分脚本** | 已有单体 script.json | `node scripts/split-script.mjs content/xxx/script.json` |
+| **模板复制** | 新建剧本 | 复制 `content/_template/` 目录，替换内容 |
+
+### 3. 出图与校验
+
+```bash
+# 一键生产（生成 + 校验 + 出图）
+pnpm produce --players 6 --theme "校园密室"
+
+# 仅出图（剧本已就绪）
+pnpm exec tsx packages/visual-pipeline/src/cli.ts content/my-mystery/meta.json
+
+# 查看出图状态
+pnpm exec tsx packages/visual-pipeline/src/cli.ts --status content/my-mystery/meta.json
+
+# 断点续出（中断后跳过已完成）
+pnpm exec tsx packages/visual-pipeline/src/cli.ts --resume content/my-mystery/meta.json
+```
+
+### 4. 启动游玩
+
+剧本放入 `content/` 目录后，重启服务器即可自动加载。
+
 ## 技术栈
 
 | 层 | 技术 | 说明 |
@@ -30,7 +91,7 @@ pnpm install
 | Schema | Zod | 运行时类型校验 + TS 类型推导 |
 | 剧本生成 | Claude API (Anthropic SDK) | 分层 prompt + 自洽校验 |
 | 视觉出图 | gpt-image (中转站) + sharp | 批量出图，自动 WebP 压缩 |
-| BGM | Howler.js | 6 阶段 × 5 首 = 33 首背景音乐 |
+| BGM | Howler.js | 7 阶段 × 多首 = 33 首背景音乐 |
 
 ## 架构
 
@@ -66,12 +127,11 @@ murder-mystery-game/
 │   ├── generator/        # 剧本生成器：Claude API + 自洽校验 + repair
 │   └── visual-pipeline/  # 视觉管线：批量出图 + WebP 压缩 + 指纹追踪
 ├── content/
-│   └── _mock/            # 内置剧本「公馆惊魂·一九三五」
-│       ├── meta.json / phases.json / flow.json / ...
-│       ├── characters/   # 7 个角色定义
-│       └── assets/       # 36 张油画风素材（封面/头像/场景/道具/线索）
+│   ├── _mock/            # 内置剧本「公馆惊魂·一九三五」（示例）
+│   └── _template/        # 新剧本模板
 ├── scripts/              # 工具脚本（生成/出图/拆分/同步）
-├── PLAN/                 # 架构蓝图（6 章设计文档）
+├── PLAN/                 # 架构蓝图（设计文档）
+├── 豪门系列/              # 待适配的市场剧本（已 gitignore）
 └── start.sh              # 一键启动
 ```
 
@@ -84,32 +144,21 @@ murder-mystery-game/
 
 每个环节由剧本 DAG 定义，引擎自动推进。支持计时器、房主手动推进、搜证次数限制。
 
-## 关键特性
+## 引擎特性
 
-**引擎**
-- DAG 环节流：`always | voteResult | voteTie | flag` 四种边条件
-- 平票决胜：自动进入限制投票目标的决胜轮
-- 断线保护：掉线玩家自动跳过（sequential 环节不卡死）
-- 反作弊视图：每个玩家只看到自己该看到的信息（线索/投票状态/凶手身份）
+- **DAG 环节流**：`always | voteResult | voteTie | flag` 四种边条件
+- **平票决胜**：自动进入限制投票目标的决胜轮
+- **断线保护**：掉线玩家自动跳过（sequential 环节不卡死）
+- **反作弊视图**：每个玩家只看到自己该看到的信息（线索/投票状态/凶手身份）
+- **测试模式**：Bot 填充 + 手动推进，方便剧本预览调试
 
-**前端**
+## 前端特性
+
 - 7 个阶段场景：Lobby / Assigning / Briefing / Intro / Free / Vote / Reveal
 - 响应式布局：桌面端侧栏 + 手机端底部抽屉
 - 资源优化：图片 `loading=lazy` + 后台预加载 + 服务端 ETag/304 缓存
-- BGM 自动切换：6 阶段各配 5 首，随机播放
+- BGM 自动切换：7 阶段各配多首，随机播放
 - 案情速记：本地存储笔记本，不公开给其他玩家
-- @ 提及：讨论区支持 `/` 或 `@` 快速提及角色
-
-**视觉管线**
-- 批量出图：封面 + 7 头像 + 3 场景 + 2 道具 + 23 线索
-- 自动 WebP 转换：sharp quality:82，迁移已有 PNG
-- 指纹追踪：prompt 变化自动检测并重新出图
-- 断点续出：`--resume` 跳过已完成任务
-
-**剧本生成**
-- 分层 prompt：世界观 → 角色 → 线索 → 推理链 → DAG
-- 自洽校验：凶手存在性、DAG 可达性、投票 always 兜底、线索引用完整性
-- 自动 repair：补齐缺失字段、修正 turnOrder、映射 solutionChain
 
 ## 内置剧本
 
@@ -117,17 +166,11 @@ murder-mystery-game/
 
 - 6 人本 / 普通难度 / 约 180 分钟
 - 7 个角色（含死者）、23 条线索、3 个场景
-- 19 个环节（含搜证×2 + 投票 + 平票决胜 + 6 个结局揭示）
+- 19 个环节（含搜证×2 + 投票 + 平票决胜 + 7 个结局揭示）
 
 ## 工具脚本
 
 ```bash
-# 一键生产新剧本（生成 + 校验 + 出图）
-pnpm produce --players 6 --theme "校园密室"
-
-# 仅生成剧本（跳过出图）
-pnpm produce --skip-visual
-
 # 拆分单体 script.json 为目录结构
 node scripts/split-script.mjs content/新剧本/script.json
 
@@ -156,6 +199,8 @@ pnpm --filter @mmg/client build  # 构建前端
 
 | 文档 | 内容 |
 |------|------|
+| [content/SCRIPT-SPEC.md](content/SCRIPT-SPEC.md) | 剧本创作规范（完整字段 + 设计原则） |
+| [content/PROMPT.md](content/PROMPT.md) | LLM 生成剧本的 Prompt 模板 |
 | [PLAN/00-architecture.md](PLAN/00-architecture.md) | 总体架构、模块边界、技术栈选型 |
 | [PLAN/01-script-schema.md](PLAN/01-script-schema.md) | 剧本数据契约（TS 类型 + Zod + DAG） |
 | [PLAN/02-m1-script-generation.md](PLAN/02-m1-script-generation.md) | 剧本生成引擎 |
