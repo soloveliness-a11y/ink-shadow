@@ -1,0 +1,22 @@
+{
+  "name": "murder-mystery-game",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@10.0.0",
+  "scripts": {
+    "typecheck": "pnpm -r typecheck",
+    "build": "pnpm --filter @mmg/client build",
+    "test": "pnpm -r test",
+    "start": "pnpm build && pnpm --filter @mmg/server dev",
+    "dev": "pnpm --filter @mmg/server dev",
+    "produce": "tsx scripts/produce.ts"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "tsx": "^4.19.2"
+  }
+}

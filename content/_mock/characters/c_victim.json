@@ -1,0 +1,56 @@
+{
+  "id": "c_victim",
+  "name": "沈万山",
+  "gender": "male",
+  "age": 58,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "沈公馆主人，沪上知名实业家，以纺织起家，为人精明刻薄。",
+  "privateScript": "(死者，不参与游戏)",
+  "objectives": [],
+  "secrets": [],
+  "timeline": [
+    {
+      "time": "20:00",
+      "location": "客厅",
+      "action": "宴请宾客",
+      "isPublic": true
+    },
+    {
+      "time": "21:30",
+      "location": "书房",
+      "action": "约见秘书顾清谈账目，随后独自处理遗嘱文件",
+      "isPublic": false
+    },
+    {
+      "time": "22:20",
+      "location": "书房",
+      "action": "饮下参茶后毒发身亡",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "c_wife",
+      "relation": "结发夫妻，貌合神离",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_butler",
+      "relation": "主仆三十年",
+      "isPublic": true
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Portrait of a shrewd Chinese businessman in his late 50s, 1935 Shanghai, traditional silk changshan, stern face, memorial photo",
+    "aspect": "3:4",
+    "asset": {
+      "path": "assets/avatar_c_victim.png",
+      "model": "gpt-5.5",
+      "generatedAt": "2026-06-08T08:27:47.770Z",
+      "status": "done",
+      "promptHash": "7a802c6951aba4c9"
+    }
+  }
+}

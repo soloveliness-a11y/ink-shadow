@@ -1,0 +1,81 @@
+.bgm-panel {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.bgm-shuffle,
+.bgm-control {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(20, 20, 25, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+  padding: 0;
+}
+
+.bgm-shuffle:hover,
+.bgm-control:hover {
+  background: rgba(30, 30, 38, 0.85);
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.bgm-shuffle:active,
+.bgm-control:active {
+  transform: scale(0.95);
+}
+
+.bgm-shuffle {
+  width: 30px;
+  height: 30px;
+  background: rgba(20, 20, 25, 0.45);
+}
+
+.bgm-control.is-muted {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.bgm-control svg .anim-wave {
+  animation: bgm-wave 1.6s ease-in-out infinite;
+  transform-origin: 14px 12px;
+}
+
+.bgm-control svg .anim-wave-2 {
+  animation: bgm-wave 1.6s ease-in-out infinite 0.3s;
+  transform-origin: 14px 12px;
+}
+
+@keyframes bgm-wave {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@media (max-width: 640px) {
+  .bgm-panel {
+    bottom: 12px;
+    left: 12px;
+    gap: 4px;
+  }
+  .bgm-control {
+    width: 32px;
+    height: 32px;
+  }
+  .bgm-shuffle {
+    width: 26px;
+    height: 26px;
+  }
+}

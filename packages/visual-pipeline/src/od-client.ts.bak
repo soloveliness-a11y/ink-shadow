@@ -1,0 +1,164 @@
+import type { VisualSpec } from '@mmg/schema';
+
+export interface GenerateResult {
+  taskId: string;
+  status: string;
+}
+
+export interface WaitResult {
+  status: 'done' | 'failed' | 'interrupted' | 'running';
+  file?: {
+    name: string;
+    size: number;
+    mime: string;
+    providerError?: string;
+  };
+  error?: { message: string };
+}
+
+export interface OdMediaClientOptions {
+  daemonUrl: string;
+  model?: string;
+  /** stub mode: 不调真实 API,产确定性占位图(联调用) */
+  stub?: boolean;
+}
+
+/**
+ * open-design media HTTP 客户端。
+ * 基于实测调研:legacy /api/projects/:id/media/generate 端点,无需 token。
+ */
+export class OdMediaClient {
+  private baseUrl: string;
+  private model: string;
+  private stub: boolean;
+  private projectId: string | null = null;
+
+  constructor(opts: OdMediaClientOptions) {
+    this.baseUrl = opts.daemonUrl.replace(/\/$/, '');
+    this.model = opts.model ?? 'gpt-image-2';
+    this.stub = opts.stub ?? false;
+  }
+
+  /** 确保 project 存在(stub 模式下跳过) */
+  async ensureProject(scriptId: string): Promise<string> {
+    if (this.stub) return `stub-${scriptId}`;
+    if (this.projectId) return this.projectId;
+
+    // 先尝试通过 scriptId 查找已有 project,否则创建
+    // 简化:直接创建一个用 scriptId 命名的 project
+    const createUrl = `${this.baseUrl}/api/projects`;
+    const res = await fetch(createUrl, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ name: `mmg-${scriptId}` }),
+    });
+
+    if (res.ok) {
+      const data = await res.json() as { id?: string };
+      if (data.id) {
+        this.projectId = data.id;
+        return this.projectId;
+      }
+    }
+
+    // Fallback: 使用 scriptId 作为 project id
+    this.projectId = `mmg-${scriptId}`;
+    return this.projectId;
+  }
+
+  /** 提交图像生成任务 */
+  async generate(projectId: string, spec: VisualSpec, outputPath: string): Promise<GenerateResult> {
+    if (this.stub) {
+      // Stub: 返回确定性占位结果
+      return { taskId: `stub-${outputPath}`, status: 'queued' };
+    }
+
+    const url = `${this.baseUrl}/api/projects/${encodeURIComponent(projectId)}/media/generate`;
+
+    const prompt = spec.styleHint
+      ? `${spec.prompt}. Art style: ${spec.styleHint}`
+      : spec.prompt;
+
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        surface: 'image',
+        model: this.model,
+        prompt,
+        aspect: spec.aspect,
+        output: outputPath,
+        ...(spec.negativePrompt ? { negativePrompt: spec.negativePrompt } : {}),
+      }),
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`generate ${res.status}: ${text}`);
+    }
+
+    const data = await res.json() as { taskId?: string; status?: string };
+    if (!data.taskId) throw new Error('daemon did not return taskId');
+    return { taskId: data.taskId, status: data.status ?? 'queued' };
+  }
+
+  /** 等待任务完成 */
+  async wait(taskId: string, timeoutMs = 180_000): Promise<WaitResult> {
+    if (this.stub) {
+      // Stub: 立即返回 done
+      return {
+        status: 'done',
+        file: { name: taskId.replace('stub-', ''), size: 1024, mime: 'image/png' },
+      };
+    }
+
+    const url = `${this.baseUrl}/api/media/tasks/${encodeURIComponent(taskId)}/wait`;
+    const deadline = Date.now() + timeoutMs;
+    let since = 0;
+
+    while (Date.now() < deadline) {
+      const remaining = deadline - Date.now();
+      const callTimeout = Math.max(500, Math.min(4000, remaining));
+
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ since, timeoutMs: callTimeout }),
+      });
+
+      if (res.status === 404) throw new Error(`task ${taskId} not found`);
+      if (!res.ok) throw new Error(`wait ${res.status}: ${await res.text()}`);
+
+      const snap = await res.json() as WaitResult & { nextSince?: number };
+      if (typeof snap.nextSince === 'number') since = snap.nextSince;
+
+      if (snap.status === 'done') {
+        if (snap.file?.providerError) {
+          return { status: 'failed', error: { message: snap.file.providerError } };
+        }
+        return snap;
+      }
+      if (snap.status === 'failed' || snap.status === 'interrupted') return snap;
+    }
+
+    return { status: 'running' };
+  }
+
+  /** 从 project files 下载图片字节 (stub 模式返回空 Buffer) */
+  async download(projectId: string, fileName: string): Promise<Buffer> {
+    if (this.stub) {
+      // 返回 1x1 PNG 占位图
+      return Buffer.from(
+        'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
+        'base64',
+      );
+    }
+
+    const url = `${this.baseUrl}/api/projects/${encodeURIComponent(projectId)}/files/${encodeURIComponent(fileName)}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`download ${res.status}: ${await res.text()}`);
+
+    const arrayBuf = await res.arrayBuffer();
+    return Buffer.from(arrayBuf);
+  }
+}

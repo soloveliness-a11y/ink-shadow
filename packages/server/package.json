@@ -1,0 +1,23 @@
+{
+  "name": "@mmg/server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "M3 联机游戏服务器 — WebSocket + DAG 环节状态机,服务器权威。",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "test": "node --import tsx --test --test-force-exit tests/*.test.ts"
+  },
+  "dependencies": {
+    "@mmg/schema": "workspace:*",
+    "ws": "^8.18.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.5.13",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}

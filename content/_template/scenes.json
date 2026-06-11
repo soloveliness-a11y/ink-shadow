@@ -1,0 +1,14 @@
+[
+  {
+    "id": "s_scene_a",
+    "name": "案发现场",
+    "description": "环境描述。50-100字，暗示可能存在的线索方向。",
+    "visual": { "kind": "scene", "prompt": "English scene prompt", "aspect": "16:9" }
+  },
+  {
+    "id": "s_scene_b",
+    "name": "次要场景",
+    "description": "环境描述。",
+    "visual": { "kind": "scene", "prompt": "English scene prompt", "aspect": "16:9" }
+  }
+]

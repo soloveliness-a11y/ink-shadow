@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.env
+.od-project
+content/*/assets/
+content/*/.gen/
+content/*/.visual-progress.json
+.DS_Store
+豪门系列/

@@ -1,0 +1,51 @@
+:root {
+  /* Surfaces — exact match to prototype */
+  --s0: #08080D;
+  --s1: #0F0F17;
+  --s2: #181824;
+  --s3: #22222F;
+  --s4: #2C2C3A;
+
+  /* Text */
+  --tp: #E8E5E0;
+  --ts: #9A9AA0;
+  --tm: #5E5E68;
+  --ti: #08080D;
+
+  /* Accents — exact match to prototype */
+  --accent: #C8A66A;
+  --accent-h: #D4B87E;
+  --accent-m: rgba(200,166,106,0.12);
+  --teal: #5A9E9E;
+  --teal-m: rgba(90, 158, 158, 0.16);
+  --crimson: #C45454;
+  --crimson-m: rgba(196, 84, 84, 0.16);
+  --sage: #6A9F7A;
+  --sage-m: rgba(106, 159, 122, 0.16);
+  --smoke: #7A7A88;
+
+  /* Typography */
+  --fb: "Noto Serif SC", "Songti SC", "STSong", serif;
+  --fd: "Inter", "Noto Sans SC", -apple-system, sans-serif;
+  --fm: "JetBrains Mono", "Noto Sans SC", monospace;
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", serif;
+  --font-sans: "Inter", "Noto Sans SC", -apple-system, sans-serif;
+
+  /* Spacing */
+  --sp1: 4px; --sp2: 8px; --sp3: 12px; --sp4: 16px;
+  --sp5: 24px; --sp6: 32px; --sp8: 48px; --sp10: 64px;
+
+  /* Radius */
+  --r-sm: 4px; --r-md: 6px; --r-lg: 8px; --r-xl: 10px; --r-2xl: 12px;
+
+  /* Transition */
+  --ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --dur: 150ms;
+
+  /* Z-index scale */
+  --z-base: 0;
+  --z-header: 10;
+  --z-sidebar: 5;
+  --z-overlay: 20;
+  --z-toast: 30;
+}

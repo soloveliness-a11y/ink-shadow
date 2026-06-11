@@ -1,0 +1,25 @@
+{
+  "id": "c_victim",
+  "name": "死者姓名",
+  "gender": "male",
+  "age": 50,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "公开身份简介。死者不参与游戏，但其他角色需要了解其背景。",
+  "privateScript": "(死者，不参与游戏)",
+  "storyByPhase": {},
+  "objectives": [],
+  "secrets": [],
+  "timeline": [
+    { "time": "20:00", "location": "客厅", "action": "最后出现的地点", "isPublic": true },
+    { "time": "22:00", "location": "案发现场", "action": "推定死亡时间", "isPublic": false }
+  ],
+  "relationships": [
+    { "targetCharId": "c_suspect_a", "relation": "关系描述", "isPublic": true }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Portrait prompt",
+    "aspect": "3:4"
+  }
+}

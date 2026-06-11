@@ -1,0 +1,17 @@
+{
+  "id": "_template",
+  "title": "剧本模板",
+  "theme": "时代·场景",
+  "playerCount": { "min": 5, "max": 6 },
+  "difficulty": "normal",
+  "durationMin": 150,
+  "synopsis": "一句话简介。",
+  "styleGuide": "Art style description for M2 visual pipeline",
+  "cover": {
+    "kind": "cover",
+    "prompt": "Cover image prompt",
+    "aspect": "3:4"
+  },
+  "schemaVersion": "1.0.0",
+  "status": "draft"
+}

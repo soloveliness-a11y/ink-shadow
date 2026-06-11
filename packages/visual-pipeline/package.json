@@ -1,0 +1,27 @@
+{
+  "name": "@mmg/visual-pipeline",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "M2 视觉素材管线 — 复用 open-design od media 批量出图。",
+  "bin": {
+    "mmg-visualize": "./src/cli.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "test": "node --import tsx --test tests/*.test.ts"
+  },
+  "dependencies": {
+    "@mmg/schema": "workspace:*",
+    "dotenv": "^16.4.5",
+    "p-limit": "^6.1.0",
+    "sharp": "^0.34.5",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}

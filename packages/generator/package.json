@@ -1,0 +1,23 @@
+{
+  "name": "@mmg/generator",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "M1 剧本生成引擎 — Claude API 驱动,逆向生成(真相先行)。",
+  "bin": { "mmg-generate": "./src/cli.ts" },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "build": "tsc",
+    "test": "node --import tsx --test tests/*.test.ts"
+  },
+  "dependencies": {
+    "@mmg/schema": "workspace:*",
+    "@anthropic-ai/sdk": "^0.39.0",
+    "dotenv": "^16.4.5",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.6.3"
+  }
+}

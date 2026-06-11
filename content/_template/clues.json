@@ -1,0 +1,55 @@
+[
+  {
+    "id": "cl_will",
+    "title": "未签署的新遗嘱",
+    "content": "【公开可搜线索 · 轮1 · 书房场景】\n\n线索描述（100-200字，第三人称客观视角）：\n- 发现了什么？在哪里？什么样的状态？\n- 如果有证人/发现者的客观描述，可以加入（如「厨娘证言……」）\n- 不要写「这条线索指向XXX」——线索本身不透露结论\n- 关键线索的 pointsTo 必须指向 motive_will / weapon_tea / opportunity_xxx / poison_source 等标签",
+    "sceneId": "s_study",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": ["motive_will"],
+    "visual": { "kind": "clue", "prompt": "线索视觉 prompt", "aspect": "4:3" }
+  },
+  {
+    "id": "cl_teacup",
+    "title": "残留参茶的茶杯",
+    "content": "【公开可搜线索 · 轮1 · 书房场景 · 凶器确认】\n内容应包含：\n- 发现了什么（茶杯、残留液体、毒物鉴定结果）\n- 谁经手的（描述客观事实：茶是XX端来的）\n- 如果有时间异常，加入第三人称客观发现（如厨娘/仆人证词）",
+    "sceneId": "s_study",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": ["weapon_tea"],
+    "visual": { "kind": "clue", "prompt": "线索视觉 prompt", "aspect": "4:3" }
+  },
+  {
+    "id": "cl_arsenic",
+    "title": "药柜缺失的砒霜",
+    "content": "【私密线索 · 仅医生角色可见 · 毒源确认】\n\n⚠️ 此线索仅对 ownerCharId 角色可见。\n为什么设为私密：医生发现毒源失踪但选择沉默——这是职业道德困境，不宜公开发现。\n\n但注意：如果砒霜失踪的「锁有撬痕」是重要推理信息，必须在至少一条公开线索中也体现（如书房门框划痕）。",
+    "ownerCharId": "c_doctor",
+    "visibility": "private",
+    "isKey": true,
+    "pointsTo": ["poison_source"],
+    "visual": { "kind": "clue", "prompt": "线索视觉 prompt", "aspect": "4:3" }
+  },
+  {
+    "id": "cl_misleading",
+    "title": "误导线索样例",
+    "content": "【公开可搜线索 · 误导型 · isKey: false】\n\n这类线索的作用：指向一个无辜者的可疑行为，但不足以定罪。\n设计要点：\n- 线索本身是真的（不是伪造）\n- 但指向的结论是错的（争执≠杀人、缺钱≠为了钱杀人）\n- 给被疑者提供合理的辩护空间\n\n示例：花园石阶上的翡翠碎片→证明苏蔓在此争执过→但她可以说「我扇了巴掌就走了」",
+    "sceneId": "s_garden",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": false,
+    "pointsTo": [],
+    "visual": { "kind": "clue", "prompt": "线索视觉 prompt", "aspect": "4:3" }
+  },
+  {
+    "id": "cl_private_warning",
+    "title": "【私密线索警示】",
+    "content": "⚠️ 私密线索使用守则：\n\n✅ 可以做私密的：\n- 凶手持有的证据（如解雇信）——凶手可选择隐藏或销毁\n- 职业道德困境（如医生发现药柜被撬但未报警）——持有者因此陷入道德两难\n- 信息优势型（你看到了别人没看到的，但这本身不指控你）\n\n❌ 绝对不可以做私密的：\n- 对自己不利的物证（如情妇的争吵物证、侄子的伪造借据）\n- 应该被别人搜到来质问你的证据\n- 任何「持有者永远会选择隐藏」的线索\n\n铁律：如果持有这条线索的人的最优策略是永远不公开它→这条线索应该做成公开可搜。",
+    "ownerCharId": "c_victim",
+    "visibility": "private",
+    "isKey": false,
+    "pointsTo": [],
+    "visual": { "kind": "clue", "prompt": "none", "aspect": "4:3" }
+  }
+]
