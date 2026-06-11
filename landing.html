@@ -100,8 +100,8 @@
       letter-spacing: 0.15em; margin-bottom: 12px;
     }
     .hero-desc {
-      font-size: 16px; color: var(--text-muted); max-width: 480px;
-      margin-bottom: 48px; line-height: 1.8;
+      font-size: 16px; color: var(--text-muted); max-width: 720px;
+      margin-bottom: 48px; line-height: 1.8; white-space: nowrap;
     }
     .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
     .btn {
@@ -193,6 +193,33 @@
     .screenshot-text { font-size: 14px; color: var(--text-muted); }
     .screenshot-text strong { color: var(--text); }
 
+    /* ── HIGHLIGHTS ── */
+    .highlights-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 20px; margin-top: 48px;
+    }
+    .highlight-card {
+      padding: 28px 32px; border-radius: 16px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      display: flex; gap: 20px; align-items: flex-start;
+      transition: border-color 0.3s;
+    }
+    .highlight-card:hover { border-color: rgba(201, 169, 110, 0.3); }
+    .highlight-card.featured {
+      grid-column: 1 / -1;
+      background: linear-gradient(135deg, var(--bg-card), rgba(201, 169, 110, 0.04));
+    }
+    .highlight-icon {
+      width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+      background: var(--accent-dim); display: flex;
+      align-items: center; justify-content: center; font-size: 18px;
+    }
+    .highlight-card h3 {
+      font-family: var(--serif); font-size: 16px; font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .highlight-card p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
     /* ── HOW TO PLAY ── */
     .steps {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -256,6 +283,9 @@
       .screenshot-flow { grid-template-columns: 1fr; }
       .screenshot-item.featured { grid-column: auto; }
       .hero { padding: 100px 20px 60px; }
+      .hero-desc { white-space: normal; font-size: 15px; }
+      .highlights-grid { grid-template-columns: 1fr; }
+      .highlight-card.featured { grid-column: auto; }
     }
   </style>
 </head>
@@ -281,8 +311,7 @@
   <h1>墨 影</h1>
   <p class="hero-sub">INK SHADOW · 推理与谎言的舞台</p>
   <p class="hero-desc">
-    AI 创作完整剧本 → 自动配套油画风视觉素材 → 4~8 人浏览器端联机游玩。<br>
-    全流程闭环，浏览器即玩。
+    AI 创作完整剧本 → 自动配套油画风视觉素材 → 4~8 人浏览器端联机游玩。全流程闭环，浏览器即玩。
   </p>
   <div class="hero-actions">
     <a href="#quickstart" class="btn btn-primary">快速开始</a>
@@ -316,7 +345,7 @@
       <div class="feature-card">
         <div class="feature-icon">📖</div>
         <h3>剧本适配</h3>
-        <p>将市场已有剧本（豪门系列等）转化为标准 JSON 剧本包。拆分脚本 + 资产同步，快速入库。</p>
+        <p>将你手中的剧本资源转化为标准 JSON 剧本包。支持拆分脚本、资产同步、快速入库，让经典剧本焕发新生。</p>
       </div>
     </div>
   </div>
@@ -375,6 +404,53 @@
         <div class="screenshot-caption">
           <span class="screenshot-step">6</span>
           <span class="screenshot-text"><strong>复盘</strong> — 游戏结束，查看本局数据统计</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ HIGHLIGHTS ════════ -->
+<section id="highlights">
+  <div class="container">
+    <div class="section-label">特色功能</div>
+    <div class="section-title">不只是剧本杀，更是推理工具</div>
+    <div class="section-desc">精心设计的辅助系统，让每位玩家都能沉浸式推理。</div>
+
+    <div class="highlights-grid">
+      <div class="highlight-card">
+        <div class="highlight-icon">👤</div>
+        <div>
+          <h3>嫌疑人面板</h3>
+          <p>右侧常驻嫌疑人画像板，展示每位角色的基本信息、公开行踪、可疑关系。一目了然掌握全局。</p>
+        </div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">📋</div>
+        <div>
+          <h3>我的剧本</h3>
+          <p>右下角「我的剧本」按钮，全局回溯已解锁的剧情片段。公共旁白与角色私人记忆交错排列，随时查阅。</p>
+        </div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">🔍</div>
+        <div>
+          <h3>线索摘要</h3>
+          <p>所有已获取的线索内容完整展示，支持标记和笔记。关键线索自动高亮，方便对比推理。</p>
+        </div>
+      </div>
+      <div class="highlight-card">
+        <div class="highlight-icon">📝</div>
+        <div>
+          <h3>案情速记</h3>
+          <p>本地存储的私人笔记本，记录时间线矛盾、推理假设、想追问的人。不公开给其他玩家。</p>
+        </div>
+      </div>
+      <div class="highlight-card featured">
+        <div class="highlight-icon">📱</div>
+        <div>
+          <h3>移动端适配</h3>
+          <p>完整响应式设计，手机浏览器即可游玩。嫌疑人面板自动收起为底部抽屉，触控操作流畅。随时随地开一局。</p>
         </div>
       </div>
     </div>
