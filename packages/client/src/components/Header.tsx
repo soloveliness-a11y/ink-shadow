@@ -62,7 +62,7 @@ function ConnPill({ status }: { status: 'connecting' | 'connected' | 'reconnecti
   const label =
     status === 'reconnecting' ? '重连中…' :
     status === 'connecting' ? '连接中…' :
-    status === 'disconnected' ? '已掉线' : '已连接';
+    status === 'disconnected' ? '待连接' : '已连接';
   return (
     <span className={`header-pill conn-pill conn-${status}`}>
       <span className="conn-dot" />

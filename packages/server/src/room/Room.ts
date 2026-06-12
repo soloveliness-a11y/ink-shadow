@@ -519,9 +519,27 @@ export class Room {
     } else if (allowed.has('searchClue')) {
       // bot 自动搜证 + 自动公开,测试员手动搜;bot 搜完后标记可推进
       const maxSearches = phase.maxSearches;
-      const searchable = this.script.clues.filter(c =>
-        c.visibility === 'searchable' && this.state.flags[`unlocked:${c.id}`]
-      );
+      // 普通线索 + 已解锁的秘密线索（bot有对应技能）
+      const searchable = this.script.clues.filter(c => {
+        if (!this.state.flags[`unlocked:${c.id}`]) return false;
+        if (c.visibility === 'searchable') return true;
+        if (c.visibility === 'private' && c.requiredSkill && this.script) {
+          // 找到bot对应的角色，检查是否有对应技能
+          const botCharIdArr: string[] = [];
+          for (const p of this.state.players) {
+            if (this.botIds.includes(p.playerId) && p.charId) botCharIdArr.push(p.charId);
+          }
+          let hasBotSkill = false;
+          for (const ch of this.script.characters) {
+            if (ch.id && botCharIdArr.includes(ch.id) && ch.skills?.includes(c.requiredSkill)) {
+              hasBotSkill = true;
+              break;
+            }
+          }
+          if (hasBotSkill) return true;
+        }
+        return false;
+      });
       // 已排除掉已被任何人获取的线索
       const allAcquiredIds = new Set(Object.values(this.state.acquiredClues).flat());
       const available = searchable.filter(c => !allAcquiredIds.has(c.id));
