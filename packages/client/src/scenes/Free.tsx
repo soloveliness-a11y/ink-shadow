@@ -101,8 +101,13 @@ export function FreeScene() {
     }
     return [...seen.entries()];
   };
-  // 线索 tab 的场景列表
-  const allMyClues = [...(self?.myClues ?? []), ...(view?.revealedClues ?? [])];
+  // 线索 tab 的场景列表（去重）
+  const allMyClues = (() => {
+    const seen = new Map<string, any>();
+    for (const cl of self?.myClues ?? []) seen.set(cl.id, cl);
+    for (const cl of view?.revealedClues ?? []) seen.set(cl.id, cl);
+    return [...seen.values()];
+  })();
   const clueScenes = sceneGroupsOf(allMyClues);
   const selectedClueSceneId = clueSceneId ?? clueScenes[0]?.[0] ?? null;
   const speechLog = view?.log.filter(e => e.type === 'speak') ?? [];
