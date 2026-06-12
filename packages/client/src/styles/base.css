@@ -167,6 +167,7 @@ select.input {
 .badge-crimson { background: var(--crimson-m); color: var(--crimson); }
 .badge-teal { background: var(--teal-m); color: var(--teal); }
 .badge-muted { background: var(--s3); color: var(--ts); }
+.badge-secret { background: var(--crimson-m); color: var(--crimson); font-weight: 600; }
 
 .avatar {
   width: 36px; height: 36px; border-radius: var(--r-xl);
@@ -777,6 +778,11 @@ select.input {
 }
 .clue-confirm-actions .btn { padding-inline: 10px; }
 .clue-submitted { flex-shrink: 0; align-self: flex-start; }
+.clue-scene-header {
+  font-size: 12px; font-weight: 500; color: var(--accent);
+  padding: 4px 0; margin-top: var(--sp2); margin-bottom: 2px;
+  letter-spacing: 0.04em;
+}
 .pm-thread {
   min-height: 180px; max-height: 260px; overflow: auto;
   background: var(--s0); border: 1px solid var(--s4);
