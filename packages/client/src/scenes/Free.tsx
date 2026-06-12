@@ -448,7 +448,7 @@ export function FreeScene() {
                   const hidden = sceneClues.filter((cl) => !revealed.some((r) => r.id === cl.id));
 
                   return (
-                    <div className="search-clue-list">
+                    <div key={selectedClueSceneId} className="search-clue-list">
                       {hidden.length > 0 && (
                         <>
                           <div className="section-label">我的线索</div>
