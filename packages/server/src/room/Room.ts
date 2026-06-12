@@ -519,48 +519,53 @@ export class Room {
     } else if (allowed.has('searchClue')) {
       // bot 自动搜证 + 自动公开,测试员手动搜;bot 搜完后标记可推进
       const maxSearches = phase.maxSearches;
-      // 普通线索 + 已解锁的秘密线索（bot有对应技能）
-      const searchable = this.script.clues.filter(c => {
-        if (!this.state.flags[`unlocked:${c.id}`]) return false;
-        if (c.visibility === 'searchable') return true;
-        if (c.visibility === 'private' && c.requiredSkill && this.script) {
-          // 找到bot对应的角色，检查是否有对应技能
-          const botCharIdArr: string[] = [];
-          for (const p of this.state.players) {
-            if (this.botIds.includes(p.playerId) && p.charId) botCharIdArr.push(p.charId);
-          }
-          let hasBotSkill = false;
-          for (const ch of this.script.characters) {
-            if (ch.id && botCharIdArr.includes(ch.id) && ch.skills?.includes(c.requiredSkill)) {
-              hasBotSkill = true;
+      const allAcquiredIds = new Set(Object.values(this.state.acquiredClues).flat());
+
+      // 构建 bot 角色 ID 集合
+      const botCharIdArr: string[] = [];
+      for (const p of this.state.players) {
+        if (this.botIds.includes(p.playerId) && p.charId) botCharIdArr.push(p.charId);
+      }
+
+      // 分离秘密线索和普通线索
+      const secretAvailable: typeof this.script.clues = [];
+      const regularAvailable: typeof this.script.clues = [];
+      for (const c of this.script.clues) {
+        if (!this.state.flags[`unlocked:${c.id}`]) continue;
+        if (allAcquiredIds.has(c.id)) continue;
+        if (c.visibility === 'searchable') {
+          regularAvailable.push(c);
+        } else if (c.visibility === 'private' && c.requiredSkill) {
+          // 检查 bot 角色是否有对应技能
+          const skill = c.requiredSkill!;
+          let hasSkill = false;
+          for (const ch of this.script?.characters ?? []) {
+            if (ch.id && botCharIdArr.includes(ch.id) && ch.skills?.includes(skill)) {
+              hasSkill = true;
               break;
             }
           }
-          if (hasBotSkill) return true;
+          if (hasSkill) secretAvailable.push(c);
         }
-        return false;
-      });
-      // 已排除掉已被任何人获取的线索
-      const allAcquiredIds = new Set(Object.values(this.state.acquiredClues).flat());
-      const available = searchable.filter(c => !allAcquiredIds.has(c.id));
+      }
+
+      // 策略：优先搜秘密线索，再搜普通线索
+      const available = [...secretAvailable, ...regularAvailable];
 
       let allBotsIdle = true;
       for (const p of this.state.players) {
         if (!p.charId || !this.botIds.includes(p.playerId)) continue;
         const acquired = new Set(this.state.acquiredClues[p.charId] ?? []);
-        // 检查 bots 是否已用尽搜证次数
         const botCount = rt.searchCount?.[p.charId] ?? 0;
-        if (maxSearches && botCount >= maxSearches) continue; // 次数用完,跳过
-        if (available.length === 0) continue; // 无可搜线索,跳过
+        if (maxSearches && botCount >= maxSearches) continue;
+        if (available.length === 0) continue;
 
         // 还有次数且还有线索 → 搜索
         for (const clue of available) {
           if (!acquired.has(clue.id)) {
             const result = this.engine.handleAction(p.charId, { kind: 'searchClue', clueId: clue.id });
             if (result.ok) {
-              // ★ 搜到后自动公开
               this.engine.handleAction(p.charId, { kind: 'revealClue', clueId: clue.id });
-              // 立即更新 available 列表（该线索已被此人独占）
               available.splice(available.indexOf(clue), 1);
             }
             allBotsIdle = false;
