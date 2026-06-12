@@ -45,11 +45,13 @@ export const zCharacter = z.object({
   timeline: z.array(zTimelineEntry),
   relationships: z.array(zRelationship),
   skills: z.array(z.string()).optional(),
+  sceneId: z.string().optional(), // 角色所在区域（搜证时不可调查自己区域）
   passiveClueGivers: z.array(z.object({
     targetCharId: z.string(),
     clueId: z.string(),
   })).optional(),
   investigationReport: z.string().optional(),
+  mandatoryReveal: z.array(z.string()).optional(), // 必须公开的信息（被问到时必须回答）
   visual: zVisualSpec, // 头像(必填)
 });
 export type Character = z.infer<typeof zCharacter>;

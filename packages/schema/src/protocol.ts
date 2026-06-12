@@ -124,6 +124,7 @@ export const zClientStateView = z.object({
         targetCharId: z.string(),
         clueId: z.string(),
       })).optional(),
+      mandatoryReveal: z.array(z.string()).optional(), // 必须公开的信息
     })
     .optional(),
   currentPhase: z

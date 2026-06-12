@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useGameStore } from '../store/game.js';
 import { assetUrl } from '../lib/asset.js';
 import { useExcerptSelection } from '../hooks/useExcerptSelection.js';
+import { useTypewriter } from '../hooks/useTypewriter.js';
 import { Lightbox } from '../components/Visual.js';
 import { PhaseStatus } from '../components/PhaseStatus.js';
 import { pushToast } from '../lib/toast.js';
@@ -36,6 +37,16 @@ export function FreeScene() {
   const [searchCooldown, setSearchCooldown] = useState<number>(0);
   const chatThreadRef = useRef<HTMLDivElement>(null);
   const pmThreadRef = useRef<HTMLDivElement>(null);
+
+  // Phase narrative (collapsible)
+  const [narrativeExpanded, setNarrativeExpanded] = useState(true);
+  const [narrativeRead, setNarrativeRead] = useState(false);
+
+  // Objectives (collapsible)
+  const [objExpanded, setObjExpanded] = useState(false);
+
+  // Mandatory reveal (collapsible)
+  const [revealExpanded, setRevealExpanded] = useState(false);
 
   const self = view?.self;
   const phase = view?.currentPhase;
@@ -249,10 +260,141 @@ export function FreeScene() {
     }
   }, [self?.myClues?.length]);
 
+  // Phase narrative typewriter
+  const phaseNarrative = phase?.narrativeText ?? '';
+  const narrative = useTypewriter(phaseNarrative, {
+    speed: 22,
+    startDelay: 300,
+    enabled: narrativeExpanded && !narrativeRead,
+  });
+
+  // Reset narrative state when phase changes
+  const prevPhaseRef = useRef<string | undefined>(undefined);
+  useEffect(() => {
+    if (phase?.id !== prevPhaseRef.current) {
+      prevPhaseRef.current = phase?.id;
+      setNarrativeExpanded(!!phaseNarrative);
+      setNarrativeRead(false);
+    }
+  }, [phase?.id, phaseNarrative]);
+
+  // Auto-collapse after typewriter finishes
+  useEffect(() => {
+    if (narrative.done && narrativeExpanded && phaseNarrative) {
+      setNarrativeRead(true);
+    }
+  }, [narrative.done, narrativeExpanded, phaseNarrative]);
+
   return (
     <div onMouseUp={excerpt.onMouseUp}>
       <PhaseStatus />
 
+      {/* Phase narrative (collapsible) */}
+      {phaseNarrative && (
+        <div className={`phase-narrative ${narrativeExpanded ? 'expanded' : 'collapsed'}`}>
+          <button
+            className="phase-narrative-toggle"
+            onClick={() => {
+              if (narrativeExpanded) {
+                setNarrativeExpanded(false);
+              } else {
+                setNarrativeExpanded(true);
+                setNarrativeRead(false);
+              }
+            }}
+          >
+            <span className="phase-narrative-icon">📖</span>
+            <span className="phase-narrative-label">
+              {narrativeExpanded ? '收起剧情' : '查看剧情'}
+            </span>
+            <span className={`phase-narrative-arrow ${narrativeExpanded ? 'up' : 'down'}`}>▾</span>
+          </button>
+          {narrativeExpanded && (
+            <div className="phase-narrative-body">
+              <p className="phase-narrative-text">
+                {narrative.displayed || '\u00A0'}
+                {!narrative.done && <span className="phase-narrative-caret">▍</span>}
+              </p>
+              {!narrative.done && (
+                <button
+                  className="btn btn-ghost btn-sm phase-narrative-skip"
+                  onClick={() => narrative.skip()}
+                >
+                  跳过 ▸▸
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Objectives (collapsible) */}
+      {self && self.objectives.length > 0 && (
+        <div className={`phase-objectives ${objExpanded ? 'expanded' : 'collapsed'}`}>
+          <button
+            className="phase-objectives-toggle"
+            onClick={() => setObjExpanded(!objExpanded)}
+          >
+            <span className="phase-objectives-icon">🎯</span>
+            <span className="phase-objectives-label">
+              {objExpanded ? '收起目标' : '我的目标'}
+            </span>
+            <span className="phase-objectives-count">{self.objectives.length}</span>
+            <span className={`phase-objectives-arrow ${objExpanded ? 'up' : 'down'}`}>▾</span>
+          </button>
+          {objExpanded && (
+            <div className="phase-objectives-body">
+              <ul className="phase-objectives-list">
+                {self.objectives.map((o) => (
+                  <li key={o.id} className={`obj-${o.kind}`}>
+                    <span className="obj-icon">{o.kind === 'main' ? '主' : o.kind === 'hidden' ? '隐' : '支'}</span>
+                    <div className="phase-objectives-item">
+                      <div className="phase-objectives-kind">
+                        {o.kind === 'main' ? '主线目标' : o.kind === 'hidden' ? '隐藏目标' : '支线目标'}
+                      </div>
+                      <div className="phase-objectives-desc">{o.description}</div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Mandatory Reveal (collapsible) */}
+      {self?.mandatoryReveal && self.mandatoryReveal.length > 0 && (
+        <div className={`phase-objectives ${revealExpanded ? 'expanded' : 'collapsed'}`}>
+          <button
+            className="phase-objectives-toggle"
+            onClick={() => setRevealExpanded(!revealExpanded)}
+          >
+            <span style={{ fontSize: '15px' }}>📢</span>
+            <span className="phase-objectives-label">必须公开的信息</span>
+            <span className="phase-objectives-count">{self.mandatoryReveal.length}</span>
+            <span className={`phase-objectives-arrow ${revealExpanded ? 'up' : 'down'}`}>▾</span>
+          </button>
+          {revealExpanded && (
+            <div className="phase-objectives-body">
+              <p style={{ fontSize: '12px', color: 'var(--ts)', marginBottom: '8px' }}>
+                当其他玩家向你提起这些话题时，你必须这样做。
+              </p>
+              <ul className="phase-objectives-list">
+                {self.mandatoryReveal.map((item, i) => (
+                  <li key={i}>
+                    <span className="obj-icon" style={{ background: 'var(--accent-m)', color: 'var(--accent)' }}>必</span>
+                    <div className="phase-objectives-item">
+                      <div className="phase-objectives-desc">{item}</div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+
+      {allowed.has('searchClue') && (
       <div className="investigation-summary">
         <div className="summary-tile">
           <span>可搜线索</span>
@@ -280,6 +422,7 @@ export function FreeScene() {
             : '本轮以讨论和交换信息为主,整理公开线索中的矛盾。'}
         </div>
       </div>
+      )}
 
       <div className="free-layout">
         {/* Left: Action panel */}

@@ -1078,6 +1078,132 @@ select.input {
 .recent-action .ev-icon { width: 18px; height: 18px; font-size: 9px; }
 
 /* ============================================================
+   Phase Narrative (collapsible) — Free scene 剧情过渡
+   ============================================================ */
+.phase-narrative {
+  margin-bottom: var(--sp4);
+  border: 1px solid var(--s4);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.phase-narrative.collapsed {
+  border-color: var(--s3);
+}
+.phase-narrative.expanded {
+  border-color: rgba(200,166,106,0.3);
+  background: linear-gradient(135deg, rgba(200,166,106,0.06), rgba(15,15,23,0.8));
+}
+.phase-narrative-toggle {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%; padding: 12px 16px;
+  background: rgba(200,166,106,0.08);
+  border: none; cursor: pointer;
+  color: var(--tp); font-size: 14px;
+  transition: background 0.2s;
+}
+.phase-narrative-toggle:hover {
+  background: rgba(200,166,106,0.15);
+}
+.phase-narrative-icon { font-size: 16px; }
+.phase-narrative-label { flex: 1; text-align: left; font-weight: 500; }
+.phase-narrative-arrow {
+  font-size: 12px; transition: transform 0.3s;
+  color: var(--ts);
+}
+.phase-narrative-arrow.up { transform: rotate(180deg); }
+.phase-narrative-body {
+  padding: 16px 20px 20px;
+  animation: narrativeFadeIn 0.3s ease;
+}
+@keyframes narrativeFadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.phase-narrative-text {
+  font-size: 15px; line-height: 1.8;
+  color: var(--tp);
+  white-space: pre-wrap;
+}
+.phase-narrative-caret {
+  color: var(--accent);
+  animation: blink 0.8s step-end infinite;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+.phase-narrative-skip {
+  margin-top: 12px;
+  font-size: 13px;
+}
+
+/* ============================================================
+   Phase Objectives (collapsible) — Free scene 目标任务
+   ============================================================ */
+.phase-objectives {
+  margin-bottom: var(--sp4);
+  border: 1px solid var(--s4);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.phase-objectives.collapsed {
+  border-color: var(--s3);
+}
+.phase-objectives.expanded {
+  border-color: rgba(200,166,106,0.3);
+  background: linear-gradient(135deg, rgba(200,166,106,0.06), rgba(15,15,23,0.8));
+}
+.phase-objectives-toggle {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%; padding: 10px 16px;
+  background: rgba(200,166,106,0.06);
+  border: none; cursor: pointer;
+  color: var(--tp); font-size: 14px;
+  transition: background 0.2s;
+}
+.phase-objectives-toggle:hover {
+  background: rgba(200,166,106,0.12);
+}
+.phase-objectives-icon { font-size: 15px; }
+.phase-objectives-label { flex: 1; text-align: left; font-weight: 500; }
+.phase-objectives-count {
+  background: var(--s3); color: var(--ts);
+  font-size: 11px; font-weight: 600;
+  padding: 2px 7px; border-radius: 10px;
+  min-width: 20px; text-align: center;
+}
+.phase-objectives-arrow {
+  font-size: 12px; transition: transform 0.3s;
+  color: var(--ts);
+}
+.phase-objectives-arrow.up { transform: rotate(180deg); }
+.phase-objectives-body {
+  padding: 8px 12px 12px;
+  animation: narrativeFadeIn 0.3s ease;
+}
+.phase-objectives-list {
+  list-style: none; padding: 0; margin: 0;
+}
+.phase-objectives-list li {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--s3);
+  font-size: 13px;
+}
+.phase-objectives-list li:last-child { border-bottom: none; }
+.phase-objectives-item { flex: 1; }
+.phase-objectives-kind {
+  font-size: 11px; font-weight: 600;
+  color: var(--ts); text-transform: uppercase;
+  letter-spacing: 0.05em; margin-bottom: 2px;
+}
+.phase-objectives-desc {
+  font-size: 14px; line-height: 1.5;
+  color: var(--tp);
+}
+
+/* ============================================================
    Free(调查)双栏布局 — 动作区 2fr,事件流 1fr 压缩
    ============================================================ */
 .free-layout {
@@ -1610,6 +1736,20 @@ select.input {
   font-size: 15px; line-height: 1.95; color: var(--tp);
   white-space: pre-wrap;
 }
+.briefing-story-body { margin-top: 8px; }
+.briefing-story-heading {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 16px; font-weight: 700;
+  color: var(--accent); margin: 16px 0 6px;
+  letter-spacing: 0.06em;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(200,166,106,0.2);
+}
+.briefing-story-heading:first-child { margin-top: 0; }
+.briefing-story-para {
+  font-size: 15px; line-height: 1.95; color: var(--tp);
+  margin: 0 0 4px;
+}
 .briefing-memory-list {
   display: flex; flex-direction: column; gap: var(--sp2); margin-top: var(--sp2);
 }
@@ -1646,6 +1786,59 @@ select.input {
 }
 .briefing-instruction {
   color: var(--tm); font-size: 12px; margin-top: var(--sp3);
+}
+
+/* ★ Briefing Tab Mode (身份/剧本/关系/目标 tab 切换) */
+.briefing-tabbed {
+  display: flex; flex-direction: column;
+}
+.briefing-tabs {
+  display: flex; gap: 2px; padding: 4px;
+  background: var(--s2); border-radius: var(--r-md);
+  margin-bottom: var(--sp4);
+}
+.briefing-tab {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 10px 8px; border: none; border-radius: var(--r-sm);
+  background: transparent; cursor: pointer;
+  color: var(--ts); font-size: 14px; font-weight: 500;
+  font-family: 'Noto Serif SC', var(--fb);
+  letter-spacing: 0.12em;
+  transition: all 0.2s;
+}
+.briefing-tab:hover { color: var(--tp); background: rgba(200,166,106,0.08); }
+.briefing-tab.active {
+  color: var(--tp); background: var(--s1);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.briefing-tab-label { font-size: 14px; }
+.briefing-tab-badge {
+  background: var(--accent-m); color: var(--accent);
+  font-size: 10px; font-weight: 700;
+  padding: 1px 6px; border-radius: 8px;
+  min-width: 16px; text-align: center;
+}
+.briefing-tab-content {
+  flex: 1; min-height: 0;
+}
+.briefing-tab-pane {
+  animation: briefingTabFade 0.2s ease;
+}
+@keyframes briefingTabFade {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.briefing-tabbed .briefing-portrait {
+  margin-bottom: 0; padding-bottom: 0;
+  border-bottom: none;
+}
+.briefing-tabbed .briefing-section {
+  margin-top: var(--sp4);
+}
+.briefing-tabbed .briefing-actions {
+  margin-top: var(--sp4); padding-top: var(--sp4);
+  border-top: 1px solid var(--s4);
+  text-align: center;
 }
 
 /* ★ Narrative text scene（叙事文本展示）*/
@@ -1818,6 +2011,9 @@ select.input {
   .briefing-portrait { flex-direction: column; gap: 16px; }
   .briefing-portrait-img, .briefing-portrait-fallback { width: 120px; align-self: center; }
   .briefing-id { text-align: center; padding-top: 0; }
+  .briefing-tabs { gap: 1px; padding: 3px; }
+  .briefing-tab { padding: 8px 4px; font-size: 13px; }
+  .briefing-tab-label { font-size: 13px; }
   .narrative-text { font-size: 15px; line-height: 1.9; }
   .clue-card-text { font-size: 14px; line-height: 1.7; }
   .free-action-panel { min-height: auto; }

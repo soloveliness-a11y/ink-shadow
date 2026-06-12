@@ -250,9 +250,13 @@ export class PhaseEngine {
       case 'searchClue': {
         const clue = this.script.clues.find((c) => c.id === intent.clueId);
         if (!clue) return reject('clue_not_found');
+        // ★ 不能搜查自己角色所在区域
+        const playerChar = this.script.characters.find((c) => c.id === charId);
+        if (playerChar?.sceneId && clue.sceneId && playerChar.sceneId === clue.sceneId) {
+          return reject('cannot_search_own_scene');
+        }
         // 技能门控检查
         if (clue.requiredSkill) {
-          const playerChar = this.script.characters.find((c) => c.id === charId);
           if (!playerChar?.skills?.includes(clue.requiredSkill)) {
             return reject(`skill_required:${clue.requiredSkill}`);
           }

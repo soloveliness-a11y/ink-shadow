@@ -97,6 +97,16 @@ export function PhaseStatus() {
           )}
         </div>
       )}
+      {view?.pendingAdvance && (
+        <div className="phase-host-control">
+          <span>{isHost ? '条件已满足，请推进到下一阶段。' : '等待房主推进。'}</span>
+          {isHost && (
+            <button onClick={() => send({ kind: 'manualAdvance' })} className="btn btn-primary btn-sm">
+              推进下一阶段
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 }

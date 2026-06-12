@@ -13,6 +13,7 @@ const MAP: Record<string, string> = {
   clue_private: '这是其他角色的私有线索',
   clue_locked: '该线索尚未解锁,先去对应地点搜证',
   clue_taken: '该线索已被其他玩家抢先搜走',
+  cannot_search_own_scene: '不能搜查自己角色所在的区域',
   search_limit_reached: '你的搜证次数已用完',
   clue_not_owned: '只有线索持有者才能公开',
   already_revealed: '该线索已经公开',
