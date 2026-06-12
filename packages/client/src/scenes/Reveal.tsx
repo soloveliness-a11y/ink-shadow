@@ -48,6 +48,16 @@ export function RevealScene() {
               {truth.displayed || '\u00A0'}
               <span className="briefing-caret">{!truth.done ? '▍' : ''}</span>
             </p>
+            {(!narrative.done || !truth.done) && (
+              <div className="reveal-skip">
+                <button
+                  onClick={() => { if (!narrative.done) narrative.skip(); if (!truth.done) truth.skip(); }}
+                  className="btn btn-ghost"
+                >
+                  跳过 ▸▸
+                </button>
+              </div>
+            )}
           </>
         ) : (
           <p className="reveal-loading">真相即将揭晓…</p>

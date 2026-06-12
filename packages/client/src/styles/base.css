@@ -1883,6 +1883,11 @@ select.input {
    ============================================================ */
 .unread-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--crimson); flex-shrink: 0; }
 .briefing-actions { position: sticky; bottom: 0; background: var(--s1); padding: var(--sp4) 0; border-top: 1px solid var(--s4); z-index: 5; text-align: center; margin-top: 28px; }
+.briefing-skip-btn { font-size: 13px; opacity: 0.7; }
+.briefing-skip-btn:hover { opacity: 1; }
+.reveal-skip { text-align: center; margin-top: 20px; }
+.reveal-skip .btn { font-size: 13px; opacity: 0.6; }
+.reveal-skip .btn:hover { opacity: 1; }
 .lobby-change-script { font-size: 11px; color: var(--tm); margin-left: auto; }
 .lobby-wait-hint { text-align: center; color: var(--ts); font-size: 13px; padding: var(--sp3) 0; }
 

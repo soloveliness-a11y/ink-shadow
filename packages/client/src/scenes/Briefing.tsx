@@ -103,6 +103,18 @@ export function BriefingScene() {
               </div>
             )}
 
+            {/* 打字机跳过按钮 */}
+            {!(unlockedStoryKey ? personal.done : framing.done) && (
+              <div className="briefing-actions">
+                <button
+                  onClick={() => unlockedStoryKey ? personal.skip() : framing.skip()}
+                  className="btn btn-ghost briefing-skip-btn"
+                >
+                  跳过 ▸▸
+                </button>
+              </div>
+            )}
+
             {/* 继续按钮：个性化模式等打字机完成；共享模式也等打字机完成 */}
             {(unlockedStoryKey ? personal.done : framing.done) && (
               <div className="briefing-actions">
