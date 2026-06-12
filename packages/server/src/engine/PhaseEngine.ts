@@ -266,7 +266,15 @@ export class PhaseEngine {
         // 可达性:public 或已解锁 或是持有者
         const unlocked = this.state.flags[`unlocked:${clue.id}`];
         if (clue.visibility === 'public') break;
-        if (clue.visibility === 'private' && clue.ownerCharId !== charId) return reject('clue_private');
+        if (clue.visibility === 'private') {
+          // 秘密线索：已解锁且玩家有对应技能，或线索持有者
+          if (clue.ownerCharId === charId) break;
+          if (unlocked && clue.requiredSkill) {
+            const playerChar = this.script.characters.find((c) => c.id === charId);
+            if (playerChar?.skills?.includes(clue.requiredSkill)) break;
+          }
+          return reject('clue_private');
+        }
         if (clue.visibility === 'searchable' && !unlocked && clue.ownerCharId !== charId) return reject('clue_locked');
         // ★ 搜证次数限制
         if (phase?.maxSearches) {

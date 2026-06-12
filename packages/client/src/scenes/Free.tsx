@@ -19,6 +19,7 @@ export function FreeScene() {
   const [caseNote, setCaseNote] = useState('');
   const [loadedNoteKey, setLoadedNoteKey] = useState<string | null>(null);
   const [sceneId, setSceneId] = useState<string | null>(null);
+  const [clueSceneId, setClueSceneId] = useState<string | null>(null);
   const [lightbox, setLightbox] = useState<{ src: string; caption?: string } | null>(null);
   const excerpt = useExcerptSelection({
     selector: '.clue-card-text, .clue-card-title, .scene-detail-desc, .scene-detail-name',
@@ -87,6 +88,8 @@ export function FreeScene() {
   const selectedSceneId = sceneId ?? scenes[0]?.id ?? null;
   const selectedScene = scenes.find((s) => s.id === selectedSceneId);
   const selectedSceneClues = view?.searchableClues?.filter((cl) => cl.sceneId === selectedSceneId) ?? [];
+
+
   const unscenedClues = view?.searchableClues?.filter((cl) => !cl.sceneId) ?? [];
 
   const sceneNameOf = (sceneId?: string) => scenes.find((s) => s.id === sceneId)?.name ?? '无场景';
@@ -98,6 +101,10 @@ export function FreeScene() {
     }
     return [...seen.entries()];
   };
+  // 线索 tab 的场景列表
+  const allMyClues = [...(self?.myClues ?? []), ...(view?.revealedClues ?? [])];
+  const clueScenes = sceneGroupsOf(allMyClues);
+  const selectedClueSceneId = clueSceneId ?? clueScenes[0]?.[0] ?? null;
   const speechLog = view?.log.filter(e => e.type === 'speak') ?? [];
   const recentActions = view?.log.filter((e) => ['search_clue', 'reveal_clue', 'speak', 'privateMessage'].includes(e.type)).slice(-5) ?? [];
   const eventLog = view?.log.slice(-30) ?? [];
@@ -415,45 +422,37 @@ export function FreeScene() {
               </div>
             )}
 
-            {/* Clues */}
+            {/* Clues - Scene tab layout */}
             {effectiveTab === 'clues' && (
-              <div>
-                {hasRevealed && (() => {
-                  const groups = sceneGroupsOf(view?.revealedClues ?? []);
+              <div className="search-layout">
+                {clueScenes.length > 0 && (
+                  <div className="scene-list">
+                    {clueScenes.map(([sid, name]) => {
+                      const count = allMyClues.filter((cl) => (cl.sceneId ?? '__none__') === sid).length;
+                      const active = selectedClueSceneId === sid;
+                      return (
+                        <button key={sid} className={`scene-chip${active ? ' active' : ''}`} onClick={() => setClueSceneId(sid)}>
+                          <span>
+                            <strong>{name}</strong>
+                            <small>{count} 条线索</small>
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {selectedClueSceneId && (() => {
+                  const sceneClues = allMyClues.filter((cl) => (cl.sceneId ?? '__none__') === selectedClueSceneId);
+                  const revealed = sceneClues.filter((cl) => view?.revealedClues?.some((r) => r.id === cl.id));
+                  const hidden = sceneClues.filter((cl) => !revealed.some((r) => r.id === cl.id));
+
                   return (
-                    <>
-                      <div className="section-label">公共线索</div>
-                      {groups.map(([sid, name]) => (
-                        <div key={sid}>
-                          {groups.length > 1 && <div className="clue-scene-header">📍 {name}</div>}
-                          {(view?.revealedClues ?? []).filter((cl) => (cl.sceneId ?? '__none__') === sid).map((cl) => {
-                            const cu = assetUrl(scriptId, cl.visual?.asset?.path);
-                            return (
-                              <ClueCard
-                                key={cl.id}
-                                title={cl.title}
-                                content={cl.content}
-                                image={cu}
-                                badge={<span className="badge badge-sage">已公开</span>}
-                                isSecret={cl.id.startsWith('sc_')}
-                                onImage={() => cu && setLightbox({ src: cu, caption: cl.title })}
-                              />
-                            );
-                          })}
-                        </div>
-                      ))}
-                    </>
-                  );
-                })()}
-                {myHiddenClues.length > 0 && (() => {
-                  const groups = sceneGroupsOf(myHiddenClues);
-                  return (
-                    <>
-                      <div className="section-label section-label-spaced">我的未公开线索</div>
-                      {groups.map(([sid, name]) => (
-                        <div key={sid}>
-                          {groups.length > 1 && <div className="clue-scene-header">📍 {name}</div>}
-                          {myHiddenClues.filter((cl) => (cl.sceneId ?? '__none__') === sid).map((cl) => {
+                    <div className="search-clue-list">
+                      {hidden.length > 0 && (
+                        <>
+                          <div className="section-label">我的线索</div>
+                          {hidden.map((cl) => {
                             const cu = assetUrl(scriptId, cl.visual?.asset?.path);
                             return (
                               <ClueCard
@@ -468,20 +467,12 @@ export function FreeScene() {
                               />
                             );
                           })}
-                        </div>
-                      ))}
-                    </>
-                  );
-                })()}
-                {myRevealedClues.length > 0 && (() => {
-                  const groups = sceneGroupsOf(myRevealedClues);
-                  return (
-                    <>
-                      <div className="section-label section-label-spaced">我已公开的线索</div>
-                      {groups.map(([sid, name]) => (
-                        <div key={sid}>
-                          {groups.length > 1 && <div className="clue-scene-header">📍 {name}</div>}
-                          {myRevealedClues.filter((cl) => (cl.sceneId ?? '__none__') === sid).map((cl) => {
+                        </>
+                      )}
+                      {revealed.length > 0 && (
+                        <>
+                          <div className="section-label section-label-spaced">已公开线索</div>
+                          {revealed.map((cl) => {
                             const cu = assetUrl(scriptId, cl.visual?.asset?.path);
                             return (
                               <ClueCard
@@ -495,12 +486,15 @@ export function FreeScene() {
                               />
                             );
                           })}
-                        </div>
-                      ))}
-                    </>
+                        </>
+                      )}
+                      {sceneClues.length === 0 && (
+                        <div className="empty-state compact">该场景暂无线索</div>
+                      )}
+                    </div>
                   );
                 })()}
-                {!hasRevealed && !hasMyClues && <div className="empty-state compact">还没有获得线索</div>}
+                {clueScenes.length === 0 && <div className="empty-state compact">还没有获得线索</div>}
               </div>
             )}
 
