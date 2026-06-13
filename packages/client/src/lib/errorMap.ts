@@ -44,6 +44,9 @@ const MAP: Record<string, string> = {
   // 协议版本
   version_mismatch: '游戏已更新,请刷新页面(Cmd/Ctrl+R)后再进入',
 
+  // 决胜轮
+  target_restricted: '该角色不在本轮投票范围内',
+
   // 踢人
   kicked: '你已被房主移出房间',
   kick_not_allowed: '仅可在大厅阶段踢人',
@@ -52,6 +55,11 @@ const MAP: Record<string, string> = {
 
 export function friendlyError(code?: string, message?: string): string {
   if (code && MAP[code]) return MAP[code];
+  // skill_required:xxx → 需要 xxx 技能才能搜索此线索
+  if (code?.startsWith('skill_required:')) {
+    const skill = code.slice('skill_required:'.length);
+    return `需要「${skill}」技能才能搜索此线索`;
+  }
   if (message) return message;
   if (code) return code;
   return '未知错误';
