@@ -10,7 +10,7 @@ export function buildView(
   state: RuntimeState,
   forPlayerId: string,
   availableScripts: ScriptMeta[] = [],
-  extra?: { isTestMode?: boolean; pendingAdvance?: boolean; phaseHistory?: string[] },
+  extra?: { isTestMode?: boolean; dmEnabled?: boolean; pendingAdvance?: boolean; phaseHistory?: string[] },
 ): ClientStateView {
   const player = state.players.find((p) => p.playerId === forPlayerId);
   const charId = player?.charId;
@@ -37,6 +37,7 @@ export function buildView(
       sceneSearchProgress: {},
       sceneImages: {},
       isTestMode: extra?.isTestMode,
+      dmEnabled: extra?.dmEnabled,
       pendingAdvance: extra?.pendingAdvance,
       phaseHistory: extra?.phaseHistory,
       log: state.log,
@@ -141,6 +142,7 @@ export function buildView(
     ending: (state.status === 'finished' || (state.status === 'playing' && script.phases.find(p => p.id === state.currentPhaseId)?.kind === 'reveal'))
       ? buildEnding(script, state) : undefined,
     isTestMode: extra?.isTestMode,
+    dmEnabled: extra?.dmEnabled,
     pendingAdvance: extra?.pendingAdvance,
     phaseHistory: extra?.phaseHistory,
     log: state.log,

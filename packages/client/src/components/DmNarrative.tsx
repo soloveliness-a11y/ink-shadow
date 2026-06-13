@@ -9,15 +9,16 @@ import { useTypewriter } from '../hooks/useTypewriter.js';
  */
 export function DmNarrative() {
   const dmNarratives = useGameStore((s) => s.dmNarratives);
+  const dmEnabled = useGameStore((s) => s.view?.dmEnabled);
   const status = useGameStore((s) => s.view?.status);
 
   if (status !== 'playing' && status !== 'finished') return null;
-  if (dmNarratives.length === 0) return null;
+  if (!dmEnabled && dmNarratives.length === 0) return null;
 
-  return <DmNarrativeInner narratives={dmNarratives} />;
+  return <DmNarrativeInner narratives={dmNarratives} enabled={!!dmEnabled} />;
 }
 
-function DmNarrativeInner({ narratives }: { narratives: Array<{ text: string; ts: number }> }) {
+function DmNarrativeInner({ narratives, enabled }: { narratives: Array<{ text: string; ts: number }>; enabled: boolean }) {
   const [expanded, setExpanded] = useState(true);
   const latest = narratives[narratives.length - 1];
   const prevLatestTs = useRef(latest?.ts);
@@ -38,6 +39,17 @@ function DmNarrativeInner({ narratives }: { narratives: Array<{ text: string; ts
     enabled: expanded,
   });
 
+  // 没有旁白但 DM 已启用 → 显示就位图标
+  if (narratives.length === 0) {
+    return (
+      <div className="dm-narrative-panel dm-standby">
+        <div className="dm-narrative-toggle" title="说书人已就位，等待旁白...">
+          <span className="dm-narrative-icon">🎭</span>
+        </div>
+      </div>
+    );
+  }
+
   const history = narratives.slice(0, -1).slice(-5).reverse();
 
   return (
@@ -55,7 +67,7 @@ function DmNarrativeInner({ narratives }: { narratives: Array<{ text: string; ts
         <div className="dm-narrative-body">
           <div className="dm-narrative-label">说书人</div>
           <p className="dm-narrative-text">
-            {typewriter.displayed || ' '}
+            {typewriter.displayed || ' '}
             {!typewriter.done && <span className="dm-narrative-caret">▍</span>}
           </p>
           {!typewriter.done && (
@@ -70,7 +82,7 @@ function DmNarrativeInner({ narratives }: { narratives: Array<{ text: string; ts
           {history.length > 0 && (
             <details className="dm-narrative-history">
               <summary>历史旁白 ({history.length})</summary>
-              {history.map((n, i) => (
+              {history.map((n: { text: string; ts: number }, i: number) => (
                 <p key={`${n.ts}-${i}`} className="dm-narrative-history-item">{n.text}</p>
               ))}
             </details>

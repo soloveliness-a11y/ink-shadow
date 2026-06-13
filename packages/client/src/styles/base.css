@@ -2938,3 +2938,73 @@ html { scroll-behavior: smooth; }
     max-width: calc(100vw - 24px);
   }
 }
+
+/* ============================================================
+   AI DM Settings Panel (Lobby)
+   ============================================================ */
+
+.dm-settings {
+  margin-bottom: var(--sp3, 12px);
+}
+.dm-settings-toggle {
+  display: flex; align-items: center; gap: var(--sp2, 8px);
+  background: var(--s2); border: 1px solid var(--s3);
+  border-radius: var(--r-md, 8px);
+  padding: var(--sp2, 8px) var(--sp3, 12px);
+  cursor: pointer; width: 100%;
+  color: var(--tp); font-size: 14px;
+  transition: background 0.15s;
+}
+.dm-settings-toggle:hover { background: var(--s3); }
+.dm-settings-body {
+  background: var(--s1); border: 1px solid var(--s3);
+  border-radius: 0 0 var(--r-md, 8px) var(--r-md, 8px);
+  padding: var(--sp3, 12px);
+  margin-top: -1px;
+}
+.dm-settings-desc {
+  font-size: 12px; color: var(--ts);
+  margin-bottom: var(--sp3, 12px);
+}
+.dm-settings-row {
+  display: flex; align-items: center; gap: var(--sp2, 8px);
+  margin-bottom: var(--sp2, 8px);
+}
+.dm-settings-label {
+  font-size: 13px; color: var(--tm);
+  min-width: 70px; flex-shrink: 0;
+}
+.dm-settings-row .input {
+  flex: 1; font-size: 13px;
+}
+.dm-settings-select {
+  flex: 1; font-size: 13px;
+}
+.dm-settings-key {
+  display: flex; flex: 1; position: relative;
+}
+.dm-settings-key .input { flex: 1; padding-right: 32px; }
+.dm-settings-eye {
+  position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer;
+  font-size: 16px; padding: 2px 4px;
+}
+.dm-settings-actions {
+  margin-top: var(--sp3, 12px);
+  display: flex; justify-content: flex-end;
+}
+.dm-standby .dm-narrative-toggle {
+  opacity: 0.5;
+}
+.dm-standby .dm-narrative-toggle::after {
+  content: ''; display: block;
+  position: absolute; top: 4px; right: 4px;
+  width: 6px; height: 6px;
+  background: var(--accent, #C8A66A);
+  border-radius: 50%;
+  animation: dm-pulse 2s ease infinite;
+}
+@keyframes dm-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}

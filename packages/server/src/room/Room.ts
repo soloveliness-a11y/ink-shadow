@@ -323,6 +323,24 @@ export class Room {
       return this.rollbackSnapshot();
     }
 
+    // AI DM 配置（仅房主，任意阶段可配）
+    if (intent.kind === 'configureDm') {
+      const p = this.state.players.find(x => x.playerId === playerId);
+      if (!p?.isHost) return { error: 'not_host' };
+      if (intent.enabled && intent.apiKey) {
+        this.dmService = new DmService({
+          provider: intent.provider ?? 'anthropic',
+          apiKey: intent.apiKey,
+          apiUrl: intent.apiUrl,
+          model: intent.model ?? 'claude-haiku-4-5',
+        });
+      } else {
+        this.dmService = new DmService(null); // disabled
+      }
+      this.broadcastState();
+      return {};
+    }
+
     const p = this.state.players.find((x) => x.playerId === playerId);
     if (!p?.charId) return { error: 'no_char' };
 
@@ -472,6 +490,7 @@ export class Room {
   private viewExtra() {
     return {
       isTestMode: this.isTestMode || undefined,
+      dmEnabled: this.dmService.isEnabled || undefined,
       pendingAdvance: this.engine?.pendingAdvance || undefined,
       phaseHistory: this.phaseHistory.length > 0 ? this.phaseHistory : undefined,
     };

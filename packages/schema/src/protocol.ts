@@ -29,6 +29,7 @@ export const zClientIntent = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('kickPlayer'), targetPlayerId: z.string() }), // 房主踢人(仅 lobby)
   z.object({ kind: z.literal('manualAdvance') }),
   z.object({ kind: z.literal('rollbackPhase') }),
+  z.object({ kind: z.literal('configureDm'), enabled: z.boolean(), provider: z.enum(['anthropic', 'openai']).optional(), apiKey: z.string().optional(), apiUrl: z.string().optional(), model: z.string().optional() }),
 ]);
 export type ClientIntent = z.infer<typeof zClientIntent>;
 
@@ -163,6 +164,7 @@ export const zClientStateView = z.object({
   propImages: z.record(z.string(), z.string()).optional(), // propId -> 图路径
   votesPublic: z.record(z.string(), z.string()).optional(),
   isTestMode: z.boolean().optional(),
+  dmEnabled: z.boolean().optional(),
   pendingAdvance: z.boolean().optional(),
   phaseHistory: z.array(z.string()).optional(), // 已经过的阶段标题
   ending: z

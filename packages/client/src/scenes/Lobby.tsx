@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useGameStore } from '../store/game.js';
 import { assetUrl } from '../lib/asset.js';
 import { ConfirmDialog } from '../components/ConfirmDialog.js';
@@ -194,6 +194,9 @@ export function LobbyScene() {
           </div>
         </div>
 
+        {/* AI DM 说书人设置（房主） */}
+        {isHost && selectedScript && <DmSettingsPanel send={send} />}
+
         {/* 房主控制区 */}
         {isHost && selectedScript && (
           <div className="lobby-host-controls">
@@ -302,6 +305,158 @@ export function LobbyScene() {
           <p className="login-tip">提示:房主开房后会获得 6 位房间号,其他玩家凭此加入。</p>
         </div>
       </div>
+    </div>
+  );
+}
+
+/* ===== AI DM 说书人设置面板 ===== */
+
+interface DmConfig {
+  enabled: boolean;
+  provider: 'anthropic' | 'openai';
+  apiKey: string;
+  apiUrl: string;
+  model: string;
+}
+
+const DM_STORAGE_KEY = 'dm-config';
+const DM_DEFAULTS: DmConfig = {
+  enabled: false,
+  provider: 'openai',
+  apiKey: '',
+  apiUrl: 'https://5yuantoken.org/v1',
+  model: 'claude-haiku-4-5',
+};
+
+function loadDmConfig(): DmConfig {
+  try {
+    const saved = localStorage.getItem(DM_STORAGE_KEY);
+    if (saved) return { ...DM_DEFAULTS, ...JSON.parse(saved) };
+  } catch {}
+  return { ...DM_DEFAULTS };
+}
+
+function DmSettingsPanel({ send }: { send: (intent: any) => void }) {
+  const [expanded, setExpanded] = useState(false);
+  const [config, setConfig] = useState<DmConfig>(loadDmConfig);
+  const [showKey, setShowKey] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  const update = (patch: Partial<DmConfig>) => {
+    setConfig(prev => ({ ...prev, ...patch }));
+    setSaved(false);
+  };
+
+  const handleSave = () => {
+    // 持久化到 localStorage
+    localStorage.setItem(DM_STORAGE_KEY, JSON.stringify(config));
+    // 发给服务端
+    send({
+      kind: 'configureDm',
+      enabled: config.enabled,
+      provider: config.enabled ? config.provider : undefined,
+      apiKey: config.enabled ? config.apiKey : undefined,
+      apiUrl: config.enabled ? config.apiUrl : undefined,
+      model: config.enabled ? config.model : undefined,
+    });
+    setSaved(true);
+    setTimeout(() => setSaved(false), 1400);
+  };
+
+  // 页面加载时自动同步一次已有配置
+  useEffect(() => {
+    if (config.enabled && config.apiKey) {
+      send({
+        kind: 'configureDm',
+        enabled: true,
+        provider: config.provider,
+        apiKey: config.apiKey,
+        apiUrl: config.apiUrl || undefined,
+        model: config.model || undefined,
+      });
+    }
+  }, []);
+
+  return (
+    <div className="dm-settings">
+      <button className="dm-settings-toggle" onClick={() => setExpanded(!expanded)}>
+        <span>🎭</span>
+        <span>{expanded ? '收起说书人设置' : '说书人 AI DM'}</span>
+        {config.enabled && <span className="badge badge-teal">已启用</span>}
+        <span className={`phase-narrative-arrow ${expanded ? 'up' : 'down'}`}>▾</span>
+      </button>
+
+      {expanded && (
+        <div className="dm-settings-body">
+          <p className="dm-settings-desc">配置 AI 说书人，自动为游戏生成旁白和氛围渲染。需要 API Key。</p>
+
+          <label className="dm-settings-row">
+            <span className="dm-settings-label">启用说书人</span>
+            <button
+              className={`btn btn-sm ${config.enabled ? 'btn-primary' : 'btn-secondary'}`}
+              onClick={() => update({ enabled: !config.enabled })}
+            >
+              {config.enabled ? '已启用' : '未启用'}
+            </button>
+          </label>
+
+          {config.enabled && (
+            <>
+              <label className="dm-settings-row">
+                <span className="dm-settings-label">API 服务</span>
+                <select className="input dm-settings-select" value={config.provider} onChange={e => update({ provider: e.target.value as 'anthropic' | 'openai' })}>
+                  <option value="openai">OpenAI 兼容（中转站）</option>
+                  <option value="anthropic">Anthropic 直连</option>
+                </select>
+              </label>
+
+              <label className="dm-settings-row">
+                <span className="dm-settings-label">API Key</span>
+                <div className="dm-settings-key">
+                  <input
+                    className="input"
+                    type={showKey ? 'text' : 'password'}
+                    value={config.apiKey}
+                    onChange={e => update({ apiKey: e.target.value })}
+                    placeholder="sk-..."
+                  />
+                  <button className="dm-settings-eye" onClick={() => setShowKey(!showKey)} type="button">
+                    {showKey ? '🙈' : '👁'}
+                  </button>
+                </div>
+              </label>
+
+              {config.provider === 'openai' && (
+                <label className="dm-settings-row">
+                  <span className="dm-settings-label">API 地址</span>
+                  <input
+                    className="input"
+                    value={config.apiUrl}
+                    onChange={e => update({ apiUrl: e.target.value })}
+                    placeholder="https://api.example.com/v1"
+                  />
+                </label>
+              )}
+
+              <label className="dm-settings-row">
+                <span className="dm-settings-label">模型</span>
+                <input
+                  className="input"
+                  value={config.model}
+                  onChange={e => update({ model: e.target.value })}
+                  placeholder="claude-haiku-4-5"
+                />
+              </label>
+            </>
+          )}
+
+          <div className="dm-settings-actions">
+            <button onClick={handleSave} className={`btn btn-sm ${saved ? 'btn-primary' : 'btn-secondary'}`}>
+              {saved ? '✓ 已保存' : '保存配置'}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -39,20 +39,15 @@ export class ImageClient {
     const prompt = this.buildPrompt(spec, styleGuide);
     console.log(`  Prompt: ${prompt.slice(0, 80)}...`);
 
-    // gpt-image-* 走纯 JSON 模式,跳过 stream(stream 会触发中转站额外 text 计费)
-    const isImageModel = this.model.startsWith('gpt-image');
-
-    if (!isImageModel) {
-      // Stream 优先: 保持连接活跃,避免 Cloudflare 120s 超时
-      try {
-        const buf = await this.tryStream(prompt);
-        if (buf) return buf;
-      } catch (e) {
-        console.warn(`  stream mode failed: ${e instanceof Error ? e.message : String(e)}`);
-      }
+    // Stream 优先: 保持连接活跃,避免 Cloudflare 120s 超时
+    try {
+      const buf = await this.tryStream(prompt);
+      if (buf) return buf;
+    } catch (e) {
+      console.warn(`  stream mode failed: ${e instanceof Error ? e.message : String(e)}`);
     }
 
-    // JSON 模式
+    // JSON 模式(备选)
     try {
       const buf = await this.tryJson(prompt);
       if (buf) return buf;
