@@ -53,3 +53,18 @@ export const zRuntimeState = z.object({
   log: z.array(zGameEvent),
 });
 export type RuntimeState = z.infer<typeof zRuntimeState>;
+
+/** 可序列化的房间快照，用于持久化到磁盘 */
+export interface RoomSnapshot {
+  /** 版本号，用于未来数据迁移 */
+  version: 1;
+  state: RuntimeState;
+  hostId: string;
+  scriptId: string;
+  isTestMode: boolean;
+  botIds: string[];
+  phaseHistory: string[];
+  dmConfig: { provider: 'anthropic' | 'openai'; apiKey: string; apiUrl?: string; model: string } | null;
+  kickedTokens: string[];
+  savedAt: string;
+}

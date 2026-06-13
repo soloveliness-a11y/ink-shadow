@@ -9,6 +9,7 @@ import type { ClientIntent, ServerMessage } from '@mmg/schema';
 import { zClientIntent, PROTOCOL_VERSION } from '@mmg/schema';
 import type { LoadedScript } from './loader.js';
 import type { DmConfig } from './dm/DmService.js';
+import { writeJsonFile } from './persistence.js';
 
 const PORT = Number(process.env.PORT ?? 8080);
 // 支持绝对路径(部署友好)或相对 server 源码位置(P1-4)
@@ -152,7 +153,7 @@ function serveFile(absPath: string, req: IncomingMessage, res: ServerResponse) {
   createReadStream(absPath).pipe(res);
 }
 
-export function startServer(): void {
+export async function startServer(): Promise<void> {
   // 1. 加载剧本
   const scripts = scanScripts(SCRIPT_DIR);
   if (scripts.length === 0) {
@@ -255,11 +256,27 @@ export function startServer(): void {
   }, HEARTBEAT_MS);
   wss.on('close', () => clearInterval(heartbeat));
 
-  server.listen(PORT, () => {
+  server.listen(PORT, async () => {
     console.log(`Murder Mystery Game at http://localhost:${PORT}`);
     console.log(`  WebSocket: ws://localhost:${PORT}/ws`);
     console.log(`  Scripts: ${scripts.map(s => s.script.meta.id).join(', ')}`);
+    // 从磁盘恢复房间快照
+    await manager.initPersistence();
   });
+
+  // 优雅关机：SIGTERM/SIGINT → flush 所有房间到磁盘
+  const gracefulShutdown = async (signal: string) => {
+    console.log(`\n${signal}: persisting rooms before exit...`);
+    for (const [code, room] of manager.allRooms()) {
+      const filePath = join('data/rooms', `${code}.json`);
+      await writeJsonFile(filePath, room.snapshot());
+      console.log(`  saved ${code}`);
+    }
+    server.close();
+    process.exit(0);
+  };
+  process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+  process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 }
 
 interface Session { ws: WebSocket; playerId: string | null; roomCode: string | null; isAlive: boolean; msgCount: number; msgWindowStart: number }

@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { ClientStateView, ClientIntent, GameEvent } from '@mmg/schema';
+import type { ClientStateView, ClientIntent, GameEvent, ServerMessage } from '@mmg/schema';
 import { PROTOCOL_VERSION } from '@mmg/schema';
 import { GameConnection, createGameUrl, type ConnectionStatus } from '../net/connection.js';
 import { pushToast } from '../lib/toast.js';
@@ -71,6 +71,107 @@ function preloadAssets(view: ClientStateView): void {
   }
 }
 
+/**
+ * 处理服务端推送消息,驱动 store 状态变更。
+ * 提取为独立函数以便单元测试。
+ */
+export function handleServerMessage(
+  msg: ServerMessage,
+  getState: () => GameState,
+  setState: (partial: Partial<GameState> | ((s: GameState) => Partial<GameState>)) => void,
+  exitKicked: () => void,
+): void {
+  switch (msg.kind) {
+    case 'joined':
+      setState((s) => {
+        writeSession({
+          roomCode: s.roomCode,
+          nickname: s.nickname,
+          sessionToken: msg.sessionToken,
+        });
+        return { playerId: msg.playerId, sessionToken: msg.sessionToken, connected: true, error: null };
+      });
+      break;
+    case 'stateSync': {
+      const newView = msg.view;
+      const oldStatus = getState().view?.status;
+      setState((s) => {
+        writeSession({
+          roomCode: newView.roomCode,
+          nickname: s.nickname,
+          sessionToken: s.sessionToken,
+        });
+        // 进入新 phase 时,如果是新 phaseId 则 toast 提示
+        const phaseKey = newView.currentPhase ? `${newView.status}:${newView.currentPhase.id}` : null;
+        const newPhase = phaseKey && phaseKey !== s.seenPhaseKey;
+        // 微小延迟让 transition 跑完再 toast
+        if (newPhase && phaseKey) {
+          window.setTimeout(() => {
+            const p = newView.currentPhase;
+            if (!p) return;
+            pushToast(`${p.title} · ${p.instruction}`, 'info', 4500);
+          }, 350);
+        }
+        return {
+          view: newView,
+          roomCode: newView.roomCode,
+          error: null,
+          seenPhaseKey: phaseKey ?? s.seenPhaseKey,
+        };
+      });
+      // 游戏开始(lobby/assigning → playing)时后台预加载资源
+      if (newView.status === 'playing' && oldStatus && oldStatus !== 'playing') {
+        preloadAssets(newView);
+      }
+      break;
+    }
+    case 'event':
+      setState((s) => {
+        const events = [...s.events, msg.event];
+        if (events.length > MAX_EVENTS) events.splice(0, events.length - MAX_EVENTS);
+        return { events };
+      });
+      break;
+    case 'privateMessage':
+      setState((s) => {
+        const list = [
+          ...s.privateMessages,
+          {
+            fromCharId: msg.fromCharId,
+            toCharId: currentCharId(s.view) ?? '',
+            text: msg.text,
+            ts: Date.now(),
+          },
+        ];
+        if (list.length > MAX_PRIVATE) list.splice(0, list.length - MAX_PRIVATE);
+        return { privateMessages: list };
+      });
+      break;
+    case 'dmNarrative': {
+      const dm = msg as { text: string; charId?: string };
+      setState((s) => {
+        const narrations = [...s.dmNarratives, { text: dm.text, charId: dm.charId, ts: Date.now() }];
+        if (narrations.length > 50) narrations.splice(0, narrations.length - 50);
+        return { dmNarratives: narrations };
+      });
+      break;
+    }
+    case 'assigned':
+      // assignment handled via stateSync
+      break;
+    case 'kicked':
+      exitKicked();
+      break;
+    case 'error': {
+      const code = (msg as { code?: string }).code;
+      if (code === 'kicked') { exitKicked(); break; }
+      setState({ error: friendlyError(code, msg.message) });
+      pushToast(friendlyError(code, msg.message), 'error', 4000);
+      break;
+    }
+  }
+}
+
 export const useGameStore = create<GameState>((set, get) => ({
   connected: false,
   connectionStatus: 'disconnected',
@@ -97,95 +198,7 @@ export const useGameStore = create<GameState>((set, get) => ({
       pushToast('你已被房主移出房间', 'warn', 4000);
     };
     const conn = new GameConnection(wsUrl, (msg) => {
-      switch (msg.kind) {
-        case 'joined':
-          set((s) => {
-            writeSession({
-              roomCode: s.roomCode,
-              nickname: s.nickname,
-              sessionToken: msg.sessionToken,
-            });
-            return { playerId: msg.playerId, sessionToken: msg.sessionToken, connected: true, error: null };
-          });
-          break;
-        case 'stateSync': {
-          const newView = msg.view;
-          const oldStatus = get().view?.status;
-          set((s) => {
-            writeSession({
-              roomCode: newView.roomCode,
-              nickname: s.nickname,
-              sessionToken: s.sessionToken,
-            });
-            // 进入新 phase 时,如果是新 phaseId 则 toast 提示
-            const phaseKey = newView.currentPhase ? `${newView.status}:${newView.currentPhase.id}` : null;
-            const newPhase = phaseKey && phaseKey !== s.seenPhaseKey;
-            // 微小延迟让 transition 跑完再 toast
-            if (newPhase && phaseKey) {
-              window.setTimeout(() => {
-                const p = newView.currentPhase;
-                if (!p) return;
-                pushToast(`${p.title} · ${p.instruction}`, 'info', 4500);
-              }, 350);
-            }
-            return {
-              view: newView,
-              roomCode: newView.roomCode,
-              error: null,
-              seenPhaseKey: phaseKey ?? s.seenPhaseKey,
-            };
-          });
-          // 游戏开始(lobby/assigning → playing)时后台预加载资源
-          if (newView.status === 'playing' && oldStatus && oldStatus !== 'playing') {
-            preloadAssets(newView);
-          }
-          break;
-        }
-        case 'event':
-          set((s) => {
-            const events = [...s.events, msg.event];
-            if (events.length > MAX_EVENTS) events.splice(0, events.length - MAX_EVENTS);
-            return { events };
-          });
-          break;
-        case 'privateMessage':
-          set((s) => {
-            const list = [
-              ...s.privateMessages,
-              {
-                fromCharId: msg.fromCharId,
-                toCharId: currentCharId(s.view) ?? '',
-                text: msg.text,
-                ts: Date.now(),
-              },
-            ];
-            if (list.length > MAX_PRIVATE) list.splice(0, list.length - MAX_PRIVATE);
-            return { privateMessages: list };
-          });
-          break;
-        case 'dmNarrative': {
-          const dm = msg as { text: string; charId?: string };
-          set((s) => {
-            const narrations = [...s.dmNarratives, { text: dm.text, charId: dm.charId, ts: Date.now() }];
-            if (narrations.length > 50) narrations.splice(0, narrations.length - 50);
-            return { dmNarratives: narrations };
-          });
-          break;
-        }
-        case 'assigned':
-          // assignment handled via stateSync
-          break;
-        case 'kicked':
-          exitKicked();
-          break;
-        case 'error': {
-          const code = (msg as { code?: string }).code;
-          if (code === 'kicked') { exitKicked(); break; }
-          set({ error: friendlyError(code, msg.message) });
-          pushToast(friendlyError(code, msg.message), 'error', 4000);
-          break;
-        }
-      }
+      handleServerMessage(msg, get, set, exitKicked);
     }, () => {
       const current = get();
       const roomCode = current.roomCode ?? saved.roomCode;

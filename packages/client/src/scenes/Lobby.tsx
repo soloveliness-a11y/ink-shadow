@@ -363,17 +363,11 @@ function DmSettingsPanel({ send }: { send: (intent: any) => void }) {
     setTimeout(() => setSaved(false), 1400);
   };
 
-  // 页面加载时自动同步一次已有配置
+  // 页面加载时只发 enabled 标记（不传 key，服务端用已存配置重建）
   useEffect(() => {
-    if (config.enabled && config.apiKey) {
-      send({
-        kind: 'configureDm',
-        enabled: true,
-        provider: config.provider,
-        apiKey: config.apiKey,
-        apiUrl: config.apiUrl || undefined,
-        model: config.model || undefined,
-      });
+    const saved = loadDmConfig();
+    if (saved.enabled) {
+      send({ kind: 'configureDm', enabled: true });
     }
   }, []);
 

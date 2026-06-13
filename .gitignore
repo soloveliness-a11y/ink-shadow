@@ -12,6 +12,9 @@ content/*/.visual-progress.json
 # 版权剧本资源（不入库）
 content/danshui/
 
+# 房间持久化快照
+data/
+
 # 开发期遗留
 _archive/
 _audio-drafts/

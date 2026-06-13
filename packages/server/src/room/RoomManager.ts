@@ -1,14 +1,16 @@
 import type { Script, ScriptMeta } from '@mmg/schema';
-import type { ServerMessage } from '@mmg/schema';
-import type { RuntimeState } from '@mmg/schema';
+import type { ServerMessage, RoomSnapshot } from '@mmg/schema';
 import { Room } from './Room.js';
 import type { DmConfig } from '../dm/DmService.js';
+import { ensureDir, debouncedWrite, writeJsonFile, readJsonFile, scanDirectory, deleteFile, cancelDebouncedWrite } from '../persistence.js';
+import { join } from 'node:path';
 
 /** 已完成房间最大存活时间(30 分钟) */
 const FINISHED_ROOM_TTL_MS = 30 * 60_000;
 
 /**
  * 房间池:管理所有活跃房间。剧本预加载进 registry,开房时按 id 取。
+ * 支持持久化到磁盘（JSON 文件），服务器重启后自动恢复。
  */
 export class RoomManager {
   private scripts = new Map<string, Script>();
@@ -16,12 +18,20 @@ export class RoomManager {
   private sendFn: (playerId: string, msg: ServerMessage) => void;
   private dmConfig: DmConfig | null;
   private cleanupHandle: ReturnType<typeof setInterval> | null = null;
+  private dataDir: string;
 
-  constructor(sendFn: (playerId: string, msg: ServerMessage) => void, dmConfig: DmConfig | null = null) {
+  constructor(sendFn: (playerId: string, msg: ServerMessage) => void, dmConfig: DmConfig | null = null, dataDir = 'data/rooms') {
     this.sendFn = sendFn;
     this.dmConfig = dmConfig;
+    this.dataDir = dataDir;
     // 每 5 分钟清理一次已结束房间
     this.cleanupHandle = setInterval(() => this.cleanFinishedRooms(), 5 * 60_000);
+  }
+
+  /** 初始化持久化（异步）：创建目录 + 从磁盘恢复房间 */
+  async initPersistence(): Promise<void> {
+    await ensureDir(this.dataDir);
+    await this.restoreFromDisk();
   }
 
   /** 注册剧本(服务器启动时加载) */
@@ -32,6 +42,7 @@ export class RoomManager {
   /** 创建房间(不绑定剧本,等房主选本) */
   createRoom(): { roomCode: string } {
     const room = new Room(this.sendFn, this.dmConfig);
+    this.wirePersistence(room);
     this.rooms.set(room.roomCode, room);
     return { roomCode: room.roomCode };
   }
@@ -51,6 +62,9 @@ export class RoomManager {
     return this.scripts.get(scriptId);
   }
 
+  /** 遍历所有房间（优雅关机时用） */
+  *allRooms(): IterableIterator<[string, Room]> { yield* this.rooms; }
+
   /** 清理已结束 + 无在线玩家的房间 */
   private cleanFinishedRooms(): void {
     const now = Date.now();
@@ -60,6 +74,7 @@ export class RoomManager {
       const anyOnline = state.players.some(p => p.connected);
       if (!anyOnline || (now - state.phaseRuntime.startedAt > FINISHED_ROOM_TTL_MS)) {
         this.rooms.delete(code);
+        this.removeSnapshot(code);
       }
     }
   }
@@ -70,5 +85,43 @@ export class RoomManager {
       clearInterval(this.cleanupHandle);
       this.cleanupHandle = null;
     }
+  }
+
+  // ─── 持久化内部方法 ───
+
+  /** 为房间绑定 broadcastState 后的持久化回调 */
+  private wirePersistence(room: Room): void {
+    room.setOnBroadcast(() => {
+      const filePath = join(this.dataDir, `${room.roomCode}.json`);
+      debouncedWrite(filePath, room.snapshot());
+    });
+  }
+
+  /** 从磁盘恢复所有房间快照 */
+  private async restoreFromDisk(): Promise<void> {
+    const files = await scanDirectory(this.dataDir);
+    if (files.length === 0) return;
+    console.log(`  Restoring ${files.length} room(s) from disk...`);
+    for (const filePath of files) {
+      const data = await readJsonFile(filePath);
+      if (!data) continue;
+      try {
+        const snap = data as RoomSnapshot;
+        if (snap.version !== 1) continue;
+        const room = Room.restore(snap, this.sendFn, (id) => this.getScript(id), this.listScriptMetas());
+        this.wirePersistence(room);
+        this.rooms.set(room.roomCode, room);
+        console.log(`    ✓ ${room.roomCode} (${snap.state.status})`);
+      } catch (err) {
+        console.warn(`    ✗ ${filePath}: ${err instanceof Error ? err.message : err}`);
+      }
+    }
+  }
+
+  /** 删除房间快照文件（清理时调用） */
+  removeSnapshot(roomCode: string): void {
+    const filePath = join(this.dataDir, `${roomCode}.json`);
+    cancelDebouncedWrite(filePath);
+    deleteFile(filePath);
   }
 }

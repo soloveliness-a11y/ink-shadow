@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import type { Script, ScriptMeta, RuntimeState, ClientIntent, ServerMessage } from '@mmg/schema';
+import type { Script, ScriptMeta, RuntimeState, ClientIntent, ServerMessage, RoomSnapshot } from '@mmg/schema';
 import { PhaseEngine, type Broadcaster } from '../engine/PhaseEngine.js';
 import { buildView } from '../view.js';
 import { DmService, type DmConfig } from '../dm/DmService.js';
@@ -26,6 +26,8 @@ export class Room {
   private phaseHistory: string[] = [];
   private kickedTokens = new Set<string>();
   private dmService: DmService;
+  private dmFullConfig: DmConfig | null = null;
+  private onBroadcastFn: (() => void) | null = null;
   private static MAX_LOG = 500;
 
   constructor(sendFn: SendFn, dmConfig: DmConfig | null = null) {
@@ -112,6 +114,25 @@ export class Room {
         });
         this.broadcastState();
         return { playerId: existing.playerId, sessionToken: existing.playerId };
+      }
+    }
+
+    // 服务器重启后：按 nickname 匹配已断线玩家（token 不再有效）
+    // 玩家用原昵称重连即可恢复身份
+    if (sessionToken) {
+      const byNickname = this.state.players.find(
+        p => !p.connected && p.nickname === nickname.trim(),
+      );
+      if (byNickname) {
+        byNickname.connected = true;
+        this.playerSockets.set(byNickname.playerId, { charId: byNickname.charId });
+        this.sendToPlayer(byNickname.playerId, { kind: 'joined', playerId: byNickname.playerId, sessionToken: byNickname.playerId });
+        this.sendToPlayer(byNickname.playerId, {
+          kind: 'stateSync',
+          view: buildView(this.script, this.state, byNickname.playerId, this.availableScripts, this.viewExtra()),
+        });
+        this.broadcastState();
+        return { playerId: byNickname.playerId, sessionToken: byNickname.playerId };
       }
     }
 
@@ -324,18 +345,25 @@ export class Room {
     }
 
     // AI DM 配置（仅房主，任意阶段可配）
+    // 合并策略：有 apiKey → 更新 dmFullConfig；没 key 但 enabled → 用已存配置重建
     if (intent.kind === 'configureDm') {
       const p = this.state.players.find(x => x.playerId === playerId);
       if (!p?.isHost) return { error: 'not_host' };
-      if (intent.enabled && intent.apiKey) {
-        this.dmService = new DmService({
+
+      // 有 key → 持久化到服务端内存（不再回传客户端）
+      if (intent.apiKey) {
+        this.dmFullConfig = {
           provider: intent.provider ?? 'anthropic',
           apiKey: intent.apiKey,
           apiUrl: intent.apiUrl,
           model: intent.model ?? 'claude-haiku-4-5',
-        });
+        };
+      }
+
+      if (intent.enabled && this.dmFullConfig) {
+        this.dmService = new DmService(this.dmFullConfig);
       } else {
-        this.dmService = new DmService(null); // disabled
+        this.dmService = new DmService(null);
       }
       this.broadcastState();
       return {};
@@ -358,6 +386,64 @@ export class Room {
 
   getScript(): Readonly<Script> | null {
     return this.script;
+  }
+
+  // ─── 持久化 ───
+
+  /** 设置 broadcastState 后的回调（RoomManager 用来触发防抖写盘） */
+  setOnBroadcast(fn: () => void): void { this.onBroadcastFn = fn; }
+
+  /** 序列化当前房间为快照 */
+  snapshot(): RoomSnapshot {
+    return {
+      version: 1,
+      state: structuredClone(this.state),
+      hostId: this.hostId ?? '',
+      scriptId: this.state.scriptId,
+      isTestMode: this.isTestMode,
+      botIds: [...this.botIds],
+      phaseHistory: [...this.phaseHistory],
+      dmConfig: this.dmFullConfig,
+      kickedTokens: [...this.kickedTokens],
+      savedAt: new Date().toISOString(),
+    };
+  }
+
+  /** 从快照恢复房间（服务器重启后） */
+  static restore(
+    snap: RoomSnapshot,
+    sendFn: SendFn,
+    getScriptFn: (id: string) => Script | undefined,
+    scriptMetas: ScriptMeta[],
+  ): Room {
+    const room = new Room(sendFn, snap.dmConfig);
+    // 恢复状态
+    (room as any).roomCode = snap.state.roomCode;
+    (room as any).state = snap.state;
+    (room as any).hostId = snap.hostId || null;
+    (room as any).isTestMode = snap.isTestMode;
+    (room as any).botIds = snap.botIds;
+    (room as any).phaseHistory = snap.phaseHistory;
+    (room as any).kickedTokens = new Set(snap.kickedTokens);
+    (room as any).dmFullConfig = snap.dmConfig;
+    // 所有玩家标记为断线（需重新连接）
+    for (const p of room.state.players) {
+      p.connected = false;
+    }
+    // 重建剧本和引擎
+    room.setScriptProvider(scriptMetas, getScriptFn);
+    if (snap.scriptId) {
+      const script = getScriptFn(snap.scriptId);
+      if (script) {
+        (room as any).script = script;
+        if (snap.state.status === 'playing') {
+          const engine = new PhaseEngine(script, room.state, (room as any).createBroadcaster());
+          if (room.isTestMode) engine.setBlockAdvance(true);
+          (room as any).engine = engine;
+        }
+      }
+    }
+    return room;
   }
 
   // ─── 内部 ───
@@ -509,6 +595,8 @@ export class Room {
         });
       }
     }
+    // 通知 RoomManager 持久化（防抖写入）
+    this.onBroadcastFn?.();
   }
 
   // ─── 状态快照(测试模式用) ───
