@@ -230,6 +230,10 @@ export function ScriptBook() {
   const leftPage = pages[clampedPage];
   const rightPage = pages[clampedPage + 1];
 
+  // 移动端窄屏 → 单页模式（步进 1）；桌面 → 双页模式（步进 2）
+  const isSinglePage = typeof window !== 'undefined' && window.innerWidth <= 768;
+  const pageStep = isSinglePage ? 1 : 2;
+
   const excerptList = annotations
     .filter((a) => a.type === 'excerpt')
     .sort((a, b) => a.createdAt - b.createdAt);
@@ -316,17 +320,19 @@ export function ScriptBook() {
               <button
                 className="btn btn-secondary btn-sm"
                 disabled={clampedPage === 0}
-                onClick={() => setCurrentPage(Math.max(0, clampedPage - 2))}
+                onClick={() => setCurrentPage(Math.max(0, clampedPage - pageStep))}
               >
                 ◀ 上一页
               </button>
               <span className="scriptbook-page-indicator">
-                {clampedPage + 1}-{Math.min(clampedPage + 2, totalPages)} / {totalPages}
+                {isSinglePage
+                  ? `${clampedPage + 1} / ${totalPages}`
+                  : `${clampedPage + 1}-${Math.min(clampedPage + 2, totalPages)} / ${totalPages}`}
               </span>
               <button
                 className="btn btn-secondary btn-sm"
-                disabled={clampedPage + 2 >= totalPages}
-                onClick={() => setCurrentPage(Math.min(totalPages - 1, clampedPage + 2))}
+                disabled={clampedPage + pageStep >= totalPages}
+                onClick={() => setCurrentPage(Math.min(totalPages - 1, clampedPage + pageStep))}
               >
                 下一页 ▶
               </button>
