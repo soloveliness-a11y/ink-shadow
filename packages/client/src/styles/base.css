@@ -19,7 +19,7 @@ html, body {
   overflow-x: hidden;
 }
 
-#root { min-height: 100vh; display: flex; flex-direction: column; position: relative; }
+#root { height: 100dvh; overflow: hidden; display: flex; flex-direction: column; position: relative; }
 
 /* ============================================================
    动态舞台背景:烟雾 + 颗粒,若隐若现
@@ -68,7 +68,7 @@ html, body {
 }
 
 /* App shell sits above ambient */
-.app-shell { position: relative; z-index: 1; display: flex; flex-direction: column; min-height: 100vh; }
+.app-shell { position: relative; z-index: 1; display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; }
 
 /* ============================================================
    Scrollbar
@@ -253,7 +253,7 @@ select.input {
    ============================================================ */
 .app-body { display: flex; flex: 1; overflow: hidden; min-height: 0; }
 .main-content {
-  flex: 1; overflow-y: auto; padding: var(--sp6);
+  flex: 1; min-height: 0; overflow-y: auto; padding: var(--sp6);
   display: flex; justify-content: center;
 }
 .main-inner { width: 100%; max-width: 920px; }
@@ -666,11 +666,12 @@ select.input {
 .portrait-card {
   position: relative; overflow: hidden; padding: 0;
   aspect-ratio: 3 / 4; border-radius: var(--r-lg);
-  border: 1px solid var(--s4); background: var(--s2);
+  border: 1px solid rgba(200,166,106,0.22); background: var(--s2);
+  box-shadow: 0 0 0 3px rgba(8,8,13,0.55), 0 0 0 4px rgba(200,166,106,0.08), 0 8px 22px rgba(0,0,0,0.4);
   transition: all var(--dur) var(--ease);
 }
-.portrait-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-.portrait-card.selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 8px 24px rgba(0,0,0,0.3); }
+.portrait-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 0 0 3px rgba(8,8,13,0.55), 0 0 0 4px rgba(200,166,106,0.22), 0 14px 32px rgba(0,0,0,0.5); }
+.portrait-card.selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 0 0 4px rgba(8,8,13,0.55), 0 0 0 5px var(--accent), 0 12px 30px rgba(0,0,0,0.45); }
 .portrait-card.clickable { cursor: pointer; }
 .portrait-card.taken { opacity: 0.55; cursor: default; }
 .portrait-card > img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -1039,6 +1040,9 @@ select.input {
 .summary-tile strong {
   font-family: var(--fm); font-size: 22px; color: var(--tp); font-weight: 500;
 }
+.summary-tile.tile-accent strong { color: var(--accent); }
+.summary-tile.tile-sage strong { color: var(--sage); }
+.summary-tile.tile-teal strong { color: var(--teal); }
 .vote-roster { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
 .vote-chip {
   padding: 4px 10px; border-radius: var(--r-sm);
@@ -1565,10 +1569,14 @@ select.input {
 }
 
 .reveal-cover {
-  width: 160px; aspect-ratio: 3 / 4; margin: 0 auto 24px;
+  width: 160px; aspect-ratio: 3 / 4; margin: 0 auto 28px;
   object-fit: cover; border-radius: var(--r-lg);
-  border: 1px solid rgba(200,166,106,0.4);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.6), 0 0 0 6px rgba(200,166,106,0.05);
+  border: 1px solid rgba(200,166,106,0.42);
+  transform: rotate(-1.5deg);
+  box-shadow:
+    0 18px 50px rgba(0,0,0,0.62),
+    0 0 0 4px rgba(8,8,13,0.6),
+    0 0 0 5px rgba(200,166,106,0.2);
 }
 
 .reveal-title {
@@ -1655,14 +1663,18 @@ select.input {
   position: relative;
 }
 .briefing-portrait {
-  display: flex; gap: 24px; align-items: flex-start;
-  margin-bottom: 28px; padding-bottom: 24px;
+  display: flex; gap: 28px; align-items: flex-start;
+  margin-bottom: 32px; padding-bottom: 28px;
   border-bottom: 1px solid var(--s4);
 }
 .briefing-portrait-img {
   width: 140px; aspect-ratio: 3 / 4; object-fit: cover;
-  border-radius: var(--r-lg); border: 1px solid var(--s4);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+  border-radius: var(--r-lg);
+  border: 1px solid rgba(200,166,106,0.28);
+  box-shadow:
+    0 14px 34px rgba(0,0,0,0.48),
+    0 0 0 4px rgba(8,8,13,0.6),
+    0 0 0 5px rgba(200,166,106,0.18);
   flex-shrink: 0;
 }
 .briefing-portrait-fallback {
@@ -1671,13 +1683,18 @@ select.input {
   display: flex; align-items: center; justify-content: center;
   font-family: 'Noto Serif SC', serif; font-size: 60px; font-weight: 700;
   color: var(--accent);
-  border: 1px solid var(--s4);
+  border: 1px solid rgba(200,166,106,0.28);
+  box-shadow:
+    0 14px 34px rgba(0,0,0,0.48),
+    0 0 0 4px rgba(8,8,13,0.6),
+    0 0 0 5px rgba(200,166,106,0.18);
 }
 .briefing-id { flex: 1; padding-top: 8px; }
 .briefing-id-badge { margin-bottom: var(--sp2); }
 .briefing-name {
-  font-family: 'Noto Serif SC', serif; font-size: 28px; font-weight: 700;
-  letter-spacing: 0.04em; margin-bottom: 8px;
+  font-family: 'Noto Serif SC', serif; font-size: 30px; font-weight: 700;
+  letter-spacing: 0.06em; margin-bottom: 10px;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.5), 0 0 1px rgba(200,166,106,0.2);
 }
 .briefing-profile { font-size: 14px; color: var(--ts); line-height: 1.7; white-space: nowrap !important; }
 .briefing-ready-strip {
@@ -1763,10 +1780,30 @@ select.input {
   font-size: 12px; color: var(--ts); margin-top: -10px; margin-bottom: 14px;
   line-height: 1.6;
 }
+
+/* 暗线关系:封蜡私密感(crimson 状态色 + 破对称) */
+.briefing-section--secret {
+  position: relative;
+  padding: 18px 20px;
+  margin-top: var(--sp4);
+  background: linear-gradient(135deg, rgba(196,84,84,0.05), rgba(8,8,13,0.34));
+  border: 1px solid rgba(196,84,84,0.22);
+  border-left: 3px solid rgba(196,84,84,0.5);
+  border-radius: var(--r-md);
+}
+.briefing-section--secret > h2 { color: var(--crimson); }
+.briefing-section--secret .briefing-section-sub { color: rgba(196,84,84,0.72); margin-top: 4px; }
+
+/* 准备进度:就绪态转 sage(状态色) */
+.briefing-ready-strip.ready {
+  background: var(--sage-m); border-color: rgba(106,159,122,0.34);
+}
+.briefing-ready-strip.ready span { color: var(--sage); }
+.briefing-ready-strip.ready strong { color: var(--sage); }
 .briefing-objectives { list-style: none; padding: 0; }
 .briefing-objectives li {
-  display: flex; align-items: flex-start; gap: 14px;
-  padding: 14px 0; border-bottom: 1px solid var(--s4);
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 16px 0; border-bottom: 1px solid var(--s4);
 }
 .briefing-objectives li:last-child { border-bottom: none; }
 .briefing-obj-label {
@@ -2107,8 +2144,8 @@ select.input {
 
 /* --- 2. Briefing 立绘入场 --- */
 @keyframes portraitIn {
-  from { opacity: 0; transform: scale(0.92) translateY(8px); filter: blur(6px); }
-  to   { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+  from { opacity: 0; transform: scale(0.94) translateY(8px) rotate(-1.2deg); filter: blur(6px); }
+  to   { opacity: 1; transform: scale(1) translateY(0) rotate(-1.2deg); filter: blur(0); }
 }
 .briefing-portrait-img,
 .briefing-portrait-fallback {

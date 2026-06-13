@@ -266,15 +266,15 @@ export function FreeScene() {
 
       {allowed.has('searchClue') && (
       <div className="investigation-summary">
-        <div className="summary-tile">
+        <div className="summary-tile tile-accent">
           <span>可搜线索</span>
           <strong>{view?.searchableClues.length ?? 0}</strong>
         </div>
-        <div className="summary-tile">
+        <div className="summary-tile tile-sage">
           <span>我持有</span>
           <strong>{self?.myClues.length ?? 0}</strong>
         </div>
-        <div className="summary-tile">
+        <div className="summary-tile tile-teal">
           <span>已公开</span>
           <strong>{view?.revealedClues.length ?? 0}</strong>
         </div>

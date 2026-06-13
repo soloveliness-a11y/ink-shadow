@@ -221,7 +221,7 @@ export function BriefingScene() {
               )}
               {/* 暗线关系 */}
               {privateRels.length > 0 && (
-                <div className="briefing-section">
+                <div className="briefing-section briefing-section--secret">
                   <h2>暗线关系</h2>
                   <p className="briefing-section-sub">以下关系只有你和对方知道，其他玩家无从得知。</p>
                   <ul className="briefing-objectives">
@@ -335,7 +335,7 @@ export function BriefingScene() {
 
         {/* 底部操作区 */}
         <div className="briefing-actions">
-          <div className="briefing-ready-strip">
+          <div className={`briefing-ready-strip${readyCount === totalPlayers && totalPlayers > 0 ? ' ready' : ''}`}>
             <span>准备进度</span>
             <strong>{readyCount}/{totalPlayers || '?'}</strong>
           </div>
