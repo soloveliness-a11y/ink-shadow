@@ -92,6 +92,9 @@ importers:
 
   packages/server:
     dependencies:
+      '@anthropic-ai/sdk':
+        specifier: ^0.39.0
+        version: 0.39.0
       '@mmg/schema':
         specifier: workspace:*
         version: link:../schema

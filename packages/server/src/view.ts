@@ -270,6 +270,7 @@ function buildSelfView(script: Script, state: RuntimeState, charId: string): Non
     skills: ch.skills ?? [],
     passiveClueGivers: ch.passiveClueGivers ?? [],
     mandatoryReveal: ch.mandatoryReveal ?? [],
+    theory: state.theories[charId] || undefined,
   };
 }
 
@@ -287,5 +288,6 @@ function buildEnding(
     title: ending.title,
     narrative: ending.narrative,
     truthReveal: script.truth.reveal,
+    theories: Object.keys(state.theories).length > 0 ? state.theories : undefined,
   };
 }

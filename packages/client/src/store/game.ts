@@ -16,6 +16,7 @@ interface GameState {
   view: ClientStateView | null;
   events: GameEvent[];
   privateMessages: Array<{ fromCharId: string; toCharId: string; text: string; ts: number }>;
+  dmNarratives: Array<{ text: string; charId?: string; ts: number }>;
   error: string | null;
   conn: GameConnection | null;
   /** 已看到的 phase_enter event key,避免重复 toast */
@@ -80,6 +81,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   view: null,
   events: [],
   privateMessages: [],
+  dmNarratives: [],
   error: null,
   conn: null,
   seenPhaseKey: null,
@@ -161,6 +163,15 @@ export const useGameStore = create<GameState>((set, get) => ({
             return { privateMessages: list };
           });
           break;
+        case 'dmNarrative': {
+          const dm = msg as { text: string; charId?: string };
+          set((s) => {
+            const narrations = [...s.dmNarratives, { text: dm.text, charId: dm.charId, ts: Date.now() }];
+            if (narrations.length > 50) narrations.splice(0, narrations.length - 50);
+            return { dmNarratives: narrations };
+          });
+          break;
+        }
         case 'assigned':
           // assignment handled via stateSync
           break;

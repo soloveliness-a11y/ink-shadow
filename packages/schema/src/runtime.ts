@@ -48,6 +48,7 @@ export const zRuntimeState = z.object({
   acquiredClues: z.record(z.string(), z.array(z.string())), // charId -> 已获取线索 id
   votes: z.record(z.string(), z.string()), // voterCharId -> targetCharId
   tieCharIds: z.array(z.string()).optional(), // 平票决胜:上一轮平票角色 ID
+  theories: z.record(z.string(), z.string()), // charId -> 理论文本
   flags: z.record(z.string(), z.boolean()),
   log: z.array(zGameEvent),
 });

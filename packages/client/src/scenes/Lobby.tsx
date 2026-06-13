@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useGameStore } from '../store/game.js';
 import { assetUrl } from '../lib/asset.js';
+import { ConfirmDialog } from '../components/ConfirmDialog.js';
 
 export function LobbyScene() {
   const joinRoom = useGameStore((s) => s.joinRoom);
@@ -16,6 +17,7 @@ export function LobbyScene() {
     savedRoomCode === 'NEW' ? '' : savedRoomCode ?? '',
   );
   const [copied, setCopied] = useState(false);
+  const [kickTarget, setKickTarget] = useState<{ id: string; name: string } | null>(null);
 
   const joined = view && playerId;
 
@@ -167,14 +169,20 @@ export function LobbyScene() {
                 {isHost && view.status === 'lobby' && p.playerId !== playerId && (
                   <button
                     className="lobby-kick"
-                    onClick={() => {
-                      if (window.confirm(`将「${p.nickname}」移出房间?`)) {
-                        send({ kind: 'kickPlayer', targetPlayerId: p.playerId });
-                      }
-                    }}
+                    onClick={() => setKickTarget({ id: p.playerId, name: p.nickname })}
                     title="移出房间"
                   >踢出</button>
                 )}
+                <ConfirmDialog
+                  open={!!kickTarget}
+                  title="移出玩家"
+                  message={kickTarget ? `确认将「${kickTarget.name}」移出房间？` : ''}
+                  confirmLabel="确认移出"
+                  cancelLabel="取消"
+                  onConfirm={() => { send({ kind: 'kickPlayer', targetPlayerId: kickTarget!.id }); setKickTarget(null); }}
+                  onCancel={() => setKickTarget(null)}
+                  tone="danger"
+                />
               </div>
             ))}
             {selectedScript && Array.from({ length: Math.max(0, requiredPlayers - players.length) }).map((_, i) => (

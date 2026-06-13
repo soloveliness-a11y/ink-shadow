@@ -148,7 +148,7 @@ export class PhaseEngine {
   hostAdvance(charId: string): ActionResult {
     const phase = this.current();
     if (!phase) return reject('no_active_phase');
-    if (phase.exit.kind !== 'hostAdvance') return reject('not_host_advance_phase');
+    if (!['hostAdvance', 'timer'].includes(phase.exit.kind)) return reject('not_host_advance_phase');
     // 验证房主身份由外层 Room 负责,此处直接推进
     this.clearTimer();
     // 房主手动推进始终立即生效,不经过 blockAdvance(测试模式)拦截
@@ -307,6 +307,12 @@ export class PhaseEngine {
         }
         break;
       }
+      case 'submitTheory': {
+        if (!intent.text || !intent.text.trim()) return reject('empty_text');
+        if (intent.text.length > 2000) return reject('theory_too_long');
+        if (this.state.theories[charId]) return reject('already_submitted_theory');
+        break;
+      }
     }
     return ok();
   }
@@ -354,7 +360,9 @@ export class PhaseEngine {
         break;
       }
       case 'submitTheory':
-        this.bus.event({ type: 'submit_theory', actorCharId: charId, payload: { text: intent.text } });
+        this.state.theories[charId] = intent.text;
+        // 事件不含推理文本（防作弊:推理在揭晓前私密）
+        this.bus.event({ type: 'submit_theory', actorCharId: charId });
         break;
     }
   }

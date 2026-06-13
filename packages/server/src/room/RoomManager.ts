@@ -2,6 +2,7 @@ import type { Script, ScriptMeta } from '@mmg/schema';
 import type { ServerMessage } from '@mmg/schema';
 import type { RuntimeState } from '@mmg/schema';
 import { Room } from './Room.js';
+import type { DmConfig } from '../dm/DmService.js';
 
 /** 已完成房间最大存活时间(30 分钟) */
 const FINISHED_ROOM_TTL_MS = 30 * 60_000;
@@ -13,10 +14,12 @@ export class RoomManager {
   private scripts = new Map<string, Script>();
   private rooms = new Map<string, Room>();
   private sendFn: (playerId: string, msg: ServerMessage) => void;
+  private dmConfig: DmConfig | null;
   private cleanupHandle: ReturnType<typeof setInterval> | null = null;
 
-  constructor(sendFn: (playerId: string, msg: ServerMessage) => void) {
+  constructor(sendFn: (playerId: string, msg: ServerMessage) => void, dmConfig: DmConfig | null = null) {
     this.sendFn = sendFn;
+    this.dmConfig = dmConfig;
     // 每 5 分钟清理一次已结束房间
     this.cleanupHandle = setInterval(() => this.cleanFinishedRooms(), 5 * 60_000);
   }
@@ -28,7 +31,7 @@ export class RoomManager {
 
   /** 创建房间(不绑定剧本,等房主选本) */
   createRoom(): { roomCode: string } {
-    const room = new Room(this.sendFn);
+    const room = new Room(this.sendFn, this.dmConfig);
     this.rooms.set(room.roomCode, room);
     return { roomCode: room.roomCode };
   }

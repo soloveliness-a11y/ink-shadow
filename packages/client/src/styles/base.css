@@ -2724,3 +2724,217 @@ html { scroll-behavior: smooth; }
     width: 44px; height: 44px;
   }
 }
+
+/* ============================================================
+   ConfirmDialog 通用确认弹窗
+   ============================================================ */
+
+.confirm-backdrop {
+  position: fixed; inset: 0; z-index: var(--z-overlay, 900);
+  background: rgba(0,0,0,0.55);
+  display: flex; align-items: center; justify-content: center;
+  animation: fade-in 0.15s ease;
+}
+.confirm-card {
+  background: var(--s1);
+  border: 1px solid var(--s3);
+  border-radius: var(--r-lg, 12px);
+  padding: var(--sp5, 20px);
+  max-width: 360px; width: 90%;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+.confirm-tone-danger .confirm-title { color: var(--crimson, #C45454); }
+.confirm-tone-warning .confirm-title { color: #D49B4F; }
+.confirm-title {
+  font-family: var(--fh);
+  font-size: 17px; font-weight: 700;
+  margin-bottom: var(--sp2, 8px);
+}
+.confirm-message {
+  font-size: 14px; color: var(--ts);
+  line-height: 1.5;
+  margin-bottom: var(--sp4, 16px);
+}
+.confirm-actions {
+  display: flex; gap: var(--sp2, 8px);
+  justify-content: flex-end;
+}
+.btn-danger {
+  background: var(--crimson, #C45454) !important;
+  color: #fff !important;
+  border-color: var(--crimson, #C45454) !important;
+}
+.btn-danger:hover { filter: brightness(1.1); }
+
+/* ============================================================
+   Chat new-messages pill
+   ============================================================ */
+
+.chat-new-msg-pill {
+  position: sticky; bottom: 8px; left: 50%; transform: translateX(-50%);
+  background: var(--accent, #C8A66A); color: var(--s0);
+  border: none; border-radius: 20px;
+  padding: 4px 14px; font-size: 12px; font-weight: 600;
+  cursor: pointer; z-index: 2;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  animation: fade-in 0.2s ease;
+}
+.chat-new-msg-pill:hover { filter: brightness(1.15); }
+
+/* ============================================================
+   Floating sticky timer
+   ============================================================ */
+
+.timer-sticky-pill {
+  position: fixed; top: 72px; right: 24px; z-index: var(--z-header, 100);
+  animation: fade-in 0.2s ease;
+  pointer-events: none;
+}
+
+/* ============================================================
+   Theory Tab (推理提交)
+   ============================================================ */
+
+.theory-composer { padding: var(--sp3); }
+.theory-composer-head {
+  margin-bottom: var(--sp3);
+}
+.theory-composer-head p {
+  font-size: 13px; color: var(--ts);
+  margin-top: var(--sp1);
+}
+.theory-textarea {
+  min-height: 160px; resize: vertical;
+  line-height: 1.6;
+}
+.theory-composer-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: var(--sp2);
+}
+.theory-submitted {
+  padding: var(--sp4);
+  text-align: center;
+}
+.theory-submitted-head {
+  display: flex; align-items: center; gap: var(--sp2);
+  justify-content: center; margin-bottom: var(--sp3);
+}
+.theory-submitted-hint {
+  font-size: 13px; color: var(--ts);
+}
+.theory-submitted-text {
+  background: var(--s2);
+  border-radius: var(--r-md, 8px);
+  padding: var(--sp3);
+  text-align: left; line-height: 1.6;
+  font-size: 14px; color: var(--tp);
+}
+.ev-theory { background: var(--accent-m); color: var(--accent); }
+
+/* Reveal: theory cards */
+.reveal-theories { margin-top: var(--sp4); }
+.reveal-theory-card {
+  background: var(--s2);
+  border-radius: var(--r-md, 8px);
+  padding: var(--sp3);
+  margin-bottom: var(--sp2);
+}
+.reveal-theory-author {
+  font-weight: 700; color: var(--accent);
+  margin-bottom: var(--sp1);
+  font-size: 14px;
+}
+.reveal-theory-text {
+  font-size: 14px; line-height: 1.6;
+  color: var(--tp);
+}
+
+/* ============================================================
+   AI DM Narrative Panel (说书人旁白)
+   ============================================================ */
+
+.dm-narrative-panel {
+  position: fixed; bottom: 24px; right: 24px; z-index: var(--z-header, 100);
+  max-width: 340px;
+  animation: dm-slide-in 0.3s ease;
+}
+.dm-narrative-panel.collapsed {
+  max-width: auto;
+}
+.dm-narrative-toggle {
+  background: rgba(20, 18, 15, 0.9);
+  border: 1px solid var(--s3);
+  border-radius: 50%;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; position: relative;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  transition: transform 0.15s;
+}
+.dm-narrative-toggle:hover { transform: scale(1.08); }
+.dm-narrative-icon { font-size: 20px; }
+.dm-narrative-badge {
+  position: absolute; top: 4px; right: 4px;
+  width: 8px; height: 8px;
+  background: var(--accent, #C8A66A);
+  border-radius: 50%;
+}
+.dm-narrative-body {
+  background: rgba(20, 18, 15, 0.92);
+  border: 1px solid var(--s3);
+  border-radius: var(--r-lg, 12px);
+  padding: var(--sp3, 12px);
+  margin-bottom: var(--sp2, 8px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+}
+.dm-narrative-label {
+  font-size: 12px; font-weight: 600;
+  color: var(--accent, #C8A66A);
+  margin-bottom: var(--sp1, 4px);
+  letter-spacing: 1px;
+}
+.dm-narrative-text {
+  font-family: "FangSong", "STFangsong", serif;
+  font-size: 14px; line-height: 1.7;
+  color: var(--tp);
+  min-height: 1.7em;
+}
+.dm-narrative-caret {
+  color: var(--accent, #C8A66A);
+  animation: blink 1s step-end infinite;
+}
+.dm-narrative-skip {
+  margin-top: var(--sp1, 4px);
+  color: var(--ts);
+}
+.dm-narrative-history {
+  margin-top: var(--sp2, 8px);
+  border-top: 1px solid var(--s3);
+  padding-top: var(--sp2, 8px);
+}
+.dm-narrative-history summary {
+  font-size: 11px; color: var(--ts);
+  cursor: pointer;
+}
+.dm-narrative-history-item {
+  font-family: "FangSong", "STFangsong", serif;
+  font-size: 13px; color: var(--tm);
+  line-height: 1.5;
+  margin-top: var(--sp1, 4px);
+  padding: var(--sp1, 4px) 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+@keyframes dm-slide-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* DM narrative mobile */
+@media (max-width: 768px) {
+  .dm-narrative-panel {
+    right: 12px; bottom: 80px;
+    max-width: calc(100vw - 24px);
+  }
+}

@@ -8,11 +8,24 @@ import { resolveDir, safeResolve } from './static.js';
 import type { ClientIntent, ServerMessage } from '@mmg/schema';
 import { zClientIntent, PROTOCOL_VERSION } from '@mmg/schema';
 import type { LoadedScript } from './loader.js';
+import type { DmConfig } from './dm/DmService.js';
 
 const PORT = Number(process.env.PORT ?? 8080);
 // 支持绝对路径(部署友好)或相对 server 源码位置(P1-4)
 const SCRIPT_DIR = resolveDir(process.env.SCRIPT_DIR ?? '../../../content', import.meta.url);
 const CLIENT_DIR = resolveDir(process.env.CLIENT_DIR ?? '../../client/dist', import.meta.url);
+
+// AI DM 配置（可选，不配则不启用）
+const DM_CONFIG: DmConfig | null = process.env.DM_API_KEY
+  ? {
+      provider: (process.env.DM_PROVIDER as 'anthropic' | 'openai') ?? 'anthropic',
+      apiKey: process.env.DM_API_KEY,
+      apiUrl: process.env.DM_API_URL,
+      model: process.env.DM_MODEL ?? 'claude-haiku-4-5',
+    }
+  : null;
+if (DM_CONFIG) console.log(`  AI DM: ${DM_CONFIG.provider}/${DM_CONFIG.model}`);
+else console.log('  AI DM: off (no DM_API_KEY)');
 
 const MIME: Record<string, string> = {
   '.html': 'text/html; charset=utf-8',
@@ -163,7 +176,7 @@ export function startServer(): void {
     }
     if (session?.ws.readyState === WebSocket.OPEN) session.ws.send(JSON.stringify(msg));
   };
-  const manager = new RoomManager(sendFn);
+  const manager = new RoomManager(sendFn, DM_CONFIG);
   for (const { script } of scripts) manager.registerScript(script);
   const scriptMetas = manager.listScriptMetas();
 

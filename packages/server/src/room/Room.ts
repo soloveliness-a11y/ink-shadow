@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 import type { Script, ScriptMeta, RuntimeState, ClientIntent, ServerMessage } from '@mmg/schema';
 import { PhaseEngine, type Broadcaster } from '../engine/PhaseEngine.js';
 import { buildView } from '../view.js';
+import { DmService, type DmConfig } from '../dm/DmService.js';
 
 type SendFn = (playerId: string, msg: ServerMessage) => void;
 
@@ -24,11 +25,13 @@ export class Room {
   private stateSnapshots: RuntimeState[] = [];
   private phaseHistory: string[] = [];
   private kickedTokens = new Set<string>();
+  private dmService: DmService;
   private static MAX_LOG = 500;
 
-  constructor(sendFn: SendFn) {
+  constructor(sendFn: SendFn, dmConfig: DmConfig | null = null) {
     this.roomCode = generateRoomCode();
     this.sendFn = sendFn;
+    this.dmService = new DmService(dmConfig);
 
     this.state = {
       roomCode: this.roomCode,
@@ -40,6 +43,7 @@ export class Room {
       revealedClues: [],
       acquiredClues: {},
       votes: {},
+      theories: {},
       flags: {},
       log: [],
     };
@@ -422,12 +426,47 @@ export class Room {
         }
         // status 变 finished 后广播最终状态
         if (evt.type === 'flow_end') this.broadcastState();
+        // AI DM: 异步生成旁白（不阻塞游戏流程）
+        this.triggerDm(evt);
       },
       sendToChar: (charId, msg) => {
         const p = this.state.players.find((x) => x.charId === charId);
         if (p?.connected) this.sendToPlayer(p.playerId, msg as ServerMessage);
       },
     };
+  }
+
+  /** 异步触发 AI DM 旁白（不阻塞游戏流程） */
+  private triggerDm(evt: Omit<import('@mmg/schema').GameEvent, 'ts'>): void {
+    if (!this.dmService.isEnabled || !this.script) return;
+
+    const payload = (evt.payload ?? {}) as Record<string, string>;
+    // 补充角色名
+    if (evt.actorCharId) {
+      const ch = this.script.characters.find(c => c.id === evt.actorCharId);
+      if (ch) payload.actorName = ch.name;
+    }
+
+    const ctx = {
+      phaseTitle: this.script.phases.find(p => p.id === this.state.currentPhaseId)?.title ?? '',
+      phaseKind: this.script.phases.find(p => p.id === this.state.currentPhaseId)?.kind ?? '',
+      publicClueTitles: this.state.revealedClues
+        .map(id => this.script!.clues.find(c => c.id === id)?.title)
+        .filter(Boolean) as string[],
+      scriptTitle: this.script.meta.title,
+      characterNames: this.script.characters.filter(c => !c.isVictim).map(c => c.name),
+    };
+
+    // fire-and-forget: 不 await，LLM 返回后才推送
+    this.dmService.onEvent(evt.type, payload, ctx).then((result) => {
+      if (!result) return;
+      // 广播 DM 旁白给所有在线玩家
+      for (const p of this.state.players) {
+        if (p.connected) {
+          this.sendToPlayer(p.playerId, { kind: 'dmNarrative', text: result.text, charId: result.charId });
+        }
+      }
+    }).catch(() => { /* 静默放弃 */ });
   }
 
   private viewExtra() {
@@ -577,6 +616,15 @@ export class Room {
       if (allBotsIdle || available.length === 0) {
         this.engine.forceAdvance();
       }
+    } else if (allowed.has('submitTheory')) {
+      // Bot 自动提交推理
+      for (const p of this.state.players) {
+        if (!p.charId || !this.botIds.includes(p.playerId)) continue;
+        if (this.state.theories[p.charId]) continue;
+        this.engine.handleAction(p.charId, { kind: 'submitTheory', text: '根据目前掌握的线索,我认为凶手另有其人。' });
+      }
+      // 全部提交后推进
+      this.engine.forceAdvance();
     } else if (phase.exit.kind === 'hostAdvance' || phase.exit.kind === 'timer') {
       // hostAdvance/timer 阶段自动推进(blockAdvance 模式下转为 pending)
       this.engine.forceAdvance();

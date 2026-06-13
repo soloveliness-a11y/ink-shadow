@@ -140,6 +140,22 @@ function RevealRecap() {
           })}
         </div>
       )}
+
+      {/* 玩家推理 */}
+      {view.ending?.theories && Object.keys(view.ending.theories).length > 0 && (
+        <div className="reveal-theories">
+          <div className="section-label reveal-truth-label">玩家推理</div>
+          {Object.entries(view.ending.theories).map(([charId, theory]) => {
+            const charName = view.publicCharacters.find(c => c.id === charId)?.name ?? charId;
+            return (
+              <div key={charId} className="reveal-theory-card">
+                <div className="reveal-theory-author">{charName}</div>
+                <p className="reveal-theory-text">{theory}</p>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

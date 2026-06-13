@@ -1,5 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useGameStore } from '../store/game.js';
+import { ConfirmDialog } from './ConfirmDialog.js';
+import { playTick, playWarning } from '../audio/timerAudio.js';
 
 export function PhaseStatus() {
   const view = useGameStore((s) => s.view);
@@ -8,12 +10,41 @@ export function PhaseStatus() {
   const phase = view?.currentPhase;
   const progress = view?.phaseProgress;
   const [now, setNow] = useState(Date.now());
+  const [advanceConfirm, setAdvanceConfirm] = useState(false);
 
   useEffect(() => {
     if (!phase?.deadline) return;
     const handle = window.setInterval(() => setNow(Date.now()), 1000);
     return () => window.clearInterval(handle);
   }, [phase?.deadline]);
+
+  // Audio warnings for timer countdown
+  const warnedRef = useRef(false);
+  const lastTickSecRef = useRef(-1);
+  useEffect(() => {
+    if (!phase?.deadline) return;
+    const remaining = phase.deadline - now;
+    if (remaining <= 0) return;
+    // 30s warning (fire once)
+    if (remaining <= 30_000 && remaining > 29_000 && !warnedRef.current) {
+      warnedRef.current = true;
+      playWarning();
+    }
+    // Last 10s: tick every second
+    if (remaining <= 10_000) {
+      const sec = Math.ceil(remaining / 1000);
+      if (sec !== lastTickSecRef.current && sec > 0) {
+        lastTickSecRef.current = sec;
+        playTick();
+      }
+    }
+  }, [now, phase?.deadline]);
+
+  // Reset audio refs when phase changes
+  useEffect(() => {
+    warnedRef.current = false;
+    lastTickSecRef.current = -1;
+  }, [phase?.id]);
 
   const pendingNames = useMemo(() => {
     if (!progress || !['allReady', 'allActed', 'voteComplete'].includes(progress.exitKind)) return [];
@@ -91,10 +122,39 @@ export function PhaseStatus() {
         <div className="phase-host-control">
           <span>{isHost ? '本环节由房主判断讨论结束后推进。' : '本环节结束后由房主推进。'}</span>
           {isHost && (
-            <button onClick={() => send({ kind: 'hostAdvance' })} className="btn btn-secondary btn-sm">
-              推进下一阶段
-            </button>
+            <>
+              <button onClick={() => setAdvanceConfirm(true)} className="btn btn-secondary btn-sm">
+                推进下一阶段
+              </button>
+              <ConfirmDialog
+                open={advanceConfirm}
+                title="确认推进"
+                message="确定结束当前环节？所有玩家将进入下一阶段。"
+                confirmLabel="推进"
+                cancelLabel="取消"
+                onConfirm={() => { send({ kind: 'hostAdvance' }); setAdvanceConfirm(false); }}
+                onCancel={() => setAdvanceConfirm(false)}
+              />
+            </>
           )}
+        </div>
+      )}
+      {/* 房主可强制推进计时环节 */}
+      {progress.exitKind === 'timer' && isHost && (
+        <div className="phase-host-control">
+          <span>计时进行中，房主可提前结束。</span>
+          <button onClick={() => setAdvanceConfirm(true)} className="btn btn-secondary btn-sm">
+            提前结束计时
+          </button>
+          <ConfirmDialog
+            open={advanceConfirm}
+            title="提前结束计时"
+            message="确定跳过剩余时间并推进到下一阶段？"
+            confirmLabel="跳过"
+            cancelLabel="取消"
+            onConfirm={() => { send({ kind: 'hostAdvance' }); setAdvanceConfirm(false); }}
+            onCancel={() => setAdvanceConfirm(false)}
+          />
         </div>
       )}
       {view?.pendingAdvance && (
