@@ -39,23 +39,66 @@ export class ImageClient {
     const prompt = this.buildPrompt(spec, styleGuide);
     console.log(`  Prompt: ${prompt.slice(0, 80)}...`);
 
-    // Stream 优先: 保持连接活跃,避免 Cloudflare 120s 超时
-    try {
-      const buf = await this.tryStream(prompt);
-      if (buf) return buf;
-    } catch (e) {
-      console.warn(`  stream mode failed: ${e instanceof Error ? e.message : String(e)}`);
+    // 智能 fallback: stream 和 JSON 交替尝试，连续失败超限则停止
+    const MAX_RETRIES_PER_MODE = 2;
+    const MAX_TOTAL_FAILURES = 4;
+    let streamFails = 0;
+    let jsonFails = 0;
+    let totalFails = 0;
+
+    while (totalFails < MAX_TOTAL_FAILURES) {
+      // 优先 stream（避免 Cloudflare 524 超时）
+      if (streamFails < MAX_RETRIES_PER_MODE) {
+        try {
+          const buf = await this.tryStream(prompt);
+          if (buf) return buf;
+          streamFails++;
+          totalFails++;
+          console.warn(`  stream: no image in response (attempt ${streamFails}/${MAX_RETRIES_PER_MODE})`);
+        } catch (e) {
+          streamFails++;
+          totalFails++;
+          const msg = e instanceof Error ? e.message : String(e);
+          console.warn(`  stream failed: ${msg.slice(0, 120)}`);
+          // 524/401/502 等明确错误，切换到 JSON 模式
+          if (/\b(524|401|502|429)\b/.test(msg)) {
+            console.log(`  → switching to JSON mode`);
+            streamFails = MAX_RETRIES_PER_MODE; // 停止 stream 重试
+          }
+        }
+      }
+
+      // JSON 模式回退
+      if (jsonFails < MAX_RETRIES_PER_MODE && streamFails >= MAX_RETRIES_PER_MODE) {
+        try {
+          const buf = await this.tryJson(prompt);
+          if (buf) return buf;
+          jsonFails++;
+          totalFails++;
+          console.warn(`  json: no image in response (attempt ${jsonFails}/${MAX_RETRIES_PER_MODE})`);
+        } catch (e) {
+          jsonFails++;
+          totalFails++;
+          const msg = e instanceof Error ? e.message : String(e);
+          console.warn(`  json failed: ${msg.slice(0, 120)}`);
+          // JSON 也失败了，如果 stream 还有次数就回去试
+          if (streamFails < MAX_RETRIES_PER_MODE) {
+            console.log(`  → switching back to stream mode`);
+          }
+        }
+      }
+
+      // 两种模式都用完次数了
+      if (streamFails >= MAX_RETRIES_PER_MODE && jsonFails >= MAX_RETRIES_PER_MODE) {
+        break;
+      }
     }
 
-    // JSON 模式(备选)
-    try {
-      const buf = await this.tryJson(prompt);
-      if (buf) return buf;
-    } catch (e) {
-      console.warn(`  JSON mode failed: ${e instanceof Error ? e.message : String(e)}`);
-    }
-
-    throw new Error('No base64 image found in API response');
+    throw new Error(
+      `Image generation failed after ${totalFails} attempts ` +
+      `(stream: ${streamFails}, json: ${jsonFails}). ` +
+      `API may be down or rate limited. Use --resume to retry later.`
+    );
   }
 
   /** SSE streaming 模式(推荐:避免 Cloudflare 120s 超时) */

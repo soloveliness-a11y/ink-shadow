@@ -166,6 +166,8 @@ export class VisualRunner {
     // 顺序执行(并发会触发风控),每张之间等待
     const results: { task: VisualTask; status: 'done' | 'failed' | 'skipped' }[] = [];
     let lastGenTime = 0;
+    let consecutiveFails = 0;
+    const MAX_CONSECUTIVE_FAILS = 3; // 连续失败超限则停止，等用户决策
 
     for (let i = 0; i < tasks.length; i++) {
       const task = tasks[i]!;
@@ -182,6 +184,18 @@ export class VisualRunner {
         }
       }
 
+      // 连续失败超限 → 停止，等用户决策
+      if (consecutiveFails >= MAX_CONSECUTIVE_FAILS) {
+        console.error(`\n⛔ 连续 ${consecutiveFails} 张图失败，停止出图。`);
+        console.error(`   已完成 ${results.filter(r => r.status === 'done').length} 张，剩余 ${tasks.length - i} 张待处理。`);
+        console.error(`   API 可能不稳定，请稍后用 --resume 重试。`);
+        // 标记剩余为跳过（不继续浪费重试次数）
+        for (let j = i; j < tasks.length; j++) {
+          results.push({ task: tasks[j]!, status: 'skipped' });
+        }
+        break;
+      }
+
       // 速率限制: 确保距离上一次生图 >= minIntervalMs
       const elapsed = Date.now() - lastGenTime;
       if (lastGenTime > 0 && elapsed < this.minIntervalMs) {
@@ -192,7 +206,12 @@ export class VisualRunner {
 
       const result = await this.executeTask(task, styleGuide, assetsDir, progress, progressPath);
       results.push({ task, status: result });
-      if (result === 'done') lastGenTime = Date.now();
+      if (result === 'done') {
+        lastGenTime = Date.now();
+        consecutiveFails = 0; // 成功则重置计数
+      } else {
+        consecutiveFails++;
+      }
 
       console.log(`[${i + 1}/${tasks.length}] ${task.id}: ${result}`);
     }

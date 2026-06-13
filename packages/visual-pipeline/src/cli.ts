@@ -22,7 +22,7 @@ Usage: mmg-visualize <scriptPath|dir> [options]
 Options:
   --api-url <url>      Image API base URL (default: https://5yuantoken.org/v1)
   --api-key <key>      API key (or set MMG_API_KEY env)
-  --model <name>       Image model: gpt-image-2 | stub (default: gpt-image-2)
+  --model <name>       Image model: gpt-5.5 | stub (default: gpt-5.5)
   --resume             Skip already-done tasks
   --dir                强制以多文件目录模式入参(默认自动 detect)
   --dry-run            Print task list without generating
@@ -65,8 +65,21 @@ function parseArgs(): CliOpts | null {
   }
 
   const apiKey = params['api-key'] || process.env.MMG_API_KEY || '';
-  const model = params.model || process.env.MMG_MODEL || 'gpt-image-2';
+  const model = params.model || process.env.MMG_MODEL || 'gpt-5.5';
   const isStatus = params.status === 'true';
+
+  // 模型名校验
+  const VALID_MODELS = ['gpt-5.5', 'gpt-image-2', 'stub'];
+  if (!VALID_MODELS.includes(model)) {
+    console.error(`Error: Invalid model "${model}". Must be one of: ${VALID_MODELS.join(', ')}`);
+    console.error('  gpt-5.5    — 推荐，稳定出图');
+    console.error('  gpt-image-2 — 间歇性 502，不推荐');
+    console.error('  stub       — 占位图，测试用');
+    process.exit(1);
+  }
+  if (model === 'gpt-image-2') {
+    console.warn('⚠️  gpt-image-2 间歇性 502，推荐使用 gpt-5.5');
+  }
 
   // --status / --dry-run 是只读,不强制要 key
   if (model !== 'stub' && !apiKey && !isStatus) {

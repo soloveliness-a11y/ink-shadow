@@ -163,6 +163,9 @@ npx tsx packages/visual-pipeline/src/cli.ts content/_mock/script.json --status
 ## 输出验证
 
 ```bash
+# 快速验证:检查模型名是否正确
+grep MMG_MODEL .env  # 应该是 gpt-5.5，不是 gpt-image-2
+
 # 推荐:一条命令看全(文件/asset/progress/指纹/action)
 npx tsx packages/visual-pipeline/src/cli.ts content/_mock/script.json --status
 
