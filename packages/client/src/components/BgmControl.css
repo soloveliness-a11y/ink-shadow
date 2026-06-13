@@ -79,3 +79,5 @@
     height: 26px;
   }
 }
+
+/* 移动端 BGM 在 768px 以下由 base.css 的 mobile polish 区重定位 */

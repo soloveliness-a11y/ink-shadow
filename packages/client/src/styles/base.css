@@ -3008,3 +3008,92 @@ html { scroll-behavior: smooth; }
   0%, 100% { opacity: 0.4; }
   50% { opacity: 1; }
 }
+
+/* ============================================================
+   Mobile Polish: overscroll + safe-area + floating reposition
+   ============================================================ */
+
+/* Fix 6: 防止游戏过程中误触下拉刷新 */
+html { overscroll-behavior: none; }
+
+@media (max-width: 768px) {
+  /* ── Fix 1: 浮动元素重定位 ── */
+
+  /* BGM: 移到底部抽屉上方左侧 */
+  .bgm-panel {
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px) + 8px) !important;
+    left: 12px;
+  }
+
+  /* 剧本书 trigger: 移到底部抽屉上方右侧 */
+  .scriptbook-trigger {
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px) + 8px);
+    right: 16px;
+    width: 40px; height: 40px;
+  }
+
+  /* DM 旁白: 移到 BGM + 剧本书之上 */
+  .dm-narrative-panel {
+    right: 12px;
+    bottom: calc(72px + 56px + env(safe-area-inset-bottom, 0px));
+    max-width: calc(100vw - 24px);
+  }
+
+  /* 计时器 pill: header 改 auto 高度后，改用 top: 60px */
+  .timer-sticky-pill {
+    top: 60px;
+    right: 12px;
+  }
+
+  /* ── Fix 4: Safe Area ── */
+
+  /* 底部抽屉加 safe-area padding */
+  .sidebar.suspect-board {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* app-body 底部留白包含 safe-area */
+  .app-body {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* ── Fix 5: Briefing 文字换行 ── */
+  .briefing-profile {
+    white-space: normal !important;
+  }
+
+  /* ── Fix 2: 触控目标优化 (≥ 44px) ── */
+  .lobby-kick {
+    min-width: 36px; min-height: 36px;
+    padding: 6px 10px !important;
+  }
+  .turn-chip {
+    padding: 8px 16px !important;
+  }
+  .header-pill {
+    height: 32px !important;
+  }
+  .board-card-toggle {
+    padding: 8px 12px !important;
+    min-height: 36px;
+  }
+  .dm-settings-eye {
+    width: 36px; height: 36px;
+    font-size: 18px;
+  }
+
+  /* ── Fix 3: 聊天/私信高度适配 ── */
+  .chat-thread {
+    min-height: 120px;
+    max-height: 40vh;
+  }
+  .pm-thread {
+    min-height: 100px;
+    max-height: 30vh;
+  }
+
+  /* error banner: header 改 auto 后适配 */
+  .error-banner {
+    top: 56px;
+  }
+}
