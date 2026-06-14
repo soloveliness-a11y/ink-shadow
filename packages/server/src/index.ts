@@ -184,7 +184,7 @@ export async function startServer(): Promise<void> {
   // 3. HTTP server (static + WS upgrade)
   const server = createServer(serveStatic);
 
-  const wss = new WebSocketServer({ noServer: true });
+  const wss = new WebSocketServer({ noServer: true, perMessageDeflate: true });
   const sessions = new Map<WebSocket, Session>();
 
   server.on('upgrade', (req, socket, head) => {
