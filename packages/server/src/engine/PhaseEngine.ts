@@ -196,6 +196,8 @@ export class PhaseEngine {
       actedCharIds: [],
       searchCount: phase.maxSearches ? {} : undefined,
       currentTime: phase.clock?.startTime,
+      round: phase.maxRounds ? 0 : undefined,
+      searchedThisRound: phase.maxRounds ? [] : undefined,
     };
   }
 
@@ -287,6 +289,10 @@ export class PhaseEngine {
           const count = rt.searchCount?.[charId] ?? 0;
           if (count >= phase.maxSearches) return reject('search_limit_reached');
         }
+        // ★ 轮次搜查:每轮每人 1 次(避免一窝蜂)
+        if (phase?.maxRounds && this.state.phaseRuntime.searchedThisRound?.includes(charId)) {
+          return reject('already_searched_this_round');
+        }
         break;
       }
       case 'revealClue': {
@@ -362,6 +368,17 @@ export class PhaseEngine {
         }
         this.bus.event({ type: 'search_clue', actorCharId: charId, payload: { clueId: intent.clueId, clueTitle: clue?.title } });
         this.advanceClock();
+        // ★ 轮次搜查:记录本轮已搜,全员搜完→下一轮
+        const phase = this.current();
+        if (phase?.maxRounds && rt.searchedThisRound) {
+          rt.searchedThisRound.push(charId);
+          const activeCount = this.state.players.filter((p) => p.connected && p.charId).length;
+          if (rt.searchedThisRound.length >= activeCount) {
+            rt.round = (rt.round ?? 0) + 1;
+            rt.searchedThisRound = [];
+            this.bus.event({ type: 'round_advanced', payload: { round: rt.round } });
+          }
+        }
         break;
       }
       case 'revealClue': {
@@ -465,6 +482,10 @@ export class PhaseEngine {
 
     // 时钟到点(clock phase):currentTime >= endTime 即推进
     if (phase.clock && rt.currentTime && rt.currentTime >= phase.clock.endTime) {
+      return true;
+    }
+    // 轮次搜查到上限(maxRounds phase):round >= maxRounds 即推进
+    if (phase.maxRounds && (rt.round ?? 0) >= phase.maxRounds) {
       return true;
     }
 

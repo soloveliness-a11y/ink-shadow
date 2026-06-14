@@ -47,6 +47,9 @@ const MAP: Record<string, string> = {
   // 决胜轮
   target_restricted: '该角色不在本轮投票范围内',
 
+  // 轮次搜查(每轮每人 1 次)
+  already_searched_this_round: '你本轮已搜查,等其他人搜完进入下一轮',
+
   // 踢人
   kicked: '你已被房主移出房间',
   kick_not_allowed: '仅可在大厅阶段踢人',

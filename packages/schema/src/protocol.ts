@@ -134,6 +134,7 @@ export const zClientStateView = z.object({
         keyword: z.string(),
         text: z.string(),
       })).default([]), // 关键词触发解锁的记忆片段(豪门本"回忆")
+      searchedThisRound: z.boolean().optional(), // 本轮是否已搜查(maxRounds 轮流搜查)
     })
     .optional(),
   currentPhase: z
@@ -158,6 +159,8 @@ export const zClientStateView = z.object({
       }).optional(), // 抉择点(裁掉 effects,不下发后果)
       currentTime: z.string().optional(), // 时钟当前时间(clock phase)
       clockEnd: z.string().optional(), // 时钟结束时间
+      round: z.number().int().optional(), // 当前搜查轮次
+      maxRounds: z.number().int().optional(), // 搜查总轮次
     })
     .optional(),
   phaseProgress: z

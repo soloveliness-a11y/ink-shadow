@@ -68,6 +68,7 @@ export const zPhase = z.object({
     stepMin: z.number().int().positive().default(5),
     endTime: z.string(),
   }).optional(), // 时钟指示物(调查阶段前进式时间,如 21:05→22:15)
+  maxRounds: z.number().int().positive().optional(), // 轮次搜查上限(每轮每人 1 次,共 N 轮,如丹水 8 轮;强制轮流避免一窝蜂)
 });
 export type Phase = z.infer<typeof zPhase>;
 

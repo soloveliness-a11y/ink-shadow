@@ -93,6 +93,9 @@ export function PhaseStatus() {
           {phase.currentTime && (
             <span className="status-pill">🕐 {phase.currentTime}{phase.clockEnd ? ` / ${phase.clockEnd}` : ''}</span>
           )}
+          {phase.maxRounds != null && (
+            <span className="status-pill">🔍 第 {(phase.round ?? 0) + 1}/{phase.maxRounds} 轮</span>
+          )}
           {remaining !== null && (() => {
             const cls = isCritical ? ' status-pill-critical' : isUrgent ? ' status-pill-urgent' : '';
             const label = (isUrgent ? '⚠ ' : '') + formatDuration(remaining);

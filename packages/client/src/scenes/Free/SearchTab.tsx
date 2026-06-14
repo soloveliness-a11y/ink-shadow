@@ -107,7 +107,7 @@ export function SearchTab({ view, myCharId, scriptId, canSearch, send, onLightbo
             key={cl.id}
             title={cl.title}
             onSearch={() => doSearchClue(cl.id, cl.title)}
-            canSearch={canSearch}
+            canSearch={canSearch && !view.self?.searchedThisRound}
             cooldown={searchCooldown}
           />
         ))}
@@ -119,7 +119,7 @@ export function SearchTab({ view, myCharId, scriptId, canSearch, send, onLightbo
                 key={cl.id}
                 title={cl.title}
                 onSearch={() => doSearchClue(cl.id, cl.title)}
-                canSearch={canSearch}
+                canSearch={canSearch && !view.self?.searchedThisRound}
                 cooldown={searchCooldown}
               />
             ))}

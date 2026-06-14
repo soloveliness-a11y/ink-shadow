@@ -205,6 +205,8 @@ function buildPhaseView(script: Script, state: RuntimeState, charId: string | un
     choice: phase.choice ? { id: phase.choice.id, prompt: phase.choice.prompt, options: phase.choice.options.map((o) => ({ id: o.id, label: o.label })) } : undefined,
     currentTime: state.phaseRuntime.currentTime,
     clockEnd: phase.clock?.endTime,
+    round: state.phaseRuntime.round,
+    maxRounds: phase.maxRounds,
   };
 }
 
@@ -283,6 +285,7 @@ function buildSelfView(script: Script, state: RuntimeState, charId: string): Non
     unlockedKeywordMemories: (ch.keywordMemories ?? [])
       .filter((km) => state.flags[`kwmem:${charId}:${km.id}`])
       .map((km) => ({ id: km.id, keyword: km.keyword, text: km.text })),
+    searchedThisRound: state.phaseRuntime.searchedThisRound?.includes(charId) ?? false,
   };
 }
 
