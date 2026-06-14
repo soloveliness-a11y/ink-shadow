@@ -2,6 +2,12 @@ import { useState } from 'react';
 import { useGameStore } from '../store/game.js';
 import { assetUrl } from '../lib/asset.js';
 
+/** 阵营标识 → 中文标签(阵营本侧栏分组用) */
+function factionLabel(faction: string): string {
+  const map: Record<string, string> = { red: '红方阵营', blue: '蓝方阵营', neutral: '中立' };
+  return map[faction] ?? `${faction} 阵营`;
+}
+
 function getNotes(scriptId: string, playerId: string, charId: string): string {
   try { return localStorage.getItem(`notes:${scriptId}:${playerId}:${charId}`) ?? ''; }
   catch { return ''; }
@@ -22,9 +28,26 @@ export function CharacterSidebar() {
   const pendingAdvance = view?.pendingAdvance;
 
   const chars = view?.publicCharacters ?? [];
-  const players = chars.filter(c => !c.isVictim);
-  const npcs = chars.filter(c => c.isVictim);
+  const genre = view?.selectedScript?.genre ?? 'murder';
   const scriptId = view?.selectedScript?.id ?? '';
+  const boardTitle = genre === 'faction' ? '阵营画像板' : '嫌疑人画像板';
+  const totalCount = chars.length;
+  // 分组:murder=嫌疑/死者二分;faction=按阵营;其他=全部一组
+  const groups: { label: string; chars: typeof chars }[] = [];
+  if (genre === 'faction') {
+    const fmap = new Map<string, typeof chars>();
+    for (const c of chars) {
+      const f = c.faction ?? 'neutral';
+      if (!fmap.has(f)) fmap.set(f, []);
+      fmap.get(f)!.push(c);
+    }
+    for (const [f, cs] of fmap) groups.push({ label: factionLabel(f), chars: cs });
+  } else {
+    const players = chars.filter(c => !c.isVictim);
+    const npcs = chars.filter(c => c.isVictim);
+    if (players.length) groups.push({ label: '', chars: players });
+    if (npcs.length) groups.push({ label: 'NPC · 与本案相关', chars: npcs });
+  }
 
   const startEdit = (charId: string) => {
     setEditingId(charId);
@@ -42,48 +65,35 @@ export function CharacterSidebar() {
         onClick={() => setBoardOpen(!boardOpen)}
         aria-expanded={boardOpen}
       >
-        <span>嫌疑人画像板</span>
-        <strong>{players.length + npcs.length}</strong>
+        <span>{boardTitle}</span>
+        <strong>{totalCount}</strong>
       </button>
 
       <div className="board-header">
-        <span className="section-label">嫌疑人画像板</span>
-        <span className="board-count">{players.length + npcs.length}</span>
+        <span className="section-label">{boardTitle}</span>
+        <span className="board-count">{totalCount}</span>
       </div>
 
       <div className="board-list">
-        {players.map(c => {
-          const note = getNotes(scriptId, playerId ?? '', c.id);
-          const owner = view?.players.find(p => p.charId === c.id);
-          return (
-            <CharacterCard
-              key={c.id} char={c} owner={owner} note={note} scriptId={scriptId}
-              expanded={expandedId === c.id}
-              isEditing={editingId === c.id} noteText={noteText}
-              onToggle={() => setExpandedId(expandedId === c.id ? null : c.id)}
-              onEdit={() => startEdit(c.id)} onSave={() => saveNote(c.id)}
-              onCancel={() => setEditingId(null)} onTextChange={setNoteText}
-            />
-          );
-        })}
-        {npcs.length > 0 && (
-          <>
-            <div className="board-section-divider">NPC · 与本案相关</div>
-            {npcs.map(c => (
-              <CharacterCard
-                key={c.id} char={c}
-                owner={undefined}
-                note={getNotes(scriptId, playerId ?? '', c.id)}
-                scriptId={scriptId}
-                expanded={expandedId === c.id}
-                isEditing={editingId === c.id} noteText={noteText}
-                onToggle={() => setExpandedId(expandedId === c.id ? null : c.id)}
-                onEdit={() => startEdit(c.id)} onSave={() => saveNote(c.id)}
-                onCancel={() => setEditingId(null)} onTextChange={setNoteText}
-              />
-            ))}
-          </>
-        )}
+        {groups.map((g, gi) => (
+          <div key={gi}>
+            {g.label && <div className="board-section-divider">{g.label}</div>}
+            {g.chars.map(c => {
+              const note = getNotes(scriptId, playerId ?? '', c.id);
+              const owner = view?.players.find(p => p.charId === c.id);
+              return (
+                <CharacterCard
+                  key={c.id} char={c} owner={owner} note={note} scriptId={scriptId}
+                  expanded={expandedId === c.id}
+                  isEditing={editingId === c.id} noteText={noteText}
+                  onToggle={() => setExpandedId(expandedId === c.id ? null : c.id)}
+                  onEdit={() => startEdit(c.id)} onSave={() => saveNote(c.id)}
+                  onCancel={() => setEditingId(null)} onTextChange={setNoteText}
+                />
+              );
+            })}
+          </div>
+        ))}
       </div>
 
       {isTestMode && (

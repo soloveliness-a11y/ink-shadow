@@ -73,7 +73,7 @@ function loadSplitFormat(metaPath: string): LoadedScript {
   const props = readArrayFile(dir, 'props.json');
   const phases = readArrayFile(dir, 'phases.json');
   const flow = readObjectFile(dir, 'flow.json');
-  const truth = readObjectFile(dir, 'truth.json');
+  const truth = readObjectFileOptional(dir, 'truth.json');
 
   const raw = { meta, characters, clues, scenes, props, phases, flow, truth };
   return validateAndReturn(raw, dir);
@@ -115,5 +115,12 @@ function readArrayFile(dir: string, filename: string): unknown[] {
 function readObjectFile(dir: string, filename: string): unknown {
   const p = join(dir, filename);
   if (!existsSync(p)) throw new Error(`缺少必需文件: ${p}`);
+  return JSON.parse(readFileSync(p, 'utf8'));
+}
+
+/** 与 readObjectFile 相同,但文件不存在时返回 undefined(truth 等可选字段用,非推理本无 truth) */
+function readObjectFileOptional(dir: string, filename: string): unknown | undefined {
+  const p = join(dir, filename);
+  if (!existsSync(p)) return undefined;
   return JSON.parse(readFileSync(p, 'utf8'));
 }

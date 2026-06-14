@@ -61,5 +61,15 @@ export function evaluateFlowCondition(cond: FlowCondition | undefined, state: Ru
     return !!state.flags[cond.flag] === cond.equals;
   }
 
+  if (cond.kind === 'teamWin') {
+    // 阵营胜利:该阵营未被淘汰,且 flag:team_<id>_won 已被设置(由 castVote voteMode='team' 过半触发)
+    const team = state.teams?.[cond.teamId];
+    if (team?.eliminated) return false;
+    return !!state.flags[`team_${cond.teamId}_won`];
+  }
+
+  // 占位(后续 genre 实现):
+  //   scoreReach(机制本): state.counters?.[cond.counter] >= cond.gte
+  //   choiceResult(情感还原本): 选择结果匹配 cond.value
   return false;
 }

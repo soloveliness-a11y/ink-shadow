@@ -47,6 +47,9 @@ export class Room {
       votes: {},
       theories: {},
       flags: {},
+      teams: {},
+      resources: {},
+      counters: {},
       log: [],
     };
   }
@@ -396,7 +399,7 @@ export class Room {
   /** 序列化当前房间为快照 */
   snapshot(): RoomSnapshot {
     return {
-      version: 1,
+      version: 2,
       state: structuredClone(this.state),
       hostId: this.hostId ?? '',
       scriptId: this.state.scriptId,

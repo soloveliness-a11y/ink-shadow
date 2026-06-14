@@ -116,6 +116,7 @@ export function buildView(
       gender: c.gender,
       publicProfile: c.publicProfile,
       isVictim: c.isVictim,
+      faction: c.faction,
       avatar: c.visual.asset?.path,
       publicTimeline: c.timeline?.filter((t) => t.isPublic).map((t) => ({
         time: t.time,
@@ -139,6 +140,8 @@ export function buildView(
     sceneImages: Object.fromEntries(script.scenes.map((s) => [s.id, s.visual.asset?.path ?? ''])),
     propImages: Object.fromEntries((script.props ?? []).map((p) => [p.id, p.visual.asset?.path ?? ''])),
     votesPublic: buildVotesPublic(state, charId, currentPhase),
+    teams: state.teams,
+    myFaction: charId ? script.characters.find((c) => c.id === charId)?.faction : undefined,
     ending: (state.status === 'finished' || (state.status === 'playing' && script.phases.find(p => p.id === state.currentPhaseId)?.kind === 'reveal'))
       ? buildEnding(script, state) : undefined,
     isTestMode: extra?.isTestMode,
@@ -197,7 +200,8 @@ function buildPhaseView(script: Script, state: RuntimeState, charId: string | un
     unlockedStoryKey: phase.unlocks?.storyKey,
     maxSearches: phase.maxSearches,
     mySearchCount: charId ? (state.phaseRuntime.searchCount?.[charId] ?? 0) : undefined,
-    restrictVoteTargets: state.phaseRuntime.resolvedVoteTargets,
+    restrictVoteTargets: state.phaseRuntime.resolvedVoteTargets ?? (Array.isArray(phase.restrictVoteTargets) ? phase.restrictVoteTargets : undefined),
+    voteMode: phase.voteMode,
   };
 }
 
@@ -280,16 +284,18 @@ function buildEnding(
   script: Script,
   state: RuntimeState,
 ): NonNullable<ClientStateView['ending']> {
+  // 通用结局:顶层 endings 优先,回退 truth.endings(推理本)
+  const endings = script.endings ?? script.truth?.endings ?? [];
   // 复用 flow 的单点判定,与 DAG 实际走向保持一致(P1-5)
-  let ending = script.truth.endings.find((en) => evaluateFlowCondition(en.condition, state));
+  let ending = endings.find((en) => evaluateFlowCondition(en.condition, state));
   // 兜底
-  if (!ending) ending = script.truth.endings.at(-1);
-  if (!ending) return { title: '结局', narrative: '', truthReveal: script.truth.reveal };
+  if (!ending) ending = endings.at(-1);
+  if (!ending) return { title: '结局', narrative: '', truthReveal: script.truth?.reveal ?? '' };
 
   return {
     title: ending.title,
     narrative: ending.narrative,
-    truthReveal: script.truth.reveal,
+    truthReveal: script.truth?.reveal ?? '',
     theories: Object.keys(state.theories).length > 0 ? state.theories : undefined,
   };
 }

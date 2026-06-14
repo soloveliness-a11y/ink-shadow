@@ -199,7 +199,7 @@ function assemble(
     reveal: truth.reveal,
     endings: truth.endings.map((e) => ({
       id: e.id, title: e.title, narrative: e.narrative,
-      condition: e.condition as Script['truth']['endings'][number]['condition'],
+      condition: e.condition as NonNullable<Script['truth']>['endings'][number]['condition'],
     })),
   };
 
@@ -223,6 +223,7 @@ function assemble(
     },
     schemaVersion: '1.0.0',
     status: 'validated',
+    genre: 'murder',
   };
 
   return {
@@ -245,7 +246,7 @@ function buildTitle(params: GenParams, characters: Character[], scenes: Scene[])
   return `${params.theme}疑案`;
 }
 
-function buildSynopsis(params: GenParams, truth: Script['truth'], characters: Character[], scenes: Scene[]): string {
+function buildSynopsis(params: GenParams, truth: NonNullable<Script['truth']>, characters: Character[], scenes: Scene[]): string {
   const victim = characters.find((c) => c.isVictim)?.name ?? '死者';
   const scene = scenes[0]?.name ?? params.theme;
   const method = truth.method.replace(/[。.!！?？]+$/u, '');
@@ -276,7 +277,7 @@ function repairMeta(script: Script): void {
   );
   script.meta.synopsis = normalizeText(script.meta.synopsis) || buildSynopsis(
     { players: script.meta.playerCount.max, theme: script.meta.theme, difficulty: script.meta.difficulty },
-    script.truth,
+    script.truth!,
     script.characters,
     script.scenes,
   );
@@ -286,11 +287,11 @@ function repairMeta(script: Script): void {
 function repairMurdererReferences(script: Script): void {
   const playable = playableCharacters(script);
   const flaggedMurderers = playable.filter((c) => c.isMurderer);
-  const truthMurderers = script.truth.murdererCharIds.filter((id) => playable.some((c) => c.id === id));
+  const truthMurderers = script.truth!.murdererCharIds.filter((id) => playable.some((c) => c.id === id));
   const murdererId = truthMurderers[0] ?? flaggedMurderers[0]?.id ?? playable[0]?.id;
   if (!murdererId) return;
 
-  script.truth.murdererCharIds = [murdererId];
+  script.truth!.murdererCharIds = [murdererId];
   for (const c of script.characters) c.isMurderer = c.id === murdererId;
 
   for (const edge of script.flow.edges) {
@@ -298,7 +299,7 @@ function repairMurdererReferences(script: Script): void {
       edge.condition.equalsCharId = murdererId;
     }
   }
-  for (const ending of script.truth.endings) {
+  for (const ending of script.truth!.endings) {
     if (ending.condition.kind === 'voteResult') {
       ending.condition.equalsCharId = murdererId;
     }
@@ -307,7 +308,7 @@ function repairMurdererReferences(script: Script): void {
 
 function repairConditions(script: Script): void {
   const playableIds = new Set(playableCharacters(script).map((c) => c.id));
-  const murdererId = script.truth.murdererCharIds.find((id) => playableIds.has(id)) ?? [...playableIds][0];
+  const murdererId = script.truth!.murdererCharIds.find((id) => playableIds.has(id)) ?? [...playableIds][0];
 
   script.flow.edges = script.flow.edges.map((edge) => {
     if (!edge.condition) return edge;
@@ -324,7 +325,7 @@ function repairConditions(script: Script): void {
     return { ...edge, condition: { kind: 'always' } };
   });
 
-  script.truth.endings = script.truth.endings.map((ending, index) => {
+  script.truth!.endings = script.truth!.endings.map((ending, index) => {
     if (ending.condition.kind === 'always') return ending;
     if (ending.condition.kind === 'voteResult') {
       return {
@@ -425,7 +426,7 @@ function repairPhaseFlow(script: Script): void {
   if (!vote || reveals.length === 0) return;
 
   const existingVoteTargets = new Set(script.flow.edges.filter((e) => e.from === vote.id).map((e) => e.to));
-  const murdererId = script.truth.murdererCharIds[0] ?? playableCharacters(script)[0]?.id;
+  const murdererId = script.truth!.murdererCharIds[0] ?? playableCharacters(script)[0]?.id;
   const [goodReveal, badReveal = goodReveal] = reveals;
   if (goodReveal && !existingVoteTargets.has(goodReveal.id) && murdererId) {
     script.flow.edges.push({ from: vote.id, to: goodReveal.id, condition: { kind: 'voteResult', equalsCharId: murdererId } });
@@ -563,7 +564,7 @@ function repairSolutionChain(script: Script): void {
   const resolved: string[] = [];
   const keyClues = script.clues.filter((c) => c.isKey);
 
-  for (const ref of script.truth.solutionChain) {
+  for (const ref of script.truth!.solutionChain) {
     if (clueIds.has(ref)) {
       resolved.push(ref);
       continue;
@@ -576,7 +577,7 @@ function repairSolutionChain(script: Script): void {
     if (!resolved.includes(clue.id)) resolved.push(clue.id);
   }
 
-  script.truth.solutionChain = resolved.length > 0 ? resolved : script.truth.solutionChain;
+  script.truth!.solutionChain = resolved.length > 0 ? resolved : script.truth!.solutionChain;
 }
 
 function repairCharacterBalance(script: Script): void {

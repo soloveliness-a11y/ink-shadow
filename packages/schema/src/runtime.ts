@@ -50,14 +50,21 @@ export const zRuntimeState = z.object({
   tieCharIds: z.array(z.string()).optional(), // 平票决胜:上一轮平票角色 ID
   theories: z.record(z.string(), z.string()), // charId -> 理论文本
   flags: z.record(z.string(), z.boolean()),
+  teams: z.record(z.string(), z.object({
+    score: z.number().optional(),
+    eliminated: z.boolean().optional(),
+    members: z.array(z.string()).optional(),
+  })).optional(), // 阵营状态(阵营本)
+  resources: z.record(z.string(), z.record(z.string(), z.number())).optional(), // charId -> {resourceId: amount}(机制本预留)
+  counters: z.record(z.string(), z.number()).optional(), // 任意数值计数器(补 flags 只能 boolean 的短板)
   log: z.array(zGameEvent),
 });
 export type RuntimeState = z.infer<typeof zRuntimeState>;
 
 /** 可序列化的房间快照，用于持久化到磁盘 */
 export interface RoomSnapshot {
-  /** 版本号，用于未来数据迁移 */
-  version: 1;
+  /** 版本号，用于未来数据迁移。当前 = 2(加 teams/resources/counters,全 optional)。类型用 number 以便老快照(version 1)restore。 */
+  version: number;
   state: RuntimeState;
   hostId: string;
   scriptId: string;

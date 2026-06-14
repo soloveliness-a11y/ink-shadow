@@ -37,13 +37,23 @@ export function validateScript(input: unknown): ValidationResult {
   }
 
   const s = parsed.data;
+  const genre = s.meta.genre ?? 'murder';
   checkReferences(s, issues);
-  checkSolvability(s, issues);
+  if (genre === 'murder') {
+    checkSolvability(s, issues); // 强制死者/凶手/推理链 — 仅推理本
+  }
   checkFlowDag(s, issues);
-  checkGameplayStructure(s, issues);
+  if (genre === 'murder') {
+    checkGameplayStructure(s, issues); // 强制搜证结构 — 仅推理本
+  }
   checkVisuals(s, issues);
-  checkBalance(s, issues);
+  if (genre === 'murder') {
+    checkBalance(s, issues); // 强制 main 目标/时间线 — 仅推理本
+  }
   checkSkillBalance(s, issues);
+  if (genre === 'faction') {
+    checkFactionStructure(s, issues); // 阵营结构 — 仅阵营本
+  }
 
   return { ok: !issues.some((i) => i.level === 'error'), issues };
 }
@@ -79,10 +89,17 @@ function checkReferences(s: Script, out: ValidationIssue[]): void {
       err(out, 'ref', 'flow.edges.condition', `未知角色 ${e.condition.equalsCharId}`);
     }
   }
-  for (const id of s.truth.murdererCharIds) if (!charIds.has(id)) err(out, 'ref', 'truth.murdererCharIds', `未知角色 ${id}`);
-  for (const en of s.truth.endings) {
+  if (s.truth) {
+    for (const id of s.truth.murdererCharIds) if (!charIds.has(id)) err(out, 'ref', 'truth.murdererCharIds', `未知角色 ${id}`);
+    for (const en of s.truth.endings) {
+      if (en.condition.kind === 'voteResult' && !charIds.has(en.condition.equalsCharId)) {
+        err(out, 'ref', `truth.endings.${en.id}`, `未知角色 ${en.condition.equalsCharId}`);
+      }
+    }
+  }
+  for (const en of s.endings ?? []) {
     if (en.condition.kind === 'voteResult' && !charIds.has(en.condition.equalsCharId)) {
-      err(out, 'ref', `truth.endings.${en.id}`, `未知角色 ${en.condition.equalsCharId}`);
+      err(out, 'ref', `endings.${en.id}`, `未知角色 ${en.condition.equalsCharId}`);
     }
   }
 }
@@ -102,7 +119,7 @@ function checkSolvability(s: Script, out: ValidationIssue[]): void {
     if (!reachable(c)) err(out, 'solve', `clues.${c.id}`, '关键线索玩家不可达(非 public/未解锁/无归属)');
   }
   const clueById = new Map(s.clues.map((c) => [c.id, c] as const));
-  for (const ref of s.truth.solutionChain) {
+  for (const ref of s.truth?.solutionChain ?? []) {
     const c = clueById.get(ref);
     if (!c) {
       err(out, 'solve', 'truth.solutionChain', `推理链引用未知线索 ${ref}`);
@@ -231,5 +248,25 @@ function checkSkillBalance(s: Script, out: ValidationIssue[]): void {
     if (c.requiredSkill && !allSkills.has(c.requiredSkill)) {
       err(out, 'skillBalance', `clues.${c.id}.requiredSkill`, `线索 "${c.title}" (${c.id}) 需要技能 "${c.requiredSkill}"，但没有任何角色拥有此技能`);
     }
+  }
+}
+
+/** 阵营结构:非 neutral 角色有 faction、阵营非空、阵营平衡、至少一个 teamWin ending */
+function checkFactionStructure(s: Script, out: ValidationIssue[]): void {
+  const factions = new Map<string, number>();
+  for (const c of s.characters) {
+    if (!c.faction || c.faction === 'neutral') continue;
+    factions.set(c.faction, (factions.get(c.faction) ?? 0) + 1);
+  }
+  if (factions.size === 0) {
+    err(out, 'faction', 'characters', '阵营本(genre=faction)但没有任何角色带 faction 字段');
+  }
+  const counts = [...factions.values()];
+  if (counts.length >= 2 && Math.max(...counts) - Math.min(...counts) > 1) {
+    warn(out, 'faction', 'characters', `阵营人数不均:${[...factions.entries()].map(([f, n]) => `${f}=${n}`).join(', ')}`);
+  }
+  const endings = s.endings ?? s.truth?.endings ?? [];
+  if (!endings.some((e) => e.condition.kind === 'teamWin')) {
+    err(out, 'faction', 'endings', '阵营本至少需要一个 teamWin 结局(放在顶层 endings 或 truth.endings)');
   }
 }

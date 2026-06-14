@@ -46,6 +46,9 @@ export const zCharacter = z.object({
   relationships: z.array(zRelationship),
   skills: z.array(z.string()).optional(),
   sceneId: z.string().optional(), // 角色所在区域（搜证时不可调查自己区域）
+  faction: z.string().optional(), // 阵营标识(阵营本,如 'red'/'blue'/'neutral')
+  team: z.string().optional(), // 队伍标识(可与 faction 不同,机制本预留)
+  resources: z.record(z.string(), z.number()).optional(), // 数值资源(金钱/体力/积分,机制本预留)
   passiveClueGivers: z.array(z.object({
     targetCharId: z.string(),
     clueId: z.string(),
@@ -125,6 +128,8 @@ export const zScriptMeta = z.object({
   cover: zVisualSpec.optional(), // 封面图(竖版海报,M2 回填 asset)
   schemaVersion: z.string(),
   status: z.enum(['draft', 'validated', 'ready']),
+  /** 玩法类型。决定校验分支与 UI 渲染。老剧本缺省 = 'murder'(向后兼容)。 */
+  genre: z.enum(['murder', 'faction', 'mechanism', 'emotion', 'horror']).default('murder'),
 });
 export type ScriptMeta = z.infer<typeof zScriptMeta>;
 
@@ -137,6 +142,7 @@ export const zScript = z.object({
   props: z.array(zProp).optional(),
   phases: z.array(zPhase),
   flow: zPhaseFlow,
-  truth: zTruth,
+  truth: zTruth.optional(), // 推理本必填(校验层强制),非推理本可省略
+  endings: z.array(zEnding).optional(), // 通用结局(与 genre 无关);缺省回退 truth.endings
 });
 export type Script = z.infer<typeof zScript>;

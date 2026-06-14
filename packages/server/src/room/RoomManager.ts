@@ -107,7 +107,7 @@ export class RoomManager {
       if (!data) continue;
       try {
         const snap = data as RoomSnapshot;
-        if (snap.version !== 1) continue;
+        if (snap.version > 2) continue; // 拒绝未来版本;version 1(老)和 2(当前)都 restore(新字段全 optional,向前兼容)
         const room = Room.restore(snap, this.sendFn, (id) => this.getScript(id), this.listScriptMetas());
         this.wirePersistence(room);
         this.rooms.set(room.roomCode, room);

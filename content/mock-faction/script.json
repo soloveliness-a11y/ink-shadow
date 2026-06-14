@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "id": "mock-faction",
+    "title": "阵营试炼·红蓝之争",
+    "theme": "阵营对抗 mock",
+    "playerCount": { "min": 6, "max": 6 },
+    "difficulty": "normal",
+    "durationMin": 60,
+    "synopsis": "一场红蓝两大阵营的较量。通过发言、密谋与阵营投票,争取己方阵营获得多数支持。",
+    "styleGuide": "简洁扁平风,红蓝对比色",
+    "schemaVersion": "1.0.0",
+    "status": "validated",
+    "genre": "faction"
+  },
+  "characters": [
+    {
+      "id": "c_red1", "name": "赤焰", "gender": "female",
+      "isVictim": false, "isMurderer": false, "faction": "red",
+      "publicProfile": "红方先锋,行事果决,声量惊人。",
+      "privateScript": "你是红方阵营的核心。在发言中亮明立场,团结队友,争取中立者倒戈,让红方在投票中过半。",
+      "objectives": [{ "id": "o_main", "kind": "main", "description": "协助红方阵营赢得这场投票" }],
+      "secrets": [], "timeline": [], "relationships": [],
+      "visual": { "kind": "avatar", "prompt": "赤焰头像,红衣女子,扁平插画", "aspect": "3:4" }
+    },
+    {
+      "id": "c_red2", "name": "烈风", "gender": "male",
+      "isVictim": false, "isMurderer": false, "faction": "red",
+      "publicProfile": "红方谋士,言辞犀利。",
+      "privateScript": "你是红方阵营的谋士。用逻辑拆解蓝方主张,为红方拉票。",
+      "objectives": [{ "id": "o_main", "kind": "main", "description": "协助红方阵营赢得这场投票" }],
+      "secrets": [], "timeline": [], "relationships": [],
+      "visual": { "kind": "avatar", "prompt": "烈风头像,红衣男子,扁平插画", "aspect": "3:4" }
+    },
+    {
+      "id": "c_red3", "name": "灼光", "gender": "other",
+      "isVictim": false, "isMurderer": false, "faction": "red",
+      "publicProfile": "红方新秀,锋芒初露。",
+      "privateScript": "你是红方阵营的新秀。用新鲜的视角争取摇摆者。",
+      "objectives": [{ "id": "o_main", "kind": "main", "description": "协助红方阵营赢得这场投票" }],
+      "secrets": [], "timeline": [], "relationships": [],
+      "visual": { "kind": "avatar", "prompt": "灼光头像,红衣角色,扁平插画", "aspect": "3:4" }
+    },
+    {
+      "id": "c_blue1", "name": "碧波", "gender": "male",
+      "isVictim": false, "isMurderer": false, "faction": "blue",
+      "publicProfile": "蓝方领袖,沉稳如海。",
+      "privateScript": "你是蓝方阵营的领袖。以理服人,凝聚蓝方,在投票中让蓝方过半。",
+      "objectives": [{ "id": "o_main", "kind": "main", "description": "协助蓝方阵营赢得这场投票" }],
+      "secrets": [], "timeline": [], "relationships": [],
+      "visual": { "kind": "avatar", "prompt": "碧波头像,蓝衣男子,扁平插画", "aspect": "3:4" }
+    },
+    {
+      "id": "c_blue2", "name": "寒霜", "gender": "female",
+      "isVictim": false, "isMurderer": false, "faction": "blue",
+      "publicProfile": "蓝方策士,冷静缜密。",
+      "privateScript": "你是蓝方阵营的策士。识破红方话术,为蓝方稳固票仓。",
+      "objectives": [{ "id": "o_main", "kind": "main", "description": "协助蓝方阵营赢得这场投票" }],
+      "secrets": [], "timeline": [], "relationships": [],
+      "visual": { "kind": "avatar", "prompt": "寒霜头像,蓝衣女子,扁平插画", "aspect": "3:4" }
+    },
+    {
+      "id": "c_blue3", "name": "深海", "gender": "other",
+      "isVictim": false, "isMurderer": false, "faction": "blue",
+      "publicProfile": "蓝方游说者,八面玲珑。",
+      "privateScript": "你是蓝方阵营的游说者。周旋于摇摆者之间,为蓝方争取关键一票。",
+      "objectives": [{ "id": "o_main", "kind": "main", "description": "协助蓝方阵营赢得这场投票" }],
+      "secrets": [], "timeline": [], "relationships": [],
+      "visual": { "kind": "avatar", "prompt": "深海头像,蓝衣角色,扁平插画", "aspect": "3:4" }
+    }
+  ],
+  "clues": [],
+  "scenes": [],
+  "phases": [
+    {
+      "id": "p_brief", "kind": "briefing", "title": "开场·分营",
+      "instruction": "阅读你的阵营身份与目标。准备好后点击就绪。",
+      "allowedActions": ["readScript", "ready"],
+      "exit": { "kind": "allReady" },
+      "unlocks": { "storyKey": "opening" }
+    },
+    {
+      "id": "p_speak", "kind": "sequential", "title": "阵营发言",
+      "instruction": "按顺序公开你方的立场与诉求。",
+      "allowedActions": ["speak"],
+      "turnOrder": ["c_red1", "c_red2", "c_red3", "c_blue1", "c_blue2", "c_blue3"],
+      "exit": { "kind": "allActed" }
+    },
+    {
+      "id": "p_free", "kind": "free", "title": "自由密谋",
+      "instruction": "与同阵营或对手密谋、交涉。房主判断讨论结束后推进。",
+      "allowedActions": ["speak", "privateMessage"],
+      "exit": { "kind": "hostAdvance" }
+    },
+    {
+      "id": "p_vote", "kind": "vote", "title": "阵营投票",
+      "instruction": "选择你支持的阵营。过半阵营获胜。",
+      "allowedActions": ["castVote"],
+      "voteMode": "team",
+      "restrictVoteTargets": ["red", "blue"],
+      "exit": { "kind": "voteComplete" }
+    },
+    {
+      "id": "p_reveal", "kind": "reveal", "title": "揭晓胜负",
+      "instruction": "阵营投票结果揭晓。",
+      "allowedActions": [],
+      "exit": { "kind": "hostAdvance" }
+    }
+  ],
+  "flow": {
+    "entry": "p_brief",
+    "edges": [
+      { "from": "p_brief", "to": "p_speak" },
+      { "from": "p_speak", "to": "p_free" },
+      { "from": "p_free", "to": "p_vote" },
+      { "from": "p_vote", "to": "p_reveal" }
+    ]
+  },
+  "endings": [
+    { "id": "red_win", "condition": { "kind": "teamWin", "teamId": "red" }, "title": "红方胜利", "narrative": "红方赢得多数支持,旗开得胜。烈焰般的气势席卷全场。" },
+    { "id": "blue_win", "condition": { "kind": "teamWin", "teamId": "blue" }, "title": "蓝方胜利", "narrative": "蓝方赢得多数支持,势如破竹。深海般的力量吞没对手。" },
+    { "id": "draw", "condition": { "kind": "always" }, "title": "势均力敌", "narrative": "双方票数胶着,平分秋色。这场较量没有输家,只有未尽的对决。" }
+  ]
+}

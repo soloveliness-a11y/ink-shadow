@@ -46,6 +46,7 @@ export const zPhase = z.object({
   maxSearches: z.number().int().positive().optional(), // 该阶段每位玩家最大搜证次数
   resetVotes: z.boolean().optional(), // 进入此阶段时清空投票记录（决胜轮用）
   restrictVoteTargets: z.union([z.literal('tied'), z.array(z.string())]).optional(), // 限制投票目标;'tied'=运行时从平票者填充
+  voteMode: z.enum(['char', 'team', 'proposal']).optional(), // 投票语义:'char'=投角色(默认),'team'=投阵营,'proposal'=投提案
 });
 export type Phase = z.infer<typeof zPhase>;
 
@@ -55,6 +56,9 @@ export const zFlowCondition = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('voteResult'), equalsCharId: z.string() }),
   z.object({ kind: z.literal('voteTie') }),
   z.object({ kind: z.literal('flag'), flag: z.string(), equals: z.boolean() }),
+  z.object({ kind: z.literal('teamWin'), teamId: z.string() }), // 阵营胜利(本轮实现)
+  z.object({ kind: z.literal('scoreReach'), counter: z.string(), gte: z.number() }), // 占位(机制本):counters[counter] >= gte
+  z.object({ kind: z.literal('choiceResult'), choiceId: z.string(), value: z.string() }), // 占位(情感还原本):选择结果
 ]);
 export type FlowCondition = z.infer<typeof zFlowCondition>;
 

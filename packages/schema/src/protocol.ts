@@ -7,7 +7,7 @@ import { zRoomStatus, zGameEvent } from './runtime.js';
  * 协议版本号。每次改动 ClientIntent / ServerMessage / ClientStateView 结构时手动 +1。
  * client join 时上报,server 比对;不一致则提示玩家刷新页面(防旧前端发旧协议的静默故障)。
  */
-export const PROTOCOL_VERSION = 5;
+export const PROTOCOL_VERSION = 6;
 
 /**
  * 客户端 → 服务器:玩家意图。
@@ -40,6 +40,7 @@ export const zPublicCharacter = z.object({
   gender: z.enum(['male', 'female', 'other']).optional(),
   publicProfile: z.string(),
   isVictim: z.boolean().optional(),
+  faction: z.string().optional(), // 阵营标识(阵营本,侧栏分组用)
   avatar: z.string().optional(), // 头像 asset 路径
   /** 仅公开行踪(isPublic=true),便于侧栏时间线展示 */
   publicTimeline: z
@@ -143,6 +144,7 @@ export const zClientStateView = z.object({
       maxSearches: z.number().int().optional(),
       mySearchCount: z.number().int().optional(),
       restrictVoteTargets: z.array(z.string()).optional(),
+      voteMode: z.enum(['char', 'team', 'proposal']).optional(),
     })
     .optional(),
   phaseProgress: z
@@ -163,6 +165,12 @@ export const zClientStateView = z.object({
   sceneImages: z.record(z.string(), z.string()), // sceneId -> 图路径
   propImages: z.record(z.string(), z.string()).optional(), // propId -> 图路径
   votesPublic: z.record(z.string(), z.string()).optional(),
+  teams: z.record(z.string(), z.object({
+    score: z.number().optional(),
+    members: z.array(z.string()).optional(),
+    eliminated: z.boolean().optional(),
+  })).optional(), // 阵营状态(阵营本,全员可见)
+  myFaction: z.string().optional(), // 本玩家的阵营(裁剪后)
   isTestMode: z.boolean().optional(),
   dmEnabled: z.boolean().optional(),
   pendingAdvance: z.boolean().optional(),

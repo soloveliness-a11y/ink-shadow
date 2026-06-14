@@ -296,14 +296,24 @@ export class PhaseEngine {
       }
       case 'castVote': {
         if (this.state.votes[charId]) return reject('already_voted');
-        const target = this.script.characters.find((c) => c.id === intent.targetCharId);
-        if (!target) return reject('target_not_found');
-        if (target.id === charId) return reject('cannot_vote_self');
-        if (target.isVictim) return reject('cannot_vote_victim');
-        // 决胜轮:限制投票目标(从 runtime 读取,非共享 phase)
-        const restricted = this.state.phaseRuntime.resolvedVoteTargets;
-        if (restricted && restricted.length > 0 && !restricted.includes(intent.targetCharId)) {
-          return reject('target_restricted');
+        const voteMode = phase.voteMode ?? 'char';
+        if (voteMode === 'char') {
+          // 投角色(推理本):禁投死者/自己
+          const target = this.script.characters.find((c) => c.id === intent.targetCharId);
+          if (!target) return reject('target_not_found');
+          if (target.id === charId) return reject('cannot_vote_self');
+          if (target.isVictim) return reject('cannot_vote_victim');
+          // 决胜轮:限制投票目标(从 runtime 读取,非共享 phase)
+          const restricted = this.state.phaseRuntime.resolvedVoteTargets;
+          if (restricted && restricted.length > 0 && !restricted.includes(intent.targetCharId)) {
+            return reject('target_restricted');
+          }
+        } else {
+          // 投阵营/提案:target 是 factionId/proposalId,放宽角色检查;受 restrictVoteTargets 约束
+          const allowed = phase.restrictVoteTargets;
+          if (Array.isArray(allowed) && !allowed.includes(intent.targetCharId)) {
+            return reject('target_restricted');
+          }
         }
         break;
       }
@@ -353,6 +363,16 @@ export class PhaseEngine {
       case 'castVote': {
         this.state.votes[charId] = intent.targetCharId;
         this.bus.event({ type: 'vote_cast', actorCharId: charId });
+        // 阵营投票(voteMode='team'):实时统计,某阵营过半 → 设 flag:team_<id>_won(供 teamWin 条件判定)
+        const voteMode = this.current()?.voteMode ?? 'char';
+        if (voteMode === 'team') {
+          const counts: Record<string, number> = {};
+          for (const t of Object.values(this.state.votes)) counts[t] = (counts[t] ?? 0) + 1;
+          const total = Object.keys(this.state.votes).length;
+          for (const [faction, count] of Object.entries(counts)) {
+            if (total > 0 && count > total / 2) this.state.flags[`team_${faction}_won`] = true;
+          }
+        }
         break;
       }
       case 'privateMessage': {

@@ -18,6 +18,12 @@ export function VoteScene() {
   const [countdown, setCountdown] = useState<{ n: number; key: number } | null>(null);
   const prevVotedCount = useRef<number>(0);
   const selectedChar = view?.publicCharacters.find((c) => c.id === selected);
+  const voteMode = view?.currentPhase?.voteMode ?? 'char';
+  const teamTargets = voteMode === 'team' ? (view?.currentPhase?.restrictVoteTargets ?? []) : [];
+  const factionLabel = (f: string): string => ({ red: '红方阵营', blue: '蓝方阵营', neutral: '中立' } as Record<string, string>)[f] ?? `${f} 阵营`;
+  const selectedLabel = voteMode === 'team'
+    ? (selected ? factionLabel(selected) : '尚未选择阵营')
+    : (selectedChar?.name ?? '尚未选择嫌疑人');
   const votedIds = new Set(Object.keys(view?.votesPublic ?? {}));
   const requiredIds = view?.phaseProgress?.requiredCharIds ?? [];
   const pendingIds = requiredIds.filter((id) => !votedIds.has(id));
@@ -78,9 +84,11 @@ export function VoteScene() {
       <div className="vote-heading">
         <div className="scene-heading">{view?.currentPhase?.title ?? '投票环节'}</div>
         <div className="scene-subheading">
-          {isTiebreaker
-            ? `平票决胜 — 在 ${filteredSuspects?.map((c) => c.name).join('、')} 中选择`
-            : '选择你认为的嫌疑人'}
+          {voteMode === 'team'
+            ? '选择你支持的阵营(过半阵营获胜)'
+            : isTiebreaker
+              ? `平票决胜 — 在 ${filteredSuspects?.map((c) => c.name).join('、')} 中选择`
+              : '选择你认为的嫌疑人'}
         </div>
         {isTiebreaker && <div className="badge badge-crimson" style={{ marginTop: 8 }}>平票决胜轮</div>}
       </div>
@@ -126,37 +134,58 @@ export function VoteScene() {
       ) : (
         <>
           <div className="vote-suspect-grid">
-            {filteredSuspects?.map((c) => {
-              const isSelected = selected === c.id;
-              const url = assetUrl(scriptId, c.avatar);
-              return (
-                <div
-                  key={c.id}
-                  role="button"
-                  tabIndex={0}
-                  aria-label={`选择${c.name}`}
-                  className={`portrait-card vote-suspect-card${isSelected ? ' accused' : ''}${submitted ? ' locked' : ''}`}
-                  onClick={() => chooseSuspect(c.id)}
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); chooseSuspect(c.id); } }}
-                >
-                  {url ? <img src={url} alt={c.name} loading="lazy" decoding="async" /> : <div className="portrait-fallback">{c.name.charAt(0)}</div>}
-                  <div className="portrait-overlay">
-                    <div className="portrait-name">{c.name}</div>
-                    <div className="portrait-sub">{c.publicProfile.slice(0, 36)}</div>
-                  </div>
-                  {isSelected && (
-                    <div className="portrait-check vote-check">✓</div>
-                  )}
-                </div>
-              );
-            })}
+            {voteMode === 'team'
+              ? teamTargets.map((faction) => {
+                  const isSelected = selected === faction;
+                  return (
+                    <div
+                      key={faction}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`选择${factionLabel(faction)}`}
+                      className={`portrait-card vote-suspect-card${isSelected ? ' accused' : ''}${submitted ? ' locked' : ''}`}
+                      onClick={() => chooseSuspect(faction)}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); chooseSuspect(faction); } }}
+                    >
+                      <div className="portrait-fallback">{factionLabel(faction).charAt(0)}</div>
+                      <div className="portrait-overlay">
+                        <div className="portrait-name">{factionLabel(faction)}</div>
+                      </div>
+                      {isSelected && <div className="portrait-check vote-check">✓</div>}
+                    </div>
+                  );
+                })
+              : filteredSuspects?.map((c) => {
+                  const isSelected = selected === c.id;
+                  const url = assetUrl(scriptId, c.avatar);
+                  return (
+                    <div
+                      key={c.id}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`选择${c.name}`}
+                      className={`portrait-card vote-suspect-card${isSelected ? ' accused' : ''}${submitted ? ' locked' : ''}`}
+                      onClick={() => chooseSuspect(c.id)}
+                      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); chooseSuspect(c.id); } }}
+                    >
+                      {url ? <img src={url} alt={c.name} loading="lazy" decoding="async" /> : <div className="portrait-fallback">{c.name.charAt(0)}</div>}
+                      <div className="portrait-overlay">
+                        <div className="portrait-name">{c.name}</div>
+                        <div className="portrait-sub">{c.publicProfile.slice(0, 36)}</div>
+                      </div>
+                      {isSelected && (
+                        <div className="portrait-check vote-check">✓</div>
+                      )}
+                    </div>
+                  );
+                })}
           </div>
 
           <div className="vote-confirm-panel">
             <div>
               <div className="vote-confirm-label">当前选择</div>
-              <div className={`vote-confirm-name${selectedChar ? ' active' : ''}`}>
-                {selectedChar?.name ?? '尚未选择嫌疑人'}
+              <div className={`vote-confirm-name${selected ? ' active' : ''}`}>
+                {selectedLabel}
               </div>
               {selectedChar && (
                 <p className="vote-confirm-profile">{selectedChar.publicProfile}</p>
