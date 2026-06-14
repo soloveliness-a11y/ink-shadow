@@ -7,11 +7,12 @@
  *   pnpm produce --visual-model gpt-image-2 --daemon-url http://127.0.0.1:17456
  */
 import 'dotenv/config';
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { generate, type GenParams } from '../packages/generator/src/pipeline.js';
 import { zScript, validateScript } from '../packages/schema/src/index.js';
 import { VisualRunner } from '../packages/visual-pipeline/src/runner.js';
+import { writeScriptSplit } from './write-script.js';
 
 const args = process.argv.slice(2);
 
@@ -87,9 +88,10 @@ async function main() {
 
   // ── Stage 3: Visual pipeline (M2) ──
   const scriptDir = resolve(join('content', script.meta.id));
-  const scriptPath = join(scriptDir, 'script.json');
+  const scriptPath = join(scriptDir, 'script.json'); // runner 临时读写单文件(用于 resume);最终输出拆分格式
   mkdirSync(scriptDir, { recursive: true });
 
+  let finalScript = parseResult.data;
   if (!skipVisual) {
     console.log(`[Stage 3/3] Generating visuals via M2 (${visualModel})...`);
     const runner = new VisualRunner({
@@ -99,9 +101,8 @@ async function main() {
       resume: true,
     });
     const { script: updated, result } = await runner.run(parseResult.data, scriptPath);
-
-    const finalScript = updated;
-    writeFileSync(scriptPath, JSON.stringify(finalScript, null, 2), 'utf-8');
+    finalScript = updated;
+    writeFileSync(scriptPath, JSON.stringify(finalScript, null, 2), 'utf-8'); // 临时单文件(runner resume 用)
     console.log(`  Visuals: ${result.done} done, ${result.failed} failed / ${result.total} total`);
     console.log(`  Status: ${finalScript.meta.status}\n`);
 
@@ -109,12 +110,15 @@ async function main() {
       console.warn('WARNING: Some visuals failed. Script saved but status is not "ready".');
     }
   } else {
-    writeFileSync(scriptPath, JSON.stringify(parseResult.data, null, 2), 'utf-8');
-    console.log(`[Stage 3/3] Visuals skipped. Script saved to ${scriptPath}\n`);
+    console.log(`[Stage 3/3] Visuals skipped.\n`);
   }
 
+  // 写拆分格式(规范,取代单 script.json):meta.json + characters/ + clues/scenes/phases/flow/(truth/endings).json
+  writeScriptSplit(finalScript, scriptDir);
+  if (existsSync(scriptPath)) rmSync(scriptPath); // 移除 runner 临时单文件(loader 用拆分 meta.json)
+
   console.log('=== Done! ===');
-  console.log(`  Script: ${scriptPath}`);
+  console.log(`  Script(拆分格式): ${scriptDir}/`);
   console.log(`  Run: pnpm start`);
   console.log(`  Open: http://localhost:8080`);
 }

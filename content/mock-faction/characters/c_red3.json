@@ -1,0 +1,25 @@
+{
+  "id": "c_red3",
+  "name": "灼光",
+  "gender": "other",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "红方新秀,锋芒初露。",
+  "privateScript": "你是红方阵营的新秀。用新鲜的视角争取摇摆者。",
+  "objectives": [
+    {
+      "id": "o_main",
+      "kind": "main",
+      "description": "协助红方阵营赢得这场投票"
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "faction": "red",
+  "visual": {
+    "kind": "avatar",
+    "prompt": "灼光头像,红衣角色,扁平插画",
+    "aspect": "3:4"
+  }
+}

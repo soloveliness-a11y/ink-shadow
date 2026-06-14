@@ -1,0 +1,21 @@
+{
+  "entry": "p_brief",
+  "edges": [
+    {
+      "from": "p_brief",
+      "to": "p_speak"
+    },
+    {
+      "from": "p_speak",
+      "to": "p_free"
+    },
+    {
+      "from": "p_free",
+      "to": "p_vote"
+    },
+    {
+      "from": "p_vote",
+      "to": "p_reveal"
+    }
+  ]
+}

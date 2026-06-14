@@ -1,0 +1,25 @@
+{
+  "id": "c_blue2",
+  "name": "寒霜",
+  "gender": "female",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "蓝方策士,冷静缜密。",
+  "privateScript": "你是蓝方阵营的策士。识破红方话术,为蓝方稳固票仓。",
+  "objectives": [
+    {
+      "id": "o_main",
+      "kind": "main",
+      "description": "协助蓝方阵营赢得这场投票"
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "faction": "blue",
+  "visual": {
+    "kind": "avatar",
+    "prompt": "寒霜头像,蓝衣女子,扁平插画",
+    "aspect": "3:4"
+  }
+}

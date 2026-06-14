@@ -1,0 +1,25 @@
+{
+  "id": "c_blue3",
+  "name": "深海",
+  "gender": "other",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "蓝方游说者,八面玲珑。",
+  "privateScript": "你是蓝方阵营的游说者。周旋于摇摆者之间,为蓝方争取关键一票。",
+  "objectives": [
+    {
+      "id": "o_main",
+      "kind": "main",
+      "description": "协助蓝方阵营赢得这场投票"
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "faction": "blue",
+  "visual": {
+    "kind": "avatar",
+    "prompt": "深海头像,蓝衣角色,扁平插画",
+    "aspect": "3:4"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "c_blue1",
+  "name": "碧波",
+  "gender": "male",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "蓝方领袖,沉稳如海。",
+  "privateScript": "你是蓝方阵营的领袖。以理服人,凝聚蓝方,在投票中让蓝方过半。",
+  "objectives": [
+    {
+      "id": "o_main",
+      "kind": "main",
+      "description": "协助蓝方阵营赢得这场投票"
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "faction": "blue",
+  "visual": {
+    "kind": "avatar",
+    "prompt": "碧波头像,蓝衣男子,扁平插画",
+    "aspect": "3:4"
+  }
+}

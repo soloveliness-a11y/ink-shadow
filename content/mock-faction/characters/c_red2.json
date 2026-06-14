@@ -1,0 +1,25 @@
+{
+  "id": "c_red2",
+  "name": "烈风",
+  "gender": "male",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "红方谋士,言辞犀利。",
+  "privateScript": "你是红方阵营的谋士。用逻辑拆解蓝方主张,为红方拉票。",
+  "objectives": [
+    {
+      "id": "o_main",
+      "kind": "main",
+      "description": "协助红方阵营赢得这场投票"
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "faction": "red",
+  "visual": {
+    "kind": "avatar",
+    "prompt": "烈风头像,红衣男子,扁平插画",
+    "aspect": "3:4"
+  }
+}

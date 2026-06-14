@@ -1,0 +1,25 @@
+{
+  "id": "c_red1",
+  "name": "赤焰",
+  "gender": "female",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "红方先锋,行事果决,声量惊人。",
+  "privateScript": "你是红方阵营的核心。在发言中亮明立场,团结队友,争取中立者倒戈,让红方在投票中过半。",
+  "objectives": [
+    {
+      "id": "o_main",
+      "kind": "main",
+      "description": "协助红方阵营赢得这场投票"
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "faction": "red",
+  "visual": {
+    "kind": "avatar",
+    "prompt": "赤焰头像,红衣女子,扁平插画",
+    "aspect": "3:4"
+  }
+}

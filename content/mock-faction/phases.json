@@ -1,0 +1,83 @@
+[
+  {
+    "id": "p_brief",
+    "kind": "briefing",
+    "title": "开场·分营",
+    "instruction": "阅读你的阵营身份与目标。准备好后点击就绪。",
+    "participants": "all",
+    "allowedActions": [
+      "readScript",
+      "ready"
+    ],
+    "unlocks": {
+      "storyKey": "opening"
+    },
+    "exit": {
+      "kind": "allReady"
+    }
+  },
+  {
+    "id": "p_speak",
+    "kind": "sequential",
+    "title": "阵营发言",
+    "instruction": "按顺序公开你方的立场与诉求。",
+    "participants": "all",
+    "allowedActions": [
+      "speak"
+    ],
+    "turnOrder": [
+      "c_red1",
+      "c_red2",
+      "c_red3",
+      "c_blue1",
+      "c_blue2",
+      "c_blue3"
+    ],
+    "exit": {
+      "kind": "allActed"
+    }
+  },
+  {
+    "id": "p_free",
+    "kind": "free",
+    "title": "自由密谋",
+    "instruction": "与同阵营或对手密谋、交涉。房主判断讨论结束后推进。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "privateMessage"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    }
+  },
+  {
+    "id": "p_vote",
+    "kind": "vote",
+    "title": "阵营投票",
+    "instruction": "选择你支持的阵营。过半阵营获胜。",
+    "participants": "all",
+    "allowedActions": [
+      "castVote"
+    ],
+    "exit": {
+      "kind": "voteComplete"
+    },
+    "restrictVoteTargets": [
+      "red",
+      "blue"
+    ],
+    "voteMode": "team"
+  },
+  {
+    "id": "p_reveal",
+    "kind": "reveal",
+    "title": "揭晓胜负",
+    "instruction": "阵营投票结果揭晓。",
+    "participants": "all",
+    "allowedActions": [],
+    "exit": {
+      "kind": "hostAdvance"
+    }
+  }
+]

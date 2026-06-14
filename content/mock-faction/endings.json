@@ -1,0 +1,28 @@
+[
+  {
+    "id": "red_win",
+    "condition": {
+      "kind": "teamWin",
+      "teamId": "red"
+    },
+    "title": "红方胜利",
+    "narrative": "红方赢得多数支持,旗开得胜。烈焰般的气势席卷全场。"
+  },
+  {
+    "id": "blue_win",
+    "condition": {
+      "kind": "teamWin",
+      "teamId": "blue"
+    },
+    "title": "蓝方胜利",
+    "narrative": "蓝方赢得多数支持,势如破竹。深海般的力量吞没对手。"
+  },
+  {
+    "id": "draw",
+    "condition": {
+      "kind": "always"
+    },
+    "title": "势均力敌",
+    "narrative": "双方票数胶着,平分秋色。这场较量没有输家,只有未尽的对决。"
+  }
+]

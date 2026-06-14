@@ -34,6 +34,17 @@ pnpm produce --players 6 --theme "校园密室"
 pnpm produce --skip-visual    # 仅生成剧本，跳过出图
 ```
 
+## 剧本包格式(拆分 JSON,规范)
+
+长剧本采用**拆分 JSON**(取代单 `script.json`):避免文件膨胀,维护/校验只需改对应文件。
+
+目录结构:`meta.json`(含 `genre` 玩法类型)+ `characters/c_<id>.json` + `order.json` + `clues.json` + `scenes.json` + `phases.json` + `flow.json` + `truth.json`(推理本)/ `endings.json`(阵营·情感本,顶层结局)+ 可选 `props.json`。
+
+- **创作新剧本**:`pnpm produce` 自动输出拆分格式
+- **迁移老剧本**(单 `script.json` → 拆分):`npx tsx scripts/split-script.ts content/<id>`(内置拆分前后等价验证)
+- **校验加载**:`npx tsx scripts/verify-scripts.ts`
+- loader 检测 `meta.json` 走拆分格式;单 `script.json` 为 legacy 兼容(新剧本不再使用)
+
 ## 技术栈
 
 | 层 | 技术 | 说明 |

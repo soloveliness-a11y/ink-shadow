@@ -74,12 +74,13 @@ function loadSplitFormat(metaPath: string): LoadedScript {
   const phases = readArrayFile(dir, 'phases.json');
   const flow = readObjectFile(dir, 'flow.json');
   const truth = readObjectFileOptional(dir, 'truth.json');
+  const endings = readArrayFile(dir, 'endings.json');
 
-  const raw = { meta, characters, clues, scenes, props, phases, flow, truth };
+  const raw = { meta, characters, clues, scenes, props, phases, flow, truth, endings: endings.length > 0 ? endings : undefined };
   return validateAndReturn(raw, dir);
 }
 
-/** 旧格式：从单一 script.json 加载 */
+/** 旧格式(legacy):从单一 script.json 加载。新剧本应使用拆分格式(scripts/write-script.ts 产出),此函数仅为兼容老剧本。 */
 function loadLegacyFormat(jsonPath: string): LoadedScript {
   const raw: unknown = JSON.parse(readFileSync(jsonPath, 'utf8'));
   return validateAndReturn(raw, jsonPath);

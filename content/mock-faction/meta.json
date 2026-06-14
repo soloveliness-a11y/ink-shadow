@@ -1,0 +1,16 @@
+{
+  "id": "mock-faction",
+  "title": "阵营试炼·红蓝之争",
+  "theme": "阵营对抗 mock",
+  "playerCount": {
+    "min": 6,
+    "max": 6
+  },
+  "difficulty": "normal",
+  "durationMin": 60,
+  "synopsis": "一场红蓝两大阵营的较量。通过发言、密谋与阵营投票,争取己方阵营获得多数支持。",
+  "styleGuide": "简洁扁平风,红蓝对比色",
+  "schemaVersion": "1.0.0",
+  "status": "validated",
+  "genre": "faction"
+}
