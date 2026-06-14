@@ -156,6 +156,9 @@ export function handleServerMessage(
       });
       break;
     }
+    case 'keywordMemory':
+      pushToast(`听到「${msg.keyword}」触发了一段记忆,已加入你的剧本`, 'info', 4000);
+      break;
     case 'assigned':
       // assignment handled via stateSync
       break;

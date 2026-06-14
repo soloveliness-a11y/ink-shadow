@@ -1,0 +1,110 @@
+{
+  "id": "yueke",
+  "name": "约克",
+  "gender": "male",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "外貌精悍,体格魁梧,白色西式汗衫。自称白同,外号约克。",
+  "privateScript": "你是岳氏药材公司少东家岳客沙。父亲岳古(岳东汶)曾是法蓝庄主人的私人医生。你来法蓝庄追查吴百安被害的真相。你借用了警察小弟白同的名字。",
+  "objectives": [
+    {
+      "id": "o1",
+      "kind": "main",
+      "description": "让茉莉信任你"
+    },
+    {
+      "id": "o2",
+      "kind": "main",
+      "description": "调查清楚什么人把吴百安扔进黄浦江"
+    },
+    {
+      "id": "o3",
+      "kind": "hidden",
+      "description": "你小时候住法蓝庄,欺负过孟清淮(爱哭的少爷),偷过莫离的风铃"
+    }
+  ],
+  "secrets": [
+    "真名岳客沙,岳东汶之子",
+    "小时候住法蓝庄欺负过孟清淮",
+    "马有'岳'字印记(暴露身份)"
+  ],
+  "timeline": [
+    {
+      "time": "7/30",
+      "location": "闸北",
+      "action": "抱走昏迷的夏叔娥送医院",
+      "isPublic": false
+    },
+    {
+      "time": "7/31",
+      "location": "警局",
+      "action": "被警察白同问话后证明清白",
+      "isPublic": false
+    },
+    {
+      "time": "8/3",
+      "location": "法蓝庄",
+      "action": "收到署名易楚安的信骑马赶到",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "moli",
+      "relation": "唐莫离,你喜欢她但她装作不认识你",
+      "isPublic": false
+    }
+  ],
+  "keywordMemories": [
+    {
+      "id": "m1",
+      "keyword": "一个男人的画像",
+      "text": "全家住法蓝庄时被老爷骂过的记忆。"
+    },
+    {
+      "id": "m2",
+      "keyword": "泽州府的爆炸案",
+      "text": "父亲说过NX和地震的事。"
+    },
+    {
+      "id": "m3",
+      "keyword": "锡制士兵",
+      "text": "你抢过锡制士兵还打坏了。"
+    },
+    {
+      "id": "m4",
+      "keyword": "不弃",
+      "text": "你偷过莫离写着'不弃'的风铃。"
+    },
+    {
+      "id": "m5",
+      "keyword": "塌方的地面",
+      "text": "1900年老人并非摔伤致死。"
+    },
+    {
+      "id": "m6",
+      "keyword": "唐茂光",
+      "text": "唐茂光帮父亲借款。"
+    },
+    {
+      "id": "m7",
+      "keyword": "儿童涂鸦",
+      "text": "你欺负过娇气的少爷(孟清淮)。"
+    },
+    {
+      "id": "m8",
+      "keyword": "天仙子",
+      "text": "天仙子含东莨菪碱。"
+    },
+    {
+      "id": "m9",
+      "keyword": "深色药瓶",
+      "text": "张医师定期买父亲的药。"
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "约克头像,精悍魁梧民国男子白汗衫,暗调油画",
+    "aspect": "3:4"
+  }
+}

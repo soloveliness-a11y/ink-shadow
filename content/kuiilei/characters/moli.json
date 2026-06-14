@@ -1,0 +1,95 @@
+{
+  "id": "moli",
+  "name": "茉莉",
+  "gender": "female",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "圣约翰大学神学院学生,黑色长发,举止得体,昵称茉莉。",
+  "privateScript": "你本名唐莫离,父亲唐茂光(笔名袁野客)是《申报》专栏作家。你小时候在法蓝庄住过,认识一个'爱哭的少爷'。你带了一个法蓝黄铜壶——是一个男孩送你的。",
+  "objectives": [
+    {
+      "id": "o1",
+      "kind": "main",
+      "description": "找到易楚安,调查他是不是'爱哭的少爷'"
+    },
+    {
+      "id": "o2",
+      "kind": "hidden",
+      "description": "你是唐茂光之女,'爱哭的少爷'就是孟清淮(安宁)。你送过他写着'不弃'的风铃"
+    }
+  ],
+  "secrets": [
+    "真名唐莫离",
+    "装作不认识岳客沙",
+    "篮子里的法蓝黄铜壶是孟清淮送的",
+    "在精神病院认识13号病人"
+  ],
+  "timeline": [
+    {
+      "time": "7/18",
+      "location": "精神病院",
+      "action": "认识13号病人",
+      "isPublic": false
+    },
+    {
+      "time": "8/3",
+      "location": "老树",
+      "action": "把篮子上的铜铃挂到老树上祈祷",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "anning",
+      "relation": "小时候的'爱哭的少爷',你不认识长大后的他",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "yueke",
+      "relation": "岳客沙,小时候认识,你装作不认识",
+      "isPublic": false
+    }
+  ],
+  "keywordMemories": [
+    {
+      "id": "m1",
+      "keyword": "素糖人儿",
+      "text": "你外号素糖人儿(易兰秦起的)。"
+    },
+    {
+      "id": "m2",
+      "keyword": "一个男人的画像",
+      "text": "你修好过爱哭少爷的玩具。"
+    },
+    {
+      "id": "m3",
+      "keyword": "地震",
+      "text": "地震时你看见杜爷爷被背出,庄主露出笑容。"
+    },
+    {
+      "id": "m4",
+      "keyword": "NX",
+      "text": "NX威力大但不稳定。"
+    },
+    {
+      "id": "m5",
+      "keyword": "黑狼",
+      "text": "13号病人后悔把配方卖给黑狼。"
+    },
+    {
+      "id": "m6",
+      "keyword": "西式煮锅",
+      "text": "你用煮锅做过难吃的东西哄小女孩。"
+    },
+    {
+      "id": "m7",
+      "keyword": "锡制士兵",
+      "text": "锡兵的故事(安徒生)。"
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "茉莉头像,黑长发民国女生,暗调油画",
+    "aspect": "3:4"
+  }
+}

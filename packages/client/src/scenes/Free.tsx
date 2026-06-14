@@ -297,6 +297,19 @@ export function FreeScene() {
       <div className="free-layout">
         {/* Left: Action panel */}
         <div className="free-action-panel">
+          {view?.currentPhase?.choice && (
+            <div className="phase-choice">
+              <div className="section-label">抉择</div>
+              <div className="phase-choice-prompt">{view.currentPhase.choice.prompt}</div>
+              <div className="phase-choice-options">
+                {view.currentPhase.choice.options.map(o => (
+                  <button key={o.id} className="btn btn-secondary" onClick={() => send({ kind: 'makeChoice', choiceId: view.currentPhase!.choice!.id, optionId: o.id })}>
+                    {o.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
           <div className="tabs">
             {tabs.map(t => (
               <button key={t.key} className={`tab${effectiveTab === t.key ? ' active' : ''}${t.key === 'clues' && clueTabFlash ? ' tab-flash' : ''}`} onClick={() => updateLastSeenPm(pmTarget, t.key)}>

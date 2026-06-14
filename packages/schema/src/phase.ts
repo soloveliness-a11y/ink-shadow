@@ -14,6 +14,7 @@ export const zActionKind = z.enum([
   'castVote',
   'submitTheory',
   'ready',
+  'makeChoice', // 抉择(豪门本:选项→后果)
 ]);
 export type ActionKind = z.infer<typeof zActionKind>;
 
@@ -47,6 +48,26 @@ export const zPhase = z.object({
   resetVotes: z.boolean().optional(), // 进入此阶段时清空投票记录（决胜轮用）
   restrictVoteTargets: z.union([z.literal('tied'), z.array(z.string())]).optional(), // 限制投票目标;'tied'=运行时从平票者填充
   voteMode: z.enum(['char', 'team', 'proposal']).optional(), // 投票语义:'char'=投角色(默认),'team'=投阵营,'proposal'=投提案
+  choice: z.object({
+    id: z.string(),
+    prompt: z.string(),
+    options: z.array(z.object({
+      id: z.string(),
+      label: z.string(),
+      effects: z.array(z.union([
+        z.object({ kind: z.literal('giveClue'), clueId: z.string() }),
+        z.object({ kind: z.literal('setFlag'), flag: z.string() }),
+        z.object({ kind: z.literal('advanceClock') }),
+        z.object({ kind: z.literal('unlockStory'), storyKey: z.string() }),
+        z.object({ kind: z.literal('jumpPhase'), phaseId: z.string() }),
+      ])),
+    })),
+  }).optional(), // 抉择点(进入 phase 展示选项,makeChoice 触发 effects)
+  clock: z.object({
+    startTime: z.string(),
+    stepMin: z.number().int().positive().default(5),
+    endTime: z.string(),
+  }).optional(), // 时钟指示物(调查阶段前进式时间,如 21:05→22:15)
 });
 export type Phase = z.infer<typeof zPhase>;
 

@@ -1,0 +1,213 @@
+[
+  {
+    "id": "p_brief",
+    "kind": "briefing",
+    "title": "开场·老宅前",
+    "instruction": "阅读你的角色剧本与回忆关键词。准备好后点击就绪。",
+    "participants": "all",
+    "allowedActions": [
+      "readScript",
+      "ready"
+    ],
+    "unlocks": {
+      "storyKey": "opening"
+    },
+    "exit": {
+      "kind": "allReady"
+    }
+  },
+  {
+    "id": "p_act1",
+    "kind": "free",
+    "title": "调查阶段",
+    "instruction": "21:05,法蓝庄。去各房间调查线索,公开讨论,留意别人说出的关键词——它可能触发你的回忆。房主判断调查结束后推进。",
+    "participants": "all",
+    "allowedActions": [
+      "searchClue",
+      "speak",
+      "privateMessage"
+    ],
+    "unlocks": {
+      "clueIds": [
+        "c01",
+        "c02",
+        "c03",
+        "c04",
+        "c05",
+        "c06",
+        "c07",
+        "c08",
+        "c09",
+        "c10",
+        "c11",
+        "c12",
+        "c13",
+        "c14"
+      ]
+    },
+    "exit": {
+      "kind": "hostAdvance"
+    },
+    "clock": {
+      "startTime": "21:05",
+      "stepMin": 5,
+      "endTime": "22:15"
+    }
+  },
+  {
+    "id": "p_choice_up",
+    "kind": "free",
+    "title": "抉择·黑暗的楼梯",
+    "instruction": "六号房通往二楼的楼梯一片漆黑。是否上去?",
+    "participants": "all",
+    "allowedActions": [
+      "makeChoice"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    },
+    "choice": {
+      "id": "ch_up",
+      "prompt": "六号房通往二楼的楼梯一片漆黑。是否谨慎上楼?",
+      "options": [
+        {
+          "id": "up",
+          "label": "谨慎上楼",
+          "effects": [
+            {
+              "kind": "jumpPhase",
+              "phaseId": "p_choice_bed"
+            }
+          ]
+        },
+        {
+          "id": "back",
+          "label": "退回继续调查",
+          "effects": [
+            {
+              "kind": "jumpPhase",
+              "phaseId": "p_act1"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "p_choice_bed",
+    "kind": "free",
+    "title": "抉择·二楼卧室",
+    "instruction": "二楼卧室门开着,屋里有血迹延续到床下。",
+    "participants": "all",
+    "allowedActions": [
+      "makeChoice"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    },
+    "choice": {
+      "id": "ch_bed",
+      "prompt": "屋里血迹延续到床下。检查床下?",
+      "options": [
+        {
+          "id": "check",
+          "label": "检查床下",
+          "effects": [
+            {
+              "kind": "jumpPhase",
+              "phaseId": "p_choice_body"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "p_choice_body",
+    "kind": "free",
+    "title": "抉择·床下的尸体",
+    "instruction": "床下发现了尸体!时间直接前进到22:15。",
+    "participants": "all",
+    "allowedActions": [
+      "makeChoice"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    },
+    "choice": {
+      "id": "ch_body",
+      "prompt": "床下发现尸体,调查阶段结束,进入谁是真凶。",
+      "options": [
+        {
+          "id": "proceed",
+          "label": "进入第二幕",
+          "effects": [
+            {
+              "kind": "jumpPhase",
+              "phaseId": "p_act2"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "id": "p_act2",
+    "kind": "free",
+    "title": "谁是真凶?",
+    "instruction": "22:20。打开22:15后才能调查的线索(尸体/现场/物品)。线索可不公开,公开或私下询问。房主判断讨论结束后推进投票。",
+    "participants": "all",
+    "allowedActions": [
+      "searchClue",
+      "revealClue",
+      "speak",
+      "privateMessage"
+    ],
+    "unlocks": {
+      "clueIds": [
+        "c16",
+        "c17",
+        "c18",
+        "c19",
+        "c20",
+        "c22",
+        "c24",
+        "c25",
+        "c26",
+        "c27",
+        "c29",
+        "c30",
+        "c31",
+        "c32",
+        "c33"
+      ]
+    },
+    "exit": {
+      "kind": "hostAdvance"
+    }
+  },
+  {
+    "id": "p_vote",
+    "kind": "vote",
+    "title": "投票指认",
+    "instruction": "指认你认为的真凶。",
+    "participants": "all",
+    "allowedActions": [
+      "castVote"
+    ],
+    "exit": {
+      "kind": "voteComplete"
+    }
+  },
+  {
+    "id": "p_reveal",
+    "kind": "reveal",
+    "title": "真相揭晓",
+    "instruction": "傀儡的记忆,真相揭晓。",
+    "participants": "all",
+    "allowedActions": [],
+    "exit": {
+      "kind": "hostAdvance"
+    }
+  }
+]

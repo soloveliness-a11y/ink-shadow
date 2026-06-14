@@ -49,6 +49,11 @@ export const zCharacter = z.object({
   faction: z.string().optional(), // 阵营标识(阵营本,如 'red'/'blue'/'neutral')
   team: z.string().optional(), // 队伍标识(可与 faction 不同,机制本预留)
   resources: z.record(z.string(), z.number()).optional(), // 数值资源(金钱/体力/积分,机制本预留)
+  keywordMemories: z.array(z.object({
+    id: z.string(),
+    keyword: z.string(), // 触发关键词(玩家说出/看到时解锁,自己不能主动说)
+    text: z.string(), // 记忆片段内容(仅持有者可见)
+  })).optional(), // 关键词触发记忆(豪门本"回忆"机制)
   passiveClueGivers: z.array(z.object({
     targetCharId: z.string(),
     clueId: z.string(),

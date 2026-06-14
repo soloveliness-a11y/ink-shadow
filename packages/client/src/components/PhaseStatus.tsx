@@ -90,6 +90,9 @@ export function PhaseStatus() {
           <div className="phase-status-sub">{phase.instruction}</div>
         </div>
         <div className="phase-status-metrics">
+          {phase.currentTime && (
+            <span className="status-pill">🕐 {phase.currentTime}{phase.clockEnd ? ` / ${phase.clockEnd}` : ''}</span>
+          )}
           {remaining !== null && (() => {
             const cls = isCritical ? ' status-pill-critical' : isUrgent ? ' status-pill-urgent' : '';
             const label = (isUrgent ? '⚠ ' : '') + formatDuration(remaining);

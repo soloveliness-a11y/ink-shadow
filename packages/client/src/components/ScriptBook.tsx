@@ -95,6 +95,9 @@ export function ScriptBook() {
     const label = o.kind === 'main' ? '主线目标' : o.kind === 'hidden' ? '隐藏目标' : '支线目标';
     segments.push({ title: label, body: o.description });
   }
+  for (const km of self?.unlockedKeywordMemories ?? []) {
+    segments.push({ title: `触发的记忆·${km.keyword}`, body: km.text });
+  }
 
   // 分页:短环节合并填满一页,长环节独占(不硬切,保证段落完整)
   const charsPerPage = 1200;

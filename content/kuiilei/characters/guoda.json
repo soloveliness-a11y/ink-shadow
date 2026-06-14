@@ -1,0 +1,89 @@
+{
+  "id": "guoda",
+  "name": "郭大",
+  "gender": "male",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "光头驼背,花白胡子脸上有疤的马车夫。洛意丝雇来的车夫。",
+  "privateScript": "你本名郭立柱,曾给法蓝庄送货。7月29日你的车撞死了白发男人(吴百安),你用旧毛毯裹尸扔进了黄浦江。你现在被洛意丝雇佣来法蓝庄。",
+  "objectives": [
+    {
+      "id": "o1",
+      "kind": "main",
+      "description": "让洛意丝相信你"
+    },
+    {
+      "id": "o2",
+      "kind": "main",
+      "description": "让其他人相信你编造的身份来历"
+    },
+    {
+      "id": "o3",
+      "kind": "hidden",
+      "description": "你把吴百安尸体扔进黄浦江(撞死后抛尸)。你曾把法蓝庄秘密泄露给日本人"
+    }
+  ],
+  "secrets": [
+    "真名郭立柱",
+    "7/29撞死吴百安后抛尸黄浦江",
+    "曾向日本人泄露法蓝庄秘密"
+  ],
+  "timeline": [
+    {
+      "time": "7/29",
+      "location": "路口",
+      "action": "撞死吴百安,抛尸黄浦江",
+      "isPublic": false
+    },
+    {
+      "time": "8/3",
+      "location": "法蓝庄",
+      "action": "被洛意丝雇来法蓝庄",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "luoyisi",
+      "relation": "你的财主目标",
+      "isPublic": false
+    }
+  ],
+  "keywordMemories": [
+    {
+      "id": "m1",
+      "keyword": "一个男人的画像",
+      "text": "画像杀人魔鬼的故事(你编的)。"
+    },
+    {
+      "id": "m2",
+      "keyword": "白色的外衣",
+      "text": "白衣女人鬼故事(你编的)。"
+    },
+    {
+      "id": "m3",
+      "keyword": "唐茂光",
+      "text": "你认识唐茂光(吹牛)。"
+    },
+    {
+      "id": "m4",
+      "keyword": "绳子",
+      "text": "你被庄主绑起来问泄露的事。"
+    },
+    {
+      "id": "m5",
+      "keyword": "儿童涂鸦",
+      "text": "五个小孩鬼故事(你编的)。"
+    },
+    {
+      "id": "m6",
+      "keyword": "药剂师",
+      "text": "吴姓药剂师给夏三虎药。"
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "郭大头像,光头驼背花白胡子疤痕马车夫,暗调油画",
+    "aspect": "3:4"
+  }
+}

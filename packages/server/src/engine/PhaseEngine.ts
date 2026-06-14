@@ -195,6 +195,7 @@ export class PhaseEngine {
       deadline: phase.exit.kind === 'timer' && phase.exit.timerSec ? now() + phase.exit.timerSec * 1000 : undefined,
       actedCharIds: [],
       searchCount: phase.maxSearches ? {} : undefined,
+      currentTime: phase.clock?.startTime,
     };
   }
 
@@ -323,6 +324,13 @@ export class PhaseEngine {
         if (this.state.theories[charId]) return reject('already_submitted_theory');
         break;
       }
+      case 'makeChoice': {
+        const choice = phase.choice;
+        if (!choice || choice.id !== intent.choiceId) return reject('no_active_choice');
+        if (!choice.options.some((o) => o.id === intent.optionId)) return reject('invalid_choice_option');
+        if (this.state.flags[`choice:${charId}:${choice.id}`]) return reject('already_chose');
+        break;
+      }
     }
     return ok();
   }
@@ -334,6 +342,7 @@ export class PhaseEngine {
         break;
       case 'speak':
         this.bus.event({ type: 'speak', actorCharId: charId, payload: { text: intent.text } });
+        this.scanKeywordMemories(charId, intent.text);
         break;
       case 'searchClue': {
         if (!this.state.acquiredClues[charId]) this.state.acquiredClues[charId] = [];
@@ -352,6 +361,7 @@ export class PhaseEngine {
           }
         }
         this.bus.event({ type: 'search_clue', actorCharId: charId, payload: { clueId: intent.clueId, clueTitle: clue?.title } });
+        this.advanceClock();
         break;
       }
       case 'revealClue': {
@@ -384,7 +394,63 @@ export class PhaseEngine {
         // 事件不含推理文本（防作弊:推理在揭晓前私密）
         this.bus.event({ type: 'submit_theory', actorCharId: charId });
         break;
+      case 'makeChoice': {
+        const phase = this.current();
+        const choice = phase?.choice;
+        const opt = choice?.options.find((o) => o.id === intent.optionId);
+        if (!choice || !opt) break;
+        const flag = `choice:${charId}:${choice.id}`;
+        if (this.state.flags[flag]) break;
+        this.state.flags[flag] = true;
+        let jumped = false;
+        for (const eff of opt.effects) {
+          if (eff.kind === 'giveClue') {
+            if (!this.state.acquiredClues[charId]) this.state.acquiredClues[charId] = [];
+            if (!this.state.acquiredClues[charId].includes(eff.clueId)) this.state.acquiredClues[charId].push(eff.clueId);
+          } else if (eff.kind === 'setFlag') {
+            this.state.flags[eff.flag] = true;
+          } else if (eff.kind === 'advanceClock') {
+            this.advanceClock();
+          } else if (eff.kind === 'unlockStory') {
+            this.state.flags[`story:${eff.storyKey}`] = true;
+          } else if (eff.kind === 'jumpPhase') {
+            jumped = true;
+            this.bus.event({ type: 'choice_made', actorCharId: charId, payload: { choiceId: choice.id, optionId: opt.id, jumpedTo: eff.phaseId } });
+            this.enter(eff.phaseId); // 抉择跳转(覆盖 flow)
+          }
+        }
+        if (!jumped) this.bus.event({ type: 'choice_made', actorCharId: charId, payload: { choiceId: choice.id, optionId: opt.id } });
+        break;
+      }
     }
+  }
+
+  /** 关键词触发记忆:扫描非发言者的 keywordMemories,命中 → 解锁 + 私发记忆给持有者 */
+  private scanKeywordMemories(speakerCharId: string, text: string): void {
+    for (const ch of this.script.characters) {
+      if (ch.id === speakerCharId || !ch.keywordMemories) continue;
+      for (const km of ch.keywordMemories) {
+        const flag = `kwmem:${ch.id}:${km.id}`;
+        if (this.state.flags[flag]) continue;
+        if (text.includes(km.keyword)) {
+          this.state.flags[flag] = true;
+          this.bus.sendToChar(ch.id, { kind: 'keywordMemory', charId: ch.id, memId: km.id, keyword: km.keyword, text: km.text });
+          // 不广播事件:记忆触发是私密的,仅持有人收到 keywordMemory;其他人不知
+        }
+      }
+    }
+  }
+
+  /** 时钟前进 stepMin(clock phase 用,调查/抉择后推进游戏内时间) */
+  private advanceClock(): void {
+    const phase = this.current();
+    if (!phase?.clock) return;
+    const rt = this.state.phaseRuntime;
+    if (!rt.currentTime) rt.currentTime = phase.clock.startTime;
+    const [h, m] = rt.currentTime.split(':').map(Number);
+    const total = (h ?? 0) * 60 + (m ?? 0) + phase.clock.stepMin;
+    rt.currentTime = `${String(Math.floor(total / 60)).padStart(2, '0')}:${String(total % 60).padStart(2, '0')}`;
+    this.bus.event({ type: 'clock_advanced', payload: { currentTime: rt.currentTime } });
   }
 
   private setPlayerReady(charId: string, ready: boolean): void {
@@ -396,6 +462,11 @@ export class PhaseEngine {
     const phase = this.current();
     if (!phase) return false;
     const rt = this.state.phaseRuntime;
+
+    // 时钟到点(clock phase):currentTime >= endTime 即推进
+    if (phase.clock && rt.currentTime && rt.currentTime >= phase.clock.endTime) {
+      return true;
+    }
 
     // 只统计 connected 玩家
     const activePlayers = this.state.players.filter((p) => p.connected && p.charId);

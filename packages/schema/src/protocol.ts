@@ -7,7 +7,7 @@ import { zRoomStatus, zGameEvent } from './runtime.js';
  * 协议版本号。每次改动 ClientIntent / ServerMessage / ClientStateView 结构时手动 +1。
  * client join 时上报,server 比对;不一致则提示玩家刷新页面(防旧前端发旧协议的静默故障)。
  */
-export const PROTOCOL_VERSION = 6;
+export const PROTOCOL_VERSION = 7;
 
 /**
  * 客户端 → 服务器:玩家意图。
@@ -29,6 +29,7 @@ export const zClientIntent = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('kickPlayer'), targetPlayerId: z.string() }), // 房主踢人(仅 lobby)
   z.object({ kind: z.literal('manualAdvance') }),
   z.object({ kind: z.literal('rollbackPhase') }),
+  z.object({ kind: z.literal('makeChoice'), choiceId: z.string(), optionId: z.string() }),
   z.object({ kind: z.literal('configureDm'), enabled: z.boolean(), provider: z.enum(['anthropic', 'openai']).optional(), apiKey: z.string().optional(), apiUrl: z.string().optional(), model: z.string().optional() }),
 ]);
 export type ClientIntent = z.infer<typeof zClientIntent>;
@@ -128,6 +129,11 @@ export const zClientStateView = z.object({
       })).optional(),
       mandatoryReveal: z.array(z.string()).optional(), // 必须公开的信息
       theory: z.string().optional(), // 已提交的推理文本
+      unlockedKeywordMemories: z.array(z.object({
+        id: z.string(),
+        keyword: z.string(),
+        text: z.string(),
+      })).default([]), // 关键词触发解锁的记忆片段(豪门本"回忆")
     })
     .optional(),
   currentPhase: z
@@ -145,6 +151,13 @@ export const zClientStateView = z.object({
       mySearchCount: z.number().int().optional(),
       restrictVoteTargets: z.array(z.string()).optional(),
       voteMode: z.enum(['char', 'team', 'proposal']).optional(),
+      choice: z.object({
+        id: z.string(),
+        prompt: z.string(),
+        options: z.array(z.object({ id: z.string(), label: z.string() })),
+      }).optional(), // 抉择点(裁掉 effects,不下发后果)
+      currentTime: z.string().optional(), // 时钟当前时间(clock phase)
+      clockEnd: z.string().optional(), // 时钟结束时间
     })
     .optional(),
   phaseProgress: z
@@ -191,6 +204,7 @@ export const zServerMessage = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('privateMessage'), fromCharId: z.string(), text: z.string() }),
   z.object({ kind: z.literal('kicked'), reason: z.string().optional() }), // 被房主移出房间
   z.object({ kind: z.literal('dmNarrative'), text: z.string(), charId: z.string().optional() }), // AI DM 旁白
+  z.object({ kind: z.literal('keywordMemory'), charId: z.string(), memId: z.string(), keyword: z.string(), text: z.string() }), // 私发:关键词解锁的记忆片段
   z.object({ kind: z.literal('error'), code: z.string().optional(), message: z.string() }),
 ]);
 export type ServerMessage = z.infer<typeof zServerMessage>;

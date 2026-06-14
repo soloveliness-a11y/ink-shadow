@@ -1,0 +1,18 @@
+{
+  "id": "duguicheng",
+  "name": "杜贵成",
+  "gender": "male",
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "法蓝庄前总管,精神病院13号病人。二楼床下的尸体。",
+  "privateScript": "（NPC·非玩家角色·死者）",
+  "objectives": [],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "杜贵成头像,花白乱发民国老人,暗调油画",
+    "aspect": "3:4"
+  }
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "s_hall",
+    "name": "大厅",
+    "description": "一楼大厅,挂着画像,地上有血污地毡。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "法蓝庄大厅,民国废弃老宅,暗调",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_corridor",
+    "name": "走廊",
+    "description": "一楼走廊,有地图和撕下的照片。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "法蓝庄走廊,暗调",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_room1",
+    "name": "一号房",
+    "description": "书房/实验室区域,地面塌方,有暗格。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "法蓝庄一号房书房塌方,暗调",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_room2",
+    "name": "二号房",
+    "description": "有西式煮锅的房间。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "法蓝庄二号房,暗调",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_room3",
+    "name": "三号房",
+    "description": "有药瓶、白外衣、社团名单。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "法蓝庄三号房药瓶,暗调",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_room5",
+    "name": "五号房",
+    "description": "墙上有儿童涂鸦。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "法蓝庄五号房涂鸦,暗调",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_room6",
+    "name": "六号房",
+    "description": "有注射器和通往二楼的漆黑楼梯。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "法蓝庄六号房楼梯漆黑,暗调",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_bedroom",
+    "name": "二楼卧室",
+    "description": "案发现场,床下藏着尸体。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "法蓝庄二楼卧室案发现场,暗调",
+      "aspect": "16:9"
+    }
+  }
+]

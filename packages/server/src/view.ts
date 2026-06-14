@@ -202,6 +202,9 @@ function buildPhaseView(script: Script, state: RuntimeState, charId: string | un
     mySearchCount: charId ? (state.phaseRuntime.searchCount?.[charId] ?? 0) : undefined,
     restrictVoteTargets: state.phaseRuntime.resolvedVoteTargets ?? (Array.isArray(phase.restrictVoteTargets) ? phase.restrictVoteTargets : undefined),
     voteMode: phase.voteMode,
+    choice: phase.choice ? { id: phase.choice.id, prompt: phase.choice.prompt, options: phase.choice.options.map((o) => ({ id: o.id, label: o.label })) } : undefined,
+    currentTime: state.phaseRuntime.currentTime,
+    clockEnd: phase.clock?.endTime,
   };
 }
 
@@ -232,7 +235,7 @@ function buildPhaseProgress(script: Script, state: RuntimeState): ClientStateVie
 
 function buildSelfView(script: Script, state: RuntimeState, charId: string): NonNullable<ClientStateView['self']> {
   const ch = script.characters.find((c) => c.id === charId);
-  if (!ch) return { charId, privateScript: '', storyUnlocked: [], unlockedNarratives: [], unlockedPhaseBlocks: [], objectives: [], myClues: [], skills: [], passiveClueGivers: [], mandatoryReveal: [] };
+  if (!ch) return { charId, privateScript: '', storyUnlocked: [], unlockedNarratives: [], unlockedPhaseBlocks: [], objectives: [], myClues: [], skills: [], passiveClueGivers: [], mandatoryReveal: [], unlockedKeywordMemories: [] };
 
   // 已获取的线索(含内容)
   const myClueIds = state.acquiredClues[charId] ?? [];
@@ -277,6 +280,9 @@ function buildSelfView(script: Script, state: RuntimeState, charId: string): Non
     passiveClueGivers: ch.passiveClueGivers ?? [],
     mandatoryReveal: ch.mandatoryReveal ?? [],
     theory: state.theories[charId] || undefined,
+    unlockedKeywordMemories: (ch.keywordMemories ?? [])
+      .filter((km) => state.flags[`kwmem:${charId}:${km.id}`])
+      .map((km) => ({ id: km.id, keyword: km.keyword, text: km.text })),
   };
 }
 
