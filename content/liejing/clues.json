@@ -1,0 +1,26 @@
+[
+  {
+    "id": "clue_bedroom",
+    "name": "林老爷卧室线索",
+    "type": "location",
+    "description": "林老爷被发现死在卧室内，现场有土炸弹的痕迹。",
+    "location": "林老爷卧室",
+    "scene": "s_lin_bedroom"
+  },
+  {
+    "id": "clue_lu_home",
+    "name": "卢家线索",
+    "type": "location",
+    "description": "卢恩健的家，他曾是「谍检稽查」。",
+    "location": "卢家",
+    "scene": "s_lu_home"
+  },
+  {
+    "id": "clue_newspaper",
+    "name": "报社线索",
+    "type": "location",
+    "description": "林轩宏工作的地方，他曾在此实习。",
+    "location": "报社",
+    "scene": "s_newspaper_office"
+  }
+]

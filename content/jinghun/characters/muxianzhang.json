@@ -1,0 +1,41 @@
+{
+  "id": "muxianzhang",
+  "name": "木县长",
+  "realName": "周启帆/李独钟",
+  "role": "县长",
+  "gender": "male",
+  "age": 35,
+  "description": "三十多岁，白面长须，面带一丝忧色，头戴民国爵士帽，身穿长袍。",
+  "background": "德清县县长，身份复杂，可能有多重身份。",
+  "motivation": "想保护自己，找出真相。",
+  "secrets": [
+    "身份复杂，可能有多重身份",
+    "知道一些秘密"
+  ],
+  "relationships": [
+    {
+      "to": "孙师爷",
+      "relation": "同事",
+      "detail": "孙师爷是他的下属"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真相",
+      "description": "你找出真相，保护了自己。"
+    },
+    {
+      "id": "ending_2",
+      "name": "结局二",
+      "condition": "没找出真相",
+      "description": "你没有找出真相，但继续做县长。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese official, 35 years old, formal clothes, oil painting style",
+    "aspect": "3:4"
+  }
+}

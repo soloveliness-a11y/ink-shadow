@@ -1,0 +1,21 @@
+{
+  "id": "liejing",
+  "title": "裂镜重圆",
+  "theme": "民国天津·林家命案",
+  "playerCount": {
+    "min": 6,
+    "max": 6
+  },
+  "difficulty": "hard",
+  "durationMin": 300,
+  "synopsis": "民国三年（1914年）9月12日，天津西郊林家。家主人林居尚即将年满五十，生辰在即。然而在这座大院重楼里，一场精心策划的暗杀正在上演——「裂镜」组织的目标是卢恩健，而真凶就藏在幸存者之中。",
+  "styleGuide": "1914 Republican era Chinese mansion in Tianjin, traditional architecture, oil painting style, dramatic lighting, mysterious atmosphere",
+  "cover": {
+    "kind": "cover",
+    "prompt": "Vertical poster for a 1914 Chinese mansion murder mystery. Traditional Tianjin architecture, oil painting style, dramatic lighting, six silhouettes in period costumes, mysterious atmosphere",
+    "aspect": "3:4"
+  },
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "genre": "murder"
+}

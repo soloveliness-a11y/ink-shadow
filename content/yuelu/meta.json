@@ -1,0 +1,21 @@
+{
+  "id": "yuelu",
+  "title": "岳麓山下",
+  "theme": "民国长沙·岳麓山命案",
+  "playerCount": {
+    "min": 6,
+    "max": 6
+  },
+  "difficulty": "hard",
+  "durationMin": 300,
+  "synopsis": "民国三年（1914年），长沙岳麓山下。湘福轮船公司老板易温离奇死亡，六名嫌疑人各有动机。在这座隐藏着家族秘密的麓下馆里，一场精心策划的谋杀正在上演——而真凶，就藏在幸存者之中。",
+  "styleGuide": "1914 Republican era Chinese mansion near Yuelu Mountain, traditional architecture, oil painting style, dramatic lighting, mysterious atmosphere",
+  "cover": {
+    "kind": "cover",
+    "prompt": "Vertical poster for a 1914 Chinese mansion murder mystery. Traditional architecture near Yuelu Mountain, oil painting style, dramatic lighting, six silhouettes in period costumes, mysterious atmosphere",
+    "aspect": "3:4"
+  },
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "genre": "murder"
+}

@@ -1,0 +1,149 @@
+[
+  {
+    "id": "p_opening",
+    "kind": "briefing",
+    "title": "开场·角色分配",
+    "instruction": "民国三年（1914年）9月4日，广东宝殊镇。请各位阅读自己的角色剧本，了解身份与背景。准备好后点击就绪。",
+    "participants": "all",
+    "allowedActions": [
+      "readScript",
+      "ready"
+    ],
+    "exit": {
+      "kind": "allReady"
+    }
+  },
+  {
+    "id": "p_act1",
+    "kind": "free",
+    "title": "第一幕·9月1日",
+    "instruction": "时间回到三天前——9月1日。从你的视角讲述这一天发生的事。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "readScript",
+      "ready"
+    ],
+    "unlocks": {
+      "storyKey": "act1"
+    },
+    "exit": {
+      "kind": "allReady"
+    }
+  },
+  {
+    "id": "p_act2",
+    "kind": "free",
+    "title": "第二幕·9月2日",
+    "instruction": "前天（9月2日）。葛月萝被放入棺材送去坟场停灵。集体调查开始。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "readScript",
+      "searchClue",
+      "revealClue",
+      "ready"
+    ],
+    "unlocks": {
+      "storyKey": "act2",
+      "clueIds": [
+        "cl_ge_home_letter",
+        "cl_zhang_pharmacy",
+        "cl_yu_tablet",
+        "cl_lv_tavern_hole",
+        "cl_ge_grave",
+        "cl_cemetery_gunshot",
+        "cl_old_house_blood",
+        "cl_tavern_wine",
+        "cl_xue_gesture"
+      ]
+    },
+    "maxSearches": 3,
+    "exit": {
+      "kind": "allReady"
+    }
+  },
+  {
+    "id": "p_act3",
+    "kind": "free",
+    "title": "第三幕·9月3日",
+    "instruction": "昨天（9月3日）。吕松年和薛达财的尸体被发现，张太太想阻止妹妹继续杀人。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "readScript",
+      "searchClue",
+      "revealClue",
+      "ready"
+    ],
+    "unlocks": {
+      "storyKey": "act3"
+    },
+    "maxSearches": 3,
+    "exit": {
+      "kind": "allReady"
+    }
+  },
+  {
+    "id": "p_act4",
+    "kind": "free",
+    "title": "第四幕·9月4日",
+    "instruction": "今天（9月4日），农历七月十五中元节。最后的调查机会。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "readScript",
+      "searchClue",
+      "revealClue",
+      "ready"
+    ],
+    "unlocks": {
+      "storyKey": "act4"
+    },
+    "maxSearches": 2,
+    "exit": {
+      "kind": "allReady"
+    }
+  },
+  {
+    "id": "p_vote",
+    "kind": "vote",
+    "title": "投票指认",
+    "instruction": "所有线索已摆在面前。请投出你的一票。",
+    "participants": "all",
+    "allowedActions": [
+      "castVote"
+    ],
+    "exit": {
+      "kind": "voteComplete"
+    }
+  },
+  {
+    "id": "p_end_correct",
+    "kind": "reveal",
+    "title": "结局·真相大白",
+    "instruction": "真凶被识破。阅读你的结局。",
+    "participants": "all",
+    "allowedActions": [
+      "readScript"
+    ],
+    "exit": {
+      "kind": "timer",
+      "timerSec": 30
+    }
+  },
+  {
+    "id": "p_end_wrong",
+    "kind": "reveal",
+    "title": "结局·真凶逃脱",
+    "instruction": "真凶逃脱了审判。阅读你的结局。",
+    "participants": "all",
+    "allowedActions": [
+      "readScript"
+    ],
+    "exit": {
+      "kind": "timer",
+      "timerSec": 30
+    }
+  }
+]

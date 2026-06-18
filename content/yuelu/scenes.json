@@ -1,0 +1,52 @@
+[
+  {
+    "id": "s_luxia_museum",
+    "name": "麓下馆",
+    "description": "岳麓山下的别墅，易温的住所。三层结构，一层有大厅、餐厅、厨房，二层有卧室、书房，三层有客房。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "1914 Chinese mansion near Yuelu Mountain, traditional architecture, oil painting style, dramatic lighting",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_first_floor",
+    "name": "一层",
+    "description": "麓下馆一层，有大厅、餐厅、厨房。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "1914 mansion first floor, grand hall, oil painting style, warm candlelight",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_second_floor",
+    "name": "二层",
+    "description": "麓下馆二层，有主人卧室、书房。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "1914 mansion second floor, bedroom, study, oil painting style, dim lighting",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_third_floor",
+    "name": "三层",
+    "description": "麓下馆三层，有客房。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "1914 mansion third floor, guest rooms, oil painting style, mysterious atmosphere",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_basement",
+    "name": "地下室",
+    "description": "麓下馆地下室，有多个房间，隐藏着秘密。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "1914 mansion basement, dark rooms, oil painting style, eerie atmosphere",
+      "aspect": "16:9"
+    }
+  }
+]

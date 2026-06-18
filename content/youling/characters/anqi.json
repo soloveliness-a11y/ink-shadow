@@ -1,0 +1,39 @@
+{
+  "id": "anqi",
+  "name": "安琪",
+  "role": "西饼店实习生",
+  "gender": "female",
+  "age": 20,
+  "description": "芙兰茜西饼店的实习生，与夏家拳馆有关。",
+  "background": "芙兰茜西饼店的实习生，与夏家拳馆有复杂关系。",
+  "motivation": "想保护自己，找出真相。",
+  "secrets": [
+    "与夏家拳馆有复杂关系"
+  ],
+  "relationships": [
+    {
+      "to": "夏三虎",
+      "relation": "复杂关系",
+      "detail": "与夏三虎有复杂关系"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真相",
+      "description": "你找出真相，保护了自己。"
+    },
+    {
+      "id": "ending_2",
+      "name": "结局二",
+      "condition": "没找出真相",
+      "description": "你没有找出真相，但安全离开。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese girl, 20 years old, bakery uniform, oil painting style",
+    "aspect": "3:4"
+  }
+}

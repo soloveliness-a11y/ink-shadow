@@ -1,0 +1,18 @@
+[
+  {
+    "id": "clue_inner_court",
+    "name": "内宅线索",
+    "type": "location",
+    "description": "醉阳楼内宅，有秦芳君房、吴丽人房、吴怡人房等。",
+    "location": "内宅区域",
+    "scene": "s_inner_court"
+  },
+  {
+    "id": "clue_outer_court",
+    "name": "外院线索",
+    "type": "location",
+    "description": "醉阳楼外院，有大厅、厨房、仓库等。",
+    "location": "外院区域",
+    "scene": "s_outer_court"
+  }
+]

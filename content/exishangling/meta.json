@@ -1,0 +1,21 @@
+{
+  "id": "exishangling",
+  "title": "鄂西山灵",
+  "theme": "民国鄂西·姊陵坪命案",
+  "playerCount": {
+    "min": 6,
+    "max": 6
+  },
+  "difficulty": "hard",
+  "durationMin": 300,
+  "synopsis": "民国三年（1914年），鄂西姊陵坪。巫师家发生命案，六名嫌疑人各有动机。在这座隐藏着山灵传说的寨子里，真凶就藏在幸存者之中。",
+  "styleGuide": "1914 Republican era Western Hubei mountain village, traditional architecture, oil painting style, dramatic lighting, mysterious atmosphere",
+  "cover": {
+    "kind": "cover",
+    "prompt": "Vertical poster for a 1914 Chinese mountain village murder mystery. Traditional architecture, oil painting style, dramatic lighting, six silhouettes in period costumes, mysterious atmosphere",
+    "aspect": "3:4"
+  },
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "genre": "murder"
+}

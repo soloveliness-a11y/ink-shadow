@@ -1,0 +1,45 @@
+{
+  "id": "xiazhongpeng",
+  "name": "夏仲鹏",
+  "role": "拳馆顾问",
+  "gender": "male",
+  "age": 42,
+  "description": "夏家拳馆的顾问，坐轮椅，与夏三虎是兄弟。",
+  "background": "夏家拳馆的顾问，与夏三虎是兄弟。",
+  "motivation": "想保护拳馆，找出杀害哥哥的凶手。",
+  "secrets": [
+    "与夏三虎是兄弟",
+    "知道拳馆的秘密"
+  ],
+  "relationships": [
+    {
+      "to": "夏三虎",
+      "relation": "兄弟",
+      "detail": "夏三虎是他的哥哥"
+    },
+    {
+      "to": "夏叔娥",
+      "relation": "叔侄",
+      "detail": "夏叔娥是他的侄女"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真凶",
+      "description": "你找出杀害哥哥的凶手，为哥哥报仇。"
+    },
+    {
+      "id": "ending_2",
+      "name": "结局二",
+      "condition": "没找出真凶",
+      "description": "你没有找出凶手，拳馆陷入困境。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese man, 42 years old, wheelchair, oil painting style, solemn expression",
+    "aspect": "3:4"
+  }
+}

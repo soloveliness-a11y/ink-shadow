@@ -1,0 +1,35 @@
+{
+  "id": "chenjunmeng",
+  "name": "陈均梦",
+  "realName": "方敏月",
+  "role": "盲女",
+  "gender": "female",
+  "age": 21,
+  "description": "二十一岁，长发白肤，双眼紧闭，似乎心事重重。",
+  "background": "本名方敏月，是方乘山的女儿，双眼失明。",
+  "motivation": "想找出真相，为父亲报仇。",
+  "secrets": [
+    "本名方敏月，是方乘山的女儿",
+    "双眼失明"
+  ],
+  "relationships": [
+    {
+      "to": "方医生",
+      "relation": "姐妹",
+      "detail": "方医生是她的姐姐"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真相",
+      "description": "你找出真相，为父亲报仇。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese blind girl, 21 years old, long hair, oil painting style",
+    "aspect": "3:4"
+  }
+}

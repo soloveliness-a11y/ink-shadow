@@ -1,0 +1,63 @@
+{
+  "script": "yuelu",
+  "timestamp": "2026-06-18T02:19:42.105Z",
+  "summary": {
+    "total": 13,
+    "passed": 13,
+    "failed": 0
+  },
+  "details": [
+    {
+      "success": true,
+      "file": "content/yuelu/meta.json"
+    },
+    {
+      "success": true,
+      "file": "content/yuelu/clues.json"
+    },
+    {
+      "success": true,
+      "file": "content/yuelu/scenes.json"
+    },
+    {
+      "success": true,
+      "file": "content/yuelu/phases.json"
+    },
+    {
+      "success": true,
+      "file": "content/yuelu/flow.json"
+    },
+    {
+      "success": true,
+      "file": "content/yuelu/truth.json"
+    },
+    {
+      "success": true,
+      "file": "content/yuelu/characters/ayang.json"
+    },
+    {
+      "success": true,
+      "file": "content/yuelu/characters/daini.json"
+    },
+    {
+      "success": true,
+      "file": "content/yuelu/characters/minjiaxue.json"
+    },
+    {
+      "success": true,
+      "file": "content/yuelu/characters/songyanhu.json"
+    },
+    {
+      "success": true,
+      "file": "content/yuelu/characters/suwenzhao.json"
+    },
+    {
+      "success": true,
+      "file": "content/yuelu/characters/yilianzhi.json"
+    },
+    {
+      "success": true,
+      "file": "content/yuelu/meta.json"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "id": "tianjiwulang",
+  "name": "田吉雾郎",
+  "role": "日本人",
+  "gender": "male",
+  "age": 35,
+  "description": "日本人，身份神秘。",
+  "background": "日本人，与案件有关。",
+  "motivation": "想完成任务，找出真相。",
+  "secrets": [
+    "身份神秘，与案件有关"
+  ],
+  "relationships": [
+    {
+      "to": "桥牧野",
+      "relation": "同事",
+      "detail": "两人都是日本人"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真相",
+      "description": "你找出真相，完成任务。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Japanese man, 35 years old, oil painting style",
+    "aspect": "3:4"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "id": "suwenzhao",
+  "name": "苏闻兆",
+  "role": "易温的朋友",
+  "gender": "male",
+  "age": 30,
+  "description": "易温的朋友，湘福轮船公司经理。",
+  "background": "易温的朋友，湘福轮船公司经理，知道易温的秘密。",
+  "motivation": "想保护湘福轮船公司，找出杀害易温的凶手。",
+  "secrets": [
+    "知道易温的秘密",
+    "与湘福轮船公司有关"
+  ],
+  "relationships": [
+    {
+      "to": "易温",
+      "relation": "朋友",
+      "detail": "易温是他的朋友"
+    },
+    {
+      "to": "黛妮",
+      "relation": "同事",
+      "detail": "两人在湘福轮船公司共事"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真凶",
+      "description": "你找出杀害易温的凶手，保护了湘福轮船公司。"
+    },
+    {
+      "id": "ending_2",
+      "name": "结局二",
+      "condition": "没找出真凶",
+      "description": "你没有找出凶手，湘福轮船公司陷入困境。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese man, 30 years old, business expression, oil painting style",
+    "aspect": "3:4"
+  }
+}

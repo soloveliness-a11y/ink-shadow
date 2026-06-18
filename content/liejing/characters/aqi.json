@@ -1,0 +1,45 @@
+{
+  "id": "aqi",
+  "name": "阿启",
+  "role": "林轸远的朋友",
+  "gender": "male",
+  "age": 22,
+  "description": "林轸远的朋友，曾是孤儿。",
+  "background": "曾是孤儿，被林轸远收留，成为他的朋友。",
+  "motivation": "想帮助林轸远找出杀害林老爷的凶手。",
+  "secrets": [
+    "曾偷走一枚土炸弹",
+    "知道林轸远的秘密"
+  ],
+  "relationships": [
+    {
+      "to": "林轸远",
+      "relation": "朋友",
+      "detail": "林轸远是他的朋友和恩人"
+    },
+    {
+      "to": "林轶广",
+      "relation": "朋友",
+      "detail": "两人是朋友"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "帮助林轸远",
+      "description": "你帮助林轸远找出真相，两人一起离开天津。"
+    },
+    {
+      "id": "ending_2",
+      "name": "结局二",
+      "condition": "没帮助林轸远",
+      "description": "你没有帮助林轸远，独自离开。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese young man, loyal expression, oil painting style",
+    "aspect": "3:4"
+  }
+}

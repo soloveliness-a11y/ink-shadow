@@ -1,0 +1,33 @@
+{
+  "id": "guishu",
+  "name": "贵叔",
+  "role": "姚家仆人",
+  "gender": "male",
+  "age": 50,
+  "description": "看不出具体年纪，头发乱蓬，胡子邋遢。",
+  "background": "姚家的老仆人，知道很多秘密。",
+  "motivation": "想保护姚家，找出真相。",
+  "secrets": [
+    "知道姚家的秘密"
+  ],
+  "relationships": [
+    {
+      "to": "姚仲义",
+      "relation": "主仆",
+      "detail": "姚仲义是他的少主人"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真相",
+      "description": "你找出真相，保护了姚家。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese servant, old, oil painting style",
+    "aspect": "3:4"
+  }
+}

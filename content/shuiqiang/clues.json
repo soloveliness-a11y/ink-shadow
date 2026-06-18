@@ -1,0 +1,34 @@
+[
+  {
+    "id": "clue_exhibition_room",
+    "name": "陈列室线索",
+    "type": "location",
+    "description": "三层陈列室，有四个雕像、火铳柜子、屏风。阳台可以悬挂旗帜。",
+    "location": "三层陈列室",
+    "scene": "s_exhibition_room"
+  },
+  {
+    "id": "clue_basement",
+    "name": "地下密室线索",
+    "type": "location",
+    "description": "水池旁的地下通道，有祭坛、蜡状固体、装有白磷的玻璃瓶。",
+    "location": "地下密室",
+    "scene": "s_basement"
+  },
+  {
+    "id": "clue_master_bedroom",
+    "name": "主卧室线索",
+    "type": "location",
+    "description": "二层主卧室，有太太的画像、轮椅、蜡烛。",
+    "location": "二层主卧室",
+    "scene": "s_second_floor"
+  },
+  {
+    "id": "clue_kitchen",
+    "name": "厨房线索",
+    "type": "location",
+    "description": "一层厨房，有分餐制标签、风干鱼、阳江豆豉。",
+    "location": "一层厨房",
+    "scene": "s_first_floor"
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "id": "qiushanliuli",
+  "name": "秋山琉璃",
+  "role": "和服女人",
+  "gender": "female",
+  "age": 28,
+  "description": "和服女人，身份神秘。",
+  "background": "和服女人，与案件有关。",
+  "motivation": "想找出真相，但身份神秘。",
+  "secrets": [
+    "身份神秘，与案件有关"
+  ],
+  "relationships": [
+    {
+      "to": "田吉雾郎",
+      "relation": "同乡",
+      "detail": "两人都是日本人"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真相",
+      "description": "你找出真相，身份揭晓。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Japanese woman in kimono, 28 years old, oil painting style",
+    "aspect": "3:4"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "id": "kusheng",
+  "name": "苦生",
+  "role": "苦力",
+  "gender": "male",
+  "age": 28,
+  "description": "苦力，身份卑微。",
+  "background": "苦力，与案件有关。",
+  "motivation": "想改变命运，找出真相。",
+  "secrets": [
+    "与案件有关"
+  ],
+  "relationships": [
+    {
+      "to": "韩芸",
+      "relation": "朋友",
+      "detail": "两人是朋友"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真相",
+      "description": "你找出真相，改变命运。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese laborer, 28 years old, oil painting style",
+    "aspect": "3:4"
+  }
+}

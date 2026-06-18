@@ -1,0 +1,33 @@
+{
+  "id": "hanyun",
+  "name": "韩芸",
+  "role": "女工",
+  "gender": "female",
+  "age": 22,
+  "description": "女工，现在是民国了，女人出来工作并不稀奇。",
+  "background": "女工，与案件有关。",
+  "motivation": "想保护自己，找出真相。",
+  "secrets": [
+    "与案件有关"
+  ],
+  "relationships": [
+    {
+      "to": "苦生",
+      "relation": "朋友",
+      "detail": "两人是朋友"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真相",
+      "description": "你找出真相，保护了自己。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese factory girl, 22 years old, oil painting style",
+    "aspect": "3:4"
+  }
+}

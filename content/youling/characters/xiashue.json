@@ -1,0 +1,45 @@
+{
+  "id": "xiashue",
+  "name": "夏叔娥",
+  "role": "拳术教师",
+  "gender": "female",
+  "age": 21,
+  "description": "夏家拳馆的拳术教师，夏三虎的女儿。",
+  "background": "夏家拳馆的拳术教师，夏三虎的女儿。",
+  "motivation": "想找出杀害父亲的凶手。",
+  "secrets": [
+    "是夏三虎的女儿",
+    "知道拳馆的秘密"
+  ],
+  "relationships": [
+    {
+      "to": "夏三虎",
+      "relation": "父女",
+      "detail": "夏三虎是她的父亲"
+    },
+    {
+      "to": "夏仲鹏",
+      "relation": "叔侄",
+      "detail": "夏仲鹏是她的叔叔"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真凶",
+      "description": "你找出杀害父亲的凶手，为父亲报仇。"
+    },
+    {
+      "id": "ending_2",
+      "name": "结局二",
+      "condition": "没找出真凶",
+      "description": "你没有找出凶手，但继承了拳馆。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese girl, 21 years old, martial arts uniform, oil painting style",
+    "aspect": "3:4"
+  }
+}

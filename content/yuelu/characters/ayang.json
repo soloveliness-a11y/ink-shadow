@@ -1,0 +1,45 @@
+{
+  "id": "ayang",
+  "name": "阿扬",
+  "role": "易温的助手",
+  "gender": "male",
+  "age": 25,
+  "description": "易温的助手，忠诚老实。",
+  "background": "易温的助手，对易温忠心耿耿。",
+  "motivation": "想保护易温的家人，找出杀害易温的凶手。",
+  "secrets": [
+    "知道易温的秘密",
+    "曾见过可疑的人"
+  ],
+  "relationships": [
+    {
+      "to": "易温",
+      "relation": "主仆",
+      "detail": "易温是他的主人"
+    },
+    {
+      "to": "黛妮",
+      "relation": "同事",
+      "detail": "两人在湘福轮船公司共事"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真凶",
+      "description": "你找出杀害易温的凶手，为易温报仇。"
+    },
+    {
+      "id": "ending_2",
+      "name": "结局二",
+      "condition": "没找出真凶",
+      "description": "你没有找出凶手，但保护了易温的家人。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese servant, loyal expression, oil painting style",
+    "aspect": "3:4"
+  }
+}

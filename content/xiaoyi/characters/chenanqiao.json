@@ -1,0 +1,33 @@
+{
+  "id": "chenanqiao",
+  "name": "陈安巧",
+  "role": "侍女",
+  "gender": "female",
+  "age": 22,
+  "description": "二十出头，性格沉稳的侍女，深受红夫人信任。",
+  "background": "红夫人的侍女，深受信任，知道很多秘密。",
+  "motivation": "想保护红夫人，找出真相。",
+  "secrets": [
+    "知道红夫人的秘密"
+  ],
+  "relationships": [
+    {
+      "to": "红夫人",
+      "relation": "主仆",
+      "detail": "红夫人是她的主人"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真相",
+      "description": "你找出真相，保护了红夫人。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese maid, 22 years old, oil painting style",
+    "aspect": "3:4"
+  }
+}

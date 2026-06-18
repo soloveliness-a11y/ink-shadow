@@ -1,0 +1,39 @@
+{
+  "id": "duanyuetong",
+  "name": "段约同",
+  "role": "警察",
+  "gender": "male",
+  "age": 20,
+  "description": "上海浦东区的警察，负责调查此案。",
+  "background": "上海浦东区的警察，年轻有为。",
+  "motivation": "想找出杀害夏三虎的凶手。",
+  "secrets": [
+    "知道一些案件的秘密"
+  ],
+  "relationships": [
+    {
+      "to": "夏三虎",
+      "relation": "调查者",
+      "detail": "负责调查夏三虎的死亡案件"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真凶",
+      "description": "你找出杀害夏三虎的凶手，破获此案。"
+    },
+    {
+      "id": "ending_2",
+      "name": "结局二",
+      "condition": "没找出真凶",
+      "description": "你没有找出凶手，案件成为悬案。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese police officer, 20 years old, oil painting style, determined expression",
+    "aspect": "3:4"
+  }
+}

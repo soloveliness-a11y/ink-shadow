@@ -1,0 +1,41 @@
+{
+  "id": "wuliren",
+  "name": "吴丽人",
+  "realName": "离雁",
+  "role": "酒楼女招待",
+  "gender": "female",
+  "age": 20,
+  "description": "本名离雁，和母亲住在舅父家，六岁时母亲去世。",
+  "background": "本名离雁，母亲临终前给她一个绣囊，让她去京城寻亲。",
+  "motivation": "想找出真相，完成母亲的遗愿。",
+  "secrets": [
+    "本名离雁，不是吴丽人",
+    "母亲留下绣囊让她寻亲"
+  ],
+  "relationships": [
+    {
+      "to": "秦芳君",
+      "relation": "同事",
+      "detail": "在醉阳楼工作"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真相",
+      "description": "你找出真相，完成母亲的遗愿。"
+    },
+    {
+      "id": "ending_2",
+      "name": "结局二",
+      "condition": "没找出真相",
+      "description": "你没有找出真相，但继续生活。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese waitress, 20 years old, oil painting style",
+    "aspect": "3:4"
+  }
+}

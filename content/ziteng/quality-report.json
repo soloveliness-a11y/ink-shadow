@@ -1,0 +1,67 @@
+{
+  "script": "ziteng",
+  "timestamp": "2026-06-18T02:19:41.936Z",
+  "summary": {
+    "total": 14,
+    "passed": 14,
+    "failed": 0
+  },
+  "details": [
+    {
+      "success": true,
+      "file": "content/ziteng/meta.json"
+    },
+    {
+      "success": true,
+      "file": "content/ziteng/clues.json"
+    },
+    {
+      "success": true,
+      "file": "content/ziteng/scenes.json"
+    },
+    {
+      "success": true,
+      "file": "content/ziteng/phases.json"
+    },
+    {
+      "success": true,
+      "file": "content/ziteng/flow.json"
+    },
+    {
+      "success": true,
+      "file": "content/ziteng/truth.json"
+    },
+    {
+      "success": true,
+      "file": "content/ziteng/characters/geyueluo.json"
+    },
+    {
+      "success": true,
+      "file": "content/ziteng/characters/lewan.json"
+    },
+    {
+      "success": true,
+      "file": "content/ziteng/characters/lusongnian.json"
+    },
+    {
+      "success": true,
+      "file": "content/ziteng/characters/order.json"
+    },
+    {
+      "success": true,
+      "file": "content/ziteng/characters/xuedacai.json"
+    },
+    {
+      "success": true,
+      "file": "content/ziteng/characters/yuyancheng.json"
+    },
+    {
+      "success": true,
+      "file": "content/ziteng/characters/zhangtaitai.json"
+    },
+    {
+      "success": true,
+      "file": "content/ziteng/meta.json"
+    }
+  ]
+}

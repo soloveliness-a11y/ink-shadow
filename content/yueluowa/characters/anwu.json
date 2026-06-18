@@ -1,0 +1,14 @@
+{
+  "id": "anwu",
+  "name": "安梧",
+  "role": "角色",
+  "gender": "unknown",
+  "age": 25,
+  "description": "安梧，身份待确认。",
+  "background": "与案件有关。",
+  "motivation": "想找出真相。",
+  "secrets": ["与案件有关"],
+  "relationships": [],
+  "endings": [{"id": "ending_1", "name": "结局一", "condition": "找出真相", "description": "你找出真相。"}],
+  "visual": {"kind": "character", "prompt": "1914 Chinese person, oil painting style", "aspect": "3:4"}
+}

@@ -1,0 +1,75 @@
+{
+  "script": "jinghun",
+  "timestamp": "2026-06-18T02:19:41.687Z",
+  "summary": {
+    "total": 16,
+    "passed": 16,
+    "failed": 0
+  },
+  "details": [
+    {
+      "success": true,
+      "file": "content/jinghun/meta.json"
+    },
+    {
+      "success": true,
+      "file": "content/jinghun/clues.json"
+    },
+    {
+      "success": true,
+      "file": "content/jinghun/scenes.json"
+    },
+    {
+      "success": true,
+      "file": "content/jinghun/phases.json"
+    },
+    {
+      "success": true,
+      "file": "content/jinghun/flow.json"
+    },
+    {
+      "success": true,
+      "file": "content/jinghun/truth.json"
+    },
+    {
+      "success": true,
+      "file": "content/jinghun/characters/jianxiuwen.json"
+    },
+    {
+      "success": true,
+      "file": "content/jinghun/characters/jingtan.json"
+    },
+    {
+      "success": true,
+      "file": "content/jinghun/characters/lirenshan.json"
+    },
+    {
+      "success": true,
+      "file": "content/jinghun/characters/muxianzhang.json"
+    },
+    {
+      "success": true,
+      "file": "content/jinghun/characters/qinfangjun.json"
+    },
+    {
+      "success": true,
+      "file": "content/jinghun/characters/sunshiye.json"
+    },
+    {
+      "success": true,
+      "file": "content/jinghun/characters/wangfengzhou.json"
+    },
+    {
+      "success": true,
+      "file": "content/jinghun/characters/wuliren.json"
+    },
+    {
+      "success": true,
+      "file": "content/jinghun/characters/wuyiren.json"
+    },
+    {
+      "success": true,
+      "file": "content/jinghun/meta.json"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "id": "linyuansheng",
+  "name": "林园生",
+  "realName": "田绪园",
+  "gender": "male",
+  "age": 18,
+  "role": "渔叟扮演者",
+  "description": "男，十八岁。外貌俊俏，为人大大咧咧，演起戏来却气势汹汹。被安排扮演渔叟。",
+  "background": "原名田绪园，是田广顷的儿子。1914年来到上海上学，化名林园生加入花彩班。",
+  "motivation": "想在戏班中证明自己，与常晚亭有冲突。",
+  "secrets": [
+    "本名田绪园，是田广顷的儿子",
+    "打昏并绑住常晚亭"
+  ],
+  "relationships": [
+    {
+      "to": "常晚亭",
+      "relation": "冲突者",
+      "detail": "打昏并绑住常晚亭"
+    },
+    {
+      "to": "叶牡丹",
+      "relation": "共犯",
+      "detail": "叶牡丹完成谋杀"
+    },
+    {
+      "to": "田广顷",
+      "relation": "父子",
+      "detail": "田广顷是他的父亲"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "你没有被指认为共犯",
+      "description": "常晚亭的死被当作吸食鸦片过量后的自杀，你成功隐瞒了真相。"
+    },
+    {
+      "id": "ending_2",
+      "name": "结局二",
+      "condition": "你被指认为共犯",
+      "description": "你的罪行被揭露，将受到法律制裁。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese opera actor, handsome young man, casual demeanor, oil painting style",
+    "aspect": "3:4"
+  }
+}

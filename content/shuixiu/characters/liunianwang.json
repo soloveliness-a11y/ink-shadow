@@ -1,0 +1,51 @@
+{
+  "id": "liunianwang",
+  "name": "柳念往",
+  "realName": "白年昆",
+  "gender": "male",
+  "age": 21,
+  "role": "花彩班成员",
+  "description": "男，二十一岁，梳着后背头，代班出演时，虽然没有特别出彩，一般也能按要求完成。",
+  "background": "原名白年昆，被柳亭杉收养为徒，改名柳念往。1907年随柳阳关来到上海谋生。",
+  "motivation": "想在戏班中获得更好的角色，与常晚亭有复杂关系。",
+  "secrets": [
+    "本名白年昆，被柳亭杉收养",
+    "与常晚亭有债务关系"
+  ],
+  "relationships": [
+    {
+      "to": "常晚亭",
+      "relation": "同事",
+      "detail": "同为花彩班成员，有债务关系"
+    },
+    {
+      "to": "柳阳关",
+      "relation": "师兄弟",
+      "detail": "同为柳亭杉的徒弟"
+    },
+    {
+      "to": "姬霞",
+      "relation": "同事",
+      "detail": "同为花彩班成员"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "你没有失去资格",
+      "description": "常晚亭的死被当作吸食鸦片过量后的自杀，你继续在戏班中发展。"
+    },
+    {
+      "id": "ending_2",
+      "name": "结局二",
+      "condition": "你失去资格",
+      "description": "常晚亭的死被当作吸食鸦片过量后的自杀，但你因某些原因失去了资格。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese opera actor, 21 years old, back-swept hair, oil painting style",
+    "aspect": "3:4"
+  }
+}

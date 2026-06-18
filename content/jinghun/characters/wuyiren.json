@@ -1,0 +1,39 @@
+{
+  "id": "wuyiren",
+  "name": "吴怡人",
+  "role": "酒楼女招待",
+  "gender": "female",
+  "age": 18,
+  "description": "醉阳楼的女招待，年轻活泼。",
+  "background": "醉阳楼的女招待，与吴丽人是同事。",
+  "motivation": "想保护自己，找出真相。",
+  "secrets": [
+    "知道一些秘密"
+  ],
+  "relationships": [
+    {
+      "to": "吴丽人",
+      "relation": "同事",
+      "detail": "两人是同事"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真相",
+      "description": "你找出真相，保护了自己。"
+    },
+    {
+      "id": "ending_2",
+      "name": "结局二",
+      "condition": "没找出真相",
+      "description": "你没有找出真相，但安全离开。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese waitress, 18 years old, oil painting style",
+    "aspect": "3:4"
+  }
+}

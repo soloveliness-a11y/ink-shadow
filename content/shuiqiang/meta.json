@@ -1,0 +1,21 @@
+{
+  "id": "shuiqiang",
+  "title": "嗜睡蔷薇",
+  "theme": "民国宁波·蔷薇馆命案",
+  "playerCount": {
+    "min": 6,
+    "max": 6
+  },
+  "difficulty": "hard",
+  "durationMin": 300,
+  "synopsis": "民国三年（1914年）9月10日，浙江宁波四明山上的蔷薇馆。一场暴风雨即将来临，这座隐藏着炼金术秘密的古老别墅里，主人罗亨理被发现死在陈列室中。六名嫌疑人各有动机，而真相隐藏在嗜睡症、女巫传说和献祭仪式的迷雾之中。",
+  "styleGuide": "1914 Republican era Chinese mansion on mountain cliff, Western architecture, oil painting style, stormy atmosphere, dramatic lighting, mysterious shadows",
+  "cover": {
+    "kind": "cover",
+    "prompt": "Vertical poster for a 1914 Chinese mansion murder mystery. A Western-style villa on a mountain cliff, storm clouds gathering, oil painting style, dramatic lighting, six silhouettes in period costumes, mysterious atmosphere",
+    "aspect": "3:4"
+  },
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "genre": "murder"
+}

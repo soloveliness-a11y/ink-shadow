@@ -1,0 +1,79 @@
+{
+  "script": "xiaoyi",
+  "timestamp": "2026-06-18T02:19:41.727Z",
+  "summary": {
+    "total": 17,
+    "passed": 17,
+    "failed": 0
+  },
+  "details": [
+    {
+      "success": true,
+      "file": "content/xiaoyi/meta.json"
+    },
+    {
+      "success": true,
+      "file": "content/xiaoyi/clues.json"
+    },
+    {
+      "success": true,
+      "file": "content/xiaoyi/scenes.json"
+    },
+    {
+      "success": true,
+      "file": "content/xiaoyi/phases.json"
+    },
+    {
+      "success": true,
+      "file": "content/xiaoyi/flow.json"
+    },
+    {
+      "success": true,
+      "file": "content/xiaoyi/truth.json"
+    },
+    {
+      "success": true,
+      "file": "content/xiaoyi/characters/chenanqiao.json"
+    },
+    {
+      "success": true,
+      "file": "content/xiaoyi/characters/chenjunmeng.json"
+    },
+    {
+      "success": true,
+      "file": "content/xiaoyi/characters/fangyisheng.json"
+    },
+    {
+      "success": true,
+      "file": "content/xiaoyi/characters/guishu.json"
+    },
+    {
+      "success": true,
+      "file": "content/xiaoyi/characters/hongfuren.json"
+    },
+    {
+      "success": true,
+      "file": "content/xiaoyi/characters/hurenyu.json"
+    },
+    {
+      "success": true,
+      "file": "content/xiaoyi/characters/yaozhongyi.json"
+    },
+    {
+      "success": true,
+      "file": "content/xiaoyi/characters/yunling.json"
+    },
+    {
+      "success": true,
+      "file": "content/xiaoyi/characters/yuyishi.json"
+    },
+    {
+      "success": true,
+      "file": "content/xiaoyi/characters/zhudi.json"
+    },
+    {
+      "success": true,
+      "file": "content/xiaoyi/meta.json"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "id": "yemudan",
+  "name": "叶牡丹",
+  "realName": "白雪生",
+  "gender": "male",
+  "age": 18,
+  "role": "备选女主角",
+  "description": "女，十八岁。身穿立领白衫，秀发齐肩，梳刘海，妆容秀丽，体态轻盈，舞姿优美。实际上是男扮女装。",
+  "background": "原名白雪生，1913年被田广顷买下，后逃到上海，男扮女装化名叶牡丹加入花彩班。",
+  "motivation": "想成为女主角，除掉常晚亭这个威胁。",
+  "secrets": [
+    "本名白雪生，是男性",
+    "1913年被田广顷买下，后逃到上海",
+    "用绳索吊死了常晚亭"
+  ],
+  "relationships": [
+    {
+      "to": "常晚亭",
+      "relation": "凶手-受害者",
+      "detail": "常晚亭发现叶牡丹是男性，以此要挟。叶牡丹用绳索吊死了他。"
+    },
+    {
+      "to": "林园生",
+      "relation": "共犯",
+      "detail": "林园生打昏并绑住常晚亭，叶牡丹完成谋杀"
+    },
+    {
+      "to": "姬霞",
+      "relation": "同事",
+      "detail": "同为花彩班成员"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "你没有被指认为凶手",
+      "description": "常晚亭的死被当作吸食鸦片过量后的自杀，你成功隐瞒了真相。"
+    },
+    {
+      "id": "ending_2",
+      "name": "结局二",
+      "condition": "你被指认为凶手",
+      "description": "你的罪行被揭露，将受到法律制裁。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese opera actress (actually male), white shirt, shoulder-length hair, bangs, delicate makeup, oil painting style",
+    "aspect": "3:4"
+  }
+}

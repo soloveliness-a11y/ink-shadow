@@ -1,0 +1,72 @@
+[
+  {
+    "id": "s_weaver_museum",
+    "name": "蔷薇馆",
+    "description": "位于宁波四明山断崖上的古老西洋建筑，七十年前由英国人建造，后被罗家买下作为别墅。三层结构，一层有大厅、厨房、餐厅，二层有主卧室、书房、客房，三层有陈列室、客房、书库。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "1914 Western-style villa on Chinese mountain cliff, stone walls, stormy sky, oil painting style, dramatic lighting",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_first_floor",
+    "name": "一层",
+    "description": "蔷薇馆一层，有大厅、厨房、餐厅、男仆房、女仆房。正门和西侧门通向外面。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "1914 mansion first floor, grand hall, oil painting style, warm candlelight",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_second_floor",
+    "name": "二层",
+    "description": "蔷薇馆二层，有主卧室、书房、客房。轮椅梯通向一层。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "1914 mansion second floor, bedroom, study, oil painting style, dim candlelight",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_third_floor",
+    "name": "三层",
+    "description": "蔷薇馆三层，有陈列室、客房、书库。时钟会在整点响起。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "1914 mansion third floor, exhibition room, oil painting style, mysterious atmosphere",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_exhibition_room",
+    "name": "陈列室",
+    "description": "三层陈列室，有四个雕像、火铳柜子、屏风。阳台可以悬挂旗帜。罗亨理的尸体在此被发现。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "1914 mansion exhibition room, statues, muskets, oil painting style, dramatic lighting",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_basement",
+    "name": "地下密室",
+    "description": "水池旁的地下通道，有祭坛、蜡状固体、装有白磷的玻璃瓶。阿晴的尸体曾在此处。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "1914 mansion underground chamber, altar, mysterious symbols, oil painting style, eerie atmosphere",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_garden",
+    "name": "花园",
+    "description": "蔷薇馆外的花园，花草肆意生长。太太每天会被推来这里散步。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "1914 mansion garden, overgrown flowers, mountain backdrop, oil painting style, stormy sky",
+      "aspect": "16:9"
+    }
+  }
+]

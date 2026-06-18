@@ -1,0 +1,33 @@
+{
+  "id": "yunling",
+  "name": "云凌",
+  "role": "神秘女子",
+  "gender": "female",
+  "age": 22,
+  "description": "二十出头，短发男装，独自一人来到百里村。",
+  "background": "神秘女子，独自来到百里村，身份不明。",
+  "motivation": "想找出真相，但身份神秘。",
+  "secrets": [
+    "身份神秘，可能与案件有关"
+  ],
+  "relationships": [
+    {
+      "to": "姚仲义",
+      "relation": "陌生人",
+      "detail": "两人初次见面"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真相",
+      "description": "你找出真相，身份揭晓。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese girl, 22 years old, short hair, oil painting style",
+    "aspect": "3:4"
+  }
+}

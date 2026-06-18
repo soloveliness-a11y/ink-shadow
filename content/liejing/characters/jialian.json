@@ -1,0 +1,47 @@
+{
+  "id": "jialian",
+  "name": "佳怜",
+  "realName": "章佳目",
+  "role": "卢恩健的养女",
+  "gender": "female",
+  "age": 18,
+  "description": "本姓章，原籍江西，小名佳目。父亲章励恭被卢恩健害死，母亲被卢恩健纳为妾室。",
+  "background": "父亲章励恭是革命党人，被卢恩健害死。母亲被卢恩健纳为妾室，佳怜改名卢佳怜。",
+  "motivation": "想为父亲报仇，但不知道卢恩健就是杀父仇人。",
+  "secrets": [
+    "本姓章，父亲是章励恭",
+    "父亲被卢恩健害死",
+    "母亲被卢恩健纳为妾室"
+  ],
+  "relationships": [
+    {
+      "to": "卢恩健",
+      "relation": "养父/仇人",
+      "detail": "卢恩健是她的养父，但实际上是杀父仇人"
+    },
+    {
+      "to": "林轸远",
+      "relation": "恋人",
+      "detail": "她喜欢林轸远"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真相",
+      "description": "你找出父亲被害的真相，为父亲报仇。"
+    },
+    {
+      "id": "ending_2",
+      "name": "结局二",
+      "condition": "没找出真相",
+      "description": "你没有找出真相，继续生活在仇恨中。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese girl, 18 years old, oil painting style, determined expression",
+    "aspect": "3:4"
+  }
+}

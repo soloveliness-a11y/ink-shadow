@@ -1,0 +1,45 @@
+{
+  "id": "songyanhu",
+  "name": "宋言沪",
+  "role": "易温的朋友",
+  "gender": "male",
+  "age": 28,
+  "description": "易温的朋友，曾是恋人。",
+  "background": "易温的朋友，曾与黛妮是恋人。",
+  "motivation": "想保护黛妮，找出杀害易温的凶手。",
+  "secrets": [
+    "曾与黛妮是恋人",
+    "知道易温的秘密"
+  ],
+  "relationships": [
+    {
+      "to": "易温",
+      "relation": "朋友",
+      "detail": "易温是他的朋友"
+    },
+    {
+      "to": "黛妮",
+      "relation": "前恋人",
+      "detail": "两人曾是恋人"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真凶",
+      "description": "你找出杀害易温的凶手，保护了黛妮。"
+    },
+    {
+      "id": "ending_2",
+      "name": "结局二",
+      "condition": "没找出真凶",
+      "description": "你没有找出凶手，但与黛妮重逢。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese man, 28 years old, gentle expression, oil painting style",
+    "aspect": "3:4"
+  }
+}

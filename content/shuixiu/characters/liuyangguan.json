@@ -1,0 +1,50 @@
+{
+  "id": "liuyangguan",
+  "name": "柳阳关",
+  "gender": "male",
+  "age": 20,
+  "role": "备选正生",
+  "description": "男，二十岁。从小学艺，基本功非常扎实，从未演过主角。",
+  "background": "柳亭杉的徒弟，1907年随柳念往来到上海谋生。与姬霞互赠定情信物。",
+  "motivation": "想成为男主角，与姬霞同台演出。",
+  "secrets": [
+    "与姬霞互赠定情信物",
+    "知道常晚亭的一些秘密"
+  ],
+  "relationships": [
+    {
+      "to": "姬霞",
+      "relation": "恋人",
+      "detail": "两人互赠珍珠簪和玉锁作为定情信物"
+    },
+    {
+      "to": "柳念往",
+      "relation": "师兄弟",
+      "detail": "同为柳亭杉的徒弟"
+    },
+    {
+      "to": "常晚亭",
+      "relation": "同事",
+      "detail": "同为花彩班成员"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "你扮演楚玉",
+      "description": "常晚亭的死被当作吸食鸦片过量后的自杀，你与姬霞同台演出，折桂夺冠。"
+    },
+    {
+      "id": "ending_2",
+      "name": "结局二",
+      "condition": "你没有扮演楚玉",
+      "description": "常晚亭的死被当作吸食鸦片过量后的自杀，你失去了与姬霞同台的机会。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese opera actor, 20 years old, basic skills solid, oil painting style",
+    "aspect": "3:4"
+  }
+}

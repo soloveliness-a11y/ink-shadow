@@ -1,0 +1,18 @@
+[
+  {
+    "id": "clue_study",
+    "name": "书房线索",
+    "type": "location",
+    "description": "易温被发现死在书房内，现场有左轮手枪的痕迹。",
+    "location": "二层书房",
+    "scene": "s_second_floor"
+  },
+  {
+    "id": "clue_basement",
+    "name": "地下室线索",
+    "type": "location",
+    "description": "麓下馆地下室，有多个房间，隐藏着秘密。",
+    "location": "地下室",
+    "scene": "s_basement"
+  }
+]

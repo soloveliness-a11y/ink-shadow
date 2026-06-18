@@ -1,0 +1,55 @@
+{
+  "id": "huacaiyun",
+  "name": "花彩云",
+  "gender": "female",
+  "age": 18,
+  "role": "花彩班成员",
+  "description": "女，十八岁。身穿粉色衣裙，偏瘦，梳着长辫子，鬓戴珠花，舞台经验丰富。",
+  "background": "花彩班班主花彩珠的女儿，从小在戏班长大，舞台经验丰富。",
+  "motivation": "想在戏班中获得更好的角色，与常晚亭有复杂关系。",
+  "secrets": [
+    "母亲是花彩珠",
+    "与常晚亭有过私会"
+  ],
+  "relationships": [
+    {
+      "to": "花彩珠",
+      "relation": "母女",
+      "detail": "花彩珠是她的母亲"
+    },
+    {
+      "to": "常晚亭",
+      "relation": "同事",
+      "detail": "同为花彩班成员，曾私会"
+    },
+    {
+      "to": "姬霞",
+      "relation": "同事",
+      "detail": "同为花彩班成员"
+    },
+    {
+      "to": "叶牡丹",
+      "relation": "同事",
+      "detail": "同为花彩班成员"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "你没有失去资格",
+      "description": "常晚亭的死被当作吸食鸦片过量后的自杀，你继续在戏班中发展。"
+    },
+    {
+      "id": "ending_2",
+      "name": "结局二",
+      "condition": "你失去资格",
+      "description": "常晚亭的死被当作吸食鸦片过量后的自杀，但你因某些原因失去了资格。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese opera actress, pink dress, thin, long braid, pearl hairpin, oil painting style",
+    "aspect": "3:4"
+  }
+}

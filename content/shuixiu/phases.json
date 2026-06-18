@@ -1,0 +1,87 @@
+[
+  {
+    "id": "p_briefing",
+    "name": "自我介绍",
+    "description": "玩家们阅读各自剧本，了解角色背景和关系。",
+    "type": "briefing",
+    "settings": {
+      "durationMinutes": 20,
+      "timerEnabled": false
+    }
+  },
+  {
+    "id": "p_round1",
+    "name": "第一轮讨论",
+    "description": "玩家们轮流分享自己知道的信息，讨论昨晚发生的事情。",
+    "type": "discussion",
+    "settings": {
+      "durationMinutes": 30,
+      "timerEnabled": true,
+      "maxSearches": 0
+    }
+  },
+  {
+    "id": "p_search1",
+    "name": "第一轮搜查",
+    "description": "玩家们可以搜查场景，寻找线索。",
+    "type": "search",
+    "settings": {
+      "durationMinutes": 20,
+      "timerEnabled": true,
+      "maxSearches": 2
+    }
+  },
+  {
+    "id": "p_round2",
+    "name": "第二轮讨论",
+    "description": "玩家们分享搜查到的线索，进一步讨论。",
+    "type": "discussion",
+    "settings": {
+      "durationMinutes": 30,
+      "timerEnabled": true,
+      "maxSearches": 0
+    }
+  },
+  {
+    "id": "p_search2",
+    "name": "第二轮搜查",
+    "description": "玩家们可以继续搜查场景。",
+    "type": "search",
+    "settings": {
+      "durationMinutes": 20,
+      "timerEnabled": true,
+      "maxSearches": 2
+    }
+  },
+  {
+    "id": "p_final_discussion",
+    "name": "最终讨论",
+    "description": "玩家们进行最后的讨论，整理线索。",
+    "type": "discussion",
+    "settings": {
+      "durationMinutes": 20,
+      "timerEnabled": true,
+      "maxSearches": 0
+    }
+  },
+  {
+    "id": "p_voting",
+    "name": "投票指认",
+    "description": "玩家们投票指认凶手。",
+    "type": "voting",
+    "settings": {
+      "durationMinutes": 5,
+      "timerEnabled": true
+    }
+  },
+  {
+    "id": "p_reveal",
+    "name": "真相揭晓",
+    "description": "游戏主持人或系统揭晓真相。",
+    "type": "reveal",
+    "settings": {
+      "durationMinutes": 10,
+      "timerEnabled": false
+    }
+  }
+]

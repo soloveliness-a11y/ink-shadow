@@ -1,0 +1,21 @@
+{
+  "id": "ziteng",
+  "title": "紫藤夫人",
+  "theme": "民国广东·宝殊镇连环命案",
+  "playerCount": {
+    "min": 6,
+    "max": 6
+  },
+  "difficulty": "hard",
+  "durationMin": 270,
+  "synopsis": "民国三年（1914年）9月4日，广东宝殊镇。三个月前，葛家家主葛继先被土匪绑架惨死。葛月萝悲痛欲绝，迁怒全宅奴仆。在这座隐藏着太平天国宝藏秘密的小镇上，一场精心策划的连环谋杀正在上演——而真凶，就藏在幸存者之中。",
+  "styleGuide": "1914 Guangdong Baoshu town, realistic oil painting, warm sepia tones, Republican era Chinese town, wisteria imagery",
+  "cover": {
+    "kind": "cover",
+    "prompt": "Vertical poster for a 1914 Guangdong town murder mystery. A misty Chinese town nestled in mountains, wisteria vines climbing old walls, warm sepia tones, oil painting style, dramatic lighting, vintage film grain, six silhouettes gathered in a traditional courtyard",
+    "aspect": "3:4"
+  },
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "genre": "murder"
+}

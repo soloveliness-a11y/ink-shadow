@@ -1,0 +1,74 @@
+{
+  "id": "jixia",
+  "name": "姬霞",
+  "realName": "韩佳香",
+  "gender": "female",
+  "age": 20,
+  "role": "女主角备选",
+  "description": "女，二十岁。黑衣长发，面色有些苍白，唱腔婉转而优美。化名姬霞加入花彩班。",
+  "background": "浙江省衢州人氏，父亲韩婵冬是昆腔名师。大姐韩佳梅嫁给白延秋。1912年，经柳亭杉介绍，化名姬霞加入花彩班。",
+  "motivation": "想成为女主角，与柳阳关同台演出。常晚亭多次威胁她，想除掉他。",
+  "secrets": [
+    "本名韩佳香，是韩婵冬的小女儿",
+    "大姐是韩佳梅，姐夫是白延秋",
+    "与柳阳关互赠定情信物"
+  ],
+  "relationships": [
+    {
+      "to": "柳阳关",
+      "relation": "恋人",
+      "detail": "两人互赠珍珠簪和玉锁作为定情信物"
+    },
+    {
+      "to": "花彩云",
+      "relation": "同事",
+      "detail": "同为花彩班成员"
+    },
+    {
+      "to": "叶牡丹",
+      "relation": "同事",
+      "detail": "同为花彩班成员"
+    },
+    {
+      "to": "林园生",
+      "relation": "同事",
+      "detail": "同为花彩班成员"
+    },
+    {
+      "to": "柳念往",
+      "relation": "同事",
+      "detail": "同为花彩班成员"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "你没有失去资格；你成为女一号；柳阳关扮演楚玉",
+      "description": "常晚亭的死被当作吸食鸦片过量后的自杀。你和柳阳关折桂夺冠，成为梨园佳侣。"
+    },
+    {
+      "id": "ending_2",
+      "name": "结局二",
+      "condition": "你虽然失去资格；但仍成为女一号；柳阳关扮演楚玉",
+      "description": "常晚亭的死被当作吸食鸦片过量后的自杀。你和柳阳关同台，但因不敢表现真情而遇到麻烦。"
+    },
+    {
+      "id": "ending_3",
+      "name": "结局三",
+      "condition": "你成为女一号；柳阳关没有扮演楚玉",
+      "description": "常晚亭的死被当作吸食鸦片过量后的自杀。你和另一个男人同台，始终缺少打动观众的东西。"
+    },
+    {
+      "id": "ending_4",
+      "name": "结局四",
+      "condition": "你没有成为女一号",
+      "description": "常晚亭的死被当作吸食鸦片过量后的自杀。你失去了最好的机会，只能看着别人成为女主角。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese opera actress, black clothes, long hair, pale face, oil painting style, elegant pose",
+    "aspect": "3:4"
+  }
+}

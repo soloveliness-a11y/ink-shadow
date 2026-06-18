@@ -1,0 +1,63 @@
+{
+  "script": "shuixiu",
+  "timestamp": "2026-06-18T02:19:41.978Z",
+  "summary": {
+    "total": 13,
+    "passed": 13,
+    "failed": 0
+  },
+  "details": [
+    {
+      "success": true,
+      "file": "content/shuixiu/meta.json"
+    },
+    {
+      "success": true,
+      "file": "content/shuixiu/clues.json"
+    },
+    {
+      "success": true,
+      "file": "content/shuixiu/scenes.json"
+    },
+    {
+      "success": true,
+      "file": "content/shuixiu/phases.json"
+    },
+    {
+      "success": true,
+      "file": "content/shuixiu/flow.json"
+    },
+    {
+      "success": true,
+      "file": "content/shuixiu/truth.json"
+    },
+    {
+      "success": true,
+      "file": "content/shuixiu/characters/huacaiyun.json"
+    },
+    {
+      "success": true,
+      "file": "content/shuixiu/characters/jixia.json"
+    },
+    {
+      "success": true,
+      "file": "content/shuixiu/characters/linyuansheng.json"
+    },
+    {
+      "success": true,
+      "file": "content/shuixiu/characters/liunianwang.json"
+    },
+    {
+      "success": true,
+      "file": "content/shuixiu/characters/liuyangguan.json"
+    },
+    {
+      "success": true,
+      "file": "content/shuixiu/characters/yemudan.json"
+    },
+    {
+      "success": true,
+      "file": "content/shuixiu/meta.json"
+    }
+  ]
+}

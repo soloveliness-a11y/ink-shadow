@@ -1,0 +1,28 @@
+{
+  "phases": [
+    {
+      "id": "p_briefing",
+      "next": "p_investigation"
+    },
+    {
+      "id": "p_investigation",
+      "next": "p_lawyer_arrives"
+    },
+    {
+      "id": "p_lawyer_arrives",
+      "next": "p_final_investigation"
+    },
+    {
+      "id": "p_final_investigation",
+      "next": "p_voting"
+    },
+    {
+      "id": "p_voting",
+      "next": "p_reveal"
+    },
+    {
+      "id": "p_reveal",
+      "next": null
+    }
+  ]
+}

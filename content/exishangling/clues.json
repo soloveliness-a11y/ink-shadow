@@ -1,0 +1,26 @@
+[
+  {
+    "id": "clue_wushi_home",
+    "name": "巫师家线索",
+    "type": "location",
+    "description": "巫师家发生命案，需要调查。",
+    "location": "巫师家",
+    "scene": "s_wushi_home"
+  },
+  {
+    "id": "clue_shanling_cave",
+    "name": "山灵洞线索",
+    "type": "location",
+    "description": "山灵洞有薄板棺材，可能藏有秘密。",
+    "location": "山灵洞",
+    "scene": "s_shanling_cave"
+  },
+  {
+    "id": "clue_jieling_tower",
+    "name": "姊陵塔线索",
+    "type": "location",
+    "description": "姊陵塔有东垭和西垭，需要调查。",
+    "location": "姊陵塔",
+    "scene": "s_jieling_tower"
+  }
+]

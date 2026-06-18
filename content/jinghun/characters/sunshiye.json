@@ -1,0 +1,40 @@
+{
+  "id": "sunshiye",
+  "name": "孙师爷",
+  "role": "师爷",
+  "gender": "male",
+  "age": 45,
+  "description": "县衙师爷，贪恋秦芳君的美貌。",
+  "background": "县衙师爷，贪恋秦芳君的美貌，曾想追求她。",
+  "motivation": "想得到秦芳君，但秦芳君已死。",
+  "secrets": [
+    "曾想追求秦芳君",
+    "知道一些秘密"
+  ],
+  "relationships": [
+    {
+      "to": "秦芳君",
+      "relation": "追求者",
+      "detail": "曾想追求秦芳君"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真相",
+      "description": "你找出真相，但秦芳君已死。"
+    },
+    {
+      "id": "ending_2",
+      "name": "结局二",
+      "condition": "没找出真相",
+      "description": "你没有找出真相，但继续生活。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese official, 45 years old, formal clothes, oil painting style",
+    "aspect": "3:4"
+  }
+}

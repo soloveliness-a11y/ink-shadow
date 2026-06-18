@@ -1,0 +1,33 @@
+{
+  "id": "yuedie",
+  "name": "月蝶",
+  "role": "舞女",
+  "gender": "female",
+  "age": 25,
+  "description": "舞女，身世神秘。",
+  "background": "舞女，与案件有关。",
+  "motivation": "想保护自己，找出真相。",
+  "secrets": [
+    "身世神秘，与案件有关"
+  ],
+  "relationships": [
+    {
+      "to": "田吉雾郎",
+      "relation": "复杂关系",
+      "detail": "与田吉雾郎有复杂关系"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真相",
+      "description": "你找出真相，保护了自己。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese dancer, 25 years old, oil painting style",
+    "aspect": "3:4"
+  }
+}

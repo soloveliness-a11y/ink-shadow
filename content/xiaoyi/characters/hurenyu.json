@@ -1,0 +1,34 @@
+{
+  "id": "hurenyu",
+  "name": "胡人玉",
+  "role": "商人",
+  "gender": "male",
+  "age": 32,
+  "description": "三十出头，为人老练、沉稳。",
+  "background": "商人，与姚家有生意往来。",
+  "motivation": "想完成生意，找出真相。",
+  "secrets": [
+    "与姚家有生意往来",
+    "知道一些秘密"
+  ],
+  "relationships": [
+    {
+      "to": "姚仲义",
+      "relation": "生意伙伴",
+      "detail": "与姚仲义有生意往来"
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_1",
+      "name": "结局一",
+      "condition": "找出真相",
+      "description": "你找出真相，完成了生意。"
+    }
+  ],
+  "visual": {
+    "kind": "character",
+    "prompt": "1914 Chinese businessman, 32 years old, oil painting style",
+    "aspect": "3:4"
+  }
+}

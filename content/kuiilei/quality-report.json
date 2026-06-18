@@ -1,0 +1,71 @@
+{
+  "script": "kuiilei",
+  "timestamp": "2026-06-18T02:19:41.604Z",
+  "summary": {
+    "total": 15,
+    "passed": 15,
+    "failed": 0
+  },
+  "details": [
+    {
+      "success": true,
+      "file": "content/kuiilei/meta.json"
+    },
+    {
+      "success": true,
+      "file": "content/kuiilei/clues.json"
+    },
+    {
+      "success": true,
+      "file": "content/kuiilei/scenes.json"
+    },
+    {
+      "success": true,
+      "file": "content/kuiilei/phases.json"
+    },
+    {
+      "success": true,
+      "file": "content/kuiilei/flow.json"
+    },
+    {
+      "success": true,
+      "file": "content/kuiilei/truth.json"
+    },
+    {
+      "success": true,
+      "file": "content/kuiilei/characters/anning.json"
+    },
+    {
+      "success": true,
+      "file": "content/kuiilei/characters/duguicheng.json"
+    },
+    {
+      "success": true,
+      "file": "content/kuiilei/characters/guoda.json"
+    },
+    {
+      "success": true,
+      "file": "content/kuiilei/characters/luoyisi.json"
+    },
+    {
+      "success": true,
+      "file": "content/kuiilei/characters/moli.json"
+    },
+    {
+      "success": true,
+      "file": "content/kuiilei/characters/order.json"
+    },
+    {
+      "success": true,
+      "file": "content/kuiilei/characters/xueyi.json"
+    },
+    {
+      "success": true,
+      "file": "content/kuiilei/characters/yueke.json"
+    },
+    {
+      "success": true,
+      "file": "content/kuiilei/meta.json"
+    }
+  ]
+}
