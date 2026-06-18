@@ -5,12 +5,12 @@
  *   - 旧管线时代用单文件 script.json 跑生成,分文件没同步
  *   - 一次性的数据迁移,运行后建议删除
  *
- * 用法: node scripts/sync-visual-from-script.mjs content/_mock
+ * 用法: node scripts/sync-visual-from-script.mjs content/mock
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 
-const root = resolve(process.argv[2] ?? 'content/_mock');
+const root = resolve(process.argv[2] ?? 'content/mock');
 if (!existsSync(join(root, 'script.json'))) {
   console.error(`script.json not found at ${root}`);
   process.exit(1);

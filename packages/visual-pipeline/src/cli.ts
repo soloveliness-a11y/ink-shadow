@@ -13,8 +13,8 @@ function usage() {
 Usage: mmg-visualize <scriptPath|dir> [options]
 
 <scriptPath>  接受两种形式:
-                - 单文件: content/_mock/script.json(全量 Script 容器,兼容旧工作流)
-                - 多文件目录: content/_mock/(含 meta.json + clues.json + characters/...)
+                - 单文件: content/mock/script.json(全量 Script 容器,兼容旧工作流)
+                - 多文件目录: content/mock/(含 meta.json + clues.json + characters/...)
                   → 自动从 clues.json 等读取,生图完成后回写到对应分文件,不再依赖全量合成
 
                 冲突时:若路径下同时存在 script.json 和多文件分文件,加 --dir 强制走目录模式。

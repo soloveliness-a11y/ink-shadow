@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useGameStore } from '../store/game.js';
 import { assetUrl } from '../lib/asset.js';
+import { pushToast } from '../lib/toast.js';
 import { ConfirmDialog } from '../components/ConfirmDialog.js';
 
 export function LobbyScene() {
@@ -173,18 +174,19 @@ export function LobbyScene() {
                     title="移出房间"
                   >踢出</button>
                 )}
-                <ConfirmDialog
-                  open={!!kickTarget}
-                  title="移出玩家"
-                  message={kickTarget ? `确认将「${kickTarget.name}」移出房间？` : ''}
-                  confirmLabel="确认移出"
-                  cancelLabel="取消"
-                  onConfirm={() => { send({ kind: 'kickPlayer', targetPlayerId: kickTarget!.id }); setKickTarget(null); }}
-                  onCancel={() => setKickTarget(null)}
-                  tone="danger"
-                />
               </div>
             ))}
+            {/* #9: ConfirmDialog 提到 map 外层,全局只 1 份(原在 map 内每玩家一份,N 份同时开合浪费) */}
+            <ConfirmDialog
+              open={!!kickTarget}
+              title="移出玩家"
+              message={kickTarget ? `确认将「${kickTarget.name}」移出房间？` : ''}
+              confirmLabel="确认移出"
+              cancelLabel="取消"
+              onConfirm={() => { send({ kind: 'kickPlayer', targetPlayerId: kickTarget!.id }); setKickTarget(null); }}
+              onCancel={() => setKickTarget(null)}
+              tone="danger"
+            />
             {selectedScript && Array.from({ length: Math.max(0, requiredPlayers - players.length) }).map((_, i) => (
               <div key={`empty-${i}`} className="lobby-player lobby-player-empty">
                 <div className="lobby-player-avatar">?</div>
@@ -348,8 +350,12 @@ function DmSettingsPanel({ send }: { send: (intent: any) => void }) {
   };
 
   const handleSave = () => {
-    // 持久化到 localStorage
-    localStorage.setItem(DM_STORAGE_KEY, JSON.stringify(config));
+    // 持久化到 localStorage(隐私模式/配额满可能抛 QuotaExceeded,#7 包 try/catch 不阻断后续)
+    try {
+      localStorage.setItem(DM_STORAGE_KEY, JSON.stringify(config));
+    } catch {
+      pushToast('配置未能保存到本机,但本次仍会生效', 'warn');
+    }
     // 发给服务端
     send({
       kind: 'configureDm',

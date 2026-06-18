@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useGameStore } from '../store/game.js';
 import { assetUrl } from '../lib/asset.js';
 
@@ -24,6 +24,8 @@ export function CharacterSidebar() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [boardOpen, setBoardOpen] = useState(false);
   const [noteText, setNoteText] = useState('');
+  // #2: notes 读取失效标记 —— 仅在保存笔记/切剧本/切玩家时 bump,避免每次渲染都 N 次 localStorage.getItem
+  const [notesVersion, setNotesVersion] = useState(0);
   const isTestMode = view?.isTestMode;
   const pendingAdvance = view?.pendingAdvance;
 
@@ -49,12 +51,26 @@ export function CharacterSidebar() {
     if (npcs.length) groups.push({ label: 'NPC · 与本案相关', chars: npcs });
   }
 
+  // #2: 一次性批量读取所有角色笔记到内存 Map,替代 map 内逐个 localStorage.getItem。
+  // 仅在 scriptId/playerId 变化或保存笔记(notesVersion bump)时重算。
+  const notesByChar = useMemo(() => {
+    const m = new Map<string, string>();
+    if (scriptId && playerId) {
+      for (const c of chars) {
+        m.set(c.id, getNotes(scriptId, playerId, c.id));
+      }
+    }
+    return m;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scriptId, playerId, notesVersion, chars]);
+
   const startEdit = (charId: string) => {
     setEditingId(charId);
-    setNoteText(getNotes(scriptId, playerId ?? '', charId));
+    setNoteText(notesByChar.get(charId) ?? getNotes(scriptId, playerId ?? '', charId));
   };
   const saveNote = (charId: string) => {
     setNotes(scriptId, playerId ?? '', charId, noteText);
+    setNotesVersion(v => v + 1); // 触发 notesByChar 重算
     setEditingId(null);
   };
 
@@ -79,7 +95,7 @@ export function CharacterSidebar() {
           <div key={gi}>
             {g.label && <div className="board-section-divider">{g.label}</div>}
             {g.chars.map(c => {
-              const note = getNotes(scriptId, playerId ?? '', c.id);
+              const note = notesByChar.get(c.id) ?? '';
               const owner = view?.players.find(p => p.charId === c.id);
               return (
                 <CharacterCard

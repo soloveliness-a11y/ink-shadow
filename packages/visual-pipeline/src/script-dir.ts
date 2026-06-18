@@ -1,7 +1,7 @@
 /**
  * 多文件剧本目录 I/O —— 与单文件 script.json 互转的桥梁。
  *
- * 目录结构(由 split-script.mjs 产生):
+ * 目录结构(由 split-script.ts 产生):
  *   <dir>/
  *     meta.json
  *     characters/

@@ -1,5 +1,5 @@
 /**
- * 真实出图:对 _mock 出所有未 done 的图(cover + 9 线索图)。
+ * 真实出图:对 mock 出所有未 done 的图(cover + 9 线索图)。
  * resume 模式跳过已有 13 张真实图;每张间隔 240-300s 防风控。
  * 从根目录跑:pnpm exec tsx scripts/real-gen.ts
  */
@@ -17,7 +17,7 @@ if (!apiKey) {
 const apiUrl = process.env.MMG_API_URL || 'https://5yuantoken.org/v1';
 const model = process.env.MMG_MODEL || 'gpt-5.5';
 
-const path = resolve('content/_mock/script.json');
+const path = resolve('content/mock/script.json');
 const script = zScript.parse(JSON.parse(readFileSync(path, 'utf-8')));
 
 console.log(`=== 真实出图 ===`);

@@ -74,7 +74,8 @@ export interface RoomSnapshot {
   isTestMode: boolean;
   botIds: string[];
   phaseHistory: string[];
-  dmConfig: { provider: 'anthropic' | 'openai'; apiKey: string; apiUrl?: string; model: string } | null;
+  /** 安全:apiKey 不落盘(避免明文密钥写入磁盘)。重启恢复后房主需重新填 key 才能启用 DM。 */
+  dmConfig: { provider: 'anthropic' | 'openai'; apiUrl?: string; model: string } | null;
   kickedTokens: string[];
   savedAt: string;
 }

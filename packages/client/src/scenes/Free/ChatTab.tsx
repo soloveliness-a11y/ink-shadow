@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { SPEECH_MAX } from '../../lib/limits.js';
 import type { ClientStateView, PublicCharacter } from '@mmg/schema';
 
@@ -18,7 +18,11 @@ export function ChatTab({ view, myCharId, publicCharacters, mentionCandidates, s
   const chatThreadRef = useRef<HTMLDivElement>(null);
   const prevLogLenRef = useRef(0);
 
-  const speechLog = view?.log.filter(e => e.type === 'speak') ?? [];
+  // #9: memoize 发言日志过滤(log 随对局增长,每次渲染重算 filter)
+  const speechLog = useMemo(
+    () => view?.log.filter(e => e.type === 'speak') ?? [],
+    [view?.log],
+  );
 
   // Detect scroll position
   const handleScroll = () => {

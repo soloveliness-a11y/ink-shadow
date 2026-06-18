@@ -39,6 +39,9 @@ class BgmEngine {
   private unlocked = false;
   private listeners = new Set<Listener>();
   private fadeTimer: ReturnType<typeof setInterval> | null = null;
+  // #2: 保存淡出/暂停用的 setTimeout handle,快速连续切歌时先清掉旧的,
+  // 避免旧 timer 误 unload/pause 已替换的新 howl(音乐突然中断)
+  private pendingTimers: ReturnType<typeof setTimeout>[] = [];
   // 静默存盘的"目标音量", 用于静音切换时保留
   private preMuteVolume: number | null = null;
 
@@ -52,6 +55,21 @@ class BgmEngine {
     this.listeners.add(fn);
     fn(this.snapshot());
     return () => this.listeners.delete(fn);
+  }
+
+  // #2: 可取消的 setTimeout 包装,所有淡出/延迟暂停都走这里
+  private defer(fn: () => void, ms: number): void {
+    const handle = setTimeout(() => {
+      this.pendingTimers = this.pendingTimers.filter((h) => h !== handle);
+      fn();
+    }, ms);
+    this.pendingTimers.push(handle);
+  }
+
+  /** 清掉所有 pending 的延迟回调(快速连续切换/卸载时调用) */
+  private cancelPendingTimers(): void {
+    for (const h of this.pendingTimers) clearTimeout(h);
+    this.pendingTimers = [];
   }
 
   private snapshot(): BgmEngineState {
@@ -129,10 +147,12 @@ class BgmEngine {
 
   /** 淡出旧音 → 加载并淡入新音 */
   private _crossfade(slot: BgmSlot, track: BgmTrack, cfg: BgmSlotConfig) {
+    // #2: 快速连续切歌时,先丢弃上一轮未执行的淡出/暂停回调,避免误伤新 howl
+    this.cancelPendingTimers();
     if (this.howl && this.howl.playing()) {
       const oldHowl = this.howl;
       oldHowl.fade(oldHowl.volume(), 0, cfg.fadeOutMs);
-      setTimeout(() => { try { oldHowl.unload(); } catch { /* noop */ } }, cfg.fadeOutMs + 80);
+      this.defer(() => { try { oldHowl.unload(); } catch { /* noop */ } }, cfg.fadeOutMs + 80);
     } else {
       this.stopAndDispose();
     }
@@ -168,14 +188,16 @@ class BgmEngine {
   // ----- 控制 -----
   stop() {
     if (!this.howl) return;
+    this.cancelPendingTimers();
     this.howl.fade(this.howl.volume(), 0, 600);
-    setTimeout(() => this.stopAndDispose(), 650);
+    this.defer(() => this.stopAndDispose(), 650);
     this.currentSlot = null;
     this.currentTrack = null;
     this.emit();
   }
 
   private stopAndDispose() {
+    this.cancelPendingTimers();
     if (this.fadeTimer) {
       clearInterval(this.fadeTimer);
       this.fadeTimer = null;
@@ -203,8 +225,12 @@ class BgmEngine {
       this.saveMuted(false);
       const target = this.preMuteVolume ?? this.volume;
       this.preMuteVolume = null;
+      // #3: 清掉静音时排队的延迟 pause,否则快速切换时它会在已恢复播放的 howl 上触发暂停
+      this.cancelPendingTimers();
       if (this.howl) {
+        // 静音超过 fadeOutMs 后 howl 已被 pause,只设音量不够,必须 play() 才能恢复
         this.howl.volume(target);
+        if (!this.howl.playing()) this.howl.play();
       } else if (this.currentSlot && this.unlocked) {
         // 之前静音时切过槽位, 恢复时按当前目标槽位开播
         this.playSlot(this.currentSlot, true);
@@ -216,7 +242,7 @@ class BgmEngine {
       this.saveMuted(true);
       if (this.howl) {
         this.howl.fade(this.howl.volume(), 0, 300);
-        setTimeout(() => this.howl?.pause(), 320);
+        this.defer(() => this.howl?.pause(), 320);
       }
     }
     this.emit();

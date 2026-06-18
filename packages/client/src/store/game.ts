@@ -191,6 +191,11 @@ export const useGameStore = create<GameState>((set, get) => ({
   seenPhaseKey: null,
 
   connect: (url) => {
+    // #3: 幂等守卫 — 已有连接时直接复用,避免 React 批处理下重复调用产生多条 WS + 多套重连
+    const existing = get().conn;
+    if (existing && (existing.connected || existing.currentStatus === 'connecting' || existing.currentStatus === 'reconnecting')) {
+      return;
+    }
     const wsUrl = url ?? createGameUrl('/ws');
     const saved = readSession();
     // 被踢:断连(停止自动重连)+ 清本地会话 + 回登录页

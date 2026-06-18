@@ -11,9 +11,15 @@ export function useTypewriter(
   const [displayed, setDisplayed] = useState(enabled ? '' : text);
   const [done, setDone] = useState(!enabled);
   const cancelledRef = useRef(false);
+  // #8: 保存 interval handle,使 cleanup 能在 startTimer 已 fire 后清理 interval,避免泄漏
+  const intervalRef = useRef<number | null>(null);
 
   const skip = useCallback(() => {
     cancelledRef.current = true;
+    if (intervalRef.current !== null) {
+      window.clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
     setDisplayed(text);
     setDone(true);
   }, [text]);
@@ -27,15 +33,19 @@ export function useTypewriter(
     setDisplayed('');
     setDone(false);
     cancelledRef.current = false;
+    intervalRef.current = null;
     let i = 0;
     const startTimer = window.setTimeout(() => {
       if (cancelledRef.current) return;
-      const handle = window.setInterval(() => {
+      intervalRef.current = window.setInterval(() => {
         if (cancelledRef.current) return;
         i += 1;
         setDisplayed(text.slice(0, i));
         if (i >= text.length) {
-          window.clearInterval(handle);
+          if (intervalRef.current !== null) {
+            window.clearInterval(intervalRef.current);
+            intervalRef.current = null;
+          }
           setDone(true);
         }
       }, speed);
@@ -43,6 +53,11 @@ export function useTypewriter(
     return () => {
       cancelledRef.current = true;
       window.clearTimeout(startTimer);
+      // #8: startTimer 已 fire 进入 interval 阶段时,这里清掉它
+      if (intervalRef.current !== null) {
+        window.clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
     };
   }, [text, speed, startDelay, enabled]);
 

@@ -14,23 +14,23 @@ export const PROTOCOL_VERSION = 7;
  * 服务器对每个意图做权威校验(环节是否允许、是否轮到该玩家、线索是否解锁)。
  */
 export const zClientIntent = z.discriminatedUnion('kind', [
-  z.object({ kind: z.literal('join'), roomCode: z.string(), nickname: z.string(), sessionToken: z.string().optional(), clientVersion: z.number().int().optional() }),
-  z.object({ kind: z.literal('selectScript'), scriptId: z.string() }),
+  z.object({ kind: z.literal('join'), roomCode: z.string().max(64), nickname: z.string().max(40), sessionToken: z.string().max(128).optional(), clientVersion: z.number().int().optional() }),
+  z.object({ kind: z.literal('selectScript'), scriptId: z.string().max(128) }),
   z.object({ kind: z.literal('startTest') }),
-  z.object({ kind: z.literal('selectChar'), charId: z.string() }),
+  z.object({ kind: z.literal('selectChar'), charId: z.string().max(128) }),
   z.object({ kind: z.literal('ready') }),
-  z.object({ kind: z.literal('speak'), text: z.string() }),
-  z.object({ kind: z.literal('searchClue'), clueId: z.string() }),
-  z.object({ kind: z.literal('revealClue'), clueId: z.string() }),
-  z.object({ kind: z.literal('privateMessage'), toCharId: z.string(), text: z.string() }),
-  z.object({ kind: z.literal('castVote'), targetCharId: z.string() }),
-  z.object({ kind: z.literal('submitTheory'), text: z.string() }),
+  z.object({ kind: z.literal('speak'), text: z.string().max(2000) }),
+  z.object({ kind: z.literal('searchClue'), clueId: z.string().max(128) }),
+  z.object({ kind: z.literal('revealClue'), clueId: z.string().max(128) }),
+  z.object({ kind: z.literal('privateMessage'), toCharId: z.string().max(128), text: z.string().max(2000) }),
+  z.object({ kind: z.literal('castVote'), targetCharId: z.string().max(128) }),
+  z.object({ kind: z.literal('submitTheory'), text: z.string().max(2000) }),
   z.object({ kind: z.literal('hostAdvance') }),
-  z.object({ kind: z.literal('kickPlayer'), targetPlayerId: z.string() }), // 房主踢人(仅 lobby)
+  z.object({ kind: z.literal('kickPlayer'), targetPlayerId: z.string().max(128) }), // 房主踢人(仅 lobby)
   z.object({ kind: z.literal('manualAdvance') }),
   z.object({ kind: z.literal('rollbackPhase') }),
-  z.object({ kind: z.literal('makeChoice'), choiceId: z.string(), optionId: z.string() }),
-  z.object({ kind: z.literal('configureDm'), enabled: z.boolean(), provider: z.enum(['anthropic', 'openai']).optional(), apiKey: z.string().optional(), apiUrl: z.string().optional(), model: z.string().optional() }),
+  z.object({ kind: z.literal('makeChoice'), choiceId: z.string().max(128), optionId: z.string().max(128) }),
+  z.object({ kind: z.literal('configureDm'), enabled: z.boolean(), provider: z.enum(['anthropic', 'openai']).optional(), apiKey: z.string().max(512).optional(), apiUrl: z.string().max(512).optional(), model: z.string().max(128).optional() }),
 ]);
 export type ClientIntent = z.infer<typeof zClientIntent>;
 

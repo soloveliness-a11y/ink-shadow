@@ -26,7 +26,9 @@ export function App() {
   const roomCode = useGameStore((s) => s.roomCode);
   const sessionToken = useGameStore((s) => s.sessionToken);
   const nickname = useGameStore((s) => s.nickname);
-  const view = useGameStore((s) => s.view);
+  // #1: 只订阅「是否有 view」(布尔),而非整个 view 对象 —— 否则每次 stateSync(讨论期每条发言/搜证)
+  // 都会重渲 App 及其全部子树(Header/Sidebar/ScriptBook),抵消它们各自的细粒度 selector 收益。
+  const hasView = useGameStore((s) => s.view !== null);
 
   // BGM: 用户首次交互后解锁 + 跟随 phase 切换
   useBgmUnlock();
@@ -62,7 +64,7 @@ export function App() {
             <div className="main-inner">
               <SceneRoot
                 connected={connected}
-                view={view}
+                hasView={hasView}
                 status={status}
                 phaseKind={phaseKind}
                 phaseId={phaseId}
@@ -80,15 +82,15 @@ export function App() {
   );
 }
 
-function SceneRoot({ connected, view, status, phaseKind, phaseId }: {
+function SceneRoot({ connected, hasView, status, phaseKind, phaseId }: {
   connected: boolean;
-  view: ReturnType<typeof useGameStore.getState>['view'];
+  hasView: boolean;
   status: string | undefined;
   phaseKind: string | undefined;
   phaseId: string | undefined;
 }) {
   if (!connected) return <LobbyScene />;
-  if (!view) return <LoadingScreen tip="连接中..." />;
+  if (!hasView) return <LoadingScreen tip="连接中..." />;
 
   return (
     <div key={`${status}-${phaseId ?? phaseKind ?? 'none'}`} className="scene-fade">

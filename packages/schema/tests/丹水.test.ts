@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { zCharacter, zClue } from '../src/script.js';
 
-const mockUrl = new URL('../../../content/_mock/script.json', import.meta.url);
+const mockUrl = new URL('../../../content/mock/script.json', import.meta.url);
 const loadMock = (): unknown => JSON.parse(readFileSync(mockUrl, 'utf8'));
 
 test('character with skills, passiveClueGivers, investigationReport → valid', () => {

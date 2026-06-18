@@ -9,7 +9,7 @@ import { planVisualTasks } from '../src/planner.js';
 import { VisualRunner } from '../src/runner.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const mockScriptPath = resolve(__dirname, '../../../content/_mock/script.json');
+const mockScriptPath = resolve(__dirname, '../../../content/mock/script.json');
 const mockScript = zScript.parse(JSON.parse(readFileSync(mockScriptPath, 'utf-8')));
 
 /** 动态计算 planner 应返回的任务数:所有未 done 的 visual spec + cover(mock 无 cover 时 planner 补 1)。测试不硬编码,避免耦合 _mock 磁盘状态。 */

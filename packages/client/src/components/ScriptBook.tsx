@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback, type ReactNode } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo, type ReactNode } from 'react';
 import { useGameStore } from '../store/game.js';
 import { useAnnotationStore, type ScriptAnnotation } from '../store/annotations.js';
 
@@ -78,31 +78,39 @@ export function ScriptBook() {
     if (playerId) annoLoad(scriptId, playerId);
   }, [scriptId, playerId, annoLoad]);
 
-  // 构建结构化环节(标题 + 正文),用于按环节分页与定位
-  const segments: ScriptSegment[] = [];
-  if (myChar) {
-    segments.push({ title: '你的身份', body: `${myChar.name}${myChar.publicProfile ? '\n' + myChar.publicProfile : ''}` });
-  }
-  if (self?.privateScript) segments.push({ title: '开场发本', body: self.privateScript });
-  // 各阶段:公共旁白 + 该阶段角色记忆,配对交错(每段旁白紧跟它对应的私人记忆)
-  for (const b of self?.unlockedPhaseBlocks ?? []) {
-    if (b.narrative) segments.push({ title: b.phaseTitle, body: b.narrative });
-    if (b.story) {
-      segments.push({ title: b.narrative ? '角色记忆' : b.phaseTitle, body: b.story });
+  // #10: 构建结构化环节(标题 + 正文)并分页 —— memoize,避免每次 stateSync 都重算
+  // (ScriptBook 游戏期间常驻,讨论期频繁 stateSync 会反复触发 paginateSegments)。
+  const { pages, totalPages } = useMemo(() => {
+    const segments: ScriptSegment[] = [];
+    if (myChar) {
+      segments.push({ title: '你的身份', body: `${myChar.name}${myChar.publicProfile ? '\n' + myChar.publicProfile : ''}` });
     }
-  }
-  for (const o of self?.objectives ?? []) {
-    const label = o.kind === 'main' ? '主线目标' : o.kind === 'hidden' ? '隐藏目标' : '支线目标';
-    segments.push({ title: label, body: o.description });
-  }
-  for (const km of self?.unlockedKeywordMemories ?? []) {
-    segments.push({ title: `触发的记忆·${km.keyword}`, body: km.text });
-  }
-
-  // 分页:短环节合并填满一页,长环节独占(不硬切,保证段落完整)
-  const charsPerPage = 1200;
-  const pages = paginateSegments(segments, charsPerPage);
-  const totalPages = pages.length;
+    if (self?.privateScript) segments.push({ title: '开场发本', body: self.privateScript });
+    // 各阶段:公共旁白 + 该阶段角色记忆,配对交错(每段旁白紧跟它对应的私人记忆)
+    for (const b of self?.unlockedPhaseBlocks ?? []) {
+      if (b.narrative) segments.push({ title: b.phaseTitle, body: b.narrative });
+      if (b.story) {
+        segments.push({ title: b.narrative ? '角色记忆' : b.phaseTitle, body: b.story });
+      }
+    }
+    for (const o of self?.objectives ?? []) {
+      const label = o.kind === 'main' ? '主线目标' : o.kind === 'hidden' ? '隐藏目标' : '支线目标';
+      segments.push({ title: label, body: o.description });
+    }
+    for (const km of self?.unlockedKeywordMemories ?? []) {
+      segments.push({ title: `触发的记忆·${km.keyword}`, body: km.text });
+    }
+    // 分页:短环节合并填满一页,长环节独占(不硬切,保证段落完整)
+    const charsPerPage = 1200;
+    const pgs = paginateSegments(segments, charsPerPage);
+    return { pages: pgs, totalPages: pgs.length };
+  }, [
+    myChar,
+    self?.privateScript,
+    self?.unlockedPhaseBlocks,
+    self?.objectives,
+    self?.unlockedKeywordMemories,
+  ]);
   const clampedPage = Math.max(0, Math.min(currentPage, totalPages - 1));
 
   // 添加标注
@@ -233,8 +241,16 @@ export function ScriptBook() {
   const leftPage = pages[clampedPage];
   const rightPage = pages[clampedPage + 1];
 
-  // 移动端窄屏 → 单页模式（步进 1）；桌面 → 双页模式（步进 2）
-  const isSinglePage = typeof window !== 'undefined' && window.innerWidth <= 768;
+  // #15: 移动端窄屏 → 单页模式(步进 1);桌面 → 双页模式(步进 2)。
+  // 响应 resize,避免首次 mount 后横竖屏切换/窗口缩放时分页步进不更新。
+  const [isSinglePage, setIsSinglePage] = useState(
+    () => typeof window !== 'undefined' && window.innerWidth <= 768,
+  );
+  useEffect(() => {
+    const onResize = () => setIsSinglePage(window.innerWidth <= 768);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
   const pageStep = isSinglePage ? 1 : 2;
 
   const excerptList = annotations

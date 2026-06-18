@@ -18,3 +18,10 @@ data/
 # 开发期遗留
 _archive/
 _audio-drafts/
+scripts/_oneoff/
+
+# 根目录临时脚本
+/*.py
+
+# BGM 音频文件(体积大,走本地/外部托管,不随 git 分发;README 清单仍入库)
+packages/client/public/audio/**/*.mp3

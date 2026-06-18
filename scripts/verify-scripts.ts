@@ -2,7 +2,7 @@ import { loadScript } from '../packages/server/src/loader.js';
 import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '..');
-const ids = ['_mock', 'mock-faction', 'danshui', 'kuiilei'];
+const ids = ['mock', 'mock-faction', 'danshui', 'kuiilei', 'ziteng'];
 let fail = 0;
 for (const id of ids) {
   try {

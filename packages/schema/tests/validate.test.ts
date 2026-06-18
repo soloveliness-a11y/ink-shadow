@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { validateScript } from '../src/index.js';
 
-const mockUrl = new URL('../../../content/_mock/script.json', import.meta.url);
+const mockUrl = new URL('../../../content/mock/script.json', import.meta.url);
 const loadMock = (): unknown => JSON.parse(readFileSync(mockUrl, 'utf8'));
 
 test('mock 剧本包通过结构 + 自洽校验,零 error 零 warn', () => {

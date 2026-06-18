@@ -19,7 +19,9 @@ export class GameConnection {
   private retryDelay = 1000;
   private maxRetry = 8000;
   private shouldReconnect = false;
+  private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
   private queue: ClientIntent[] = [];
+  private static MAX_QUEUE = 200;
   private status: ConnectionStatus = 'disconnected';
   private statusListeners = new Set<StatusListener>();
   private lastReconnectAt = 0;
@@ -38,6 +40,10 @@ export class GameConnection {
 
   disconnect(): void {
     this.shouldReconnect = false;
+    if (this.reconnectTimer) {
+      clearTimeout(this.reconnectTimer);
+      this.reconnectTimer = null;
+    }
     this.retryDelay = 1000;
     this.ws?.close();
     this.ws = null;
@@ -49,7 +55,11 @@ export class GameConnection {
       this.ws.send(JSON.stringify(intent));
       return;
     }
+    // #6: 队列加上限,断网期间持续 push 不致 OOM;丢弃最旧意图(如已过期的投票)
     this.queue.push(intent);
+    if (this.queue.length > GameConnection.MAX_QUEUE) {
+      this.queue.splice(0, this.queue.length - GameConnection.MAX_QUEUE);
+    }
   }
 
   get connected(): boolean {
@@ -76,6 +86,8 @@ export class GameConnection {
   }
 
   private doConnect(): void {
+    // #1: disconnect 后可能仍有已排队的重连回调,此处拦截避免建幽灵连接
+    if (!this.shouldReconnect) return;
     try {
       this.ws = new WebSocket(this.url);
     } catch {
@@ -117,8 +129,12 @@ export class GameConnection {
   }
 
   private scheduleReconnect(): void {
+    // #1: 保存 handle,disc/connect 期间可取消;doConnect 内也有 shouldReconnect 守卫
+    if (this.reconnectTimer) clearTimeout(this.reconnectTimer);
     const wait = this.retryDelay;
-    setTimeout(() => {
+    this.reconnectTimer = setTimeout(() => {
+      this.reconnectTimer = null;
+      if (!this.shouldReconnect) return;
       this.retryDelay = Math.min(this.retryDelay * 2, this.maxRetry);
       this.doConnect();
     }, wait);

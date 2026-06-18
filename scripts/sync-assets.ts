@@ -4,12 +4,12 @@
  *   avatar_<charId>.png / scene_<sceneId>.png / prop_<propId>.png / clue_<clueId>.png / cover.png
  * 用途:修复历史回填不一致;阶段4补出图后统一落盘。
  *
- * Usage: pnpm exec tsx scripts/sync-assets.ts [scriptId=_mock]
+ * Usage: pnpm exec tsx scripts/sync-assets.ts [scriptId=mock]
  */
 import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
-const scriptId = process.argv[2] ?? '_mock';
+const scriptId = process.argv[2] ?? 'mock';
 const dir = resolve('content', scriptId);
 const scriptPath = join(dir, 'script.json');
 const assetsDir = join(dir, 'assets');
