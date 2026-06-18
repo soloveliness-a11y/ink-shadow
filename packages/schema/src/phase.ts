@@ -15,6 +15,8 @@ export const zActionKind = z.enum([
   'submitTheory',
   'ready',
   'makeChoice', // 抉择(豪门本:选项→后果)
+  'adjustCounter', // 机制本:主动增减计数器(如投入筹码/计分)
+  'adjustResource', // 机制本:主动增减自己持有的资源
 ]);
 export type ActionKind = z.infer<typeof zActionKind>;
 
@@ -60,6 +62,10 @@ export const zPhase = z.object({
         z.object({ kind: z.literal('advanceClock') }),
         z.object({ kind: z.literal('unlockStory'), storyKey: z.string() }),
         z.object({ kind: z.literal('jumpPhase'), phaseId: z.string() }),
+        // 机制本/阵营本/情感本扩展 effects(第一期接通):
+        z.object({ kind: z.literal('adjustCounter'), counter: z.string(), delta: z.number() }),
+        z.object({ kind: z.literal('adjustResource'), resourceId: z.string(), delta: z.number() }),
+        z.object({ kind: z.literal('adjustTeamScore'), teamId: z.string(), delta: z.number() }),
       ])),
     })),
   }).optional(), // 抉择点(进入 phase 展示选项,makeChoice 触发 effects)

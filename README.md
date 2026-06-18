@@ -173,11 +173,11 @@ pnpm --filter @mmg/client build  # 构建前端
 |----|--------|----------|
 | @mmg/schema | 12 | 结构校验、DAG 可达性、引用完整性 |
 | @mmg/generator | 10 | 剧本校验、repair 修复、solutionChain 映射 |
-| @mmg/server | 50 | 房间生命周期、DAG 推进、掉线保护、投票/平票、反作弊视图、视图批量裁剪等价性、深度优化回归(tieCharIds 清理/定时器销毁/private 搜证限制/theories 脱敏) |
+| @mmg/server | 55 | 房间生命周期、DAG 推进、掉线保护、投票/平票、反作弊视图、视图批量裁剪等价性、深度优化回归、机制本/情感本/阵营本引擎(scoreReach/choiceResult/counters/resources) |
 | @mmg/client | 31 | store 消息处理、错误码映射完整性、资源 URL |
 | @mmg/visual-pipeline | 9 | 任务规划、stub 出图、断点续出、幽灵修复、promptHash 重出 |
 
-**112 tests, 0 failures.**
+**117 tests, 0 failures.**
 
 ## 文档
 

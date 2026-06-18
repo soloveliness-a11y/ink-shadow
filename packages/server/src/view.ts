@@ -92,6 +92,7 @@ export function buildView(
     votesPublic: buildVotesPublic(state, charId, currentPhase),
     teams: state.teams,
     myFaction: charId ? script.characters.find((c) => c.id === charId)?.faction : undefined,
+    counters: state.counters,
     ending: (state.status === 'finished' || (state.status === 'playing' && script.phases.find(p => p.id === state.currentPhaseId)?.kind === 'reveal'))
       ? buildEnding(script, state, charId, state.status === 'finished') : undefined,
     isTestMode: extra?.isTestMode,
@@ -348,6 +349,7 @@ function buildSelfView(script: Script, state: RuntimeState, charId: string): Non
       .filter((km) => state.flags[`kwmem:${charId}:${km.id}`])
       .map((km) => ({ id: km.id, keyword: km.keyword, text: km.text })),
     searchedThisRound: state.phaseRuntime.searchedThisRound?.includes(charId) ?? false,
+    resources: state.resources?.[charId] ?? undefined,
   };
 }
 

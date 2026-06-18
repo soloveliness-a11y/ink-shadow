@@ -27,6 +27,7 @@ export const zPhaseRuntime = z.object({
   currentTime: z.string().optional(), // 时钟指示物当前时间(clock phase 用,如 "21:10")
   round: z.number().int().optional(), // 当前搜查轮次(maxRounds phase 用,从 0 起)
   searchedThisRound: z.array(z.string()).optional(), // 本轮已搜查的 charId(maxRounds 强制轮流)
+  choices: z.record(z.string(), z.string()).optional(), // makeChoice 记录:charId → optionId(集体抉择结算用)
 });
 export type PhaseRuntime = z.infer<typeof zPhaseRuntime>;
 

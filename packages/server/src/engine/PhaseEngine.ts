@@ -343,6 +343,20 @@ export class PhaseEngine {
         if (this.state.flags[`choice:${charId}:${choice.id}`]) return reject('already_chose');
         break;
       }
+      case 'adjustCounter': {
+        // delta 为整数即可,具体语义(投入/扣除)由剧本定义;负数允许(扣减)
+        if (!Number.isInteger(intent.delta)) return reject('invalid_delta');
+        break;
+      }
+      case 'adjustResource': {
+        if (!Number.isInteger(intent.delta)) return reject('invalid_delta');
+        // 扣减时不允许透支(持有量 < 扣减量)
+        if (intent.delta < 0) {
+          const current = this.state.resources?.[charId]?.[intent.resourceId] ?? 0;
+          if (current + intent.delta < 0) return reject('insufficient_resource');
+        }
+        break;
+      }
     }
     return ok();
   }
@@ -425,6 +439,9 @@ export class PhaseEngine {
         const flag = `choice:${charId}:${choice.id}`;
         if (this.state.flags[flag]) break;
         this.state.flags[flag] = true;
+        // 记录该玩家的选择到 phaseRuntime.choices(供 settlePhaseOnExit 集体抉择结算)
+        if (!this.state.phaseRuntime.choices) this.state.phaseRuntime.choices = {};
+        this.state.phaseRuntime.choices[charId] = opt.id;
         let jumped = false;
         for (const eff of opt.effects) {
           if (eff.kind === 'giveClue') {
@@ -440,12 +457,52 @@ export class PhaseEngine {
             jumped = true;
             this.bus.event({ type: 'choice_made', actorCharId: charId, payload: { choiceId: choice.id, optionId: opt.id, jumpedTo: eff.phaseId } });
             this.enter(eff.phaseId); // 抉择跳转(覆盖 flow)
+          } else if (eff.kind === 'adjustCounter') {
+            this.applyAdjustCounter(eff.counter, eff.delta);
+          } else if (eff.kind === 'adjustResource') {
+            this.applyAdjustResource(charId, eff.resourceId, eff.delta);
+          } else if (eff.kind === 'adjustTeamScore') {
+            this.applyAdjustTeamScore(eff.teamId, eff.delta);
           }
         }
         if (!jumped) this.bus.event({ type: 'choice_made', actorCharId: charId, payload: { choiceId: choice.id, optionId: opt.id } });
         break;
       }
+      case 'adjustCounter': {
+        this.applyAdjustCounter(intent.counter, intent.delta);
+        this.bus.event({ type: 'counter_adjusted', actorCharId: charId, payload: { counter: intent.counter, delta: intent.delta } });
+        break;
+      }
+      case 'adjustResource': {
+        this.applyAdjustResource(charId, intent.resourceId, intent.delta);
+        this.bus.event({ type: 'resource_adjusted', actorCharId: charId, payload: { resourceId: intent.resourceId, delta: intent.delta } });
+        break;
+      }
     }
+  }
+
+  // ─── 机制本/阵营本/情感本:计数器/资源/阵营分 工具方法(第一期接通) ───
+
+  /** 调整全局计数器(机制本:如回合分/证据强度)。 */
+  private applyAdjustCounter(counter: string, delta: number): void {
+    if (!this.state.counters) this.state.counters = {};
+    this.state.counters[counter] = (this.state.counters[counter] ?? 0) + delta;
+  }
+
+  /** 调整玩家持有的资源(机制本:如筹码/道具)。 */
+  private applyAdjustResource(charId: string, resourceId: string, delta: number): void {
+    if (!this.state.resources) this.state.resources = {};
+    if (!this.state.resources[charId]) this.state.resources[charId] = {};
+    const bag = this.state.resources[charId]!;
+    bag[resourceId] = (bag[resourceId] ?? 0) + delta;
+  }
+
+  /** 调整阵营分数(阵营本增强:如红蓝方积分)。 */
+  private applyAdjustTeamScore(teamId: string, delta: number): void {
+    if (!this.state.teams) this.state.teams = {};
+    const team = this.state.teams[teamId] ?? { score: 0 };
+    team.score = (team.score ?? 0) + delta;
+    this.state.teams[teamId] = team;
   }
 
   /** 关键词触发记忆:扫描非发言者的 keywordMemories,命中 → 解锁 + 私发记忆给持有者 */
@@ -532,6 +589,8 @@ export class PhaseEngine {
   }
 
   private doAdvance(): void {
+    // 推进前结算当前环节的集体抉择/提案投票结果(写入 flag,供 selectNextPhase 条件判定)
+    this.settlePhaseOnExit();
     const nextId = selectNextPhase(this.script.flow, this.state, this.state.currentPhaseId);
     this.clearTimer();
     if (nextId) {
@@ -543,6 +602,52 @@ export class PhaseEngine {
       this.enter(nextId);
     } else {
       this.bus.event({ type: 'flow_end' });
+    }
+  }
+
+  /**
+   * 环节退出前的结果结算(在 selectNextPhase 之前调用,确保 flow 条件能读到结果):
+   *  - choice(集体抉择):收集所有玩家选择(phaseRuntime.choices)→ 多数票 → 写 flags
+   *  - proposal 投票:统计 proposalId 票数 → 过半 → 写 flags[proposal_<id>_won]
+   * 幂等:已结算的 choice 不重复结算(flag 检查)。
+   */
+  private settlePhaseOnExit(): void {
+    const phase = this.current();
+    if (!phase) return;
+
+    // choice 集体抉择结算(全局多数票):从 phaseRuntime.choices 收集每人选的 optionId
+    if (phase.choice) {
+      const choiceId = phase.choice.id;
+      if (!this.state.flags[`choiceResult:${choiceId}`]) {
+        const choices = this.state.phaseRuntime.choices ?? {};
+        const optCounts: Record<string, number> = {};
+        for (const [, optId] of Object.entries(choices)) {
+          optCounts[optId] = (optCounts[optId] ?? 0) + 1;
+        }
+        // 多数票(平票取票数最高中 options 定义顺序首个)
+        let winner: string | null = null;
+        let maxCnt = 0;
+        for (const opt of phase.choice.options) {
+          const c = optCounts[opt.id] ?? 0;
+          if (c > maxCnt) { maxCnt = c; winner = opt.id; }
+        }
+        if (winner) {
+          this.state.flags[`choiceResult:${choiceId}`] = true;
+          // 预写所有可能的目标 value flag,flow 的 choiceResult 条件直接读
+          this.state.flags[`choiceResultMatch:${choiceId}:${winner}`] = true;
+        }
+      }
+    }
+
+    // proposal 投票过半结算
+    if (phase.voteMode === 'proposal' && phase.restrictVoteTargets) {
+      const proposals = Array.isArray(phase.restrictVoteTargets) ? phase.restrictVoteTargets : [];
+      const total = Object.keys(this.state.votes).length;
+      for (const pid of proposals) {
+        if (this.state.flags[`proposal_${pid}_won`]) continue;
+        const cnt = Object.values(this.state.votes).filter((v) => v === pid).length;
+        if (total > 0 && cnt > total / 2) this.state.flags[`proposal_${pid}_won`] = true;
+      }
     }
   }
 

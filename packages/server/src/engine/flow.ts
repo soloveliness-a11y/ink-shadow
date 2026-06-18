@@ -68,8 +68,22 @@ export function evaluateFlowCondition(cond: FlowCondition | undefined, state: Ru
     return !!state.flags[`team_${cond.teamId}_won`];
   }
 
-  // 占位(后续 genre 实现):
-  //   scoreReach(机制本): state.counters?.[cond.counter] >= cond.gte
-  //   choiceResult(情感还原本): 选择结果匹配 cond.value
+  // 机制本:counter 达到阈值
+  if (cond.kind === 'scoreReach') {
+    return (state.counters?.[cond.counter] ?? 0) >= cond.gte;
+  }
+
+  // 情感还原本:全局集体抉择结果(多数票选项,由 settlePhaseOnExit 结算)
+  // flags[choiceResult:<id>]=true 表示已结算,counters[choiceResultValue:<id>] 存 winning option 的 index
+  if (cond.kind === 'choiceResult') {
+    if (!state.flags[`choiceResult:${cond.choiceId}`]) return false;
+    // value 是 optionId,需从 phase 的 options 里反查 index 比较(引擎结算时存了 index)
+    // 但 flow.ts 不持有 script.phases,这里只能比对 index。约定:value 可传 index 或 optionId,
+    // 优先按 optionId 比对:若 counters 存的 index 对应的 optionId 等于 cond.value 则命中。
+    // 因 flow 无 phase 引用,改由 PhaseEngine 在结算时直接写 flag[choiceResultMatch:<choiceId>:<value>]=true
+    // —— 更简单:settlePhaseOnExit 对每个可能的目标 value 预写 flag。这里只读 flag。
+    return !!state.flags[`choiceResultMatch:${cond.choiceId}:${cond.value}`];
+  }
+
   return false;
 }

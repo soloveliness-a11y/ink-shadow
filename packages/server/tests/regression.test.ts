@@ -183,3 +183,152 @@ test('B2: reveal 阶段(status=playing)只下发自己的 theory;finished 后全
     assert.ok(keys.length === 2, `finished 后应下发全部推理,实际 ${keys.length} 条`);
   }
 });
+
+// ─── 机制本/情感本/阵营本 第一期接通测试 ───
+
+test('scoreReach: adjustCounter 累计后 flow 条件命中', () => {
+  const script: Script = {
+    id: '_mock', meta: { id: '_mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
+    characters: [{ id: 'c_wife', name: '妻', gender: 'female' as const, publicProfile: '', visual: {} } as never],
+    scenes: [], clues: [],
+    flow: { entry: 'p_act', edges: [
+      { from: 'p_act', to: 'p_end', condition: { kind: 'scoreReach' as const, counter: 'points', gte: 10 } },
+    ] },
+    phases: [
+      { id: 'p_act', kind: 'free', title: '行动', instruction: '', participants: 'all',
+        allowedActions: ['adjustCounter' as const], exit: { kind: 'allActed' as const } },
+      { id: 'p_end', kind: 'reveal', title: '结束', instruction: '', participants: 'all',
+        allowedActions: [], exit: { kind: 'hostAdvance' as const } },
+    ],
+  } as unknown as Script;
+  const state = makeState({ phaseId: 'p_act', players: [{ playerId: 'p1', charId: 'c_wife', nickname: 'A' }] });
+  const engine = new PhaseEngine(script, state, makeBus());
+  engine.start();
+  // 累计到 10 分
+  engine.handleAction('c_wife', { kind: 'adjustCounter', counter: 'points', delta: 10 });
+  assert.equal(state.counters!.points, 10, 'counter 应累计到 10');
+  // 全员行动完毕(allActed)→ 推进,scoreReach 条件应命中进入 p_end
+  assert.equal(state.currentPhaseId, 'p_end', 'scoreReach>=10 命中后应推进到 p_end');
+});
+
+test('adjustCounter: effect via makeChoice 也能累计', () => {
+  const script: Script = {
+    id: '_mock', meta: { id: '_mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
+    characters: [{ id: 'c_wife', name: '妻', gender: 'female' as const, publicProfile: '', visual: {} } as never],
+    scenes: [], clues: [],
+    flow: { entry: 'p_choice', edges: [{ from: 'p_choice', to: 'p_end', condition: { kind: 'always' as const } }] },
+    phases: [
+      { id: 'p_choice', kind: 'free', title: '抉择', instruction: '', participants: 'all',
+        allowedActions: ['makeChoice' as never], exit: { kind: 'allActed' as never },
+        choice: { id: 'ch1', prompt: '选', options: [
+          { id: 'opt_a', label: 'A', effects: [{ kind: 'adjustCounter' as never, counter: 'score', delta: 5 }] },
+        ] } },
+      { id: 'p_end', kind: 'reveal', title: '结束', instruction: '', participants: 'all',
+        allowedActions: [], exit: { kind: 'hostAdvance' as const } },
+    ],
+  } as unknown as Script;
+  const state = makeState({ phaseId: 'p_choice', players: [{ playerId: 'p1', charId: 'c_wife', nickname: 'A' }] });
+  const engine = new PhaseEngine(script, state, makeBus());
+  engine.start();
+  engine.handleAction('c_wife', { kind: 'makeChoice', choiceId: 'ch1', optionId: 'opt_a' });
+  assert.equal(state.counters!.score, 5, 'makeChoice 的 adjustCounter effect 应累计');
+});
+
+test('adjustResource: 正常增减 + 透支保护', () => {
+  const script: Script = {
+    id: '_mock', meta: { id: '_mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
+    characters: [{ id: 'c_wife', name: '妻', gender: 'female' as const, publicProfile: '', visual: {} } as never],
+    scenes: [], clues: [],
+    flow: { entry: 'p_act', edges: [] },
+    phases: [
+      { id: 'p_act', kind: 'free', title: '行动', instruction: '', participants: 'all',
+        allowedActions: ['adjustResource' as const], exit: { kind: 'hostAdvance' as const } },
+    ],
+  } as unknown as Script;
+  const state = makeState({ phaseId: 'p_act', players: [{ playerId: 'p1', charId: 'c_wife', nickname: 'A' }] });
+  const engine = new PhaseEngine(script, state, makeBus());
+  engine.start();
+  // +3 coins
+  const r1 = engine.handleAction('c_wife', { kind: 'adjustResource', resourceId: 'coins', delta: 3 });
+  assert.equal(r1.error, undefined, '+3 coins 应成功');
+  assert.equal(state.resources!.c_wife!.coins, 3);
+  // -5 coins(透支,持有 3)
+  const r2 = engine.handleAction('c_wife', { kind: 'adjustResource', resourceId: 'coins', delta: -5 });
+  assert.equal(r2.error, 'insufficient_resource', '透支应被拒');
+  assert.equal(state.resources!.c_wife!.coins, 3, '透支失败后持有量不变');
+});
+
+test('choiceResult: 多数票结算写入 flag,flow 条件命中', () => {
+  const script: Script = {
+    id: '_mock', meta: { id: '_mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
+    characters: [
+      { id: 'c_a', name: 'A', gender: 'female' as const, publicProfile: '', visual: {} } as never,
+      { id: 'c_b', name: 'B', gender: 'male' as const, publicProfile: '', visual: {} } as never,
+      { id: 'c_c', name: 'C', gender: 'male' as const, publicProfile: '', visual: {} } as never,
+    ],
+    scenes: [], clues: [],
+    flow: { entry: 'p_choice', edges: [
+      { from: 'p_choice', to: 'p_save', condition: { kind: 'choiceResult' as const, choiceId: 'ch1', value: 'opt_a' } },
+      { from: 'p_choice', to: 'p_fail', condition: { kind: 'choiceResult' as const, choiceId: 'ch1', value: 'opt_b' } },
+    ] },
+    phases: [
+      { id: 'p_choice', kind: 'free', title: '集体抉择', instruction: '', participants: 'all',
+        allowedActions: ['makeChoice' as never], exit: { kind: 'allActed' as never },
+        choice: { id: 'ch1', prompt: '选', options: [
+          { id: 'opt_a', label: 'A', effects: [] },
+          { id: 'opt_b', label: 'B', effects: [] },
+        ] } },
+      { id: 'p_save', kind: 'reveal', title: '好结局', instruction: '', participants: 'all', allowedActions: [], exit: { kind: 'hostAdvance' as const } },
+      { id: 'p_fail', kind: 'reveal', title: '坏结局', instruction: '', participants: 'all', allowedActions: [], exit: { kind: 'hostAdvance' as const } },
+    ],
+  } as unknown as Script;
+  const state = makeState({ phaseId: 'p_choice', players: [
+    { playerId: 'p1', charId: 'c_a', nickname: 'A' },
+    { playerId: 'p2', charId: 'c_b', nickname: 'B' },
+    { playerId: 'p3', charId: 'c_c', nickname: 'C' },
+  ] });
+  const engine = new PhaseEngine(script, state, makeBus());
+  engine.start();
+  // 2 票 opt_a,1 票 opt_b → 多数票 opt_a
+  engine.handleAction('c_a', { kind: 'makeChoice', choiceId: 'ch1', optionId: 'opt_a' });
+  engine.handleAction('c_b', { kind: 'makeChoice', choiceId: 'ch1', optionId: 'opt_a' });
+  engine.handleAction('c_c', { kind: 'makeChoice', choiceId: 'ch1', optionId: 'opt_b' });
+  // allActed → 结算 → choiceResult opt_a 命中 → p_save
+  assert.equal(state.flags['choiceResult:ch1'], true, '应已结算');
+  assert.equal(state.flags['choiceResultMatch:ch1:opt_a'], true, 'opt_a 多数票 flag 应置位');
+  assert.equal(state.currentPhaseId, 'p_save', '应推进到好结局 p_save');
+});
+
+test('proposal: 过半投票置 flag', () => {
+  const script: Script = {
+    id: '_mock', meta: { id: '_mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
+    characters: [
+      { id: 'c_a', name: 'A', gender: 'female' as const, publicProfile: '', visual: {} } as never,
+      { id: 'c_b', name: 'B', gender: 'male' as const, publicProfile: '', visual: {} } as never,
+      { id: 'c_c', name: 'C', gender: 'male' as const, publicProfile: '', visual: {} } as never,
+    ],
+    scenes: [], clues: [],
+    flow: { entry: 'p_vote', edges: [
+      { from: 'p_vote', to: 'p_pass', condition: { kind: 'flag' as const, flag: 'proposal_prop1_won', equals: true } },
+    ] },
+    phases: [
+      { id: 'p_vote', kind: 'vote', title: '提案投票', instruction: '', participants: 'all',
+        allowedActions: ['castVote' as const], voteMode: 'proposal' as const,
+        restrictVoteTargets: ['prop1', 'prop2'], exit: { kind: 'voteComplete' as const } },
+      { id: 'p_pass', kind: 'reveal', title: '通过', instruction: '', participants: 'all', allowedActions: [], exit: { kind: 'hostAdvance' as const } },
+    ],
+  } as unknown as Script;
+  const state = makeState({ phaseId: 'p_vote', players: [
+    { playerId: 'p1', charId: 'c_a', nickname: 'A' },
+    { playerId: 'p2', charId: 'c_b', nickname: 'B' },
+    { playerId: 'p3', charId: 'c_c', nickname: 'C' },
+  ] });
+  const engine = new PhaseEngine(script, state, makeBus());
+  engine.start();
+  // 2 票 prop1(3 人过半),1 票 prop2
+  engine.handleAction('c_a', { kind: 'castVote', targetCharId: 'prop1' });
+  engine.handleAction('c_b', { kind: 'castVote', targetCharId: 'prop1' });
+  engine.handleAction('c_c', { kind: 'castVote', targetCharId: 'prop2' });
+  assert.equal(state.flags['proposal_prop1_won'], true, 'prop1 过半应置 flag');
+  assert.equal(state.currentPhaseId, 'p_pass', 'flag 条件命中应推进到 p_pass');
+});

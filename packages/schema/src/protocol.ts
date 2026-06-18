@@ -7,7 +7,7 @@ import { zRoomStatus, zGameEvent } from './runtime.js';
  * 协议版本号。每次改动 ClientIntent / ServerMessage / ClientStateView 结构时手动 +1。
  * client join 时上报,server 比对;不一致则提示玩家刷新页面(防旧前端发旧协议的静默故障)。
  */
-export const PROTOCOL_VERSION = 7;
+export const PROTOCOL_VERSION = 8;
 
 /**
  * 客户端 → 服务器:玩家意图。
@@ -30,6 +30,8 @@ export const zClientIntent = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('manualAdvance') }),
   z.object({ kind: z.literal('rollbackPhase') }),
   z.object({ kind: z.literal('makeChoice'), choiceId: z.string().max(128), optionId: z.string().max(128) }),
+  z.object({ kind: z.literal('adjustCounter'), counter: z.string().max(64), delta: z.number() }),
+  z.object({ kind: z.literal('adjustResource'), resourceId: z.string().max(64), delta: z.number() }),
   z.object({ kind: z.literal('configureDm'), enabled: z.boolean(), provider: z.enum(['anthropic', 'openai']).optional(), apiKey: z.string().max(512).optional(), apiUrl: z.string().max(512).optional(), model: z.string().max(128).optional() }),
 ]);
 export type ClientIntent = z.infer<typeof zClientIntent>;
@@ -135,6 +137,7 @@ export const zClientStateView = z.object({
         text: z.string(),
       })).default([]), // 关键词触发解锁的记忆片段(豪门本"回忆")
       searchedThisRound: z.boolean().optional(), // 本轮是否已搜查(maxRounds 轮流搜查)
+      resources: z.record(z.string(), z.number()).optional(), // 机制本:该玩家持有的资源 {resourceId: amount}
     })
     .optional(),
   currentPhase: z
@@ -187,6 +190,7 @@ export const zClientStateView = z.object({
     eliminated: z.boolean().optional(),
   })).optional(), // 阵营状态(阵营本,全员可见)
   myFaction: z.string().optional(), // 本玩家的阵营(裁剪后)
+  counters: z.record(z.string(), z.number()).optional(), // 机制本全局计数器(全员可见,如公共计分)
   isTestMode: z.boolean().optional(),
   dmEnabled: z.boolean().optional(),
   pendingAdvance: z.boolean().optional(),
