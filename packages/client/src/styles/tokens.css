@@ -49,3 +49,86 @@
   --z-overlay: 20;
   --z-toast: 30;
 }
+
+/* ─── 主题:青瓷水墨(古风/文人)─── */
+[data-theme="celadon"] {
+  --s0: #0A1212;
+  --s1: #0F1A1A;
+  --s2: #162626;
+  --s3: #1E3030;
+  --s4: #2A3838;
+  --tp: #E0EDE8;
+  --ts: #8AA5A0;
+  --tm: #4A5E5A;
+  --ti: #0A1212;
+  --accent: #6B9E8E;
+  --accent-h: #7FB3A3;
+  --accent-m: rgba(107,158,142,0.14);
+  --teal: #5A9E9E;
+  --teal-m: rgba(90,158,158,0.16);
+  --crimson: #B86868;
+  --crimson-m: rgba(184,104,104,0.16);
+}
+
+/* ─── 主题:暗血红月(恐怖/悬疑)─── */
+[data-theme="crimson"] {
+  --s0: #0D0808;
+  --s1: #140C0C;
+  --s2: #1C1212;
+  --s3: #281818;
+  --s4: #3A1C1C;
+  --tp: #F0E0DC;
+  --ts: #A08884;
+  --tm: #604848;
+  --ti: #0D0808;
+  --accent: #B8444C;
+  --accent-h: #CE5860;
+  --accent-m: rgba(184,68,76,0.14);
+  --teal: #6B8E8E;
+  --teal-m: rgba(107,142,142,0.16);
+  --crimson: #D04850;
+  --crimson-m: rgba(208,72,80,0.18);
+}
+
+/* ─── 主题:晨光浅色(护眼/长时阅读)─── */
+[data-theme="dawn"] {
+  --s0: #F5F3EE;
+  --s1: #EFEBE3;
+  --s2: #E4DED3;
+  --s3: #D8D4CC;
+  --s4: #CCC6BA;
+  --tp: #3A352E;
+  --ts: #6A635A;
+  --tm: #9A9388;
+  --ti: #F5F3EE;
+  --accent: #8B6F47;
+  --accent-h: #A08560;
+  --accent-m: rgba(139,111,71,0.12);
+  --teal: #4A7A7A;
+  --teal-m: rgba(74,122,122,0.12);
+  --crimson: #A04848;
+  --crimson-m: rgba(160,72,72,0.12);
+  --sage: #5A7A4A;
+  --sage-m: rgba(90,122,74,0.12);
+  --smoke: #8A8484;
+}
+
+/* ─── 主题:紫罗星空(科幻/奇幻)─── */
+[data-theme="violet"] {
+  --s0: #0C0816;
+  --s1: #120E22;
+  --s2: #1A142E;
+  --s3: #241A3C;
+  --s4: #2A2042;
+  --tp: #E4DCEE;
+  --ts: #9888B0;
+  --tm: #5A4E6E;
+  --ti: #0C0816;
+  --accent: #9A7BC8;
+  --accent-h: #AE90D8;
+  --accent-m: rgba(154,123,200,0.14);
+  --teal: #6A8EAE;
+  --teal-m: rgba(106,142,174,0.16);
+  --crimson: #C06888;
+  --crimson-m: rgba(192,104,136,0.16);
+}

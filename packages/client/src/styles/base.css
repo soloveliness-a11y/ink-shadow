@@ -17,6 +17,8 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  /* 主题切换平滑过渡(背景+文字色),不闪 */
+  transition: background-color 200ms var(--ease), color 200ms var(--ease);
 }
 
 #root { height: 100dvh; overflow: hidden; display: flex; flex-direction: column; position: relative; }
@@ -3139,3 +3141,81 @@ html { overscroll-behavior: none; }
     top: 56px;
   }
 }
+
+/* ═══ 主题切换器 ═══ */
+.theme-switcher {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
+}
+.theme-swatch {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--s4);
+  cursor: pointer;
+  transition: transform 150ms var(--ease), border-color 150ms var(--ease);
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.theme-swatch:hover { transform: scale(1.15); border-color: var(--ts); }
+.theme-swatch.selected { border-color: var(--tp); box-shadow: 0 0 0 2px var(--accent-m); }
+.theme-active { border-color: var(--s3); }
+
+.theme-picker {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  padding: 10px 12px;
+  background: var(--s1);
+  border: 1px solid var(--s4);
+  border-radius: var(--r-xl);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  z-index: var(--z-overlay);
+}
+.theme-picker .theme-swatch {
+  width: 28px; height: 28px;
+  position: relative;
+}
+.theme-picker-label {
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 9px;
+  color: var(--ts);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 120ms;
+  pointer-events: none;
+}
+.theme-swatch:hover .theme-picker-label { opacity: 1; }
+
+/* 移动端:切换器圆点稍小,picker 贴右 */
+@media (max-width: 768px) {
+  .theme-swatch { width: 18px; height: 18px; }
+  .theme-picker { gap: 6px; padding: 8px 10px; }
+  .theme-picker .theme-swatch { width: 24px; height: 24px; }
+}
+
+/* ═══ 浅色主题(dawn)组件级适配 ═══ */
+/* 浅底上:边框/阴影要更明显,深底文字色 ti 反转 */
+[data-theme="dawn"] .card {
+  box-shadow: 0 2px 8px rgba(60,50,40,0.08);
+}
+[data-theme="dawn"] .btn-primary {
+  box-shadow: 0 1px 4px rgba(139,111,71,0.2);
+}
+[data-theme="dawn"] .app-header,
+[data-theme="dawn"] .sidebar {
+  box-shadow: 0 1px 4px rgba(60,50,40,0.06);
+}
+[data-theme="dawn"] ::-webkit-scrollbar-thumb { background: var(--s4); }
+[data-theme="dawn"] ::-webkit-scrollbar-thumb:hover { background: var(--tm); }
+/* 浅色主题下,深底文字(如 btn-primary 的 label)需用深色保证可读 */
+[data-theme="dawn"] .btn-primary { color: #F5F3EE; }

@@ -1,5 +1,6 @@
 import { useGameStore } from '../store/game.js';
 import { assetUrl } from '../lib/asset.js';
+import { ThemeSwitcher } from './ThemeSwitcher.js';
 import type { JSX } from 'react';
 
 export function Header() {
@@ -53,6 +54,7 @@ export function Header() {
         {playerCount > 0 && <span className="header-pill">{onlineCount}/{playerCount} 在线</span>}
         {me?.isHost && <span className="header-pill host">房主</span>}
         {roomCode && <span className="room-badge">{roomCode}</span>}
+        <ThemeSwitcher />
       </div>
     </header>
   );
