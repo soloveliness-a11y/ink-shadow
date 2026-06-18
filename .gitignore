@@ -19,6 +19,8 @@ data/
 _archive/
 _audio-drafts/
 scripts/_oneoff/
+scripts/__pycache__/
+_screenshots/
 
 # 根目录临时脚本
 /*.py

@@ -22,6 +22,8 @@ pnpm install
 
 **一键公网分享**：双击 `分发给朋友.command`，自动起 Cloudflare 隧道，把链接发给朋友直接玩。
 
+> **BGM 音频**：33 首背景音乐(Incompetech / Kevin MacLeod, CC BY 4.0)体积较大,不随 git 分发。游戏无音频也可正常运行;需要 BGM 时按 [音频清单](packages/client/public/audio/bgm/README.md) 自行放入 `packages/client/public/audio/bgm/`。
+
 ## 一键生产新剧本
 
 ```bash
@@ -92,7 +94,7 @@ murder-mystery-game/
 │   ├── generator/        # 剧本生成器：Claude API + 自洽校验 + repair
 │   └── visual-pipeline/  # 视觉管线：批量出图 + WebP 压缩 + 指纹追踪
 ├── content/
-│   ├── _mock/            # 内置剧本「公馆惊魂·一九三五」
+│   ├── mock/             # 内置剧本「公馆惊魂·一九三五」(dev 兜底)
 │   └── _template/        # 新剧本模板
 ├── scripts/              # 工具脚本（生成/出图/拆分/同步）
 ├── PLAN/                 # 架构蓝图（设计文档）
@@ -142,8 +144,8 @@ murder-mystery-game/
 将市场已有剧本（PDF/文字）转化为标准 JSON 剧本包：
 
 ```bash
-# 已有单体 script.json → 拆分为目录结构
-node scripts/split-script.mjs content/新剧本/script.json
+# 已有单体 script.json → 拆分为目录结构（内置拆分前后等价验证）
+npx tsx scripts/split-script.ts content/新剧本
 
 # 同步资产回填（文件 → script.json）
 pnpm exec tsx scripts/sync-assets.ts 新剧本
@@ -169,12 +171,13 @@ pnpm --filter @mmg/client build  # 构建前端
 
 | 包 | 测试数 | 覆盖范围 |
 |----|--------|----------|
-| @mmg/schema | 6 | 结构校验、DAG 可达性、引用完整性 |
+| @mmg/schema | 12 | 结构校验、DAG 可达性、引用完整性 |
 | @mmg/generator | 10 | 剧本校验、repair 修复、solutionChain 映射 |
-| @mmg/server | 31 | 房间生命周期、DAG 推进、掉线保护、投票/平票、反作弊视图 |
+| @mmg/server | 50 | 房间生命周期、DAG 推进、掉线保护、投票/平票、反作弊视图、视图批量裁剪等价性、深度优化回归(tieCharIds 清理/定时器销毁/private 搜证限制/theories 脱敏) |
+| @mmg/client | 31 | store 消息处理、错误码映射完整性、资源 URL |
 | @mmg/visual-pipeline | 9 | 任务规划、stub 出图、断点续出、幽灵修复、promptHash 重出 |
 
-**56 tests, 0 failures.**
+**112 tests, 0 failures.**
 
 ## 文档
 
