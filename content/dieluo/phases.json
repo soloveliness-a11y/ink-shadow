@@ -1,1 +1,216 @@
-[{"id":"p_briefing","name":"自我介绍","type":"briefing"},{"id":"p_investigation","name":"调查阶段","type":"search"},{"id":"p_voting","name":"指认真凶","type":"voting"},{"id":"p_reveal","name":"真相揭晓","type":"reveal"}]
+[
+  {
+    "id": "p_brief",
+    "kind": "briefing",
+    "title": "酒会前的寒暄",
+    "instruction": "阅读你的角色剧本(背景故事+你的目的),然后向大家自我介绍,尝试完成上半场的部分目的。",
+    "participants": "all",
+    "allowedActions": [
+      "readScript",
+      "speak",
+      "privateMessage",
+      "ready"
+    ],
+    "unlocks": {
+      "storyKey": "opening"
+    },
+    "exit": {
+      "kind": "allReady"
+    }
+  },
+  {
+    "id": "p_intro",
+    "kind": "sequential",
+    "title": "轮流自述",
+    "instruction": "按顺序简短自我介绍(身份、来意),其他玩家可发问。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "privateMessage"
+    ],
+    "turnOrder": [
+      "tianjiwulang",
+      "qiaomuye",
+      "kusheng",
+      "hanyun",
+      "qiudaitian",
+      "qiushanliuli"
+    ],
+    "exit": {
+      "kind": "allActed"
+    }
+  },
+  {
+    "id": "p_announce",
+    "kind": "free",
+    "title": "经理的宣告",
+    "instruction": "田吉雾郎宣布'有人做了不该做的事'。下半场开始,阅读你的目的(二)。",
+    "participants": "all",
+    "allowedActions": [
+      "readScript",
+      "ready"
+    ],
+    "unlocks": {
+      "storyKey": "act2"
+    },
+    "narrativeText": "田吉雾郎站在舞台前,缓缓开口:'今天晚上,有人做了不该做的事。现在,请各位找出真相。'他的目光扫过每一个人,紫色面具下的表情难以捉摸。",
+    "exit": {
+      "kind": "allReady"
+    }
+  },
+  {
+    "id": "p_search1",
+    "kind": "free",
+    "title": "第一轮搜证",
+    "instruction": "集体调查一楼和二楼线索(每人8AP)。调查公共区域必须公开内容,调查随身物品不必公开。",
+    "participants": "all",
+    "allowedActions": [
+      "searchClue",
+      "revealClue",
+      "speak",
+      "privateMessage"
+    ],
+    "unlocks": {
+      "clueIds": [
+        "cl_lobby_01",
+        "cl_lobby_02",
+        "cl_lobby_03",
+        "cl_back_01",
+        "cl_back_02",
+        "cl_back_03",
+        "cl_vipa_01",
+        "cl_vipa_02",
+        "cl_vipa_03",
+        "cl_vipb_01",
+        "cl_vipb_02",
+        "cl_vipb_03",
+        "cl_item_01",
+        "cl_item_02",
+        "cl_item_03",
+        "cl_item_04",
+        "cl_item_05",
+        "cl_item_06",
+        "cl_item_07"
+      ]
+    },
+    "maxSearches": 4,
+    "exit": {
+      "kind": "hostAdvance"
+    }
+  },
+  {
+    "id": "p_discuss1",
+    "kind": "free",
+    "title": "讨论与私下交流",
+    "instruction": "根据线索互相询问、讨论。可以公开质疑,也可以私下交流。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "privateMessage",
+      "revealClue",
+      "ready"
+    ],
+    "exit": {
+      "kind": "allReady"
+    }
+  },
+  {
+    "id": "p_search2",
+    "kind": "free",
+    "title": "第二轮搜证(含秘密线索)",
+    "instruction": "剩余AP可继续搜证。持有特定物品可触发秘密线索。",
+    "participants": "all",
+    "allowedActions": [
+      "searchClue",
+      "revealClue",
+      "speak",
+      "privateMessage"
+    ],
+    "unlocks": {
+      "clueIds": [
+        "cl_secret_01",
+        "cl_secret_02",
+        "cl_secret_03",
+        "cl_secret_04",
+        "cl_secret_05",
+        "cl_secret_06",
+        "cl_secret_07",
+        "cl_secret_08",
+        "cl_secret_09",
+        "cl_secret_10",
+        "cl_secret_11",
+        "cl_secret_01",
+        "cl_secret_02",
+        "cl_secret_03",
+        "cl_secret_04",
+        "cl_secret_05",
+        "cl_secret_06",
+        "cl_secret_07",
+        "cl_secret_08",
+        "cl_secret_09",
+        "cl_secret_10",
+        "cl_secret_11"
+      ]
+    },
+    "maxSearches": 4,
+    "exit": {
+      "kind": "hostAdvance"
+    }
+  },
+  {
+    "id": "p_theory",
+    "kind": "free",
+    "title": "提交推理",
+    "instruction": "写下你对真相的推理(凶手是谁、手法、动机),私密提交。",
+    "participants": "all",
+    "allowedActions": [
+      "submitTheory",
+      "speak",
+      "privateMessage"
+    ],
+    "exit": {
+      "kind": "allActed"
+    }
+  },
+  {
+    "id": "p_vote",
+    "kind": "vote",
+    "title": "指认真凶",
+    "instruction": "投票指认你认为是凶手的人(不能投自己)。",
+    "participants": "all",
+    "allowedActions": [
+      "castVote"
+    ],
+    "voteMode": "char",
+    "exit": {
+      "kind": "voteComplete"
+    }
+  },
+  {
+    "id": "p_vote_tiebreak",
+    "kind": "vote",
+    "title": "平票决胜",
+    "instruction": "出现平票,在平票者中重新投票。",
+    "participants": "all",
+    "allowedActions": [
+      "castVote"
+    ],
+    "voteMode": "char",
+    "resetVotes": true,
+    "restrictVoteTargets": "tied",
+    "exit": {
+      "kind": "voteComplete"
+    }
+  },
+  {
+    "id": "p_reveal",
+    "kind": "reveal",
+    "title": "真相揭晓",
+    "instruction": "所有真相即将揭晓。",
+    "participants": "all",
+    "allowedActions": [],
+    "exit": {
+      "kind": "hostAdvance"
+    }
+  }
+]

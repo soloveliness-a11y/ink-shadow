@@ -1,33 +1,63 @@
 {
   "id": "kusheng",
   "name": "苦生",
-  "role": "苦力",
   "gender": "male",
-  "age": 28,
-  "description": "苦力，身份卑微。",
-  "background": "苦力，与案件有关。",
-  "motivation": "想改变命运，找出真相。",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "夜总会领班,戴棕色面具,三十岁出头,沉默寡言的杂役。",
+  "privateScript": "我是苦生,夜总会领班。我6月失眠,买了安眠药。今天韩芸不知怎么偷走了我的药——我不知道她用来做什么。\n\n我在夜总会干活多年,知道很多秘密,但从不声张。田吉雾郎经理不容许犯错,我也不敢。\n\n今天下午我在厨房忙碌。16:00韩芸让我去拿盐罐和洋酒。我不知道她在VIP房做了什么。",
+  "objectives": [
+    {
+      "id": "kusheng_obj_1",
+      "kind": "main",
+      "description": "找出谁偷了你的安眠药"
+    },
+    {
+      "id": "kusheng_obj_2",
+      "kind": "side",
+      "description": "弄清今夜两起命案的真相"
+    }
+  ],
   "secrets": [
-    "与案件有关"
+    "6月买了安眠药,被韩芸偷走",
+    "知道夜总会很多秘密但不敢说"
   ],
   "relationships": [
     {
-      "to": "韩芸",
-      "relation": "朋友",
-      "detail": "两人是朋友"
-    }
-  ],
-  "endings": [
+      "targetCharId": "tianjiwulang",
+      "relation": "你的上司经理",
+      "isPublic": true
+    },
     {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "找出真相",
-      "description": "你找出真相，改变命运。"
+      "targetCharId": "hanyun",
+      "relation": "同事,她偷了你的药",
+      "isPublic": false
     }
   ],
+  "sceneId": "s_kitchen",
   "visual": {
-    "kind": "character",
-    "prompt": "1914 Chinese laborer, 28 years old, oil painting style",
+    "kind": "avatar",
+    "prompt": "苦生, 夜总会领班,戴棕色面具,三十岁出头,沉默寡言的杂役。",
     "aspect": "3:4"
-  }
+  },
+  "timeline": [
+    {
+      "time": "15:00",
+      "location": "厨房",
+      "action": "忙碌备餐",
+      "isPublic": true
+    },
+    {
+      "time": "16:00",
+      "location": "厨房",
+      "action": "韩芸让他去拿盐罐和洋酒",
+      "isPublic": true
+    },
+    {
+      "time": "17:00",
+      "location": "大厅",
+      "action": "协助酒会",
+      "isPublic": true
+    }
+  ]
 }

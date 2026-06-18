@@ -1,1 +1,419 @@
-[{"id":"clue_main","name":"主要线索","type":"location"}]
+[
+  {
+    "id": "cl_lobby_01",
+    "title": "碎的注射器",
+    "visibility": "searchable",
+    "sceneId": "s_lobby",
+    "content": "\"注射器\"里面已经空了。在打扫干净的舞台中间发现(舞台高70cm)。",
+    "visual": {
+      "kind": "clue",
+      "prompt": "破碎的玻璃注射器,空瓶,民国舞台地面,近景,油画风",
+      "aspect": "4:3"
+    },
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_lobby_02",
+    "title": "男性尸体(舞台下)",
+    "visibility": "searchable",
+    "sceneId": "s_lobby",
+    "content": "死者五十多岁,男性,光头。后脑有\"瘀伤\",上身赤裸,背后有已愈合的大片\"烧伤\",拳头上有老茧。(即陈新庭,被桥牧野毒杀后,秦逢天打了后脑并藏尸于此)",
+    "visual": {
+      "kind": "clue",
+      "prompt": "舞台下隐藏的男性尸体,民国服饰,油画风",
+      "aspect": "4:3"
+    },
+    "isKey": true,
+    "pointsTo": [
+      "tianjiwulang",
+      "qiaomuye",
+      "qiudaitian"
+    ]
+  },
+  {
+    "id": "cl_lobby_03",
+    "title": "放映机",
+    "visibility": "searchable",
+    "sceneId": "s_lobby",
+    "content": "用来放映宣传片段的机器,发布会结束后留在舞台旁边。持有'电影胶片'的人可触发秘密线索07。",
+    "visual": {
+      "kind": "clue",
+      "prompt": "民国放映机,胶片,舞台旁,油画风",
+      "aspect": "4:3"
+    },
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_back_01",
+    "title": "川边次郎的证词",
+    "visibility": "searchable",
+    "sceneId": "s_backstage",
+    "content": "日籍厨师川边手持寿司菜刀皱着眉,说韩芸不该急着拿走冰桶——里面的冰块没弄碎怎么能用?(暗示韩芸取冰块用于VIP乙房布置)",
+    "visual": {
+      "kind": "clue",
+      "prompt": "日籍厨师手持菜刀,冰桶,厨房,油画风",
+      "aspect": "4:3"
+    },
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_back_02",
+    "title": "制冷柜",
+    "visibility": "searchable",
+    "sceneId": "s_backstage",
+    "content": "从欧美购入的制冷柜,用来做冰块。冰块数量比预期少——有人取走了大量冰块。",
+    "visual": {
+      "kind": "clue",
+      "prompt": "民国制冷柜,冰块模具,厨房,油画风",
+      "aspect": "4:3"
+    },
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_back_03",
+    "title": "盐罐和洋酒",
+    "visibility": "searchable",
+    "sceneId": "s_backstage",
+    "content": "苦生说16:00韩芸让他去拿盐罐和2瓶洋酒。洋酒少了几瓶——后来在VIP房被发现。",
+    "visual": {
+      "kind": "clue",
+      "prompt": "盐罐,洋酒瓶,厨房台面,油画风",
+      "aspect": "4:3"
+    },
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_vipa_01",
+    "title": "VIP甲房浴室水迹",
+    "visibility": "searchable",
+    "sceneId": "s_vip_a",
+    "content": "浴室地面有大片水迹,浴缸边缘湿滑。有人在浴室内发生过挣扎或溺毙行为。(月蝶在此被溺死)",
+    "visual": {
+      "kind": "clue",
+      "prompt": "VIP浴室,地面积水,浴缸,油画风",
+      "aspect": "4:3"
+    },
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_vipa_02",
+    "title": "密码柜(甲房)",
+    "visibility": "searchable",
+    "sceneId": "s_vip_a",
+    "content": "西式密码柜,密码620。柜内有一具女性尸体(月蝶/秋山樱),被溺死后藏于此。白色信封已被人取走(韩芸所偷)。",
+    "visual": {
+      "kind": "clue",
+      "prompt": "密码柜,打开后可见女性尸体,民国VIP房,油画风",
+      "aspect": "4:3"
+    },
+    "isKey": true,
+    "pointsTo": [
+      "tianjiwulang",
+      "hanyun"
+    ]
+  },
+  {
+    "id": "cl_vipa_03",
+    "title": "月蝶的未完成信件",
+    "visibility": "searchable",
+    "sceneId": "s_vip_a",
+    "content": "一封没写完的信,内容提到联系人会在雾夜总会等待中间人仇戴天。(韩芸8月撬门时所见,指向讨袁名单交易)",
+    "visual": {
+      "kind": "clue",
+      "prompt": "未完成的信件,毛笔字,民国信纸,油画风",
+      "aspect": "4:3"
+    },
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_vipb_01",
+    "title": "VIP乙房坠楼痕迹",
+    "visibility": "searchable",
+    "sceneId": "s_vip_b",
+    "content": "窗户大开,窗台有冰块融化后的水迹。桌上残留镁粉和洋酒——冰块融化后镁粉点燃,制造坠楼假象。",
+    "visual": {
+      "kind": "clue",
+      "prompt": "VIP房窗户大开,冰块水迹,镁粉,洋酒,油画风",
+      "aspect": "4:3"
+    },
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_vipb_02",
+    "title": "毒药瓶",
+    "visibility": "searchable",
+    "sceneId": "s_vip_b",
+    "content": "一个小瓶,内残留不明液体。经辨认是剧毒。(桥牧野用来注射杀害陈新庭)",
+    "visual": {
+      "kind": "clue",
+      "prompt": "小毒药瓶,残留液体,民国桌面,油画风",
+      "aspect": "4:3"
+    },
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_vipb_03",
+    "title": "注射器包装",
+    "visibility": "searchable",
+    "sceneId": "s_vip_b",
+    "content": "注射器的外包装被丢弃在废纸篓里。与一楼舞台发现的碎注射器是同一套。(桥牧野用注射器下毒)",
+    "visual": {
+      "kind": "clue",
+      "prompt": "注射器包装纸,废纸篓,民国VIP房,油画风",
+      "aspect": "4:3"
+    },
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_item_01",
+    "title": "田吉雾郎的随身物品",
+    "visibility": "searchable",
+    "sceneId": "s_lobby",
+    "ownerCharId": "tianjiwulang",
+    "content": "紫色面具(摘下可见烧伤疤痕)、VIP房备用钥匙、手表(表带上有水渍)。",
+    "visual": {
+      "kind": "clue",
+      "prompt": "紫色面具,钥匙,湿表带,民国物品,油画风",
+      "aspect": "4:3"
+    },
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_item_02",
+    "title": "桥牧野的随身物品",
+    "visibility": "searchable",
+    "sceneId": "s_lobby",
+    "ownerCharId": "qiaomuye",
+    "content": "墨绿色面具、电影胶片、一本日记(记录了郑家灭门的调查)。",
+    "visual": {
+      "kind": "clue",
+      "prompt": "墨绿色面具,电影胶片,日记本,民国物品,油画风",
+      "aspect": "4:3"
+    },
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_item_03",
+    "title": "月蝶的随身物品",
+    "visibility": "searchable",
+    "sceneId": "s_vip_a",
+    "ownerCharId": "yuedie",
+    "content": "金色面具、一封给父亲的信(未寄出,内容是复仇宣言)、一张旧照片(幼时与一个青年的合影——陈良雨/田吉雾郎)。",
+    "visual": {
+      "kind": "clue",
+      "prompt": "金色面具,未寄出的信,旧照片,民国物品,油画风",
+      "aspect": "4:3"
+    },
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_item_04",
+    "title": "苦生的随身物品",
+    "visibility": "searchable",
+    "sceneId": "s_kitchen",
+    "ownerCharId": "kusheng",
+    "content": "棕色面具、安眠药瓶(药少了——被韩芸偷走部分)。",
+    "visual": {
+      "kind": "clue",
+      "prompt": "棕色面具,安眠药瓶,民国物品,油画风",
+      "aspect": "4:3"
+    },
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_item_05",
+    "title": "韩芸的随身物品",
+    "visibility": "searchable",
+    "sceneId": "s_lobby",
+    "ownerCharId": "hanyun",
+    "content": "红色面具、记者证(望南夫的证件——致命破绽)、白色信封(讨袁志士名单,从密码柜偷来)。",
+    "visual": {
+      "kind": "clue",
+      "prompt": "红色面具,记者证,白色信封,民国物品,油画风",
+      "aspect": "4:3"
+    },
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_item_06",
+    "title": "仇戴天的随身物品",
+    "visibility": "searchable",
+    "sceneId": "s_vip_b",
+    "ownerCharId": "qiudaitian",
+    "content": "白色面具、陈新庭的衣服(不合身——秦逢天换穿的,略有破绽)、爵士帽。",
+    "visual": {
+      "kind": "clue",
+      "prompt": "白色面具,不合身的衣服,爵士帽,民国物品,油画风",
+      "aspect": "4:3"
+    },
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_item_07",
+    "title": "秋山琉璃的随身物品",
+    "visibility": "searchable",
+    "sceneId": "s_lobby",
+    "ownerCharId": "qiushanliuli",
+    "content": "翠色面具、行李箱(内有秋山樱的遗物:一封日文信、忠臣藏戏单)、秋山家的介绍信。",
+    "visual": {
+      "kind": "clue",
+      "prompt": "翠色面具,行李箱,日文信,戏单,民国物品,油画风",
+      "aspect": "4:3"
+    },
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_secret_01",
+    "title": "秘密线索01:田吉雾郎的烧伤",
+    "visibility": "searchable",
+    "ownerCharId": "tianjiwulang",
+    "content": "田吉雾郎摘下面具后,脸上是大片烧伤——与男性尸体背上的烧伤一致(同一火灾所致:陈家灭门)。证明田吉雾郎就是陈良雨,陈新庭的儿子。",
+    "linkedSecretClueId": "cl_lobby_02",
+    "isKey": false,
+    "pointsTo": [
+      "tianjiwulang"
+    ]
+  },
+  {
+    "id": "cl_secret_02",
+    "title": "秘密线索02:冰块的用途",
+    "visibility": "searchable",
+    "ownerCharId": "kusheng",
+    "content": "川边说冰块没弄碎——但VIP乙房的冰块是用来延时引燃镁粉的(冰融化→镁粉接触水→燃烧)。证明有人(桥牧野)精心布置了坠楼假象。",
+    "linkedSecretClueId": "cl_back_01",
+    "isKey": false,
+    "pointsTo": [
+      "tianjiwulang"
+    ]
+  },
+  {
+    "id": "cl_secret_03",
+    "title": "秘密线索03:安眠药的来源",
+    "visibility": "searchable",
+    "ownerCharId": "kusheng",
+    "content": "苦生的安眠药被偷——韩芸将它下在仇戴天的洋酒里,使其昏睡以便行动。韩芸是下药者,但真正杀死陈新庭的是桥牧野的毒药。",
+    "linkedSecretClueId": "cl_item_04",
+    "isKey": false,
+    "pointsTo": [
+      "tianjiwulang"
+    ]
+  },
+  {
+    "id": "cl_secret_04",
+    "title": "秘密线索04:密码柜密码620",
+    "visibility": "searchable",
+    "ownerCharId": "hanyun",
+    "content": "密码620——韩芸用此密码打开甲房密码柜取走白色信封(讨袁名单)。田吉雾郎也用此密码藏入月蝶尸体。",
+    "linkedSecretClueId": "cl_vipa_02",
+    "isKey": false,
+    "pointsTo": [
+      "tianjiwulang"
+    ]
+  },
+  {
+    "id": "cl_secret_05",
+    "title": "秘密线索05:田吉雾郎身上的水迹",
+    "visibility": "searchable",
+    "ownerCharId": "hanyun",
+    "content": "田吉雾郎的表带和衣袖上有水渍——与甲房浴室的水迹吻合。他在浴室内溺死了月蝶。",
+    "linkedSecretClueId": "cl_item_01",
+    "isKey": true,
+    "pointsTo": [
+      "tianjiwulang",
+      "cl_vipa_01"
+    ]
+  },
+  {
+    "id": "cl_secret_06",
+    "title": "秘密线索06:旧照片中的人",
+    "visibility": "searchable",
+    "ownerCharId": "yuedie",
+    "content": "月蝶持有的旧照片——幼时与一个青年的合影。那个青年就是陈良雨(田吉雾郎),证明二人曾是旧爱,田吉雾郎有杀人动机(阻止复仇)。",
+    "linkedSecretClueId": "cl_item_03",
+    "isKey": true,
+    "pointsTo": [
+      "tianjiwulang",
+      "cl_vipa_01"
+    ]
+  },
+  {
+    "id": "cl_secret_07",
+    "title": "秘密线索07:电影胶片的内容",
+    "visibility": "searchable",
+    "ownerCharId": "qiaomuye",
+    "content": "桥牧野的电影胶片——记录了他多年来追踪陈新庭的调查过程。《跌落的玫瑰》这部电影本身就是复仇计划的一部分。",
+    "linkedSecretClueId": "cl_lobby_03",
+    "isKey": false,
+    "pointsTo": [
+      "tianjiwulang"
+    ]
+  },
+  {
+    "id": "cl_secret_08",
+    "title": "秘密线索08:桥牧野的日记",
+    "visibility": "searchable",
+    "ownerCharId": "qiaomuye",
+    "content": "日记记录了郑家灭门惨案的详细调查:陈新庭是执行者,盛安(已改名)是幕后指使。桥牧野(郑礼贤)为复仇而来。",
+    "linkedSecretClueId": "cl_item_02",
+    "isKey": true,
+    "pointsTo": [
+      "qiaomuye",
+      "cl_vipb_02"
+    ]
+  },
+  {
+    "id": "cl_secret_09",
+    "title": "秘密线索09:记者证",
+    "visibility": "searchable",
+    "ownerCharId": "hanyun",
+    "content": "韩芸的记者证——她就是望南夫,沪闻报记者。她混入夜总会是为挖新闻和寻找丈夫郑礼贤(桥牧野)。",
+    "linkedSecretClueId": "cl_item_05",
+    "isKey": false,
+    "pointsTo": [
+      "tianjiwulang"
+    ]
+  },
+  {
+    "id": "cl_secret_10",
+    "title": "秘密线索10:男性尸体的身份",
+    "visibility": "searchable",
+    "ownerCharId": "kusheng",
+    "content": "男性尸体背上的烧伤是陈年旧伤——与田吉雾郎脸上的烧伤同源于一场火灾(陈家灭门)。死者是陈新庭,被桥牧野毒杀。",
+    "linkedSecretClueId": "cl_lobby_02",
+    "isKey": false,
+    "pointsTo": [
+      "tianjiwulang"
+    ]
+  },
+  {
+    "id": "cl_secret_11",
+    "title": "秘密线索11:田吉雾郎的真实身份",
+    "visibility": "searchable",
+    "ownerCharId": "tianjiwulang",
+    "content": "综合烧伤+旧照片+月蝶的复仇信:田吉雾郎就是陈良雨,陈新庭之子。他为保护父亲,在甲房浴室溺死了来复仇的旧爱月蝶(秋山樱)。这是女尸案的真凶。",
+    "linkedSecretClueId": "cl_lobby_02",
+    "isKey": true,
+    "pointsTo": [
+      "tianjiwulang",
+      "cl_lobby_02",
+      "cl_vipa_01"
+    ]
+  }
+]

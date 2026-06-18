@@ -1,1 +1,38 @@
-[{"id":"s_main","name":"主要场景","description":"案发地点"}]
+[
+  {
+    "id": "s_lobby",
+    "name": "一楼大厅",
+    "description": "夜总会的主大厅,舞台、酒会区域。发布会结束后,舞台旁留着放映机。男性尸体后来在舞台下被发现。",
+    "visual": { "kind": "scene", "prompt": "民国1914年上海日式夜总会大厅,舞台,酒会桌椅,昏暗灯光,油画风", "aspect": "16:9" }
+  },
+  {
+    "id": "s_backstage",
+    "name": "一楼后台",
+    "description": "厨房和后台区域。日籍厨师川边在此工作,冰块、洋酒、盐罐等物品在此处。",
+    "visual": { "kind": "scene", "prompt": "民国夜总会后台厨房,日式厨师,冰块桶,洋酒瓶,油画风", "aspect": "16:9" }
+  },
+  {
+    "id": "s_vip_a",
+    "name": "二楼VIP甲房",
+    "description": "西式门锁的VIP房,配独立卫浴和密码柜。月蝶(秋山樱)在此房浴室内被溺死,尸体藏于密码柜。",
+    "visual": { "kind": "scene", "prompt": "民国夜总会VIP套房,西式门锁,独立浴室,密码柜,烛光晚餐桌,油画风", "aspect": "16:9" }
+  },
+  {
+    "id": "s_vip_b",
+    "name": "二楼VIP乙房",
+    "description": "另一间VIP房。仇戴天(陈新庭)在此被桥牧野注射毒药,布置了冰块、镁粉制造坠楼假象。",
+    "visual": { "kind": "scene", "prompt": "民国夜总会VIP套房,长桌,冰块融化痕迹,镁粉,洋酒,窗户大开,油画风", "aspect": "16:9" }
+  },
+  {
+    "id": "s_manager",
+    "name": "经理室",
+    "description": "田吉雾郎的私人办公室,存放夜总会的重要文件和钥匙。",
+    "visual": { "kind": "scene", "prompt": "民国夜总会经理办公室,日式装饰,文件柜,紫色面具,油画风", "aspect": "16:9" }
+  },
+  {
+    "id": "s_kitchen",
+    "name": "厨房",
+    "description": "日籍厨师的厨房,有制冷柜、冰块、刀具。苦生在此工作。",
+    "visual": { "kind": "scene", "prompt": "民国日式厨房,制冷柜,冰块模具,寿司菜刀,油画风", "aspect": "16:9" }
+  }
+]

@@ -1,33 +1,91 @@
 {
   "id": "qiaomuye",
   "name": "桥牧野",
-  "role": "日本人",
   "gender": "male",
-  "age": 30,
-  "description": "日本人，与田吉雾郎是同事。",
-  "background": "日本人，与案件有关。",
-  "motivation": "想完成任务，找出真相。",
+  "isVictim": false,
+  "isMurderer": true,
+  "publicProfile": "电影导演,戴墨绿色面具,三四十岁,文质彬彬,《跌落的玫瑰》的导演。",
+  "privateScript": "我原名郑礼贤,郑家二少爷。清光绪年间,郑家被盛安陷害,惨遭灭门。我侥幸逃生,发誓复仇。\n\n我查到执行灭门的是陈新庭——他如今化名仇戴天,是北洋政府密探。我追踪他多年,终于在今年查到他将来\"雾\"夜总会取一份讨袁志士名单。\n\n我以电影导演桥牧野的身份出入夜总会,拍摄《跌落的玫瑰》——这部电影就是为了接近月蝶(秋山樱),她也在找陈新庭复仇。我们有过短暂的联盟。\n\n今天下午,韩芸送来下了安眠药的洋酒,仇戴天(陈新庭)和同伴昏睡。16:20我潜入VIP乙房,用注射器向陈新庭注射毒药。然后我布置现场:冰块、镁粉、洋酒——让冰融化后镁粉点燃,制造他从窗户坠楼身亡的假象。\n\n19:00我完成布置离开。我知道月蝶今夜也要动手杀陈新庭——但她不知道陈新庭已经死在我手里。\n\n而我的妻子景梅(望南夫),我也在找她。她化名韩芸混入夜总会当助理——她还不知道我就是郑礼贤。",
+  "objectives": [
+    {
+      "id": "qiaomuye_obj_1",
+      "kind": "main",
+      "description": "隐瞒你是毒杀仇戴天(陈新庭)的凶手"
+    },
+    {
+      "id": "qiaomuye_obj_2",
+      "kind": "hidden",
+      "description": "隐瞒你的真名是郑礼贤,郑家遗孤"
+    },
+    {
+      "id": "qiaomuye_obj_3",
+      "kind": "side",
+      "description": "找到妻子景梅(望南夫)的下落"
+    },
+    {
+      "id": "qiaomuye_obj_4",
+      "kind": "side",
+      "description": "弄清VIP甲房月蝶的死因"
+    }
+  ],
   "secrets": [
-    "与案件有关"
+    "真名郑礼贤,郑家灭门惨案的遗孤",
+    "在VIP乙房用注射器毒杀了仇戴天(陈新庭),制造坠楼假象",
+    "韩芸(望南夫)是你失踪的妻子景梅",
+    "与月蝶(秋山樱)曾结成复仇联盟"
   ],
   "relationships": [
     {
-      "to": "田吉雾郎",
-      "relation": "同事",
-      "detail": "两人都是日本人"
-    }
-  ],
-  "endings": [
+      "targetCharId": "qiudaitian",
+      "relation": "你的杀父仇人陈新庭,你毒杀了他",
+      "isPublic": false
+    },
     {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "找出真相",
-      "description": "你找出真相，完成任务。"
+      "targetCharId": "hanyun",
+      "relation": "你的妻子景梅,你们互不相认",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "yuedie",
+      "relation": "复仇盟友,她今夜被杀",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "tianjiwulang",
+      "relation": "夜总会经理",
+      "isPublic": true
     }
   ],
+  "sceneId": "s_director",
   "visual": {
-    "kind": "character",
-    "prompt": "1914 Japanese man, 30 years old, oil painting style",
+    "kind": "avatar",
+    "prompt": "桥牧野, 电影导演,戴墨绿色面具,三四十岁,文质彬彬,《跌落的玫瑰》的导演。",
     "aspect": "3:4"
-  }
+  },
+  "timeline": [
+    {
+      "time": "17:00",
+      "location": "大厅",
+      "action": "出席酒会",
+      "isPublic": true
+    },
+    {
+      "time": "19:00",
+      "location": "VIP乙房",
+      "action": "布置坠楼假象(私密)",
+      "isPublic": false
+    },
+    {
+      "time": "19:30",
+      "location": "楼梯",
+      "action": "与韩芸一同下楼",
+      "isPublic": true
+    },
+    {
+      "time": "20:10",
+      "location": "大厅",
+      "action": "听取经理宣告",
+      "isPublic": true
+    }
+  ]
 }
