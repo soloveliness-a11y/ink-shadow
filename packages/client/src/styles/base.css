@@ -3166,12 +3166,11 @@ html { overscroll-behavior: none; }
 
 .theme-picker {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 4px);
   right: 0;
-  margin-top: 8px;
   display: flex;
   gap: 8px;
-  padding: 10px 12px;
+  padding: 10px 12px 22px; /* 底部多留空给 label 显示 */
   background: var(--s1);
   border: 1px solid var(--s4);
   border-radius: var(--r-xl);
@@ -3181,20 +3180,18 @@ html { overscroll-behavior: none; }
 .theme-picker .theme-swatch {
   width: 28px; height: 28px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .theme-picker-label {
   position: absolute;
-  bottom: -18px;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: -16px;
   font-size: 9px;
   color: var(--ts);
   white-space: nowrap;
-  opacity: 0;
-  transition: opacity 120ms;
   pointer-events: none;
 }
-.theme-swatch:hover .theme-picker-label { opacity: 1; }
 
 /* 移动端:切换器圆点稍小,picker 贴右 */
 @media (max-width: 768px) {
