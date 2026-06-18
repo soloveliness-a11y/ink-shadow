@@ -1,14 +1,20 @@
 import { randomUUID } from 'node:crypto';
 import type { Script, ScriptMeta, RuntimeState, ClientIntent, ServerMessage, RoomSnapshot } from '@mmg/schema';
 import { PhaseEngine, type Broadcaster } from '../engine/PhaseEngine.js';
-import { buildView } from '../view.js';
+import { buildView, buildViewBatch } from '../view.js';
 import { DmService, type DmConfig } from '../dm/DmService.js';
+import { BotRunner } from './BotRunner.js';
+import { SnapshotStore } from './SnapshotStore.js';
 
 type SendFn = (playerId: string, msg: ServerMessage) => void;
 
 /**
  * 单房间:可选本 → 角色分配 → 游戏运行。
  * 所有状态变更方法同步执行(单线程事件循环,无竞态)。
+ *
+ * 测试模式的 bot 自动行动 与 状态快照 已抽出独立类:
+ *  - BotRunner:轮询调度 bot 在各环节的自动行为(见 BotRunner.ts)
+ *  - SnapshotStore:测试回退用的状态快照栈(见 SnapshotStore.ts)
  */
 export class Room {
   readonly roomCode: string;
@@ -22,7 +28,14 @@ export class Room {
   private botIds: string[] = [];
   private availableScripts: ScriptMeta[] = [];
   private getScriptFn: ((scriptId: string) => Script | undefined) | null = null;
-  private stateSnapshots: RuntimeState[] = [];
+  private snapshots = new SnapshotStore();
+  private botRunner = new BotRunner({
+    getState: () => this.state,
+    getScript: () => this.script,
+    getEngine: () => this.engine,
+    isTestMode: () => this.isTestMode,
+    botIds: () => this.botIds,
+  });
   private phaseHistory: string[] = [];
   private kickedTokens = new Set<string>();
   private dmService: DmService;
@@ -55,6 +68,16 @@ export class Room {
   }
 
   /** 设置剧本查询能力(由 RoomManager 注入) */
+
+  /**
+   * 销毁房间:清理 botRunner 轮询定时器与 engine 倒计时(B4)。
+   * RoomManager 在移除房间(cleanFinishedRooms / 关机)前必须调用,
+   * 否则测试模式的 bot setTimeout 会持续触达已废弃的房间直到进程退出。
+   */
+  destroy(): void {
+    this.botRunner.stop();
+    this.engine?.dispose();
+  }
   setScriptProvider(metas: ScriptMeta[], getFn: (id: string) => Script | undefined): void {
     this.availableScripts = metas;
     this.getScriptFn = getFn;
@@ -406,7 +429,10 @@ export class Room {
       isTestMode: this.isTestMode,
       botIds: [...this.botIds],
       phaseHistory: [...this.phaseHistory],
-      dmConfig: this.dmFullConfig,
+      // 安全:apiKey 不落盘(防明文密钥写入磁盘)。仅存 provider/apiUrl/model 供恢复后回显。
+      dmConfig: this.dmFullConfig
+        ? { provider: this.dmFullConfig.provider, apiUrl: this.dmFullConfig.apiUrl, model: this.dmFullConfig.model }
+        : null,
       kickedTokens: [...this.kickedTokens],
       savedAt: new Date().toISOString(),
     };
@@ -419,7 +445,8 @@ export class Room {
     getScriptFn: (id: string) => Script | undefined,
     scriptMetas: ScriptMeta[],
   ): Room {
-    const room = new Room(sendFn, snap.dmConfig);
+    // 安全:apiKey 不落盘,重启后 DM 默认关闭。房主需重新 configureDm 填 key 才能恢复旁白。
+    const room = new Room(sendFn, null);
     // 恢复状态
     (room as any).roomCode = snap.state.roomCode;
     (room as any).state = snap.state;
@@ -428,7 +455,7 @@ export class Room {
     (room as any).botIds = snap.botIds;
     (room as any).phaseHistory = snap.phaseHistory;
     (room as any).kickedTokens = new Set(snap.kickedTokens);
-    (room as any).dmFullConfig = snap.dmConfig;
+    // dmFullConfig 不从快照恢复(无 apiKey),保持 null
     // 所有玩家标记为断线（需重新连接）
     for (const p of room.state.players) {
       p.connected = false;
@@ -496,7 +523,7 @@ export class Room {
     if (this.isTestMode) {
       this.engine.setBlockAdvance(true);
       this.saveSnapshot();
-      this.scheduleBots();
+      this.botRunner.schedule();
     }
     this.engine.start();
   }
@@ -504,14 +531,7 @@ export class Room {
   private createBroadcaster(): Broadcaster {
     return {
       broadcastState: () => {
-        for (const p of this.state.players) {
-          if (p.connected) {
-            this.sendToPlayer(p.playerId, {
-              kind: 'stateSync',
-              view: buildView(this.script, this.state, p.playerId, this.availableScripts, this.viewExtra()),
-            });
-          }
-        }
+        this.fanOutStateSync();
       },
       event: (evt) => {
         const full = { ...evt, ts: Date.now() };
@@ -567,6 +587,8 @@ export class Room {
     // fire-and-forget: 不 await，LLM 返回后才推送
     this.dmService.onEvent(evt.type, payload, ctx).then((result) => {
       if (!result) return;
+      // B3: LLM 响应(可达数秒)到达前房间可能已结束/销毁,丢弃避免推送到废弃状态
+      if (this.state.status === 'finished') return;
       // 广播 DM 旁白给所有在线玩家
       for (const p of this.state.players) {
         if (p.connected) {
@@ -590,29 +612,35 @@ export class Room {
   }
 
   private broadcastState(): void {
-    for (const p of this.state.players) {
-      if (p.connected) {
-        this.sendToPlayer(p.playerId, {
-          kind: 'stateSync',
-          view: buildView(this.script, this.state, p.playerId, this.availableScripts, this.viewExtra()),
-        });
-      }
-    }
+    this.fanOutStateSync();
     // 通知 RoomManager 持久化（防抖写入）
     this.onBroadcastFn?.();
+  }
+
+  /**
+   * 给所有在线玩家下发各自裁剪后的 stateSync。
+   * 用 buildViewBatch 只算一次公共部分,再为每个玩家算私有部分 —— 取代原来的
+   * N 次独立 buildView,把每广播的 O(N×全量) 降为 O(公共 + N×私有)。
+   */
+  private fanOutStateSync(): void {
+    const connectedIds = this.state.players.filter((p) => p.connected).map((p) => p.playerId);
+    if (connectedIds.length === 0) return;
+    const extra = this.viewExtra();
+    for (const { playerId, view } of buildViewBatch(this.script, this.state, connectedIds, this.availableScripts, extra)) {
+      this.sendToPlayer(playerId, { kind: 'stateSync', view });
+    }
   }
 
   // ─── 状态快照(测试模式用) ───
 
   private saveSnapshot(): void {
-    this.stateSnapshots.push(structuredClone(this.state));
+    this.snapshots.push(this.state);
   }
 
   private rollbackSnapshot(): { error?: string } {
-    if (this.stateSnapshots.length < 2) return { error: 'no_snapshot' };
-    this.stateSnapshots.pop(); // 丢弃当前状态
-    const prev = this.stateSnapshots[this.stateSnapshots.length - 1]!;
-    Object.assign(this.state, structuredClone(prev));
+    const prev = this.snapshots.popToPrevious();
+    if (!prev) return { error: 'no_snapshot' };
+    Object.assign(this.state, prev);
     // 重建 engine
     if (this.script) {
       this.engine = new PhaseEngine(this.script, this.state, this.createBroadcaster());
@@ -621,126 +649,6 @@ export class Room {
     this.phaseHistory.pop();
     this.broadcastState();
     return {};
-  }
-
-  // ─── Bot 自动行动 ───
-
-  private scheduleBots(): void {
-    if (!this.isTestMode) return;
-    setTimeout(() => this.autoPlayBots(), 800);
-  }
-
-  private autoPlayBots(): void {
-    if (!this.isTestMode || this.state.status !== 'playing' || !this.script || !this.engine) return;
-
-    const phase = this.script.phases.find(p => p.id === this.state.currentPhaseId);
-    if (!phase) return;
-
-    const allowed = new Set(phase.allowedActions || []);
-    const rt = this.state.phaseRuntime;
-
-    if (allowed.has('ready')) {
-      for (const p of this.state.players) {
-        if (p.charId && !rt.actedCharIds.includes(p.charId)) {
-          this.engine.handleAction(p.charId, { kind: 'ready' });
-        }
-      }
-    } else if (allowed.has('speak') && phase.kind === 'sequential' && phase.turnOrder) {
-      const idx = rt.turnIndex ?? 0;
-      const turnCharId = phase.turnOrder[idx];
-      if (turnCharId && !rt.actedCharIds.includes(turnCharId)) {
-        const charName = this.script.characters.find(c => c.id === turnCharId)?.name ?? '???';
-        this.engine.handleAction(turnCharId, { kind: 'speak', text: `我是${charName}，目前没有特别的发现。` });
-      }
-    } else if (allowed.has('castVote')) {
-      // 仅 bot 自动投票,测试员手动投
-      const playable = this.script.characters.filter(c => !c.isVictim);
-      for (const p of this.state.players) {
-        if (!p.charId || !this.botIds.includes(p.playerId)) continue;
-        if (p.charId in this.state.votes) continue;
-        // 随机选一个其他角色作为投票目标
-        const others = playable.filter(c => c.id !== p.charId);
-        const target = others.length > 0
-          ? others[Math.floor(Math.random() * others.length)]!.id
-          : playable[0]!.id;
-        this.engine.handleAction(p.charId, { kind: 'castVote', targetCharId: target });
-      }
-    } else if (allowed.has('searchClue')) {
-      // bot 自动搜证 + 自动公开,测试员手动搜;bot 搜完后标记可推进
-      const maxSearches = phase.maxSearches;
-      const allAcquiredIds = new Set(Object.values(this.state.acquiredClues).flat());
-
-      // 构建 bot 角色 ID 集合
-      const botCharIdArr: string[] = [];
-      for (const p of this.state.players) {
-        if (this.botIds.includes(p.playerId) && p.charId) botCharIdArr.push(p.charId);
-      }
-
-      // 分离秘密线索和普通线索
-      const secretAvailable: typeof this.script.clues = [];
-      const regularAvailable: typeof this.script.clues = [];
-      for (const c of this.script.clues) {
-        if (!this.state.flags[`unlocked:${c.id}`]) continue;
-        if (allAcquiredIds.has(c.id)) continue;
-        if (c.visibility === 'searchable') {
-          regularAvailable.push(c);
-        } else if (c.visibility === 'private' && c.requiredSkill) {
-          // 检查 bot 角色是否有对应技能
-          const skill = c.requiredSkill!;
-          let hasSkill = false;
-          for (const ch of this.script?.characters ?? []) {
-            if (ch.id && botCharIdArr.includes(ch.id) && ch.skills?.includes(skill)) {
-              hasSkill = true;
-              break;
-            }
-          }
-          if (hasSkill) secretAvailable.push(c);
-        }
-      }
-
-      // 策略：优先搜秘密线索，再搜普通线索
-      const available = [...secretAvailable, ...regularAvailable];
-
-      let allBotsIdle = true;
-      for (const p of this.state.players) {
-        if (!p.charId || !this.botIds.includes(p.playerId)) continue;
-        const acquired = new Set(this.state.acquiredClues[p.charId] ?? []);
-        const botCount = rt.searchCount?.[p.charId] ?? 0;
-        if (maxSearches && botCount >= maxSearches) continue;
-        if (available.length === 0) continue;
-
-        // 还有次数且还有线索 → 搜索
-        for (const clue of available) {
-          if (!acquired.has(clue.id)) {
-            const result = this.engine.handleAction(p.charId, { kind: 'searchClue', clueId: clue.id });
-            if (result.ok) {
-              this.engine.handleAction(p.charId, { kind: 'revealClue', clueId: clue.id });
-              available.splice(available.indexOf(clue), 1);
-            }
-            allBotsIdle = false;
-            break;
-          }
-        }
-      }
-      // 所有bot次数用尽或所有线索已搜完 → 标记可推进
-      if (allBotsIdle || available.length === 0) {
-        this.engine.forceAdvance();
-      }
-    } else if (allowed.has('submitTheory')) {
-      // Bot 自动提交推理
-      for (const p of this.state.players) {
-        if (!p.charId || !this.botIds.includes(p.playerId)) continue;
-        if (this.state.theories[p.charId]) continue;
-        this.engine.handleAction(p.charId, { kind: 'submitTheory', text: '根据目前掌握的线索,我认为凶手另有其人。' });
-      }
-      // 全部提交后推进
-      this.engine.forceAdvance();
-    } else if (phase.exit.kind === 'hostAdvance' || phase.exit.kind === 'timer') {
-      // hostAdvance/timer 阶段自动推进(blockAdvance 模式下转为 pending)
-      this.engine.forceAdvance();
-    }
-
-    this.scheduleBots();
   }
 }
 

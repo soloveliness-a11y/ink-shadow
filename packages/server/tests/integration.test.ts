@@ -27,7 +27,7 @@ function createSendCapture() {
 
 import { fileURLToPath } from 'node:url';
 
-const mockScriptPath = fileURLToPath(new URL('../../../content/_mock', import.meta.url));
+const mockScriptPath = fileURLToPath(new URL('../../../content/mock', import.meta.url));
 const { script: mockScript } = loadScript(mockScriptPath);
 const playableIds = mockScript.characters.filter((c) => !c.isVictim).map((c) => c.id);
 

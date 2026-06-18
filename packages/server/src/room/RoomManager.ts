@@ -41,7 +41,11 @@ export class RoomManager {
 
   /** 创建房间(不绑定剧本,等房主选本) */
   createRoom(): { roomCode: string } {
-    const room = new Room(this.sendFn, this.dmConfig);
+    // 防房间码碰撞:极低概率但一旦撞上会覆盖旧房间致全员掉线。重建直到不撞(上限 10 次兜底)。
+    let room = new Room(this.sendFn, this.dmConfig);
+    for (let i = 0; i < 10 && this.rooms.has(room.roomCode); i++) {
+      room = new Room(this.sendFn, this.dmConfig);
+    }
     this.wirePersistence(room);
     this.rooms.set(room.roomCode, room);
     return { roomCode: room.roomCode };
@@ -73,6 +77,7 @@ export class RoomManager {
       if (state.status !== 'finished') continue;
       const anyOnline = state.players.some(p => p.connected);
       if (!anyOnline || (now - state.phaseRuntime.startedAt > FINISHED_ROOM_TTL_MS)) {
+        room.destroy();
         this.rooms.delete(code);
         this.removeSnapshot(code);
       }

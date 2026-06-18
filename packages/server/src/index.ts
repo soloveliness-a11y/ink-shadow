@@ -1,5 +1,5 @@
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
-import { createReadStream, existsSync, statSync, readdirSync } from 'node:fs';
+import { createReadStream, existsSync, statSync, type Stats, readdirSync } from 'node:fs';
 import { extname, join } from 'node:path';
 import { WebSocketServer, WebSocket } from 'ws';
 import { loadScript } from './loader.js';
@@ -72,9 +72,9 @@ function scanScripts(absBase: string): LoadedScript[] {
     }
   }
 
-  // Fallback: if nothing found, try _mock (dev helper)
+  // Fallback: if nothing found, try mock (dev helper)
   if (results.length === 0) {
-    const mockDir = join(absBase, '_mock');
+    const mockDir = join(absBase, 'mock');
     if (existsSync(join(mockDir, 'meta.json'))) {
       results.push(loadScript(join(mockDir, 'meta.json')));
     } else if (existsSync(join(mockDir, 'script.json'))) {
@@ -117,24 +117,36 @@ function serveStatic(req: IncomingMessage, res: ServerResponse) {
     return;
   }
 
-  // SPA fallback: if file doesn't exist, serve index.html
-  if (!existsSync(requested) || statSync(requested).isDirectory()) {
+  // SPA fallback: 文件不存在或为目录 → 回退 index.html。
+  // 用单次 statSync 兼顾两种判定,避免 existsSync+statSync 两次系统调用。
+  const directStat = safeStat(requested);
+  if (!directStat || directStat.isDirectory()) {
     serveFile(join(CLIENT_DIR, 'index.html'), req, res);
     return;
   }
 
-  serveFile(requested, req, res);
+  serveFile(requested, req, res, directStat);
 }
 
-function serveFile(absPath: string, req: IncomingMessage, res: ServerResponse) {
-  if (!existsSync(absPath) || !statSync(absPath).isFile()) {
+/** statSync 的 null-safe 封装:文件不存在/无权限时返回 null,不抛错。 */
+function safeStat(absPath: string): Stats | null {
+  try {
+    return statSync(absPath);
+  } catch {
+    return null;
+  }
+}
+
+function serveFile(absPath: string, req: IncomingMessage, res: ServerResponse, precomputed?: Stats) {
+  // 复用调用方已算好的 stat,否则自己算一次(单次系统调用,取代 existsSync+statSync 两次)。
+  const stat = precomputed ?? safeStat(absPath);
+  if (!stat || !stat.isFile()) {
     res.writeHead(404);
     res.end('Not found');
     return;
   }
   const ext = extname(absPath).toLowerCase();
   const mime = MIME[ext] ?? 'application/octet-stream';
-  const stat = statSync(absPath);
   const etag = `"${stat.size}-${Math.floor(stat.mtimeMs)}"`;
 
   // ETag 缓存:客户端发 If-None-Match → 304 节省带宽
@@ -184,7 +196,8 @@ export async function startServer(): Promise<void> {
   // 3. HTTP server (static + WS upgrade)
   const server = createServer(serveStatic);
 
-  const wss = new WebSocketServer({ noServer: true, perMessageDeflate: true });
+  // maxPayload 64KB:挡住超大帧(最长文本 2000 字 + 协议开销绰绰有余)。
+  const wss = new WebSocketServer({ noServer: true, perMessageDeflate: true, maxPayload: 64 * 1024 });
   const sessions = new Map<WebSocket, Session>();
 
   server.on('upgrade', (req, socket, head) => {
@@ -227,10 +240,19 @@ export async function startServer(): Promise<void> {
         return;
       }
       const intent = result.data;
-      // 空文本拦截(发言/私信/理论)
-      if ('text' in intent && typeof intent.text === 'string' && intent.text.trim().length === 0) {
-        send(ws, { kind: 'error', code: 'empty_text', message: '文本不能为空' });
-        return;
+      // 文本校验:空文本拦截 + 长度上限(R3: speak 无上限会被滥用枚举关键词/刷屏;
+      // submitTheory PhaseEngine 已校验 2000,这里统一兜底防止 speak/私信绕过)
+      if ('text' in intent && typeof intent.text === 'string') {
+        const t = intent.text;
+        if (t.trim().length === 0) {
+          send(ws, { kind: 'error', code: 'empty_text', message: '文本不能为空' });
+          return;
+        }
+        const MAX_TEXT = intent.kind === 'submitTheory' ? 2000 : 800; // 推理放宽,发言/私信收紧
+        if (t.length > MAX_TEXT) {
+          send(ws, { kind: 'error', code: 'theory_too_long', message: `文本过长(上限 ${MAX_TEXT} 字)` });
+          return;
+        }
       }
       handleIntent(manager, session, intent, firstScriptId, playerIdx);
     });
@@ -269,9 +291,16 @@ export async function startServer(): Promise<void> {
     console.log(`\n${signal}: persisting rooms before exit...`);
     for (const [code, room] of manager.allRooms()) {
       const filePath = join('data/rooms', `${code}.json`);
-      await writeJsonFile(filePath, room.snapshot());
-      console.log(`  saved ${code}`);
+      try {
+        await writeJsonFile(filePath, room.snapshot());
+        console.log(`  saved ${code}`);
+      } catch (err) {
+        // R5: 单房间写盘失败(磁盘满等)不应阻断其余房间落盘
+        console.warn(`  ✗ failed to save ${code}: ${err instanceof Error ? err.message : err}`);
+      }
+      room.destroy();
     }
+    manager.destroy();
     server.close();
     process.exit(0);
   };

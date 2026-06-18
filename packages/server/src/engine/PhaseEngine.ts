@@ -71,6 +71,11 @@ export class PhaseEngine {
     } else if (Array.isArray(phase.restrictVoteTargets)) {
       resolvedTargets = phase.restrictVoteTargets;
     }
+    // 清除上一轮平票残留:进入非决胜环节时丢弃 tieCharIds,
+    // 否则它会一直留在 state 里,污染后续任何 restrictVoteTargets==='tied' 的环节(B1)。
+    if (phase.restrictVoteTargets !== 'tied') {
+      this.state.tieCharIds = undefined;
+    }
 
     // 决胜轮:清空投票记录
     if (phase.resetVotes) {
@@ -101,7 +106,9 @@ export class PhaseEngine {
     // 计时器环节:启动倒计时
     this.clearTimer();
     if (phase.exit.kind === 'timer' && phase.exit.timerSec) {
+      const startPhaseId = phaseId; // R1: 闭包捕获启动时的 phaseId,防止回调触达时已推进到新环节导致连跳
       this.timerHandle = setTimeout(() => {
+        if (this.state.currentPhaseId !== startPhaseId) return; // 已被正常推进,丢弃过期回调
         if (this.checkExit()) this.advance();
       }, phase.exit.timerSec * 1000);
     }
@@ -278,21 +285,20 @@ export class PhaseEngine {
           if (clue.ownerCharId === charId) break;
           if (unlocked && clue.requiredSkill) {
             const playerChar = this.script.characters.find((c) => c.id === charId);
-            if (playerChar?.skills?.includes(clue.requiredSkill)) break;
+            if (playerChar?.skills?.includes(clue.requiredSkill)) {
+              // R2: 他人用技能搜秘密线索也计入搜证次数/轮次限制(与 searchable 一致),
+              // 防止有技能的角色无限搜 private 线索绕过 maxSearches。
+              const searchErr = this.checkSearchLimit(phase, charId);
+              if (searchErr) return reject(searchErr);
+              break;
+            }
           }
           return reject('clue_private');
         }
         if (clue.visibility === 'searchable' && !unlocked && clue.ownerCharId !== charId) return reject('clue_locked');
-        // ★ 搜证次数限制
-        if (phase?.maxSearches) {
-          const rt = this.state.phaseRuntime;
-          const count = rt.searchCount?.[charId] ?? 0;
-          if (count >= phase.maxSearches) return reject('search_limit_reached');
-        }
-        // ★ 轮次搜查:每轮每人 1 次(避免一窝蜂)
-        if (phase?.maxRounds && this.state.phaseRuntime.searchedThisRound?.includes(charId)) {
-          return reject('already_searched_this_round');
-        }
+        // ★ 搜证次数限制 / 轮次搜查(每轮每人 1 次)
+        const searchErr = this.checkSearchLimit(phase, charId);
+        if (searchErr) return reject(searchErr);
         break;
       }
       case 'revealClue': {
@@ -540,10 +546,33 @@ export class PhaseEngine {
     }
   }
 
+  /**
+   * 搜证次数/轮次限制检查(R2 抽出,searchable 与 private 共用)。
+   * @returns 错误码;null 表示通过
+   */
+  private checkSearchLimit(phase: Phase | undefined, charId: string): string | null {
+    if (phase?.maxSearches) {
+      const count = this.state.phaseRuntime.searchCount?.[charId] ?? 0;
+      if (count >= phase.maxSearches) return 'search_limit_reached';
+    }
+    if (phase?.maxRounds && this.state.phaseRuntime.searchedThisRound?.includes(charId)) {
+      return 'already_searched_this_round';
+    }
+    return null;
+  }
+
   private clearTimer(): void {
     if (this.timerHandle) {
       clearTimeout(this.timerHandle);
       this.timerHandle = null;
     }
+  }
+
+  /**
+   * 销毁引擎:清理倒计时定时器,防止房间移除后回调仍触达废弃 state(B4)。
+   * 与 forceAdvance 不同:不推进流程,纯资源释放。
+   */
+  dispose(): void {
+    this.clearTimer();
   }
 }

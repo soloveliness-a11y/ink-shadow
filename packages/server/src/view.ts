@@ -4,6 +4,9 @@ import { evaluateFlowCondition } from './engine/flow.js';
 /**
  * 可见性裁剪 — 防作弊核心。
  * 剔除 Truth、他人 privateScript/secrets/isMurderer、未获取线索内容。
+ *
+ * 性能:buildView 内部可复用一份预算好的「公共部分」(buildSharedParts),
+ * 避免给 N 个玩家广播时重复计算与玩家无关的数据。单玩家调用走原路径(自算)。
  */
 export function buildView(
   script: Script | null,
@@ -11,6 +14,7 @@ export function buildView(
   forPlayerId: string,
   availableScripts: ScriptMeta[] = [],
   extra?: { isTestMode?: boolean; dmEnabled?: boolean; pendingAdvance?: boolean; phaseHistory?: string[] },
+  shared?: SharedParts,
 ): ClientStateView {
   const player = state.players.find((p) => p.playerId === forPlayerId);
   const charId = player?.charId;
@@ -22,14 +26,7 @@ export function buildView(
       status: state.status,
       selectedScript: undefined,
       availableScripts,
-      players: state.players.map((p) => ({
-        playerId: p.playerId,
-        nickname: p.nickname,
-        charId: p.charId,
-        connected: p.connected,
-        ready: p.ready,
-        isHost: p.isHost,
-      })),
+      players: state.players.map(mapPlayerPublic),
       publicCharacters: [],
       publicScenes: [],
       revealedClues: [],
@@ -44,23 +41,16 @@ export function buildView(
     };
   }
 
-  // 已公开线索(含内容)
-  const revealedClues = state.revealedClues
-    .map((id) => script.clues.find((c) => c.id === id))
-    .filter(Boolean) as Clue[];
+  // 复用调用方预算的公共部分;未提供则现场计算(保持单玩家调用兼容)
+  const pub = shared ?? buildSharedParts(script, state);
 
-  // 可搜证线索(已解锁、未被任何人获取,只含 id+title)
-  const myAcquired = charId ? new Set(state.acquiredClues[charId] ?? []) : new Set<string>();
-  const anyoneAcquired = new Set<string>();
-  for (const ids of Object.values(state.acquiredClues)) {
-    for (const id of ids) anyoneAcquired.add(id);
-  }
+  // 可搜证线索(已解锁、未被任何人获取,只含 id+title) — 依赖玩家技能,逐玩家算
   const searchableClues: SearchableClueStub[] = script.clues
     .filter((c) => {
       // 必须已解锁
       if (!state.flags[`unlocked:${c.id}`]) return false;
       // 不能已被任何人获取
-      if (anyoneAcquired.has(c.id)) return false;
+      if (pub.anyoneAcquired.has(c.id)) return false;
       // visibility 检查
       if (c.visibility === 'searchable') {
         // 普通可搜线索
@@ -76,18 +66,7 @@ export function buildView(
     })
     .map((c) => ({ id: c.id, title: c.title, sceneId: c.sceneId }));
 
-  // 每场景搜证进度
-  const sceneSearchProgress: Record<string, { total: number; acquired: number }> = {};
-  for (const clue of script.clues) {
-    if (clue.visibility !== 'searchable') continue;
-    if (!state.flags[`unlocked:${clue.id}`]) continue;
-    const sceneId = clue.sceneId ?? '__unscened';
-    if (!sceneSearchProgress[sceneId]) sceneSearchProgress[sceneId] = { total: 0, acquired: 0 };
-    sceneSearchProgress[sceneId].total++;
-    if (anyoneAcquired.has(clue.id)) sceneSearchProgress[sceneId].acquired++;
-  }
-
-  // 当前环节信息(全员可见)
+  // 当前环节信息(全员可见) — mySearchCount 是逐玩家的,这里传入 charId
   const currentPhase = state.status === 'playing' ? buildPhaseView(script, state, charId) : undefined;
   const phaseProgress = state.status === 'playing' ? buildPhaseProgress(script, state) : undefined;
 
@@ -99,17 +78,87 @@ export function buildView(
     status: state.status,
     selectedScript: script.meta,
     availableScripts,
-    players: state.players.map((p) => ({
-      playerId: p.playerId,
-      nickname: p.nickname,
-      charId: p.charId,
-      connected: p.connected,
-      ready: p.ready,
-      isHost: p.isHost,
-    })),
+    players: pub.players,
     self,
     currentPhase,
     phaseProgress,
+    publicCharacters: pub.publicCharacters,
+    publicScenes: pub.publicScenes,
+    revealedClues: pub.revealedClues,
+    searchableClues,
+    sceneSearchProgress: pub.sceneSearchProgress,
+    sceneImages: pub.sceneImages,
+    propImages: pub.propImages,
+    votesPublic: buildVotesPublic(state, charId, currentPhase),
+    teams: state.teams,
+    myFaction: charId ? script.characters.find((c) => c.id === charId)?.faction : undefined,
+    ending: (state.status === 'finished' || (state.status === 'playing' && script.phases.find(p => p.id === state.currentPhaseId)?.kind === 'reveal'))
+      ? buildEnding(script, state, charId, state.status === 'finished') : undefined,
+    isTestMode: extra?.isTestMode,
+    dmEnabled: extra?.dmEnabled,
+    pendingAdvance: extra?.pendingAdvance,
+    phaseHistory: extra?.phaseHistory,
+    log: state.log,
+  };
+}
+
+/** M1: player → 公开字段映射(lobby 与 buildSharedParts 共用,消除重复)。 */
+function mapPlayerPublic(p: RuntimeState['players'][number]): ClientStateView['players'][number] {
+  return {
+    playerId: p.playerId,
+    nickname: p.nickname,
+    charId: p.charId,
+    connected: p.connected,
+    ready: p.ready,
+    isHost: p.isHost,
+  };
+}
+
+/** buildView 的公共部分(与玩家无关,广播时只算一次)。 */
+export interface SharedParts {
+  revealedClues: Clue[];
+  sceneSearchProgress: Record<string, { total: number; acquired: number }>;
+  sceneImages: Record<string, string>;
+  propImages: Record<string, string>;
+  publicCharacters: ClientStateView['publicCharacters'];
+  publicScenes: ClientStateView['publicScenes'];
+  players: ClientStateView['players'];
+  /** 所有玩家已获取线索的并集(searchableClues 过滤 + sceneSearchProgress 统计共用)。 */
+  anyoneAcquired: Set<string>;
+}
+
+/**
+ * 计算 buildView 中与玩家无关的部分。
+ * 广播 N 个玩家时调用方算一次,再喂给 buildView(_, _, _, _, _, shared),省 N-1 次重复扫描。
+ */
+export function buildSharedParts(script: Script, state: RuntimeState): SharedParts {
+  // 已公开线索(含内容)
+  const revealedClues = state.revealedClues
+    .map((id) => script.clues.find((c) => c.id === id))
+    .filter(Boolean) as Clue[];
+
+  // 所有玩家已获取线索的并集
+  const anyoneAcquired = new Set<string>();
+  for (const ids of Object.values(state.acquiredClues)) {
+    for (const id of ids) anyoneAcquired.add(id);
+  }
+
+  // 每场景搜证进度
+  const sceneSearchProgress: Record<string, { total: number; acquired: number }> = {};
+  for (const clue of script.clues) {
+    if (clue.visibility !== 'searchable') continue;
+    if (!state.flags[`unlocked:${clue.id}`]) continue;
+    const sceneId = clue.sceneId ?? '__unscened';
+    if (!sceneSearchProgress[sceneId]) sceneSearchProgress[sceneId] = { total: 0, acquired: 0 };
+    sceneSearchProgress[sceneId].total++;
+    if (anyoneAcquired.has(clue.id)) sceneSearchProgress[sceneId].acquired++;
+  }
+
+  return {
+    revealedClues,
+    sceneSearchProgress,
+    sceneImages: Object.fromEntries(script.scenes.map((s) => [s.id, s.visual.asset?.path ?? ''])),
+    propImages: Object.fromEntries((script.props ?? []).map((p) => [p.id, p.visual.asset?.path ?? ''])),
     publicCharacters: script.characters.map((c) => ({
       id: c.id,
       name: c.name,
@@ -134,22 +183,35 @@ export function buildView(
       description: s.description,
       image: s.visual.asset?.path,
     })),
-    revealedClues,
-    searchableClues,
-    sceneSearchProgress,
-    sceneImages: Object.fromEntries(script.scenes.map((s) => [s.id, s.visual.asset?.path ?? ''])),
-    propImages: Object.fromEntries((script.props ?? []).map((p) => [p.id, p.visual.asset?.path ?? ''])),
-    votesPublic: buildVotesPublic(state, charId, currentPhase),
-    teams: state.teams,
-    myFaction: charId ? script.characters.find((c) => c.id === charId)?.faction : undefined,
-    ending: (state.status === 'finished' || (state.status === 'playing' && script.phases.find(p => p.id === state.currentPhaseId)?.kind === 'reveal'))
-      ? buildEnding(script, state) : undefined,
-    isTestMode: extra?.isTestMode,
-    dmEnabled: extra?.dmEnabled,
-    pendingAdvance: extra?.pendingAdvance,
-    phaseHistory: extra?.phaseHistory,
-    log: state.log,
+    players: state.players.map(mapPlayerPublic),
+    anyoneAcquired,
   };
+}
+
+/**
+ * 批量为多个玩家构建视图(广播专用)。
+ * 公共部分(buildSharedParts)只算一次,每个玩家仅算其私有部分。
+ * 输出与逐个调用 buildView 字节等价(view-parity.test.ts 守护)。
+ */
+export function buildViewBatch(
+  script: Script | null,
+  state: RuntimeState,
+  playerIds: string[],
+  availableScripts: ScriptMeta[] = [],
+  extra?: { isTestMode?: boolean; dmEnabled?: boolean; pendingAdvance?: boolean; phaseHistory?: string[] },
+): Array<{ playerId: string; view: ClientStateView }> {
+  // 无剧本:每个玩家视图相同(无公共部分可共享的复杂计算),逐个构建即可
+  if (!script) {
+    return playerIds.map((playerId) => ({
+      playerId,
+      view: buildView(script, state, playerId, availableScripts, extra),
+    }));
+  }
+  const shared = buildSharedParts(script, state);
+  return playerIds.map((playerId) => ({
+    playerId,
+    view: buildView(script, state, playerId, availableScripts, extra, shared),
+  }));
 }
 
 function buildVotesPublic(
@@ -292,6 +354,8 @@ function buildSelfView(script: Script, state: RuntimeState, charId: string): Non
 function buildEnding(
   script: Script,
   state: RuntimeState,
+  forCharId?: string,
+  fullyFinished = false,
 ): NonNullable<ClientStateView['ending']> {
   // 通用结局:顶层 endings 优先,回退 truth.endings(推理本)
   const endings = script.endings ?? script.truth?.endings ?? [];
@@ -301,10 +365,21 @@ function buildEnding(
   if (!ending) ending = endings.at(-1);
   if (!ending) return { title: '结局', narrative: '', truthReveal: script.truth?.reveal ?? '' };
 
+  // B2: theories 在游戏彻底 finished 前只下发自己的推理,防止 reveal 早期(若有后续收尾环节)
+  // 提前暴露他人推理。fullyFinished 后才全量下发。
+  let theories: Record<string, string> | undefined;
+  if (Object.keys(state.theories).length > 0) {
+    if (fullyFinished) {
+      theories = state.theories;
+    } else if (forCharId && state.theories[forCharId]) {
+      theories = { [forCharId]: state.theories[forCharId] };
+    }
+  }
+
   return {
     title: ending.title,
     narrative: ending.narrative,
     truthReveal: script.truth?.reveal ?? '',
-    theories: Object.keys(state.theories).length > 0 ? state.theories : undefined,
+    theories,
   };
 }
