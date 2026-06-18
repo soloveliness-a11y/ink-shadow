@@ -19,6 +19,8 @@ export function LobbyScene() {
   );
   const [copied, setCopied] = useState(false);
   const [kickTarget, setKickTarget] = useState<{ id: string; name: string } | null>(null);
+  // C2: 选本反馈 —— 记录正在发送的剧本 id,服务端确认前禁用重复点击
+  const [pendingScript, setPendingScript] = useState<string | null>(null);
 
   const joined = view && playerId;
 
@@ -104,11 +106,18 @@ export function LobbyScene() {
             <div className="lobby-script-list">
               {availableScripts.map((sc) => {
                 const scCover = assetUrl(sc.id, sc.cover?.asset?.path);
+                const isPending = pendingScript === sc.id;
                 return (
                   <button
                     key={sc.id}
-                    onClick={() => send({ kind: 'selectScript', scriptId: sc.id })}
-                    className="lobby-script-card"
+                    disabled={!!pendingScript}
+                    onClick={() => {
+                      setPendingScript(sc.id);
+                      send({ kind: 'selectScript', scriptId: sc.id });
+                      // 保险:5s 后清除 pending,防服务端无响应卡死选择
+                      setTimeout(() => setPendingScript((cur) => (cur === sc.id ? null : cur)), 5000);
+                    }}
+                    className={`lobby-script-card${isPending ? ' is-pending' : ''}`}
                   >
                     {scCover ? (
                       <img src={scCover} alt={sc.title} className="lobby-script-thumb" loading="lazy" decoding="async" />

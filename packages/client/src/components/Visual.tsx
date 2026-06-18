@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { assetUrl } from '../lib/asset.js';
 
-/** 小头像:有图渲染 img,无图回退文字占位。沿用 .avatar 尺寸类。 */
+/** 小头像:有图渲染 img,无图/加载失败回退文字占位。沿用 .avatar 尺寸类。 */
 export function Avatar({ name, path, scriptId, className = '', onClick }: {
   name: string;
   path?: string | null;
@@ -11,8 +11,10 @@ export function Avatar({ name, path, scriptId, className = '', onClick }: {
   onClick?: () => void;
 }) {
   const url = assetUrl(scriptId, path);
-  if (url) {
-    return <img src={url} alt={name} title={name} className={`avatar avatar-img ${className}`} onClick={onClick} loading="lazy" decoding="async" />;
+  // C1: 图加载失败(404/慢/损坏)时回退首字母,不显示碎图标
+  const [imgOk, setImgOk] = useState(true);
+  if (url && imgOk) {
+    return <img src={url} alt={name} title={name} className={`avatar avatar-img ${className}`} onClick={onClick} loading="lazy" decoding="async" onError={() => setImgOk(false)} />;
   }
   return <div className={`avatar ${className}`} onClick={onClick}>{name.charAt(0)}</div>;
 }
@@ -32,6 +34,9 @@ export function Portrait({ name, subtitle, path, scriptId, selected = false, tak
     ? (e: React.KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(); } }
     : undefined;
   const url = assetUrl(scriptId, path);
+  // C1: 图加载失败回退首字母占位
+  const [imgOk, setImgOk] = useState(true);
+  const showImg = url && imgOk;
   return (
     <div
       role={clickable ? 'button' : undefined}
@@ -42,7 +47,7 @@ export function Portrait({ name, subtitle, path, scriptId, selected = false, tak
       onClick={clickable ? onClick : undefined}
       onKeyDown={handleKeyDown}
     >
-      {url ? <img src={url} alt={name} loading="lazy" decoding="async" /> : <div className="portrait-fallback">{name.charAt(0)}</div>}
+      {showImg ? <img src={url} alt={name} loading="lazy" decoding="async" onError={() => setImgOk(false)} /> : <div className="portrait-fallback">{name.charAt(0)}</div>}
       <div className="portrait-overlay">
         <div className="portrait-name">{name}</div>
         {subtitle && <div className="portrait-sub">{subtitle}</div>}

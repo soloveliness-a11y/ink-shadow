@@ -251,7 +251,16 @@ export const useGameStore = create<GameState>((set, get) => ({
   },
 
   send: (intent) => {
-    get().conn?.send(intent);
+    // C3: 断线期间发送非幂等操作时提示用户(消息会入队重连后发,但需让用户知晓)
+    const conn = get().conn;
+    const disconnected = conn && !conn.connected;
+    if (disconnected) {
+      const silentKinds = new Set(['join', 'configureDm']);
+      if (!silentKinds.has(intent.kind)) {
+        pushToast('连接中断,操作将在重连后发送', 'warn', 2500);
+      }
+    }
+    conn?.send(intent);
     if (intent.kind === 'privateMessage') {
       const fromCharId = currentCharId(get().view);
       if (fromCharId) {

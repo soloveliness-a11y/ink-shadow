@@ -574,6 +574,10 @@ select.input {
   border-color: var(--accent); transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.3);
 }
+/* C2: 选本反馈 —— 正在发送时降低透明度 + 禁用 hover 抬升 */
+.lobby-script-card.is-pending { opacity: 0.55; transform: none; cursor: progress; }
+.lobby-script-card:disabled { cursor: progress; }
+.lobby-script-card:disabled:hover { border-color: var(--s4); transform: none; box-shadow: none; }
 .lobby-script-thumb {
   width: 72px; height: 100px; object-fit: cover; border-radius: var(--r-md);
   border: 1px solid var(--s4); flex-shrink: 0;
