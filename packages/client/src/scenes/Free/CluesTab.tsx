@@ -111,7 +111,7 @@ export function CluesTab({ view, myCharId, scriptId, allowed, send, onLightbox }
           </div>
         );
       })()}
-      {clueScenes.length === 0 && <div className="empty-state compact">还没有获得线索</div>}
+      {clueScenes.length === 0 && <div className="empty-state compact">线索尚在迷雾中,去现场搜寻吧</div>}
     </div>
   );
 }

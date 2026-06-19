@@ -40,10 +40,17 @@ export function LobbyScene() {
     const missingSeats = Math.max(0, requiredPlayers - onlineCount);
 
     const copyRoomCode = () => {
-      navigator.clipboard?.writeText(view.roomCode).then(() => {
+      // P1-10: clipboard 在非 HTTPS/老浏览器可能 undefined 或失败,降级提示
+      if (!navigator.clipboard?.writeText) {
+        pushToast('复制不可用,请手动选择房间号', 'warn');
+        return;
+      }
+      navigator.clipboard.writeText(view.roomCode).then(() => {
         setCopied(true);
         window.setTimeout(() => setCopied(false), 1400);
-      }).catch(() => {});
+      }).catch(() => {
+        pushToast('复制失败,请手动选择房间号', 'warn');
+      });
     };
 
     return (

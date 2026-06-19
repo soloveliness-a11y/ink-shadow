@@ -55,16 +55,22 @@ export function VoteScene() {
     pushToast(`已投给 ${name}`, 'success', 2200);
   };
 
-  // 监看:全投完(pendingIds 从非空→空)触发 3-2-1 倒数
+  // P0-3: 倒数仅在"我投出且投完时恰为最后一人"触发,避免每个玩家都看到全屏倒数
+  // 平票重投(pendingIds 从 0 变非空)时立即清理倒数,避免空窗
   useEffect(() => {
-    const cur = votedIds.size;
-    const prev = prevVotedCount.current;
-    if (pendingIds.length === 0 && cur > 0 && cur > prev) {
-      // 投出后新增 1 票,且现在没人在等,启动倒数
+    if (pendingIds.length > 0) {
+      // 平票重投:清掉可能残留的倒数
+      if (countdown) setCountdown(null);
+      prevVotedCount.current = votedIds.size;
+      return;
+    }
+    // 仅在我刚投出(submitted 刚变 true)且全员投完时触发
+    if (submitted && votedIds.size > prevVotedCount.current && pendingIds.length === 0) {
       setCountdown({ n: 3, key: Date.now() });
     }
-    prevVotedCount.current = cur;
-  }, [votedIds.size, pendingIds.length]);
+    prevVotedCount.current = votedIds.size;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [votedIds.size, pendingIds.length, submitted]);
 
   useEffect(() => {
     if (!countdown) return;

@@ -47,7 +47,7 @@ export function EventLog({ view, myCharId, publicCharacters }: EventLogProps) {
             </div>
           );
         }) : (
-          <div className="empty-state compact">暂无事件记录</div>
+          <div className="empty-state compact">夜色尚静,还未有人留下痕迹</div>
         )}
       </div>
     </>

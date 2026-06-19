@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useGameStore } from './store/game.js';
+import { useKeyboardCompensation } from './hooks/useKeyboardCompensation.js';
 import { LobbyScene } from './scenes/Lobby.js';
 import { BriefingScene } from './scenes/Briefing.js';
 import { IntroScene } from './scenes/Intro.js';
@@ -17,6 +18,8 @@ import { useBgmUnlock } from './audio/useBgmState.js';
 import { useBgmPhaseRouter } from './audio/useBgmPhaseRouter.js';
 
 export function App() {
+  // P0-2: 移动端键盘弹起时补偿视口高度,避免输入框被遮挡
+  useKeyboardCompensation();
   const status = useGameStore((s) => s.view?.status);
   const phaseKind = useGameStore((s) => s.view?.currentPhase?.kind);
   const phaseId = useGameStore((s) => s.view?.currentPhase?.id);

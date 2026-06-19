@@ -107,6 +107,7 @@ html, body {
 .btn-danger { background: var(--crimson); color: #fff; }
 .btn-danger:hover { background: #d46060; box-shadow: 0 0 0 3px var(--crimson-m); }
 
+.btn-xs { padding: 3px 10px; font-size: 11px; line-height: 1.4; }
 .btn-sm { padding: 6px 14px; font-size: 13px; }
 .btn-lg { padding: 14px 32px; font-size: 16px; letter-spacing: 0.04em; }
 .btn-block { width: 100%; }
@@ -997,7 +998,19 @@ select.input {
   gap: var(--sp4);
 }
 .vote-suspect-card { cursor: pointer; }
-.vote-suspect-card.locked { cursor: default; pointer-events: none; }
+/* P3-13: 已投票锁定 —— 半透明灰化 + 边框淡化,让用户明确知道已投成功 */
+.vote-suspect-card.locked {
+  cursor: default; pointer-events: none;
+  opacity: 0.5; filter: grayscale(0.4);
+}
+.vote-suspect-card.locked.accused { opacity: 0.85; filter: none; }
+.vote-suspect-card.locked::after {
+  content: '✓ 已投'; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 13px; font-weight: 600; color: var(--accent);
+  background: var(--s0); padding: 4px 12px; border-radius: var(--r-sm);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4); letter-spacing: 0.05em;
+}
 .vote-suspect-card.accused {
   border-color: var(--crimson);
   box-shadow: 0 0 0 1px var(--crimson), 0 10px 28px rgba(196,84,84,0.14);
@@ -1338,6 +1351,12 @@ select.input {
 .board-card-body {
   padding: 12px; border-top: 1px dashed var(--s4);
   display: flex; flex-direction: column; gap: 10px;
+  /* P2-11: 展开/收起入场动画(收起靠 React 卸载,展开用 fadein 补偿突兀感) */
+  animation: boardCardExpand 0.2s var(--ease);
+}
+@keyframes boardCardExpand {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 .board-profile { font-size: 12px; color: var(--ts); line-height: 1.6; }
 .board-tags { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -2323,11 +2342,12 @@ select.input {
 
 /* --- 8. 字数计数 --- */
 .composer-counter {
-  font-family: var(--fm); font-size: 11px; color: var(--tm);
+  font-family: var(--fm); font-size: 11px; color: var(--ts);
   align-self: center; padding: 0 var(--sp1);
   min-width: 48px; text-align: right;
+  transition: color 150ms var(--ease);
 }
-.composer-counter:has-text { color: var(--accent); }
+/* 接近上限时变金(由 JS 内联 color 控制),此处的 :has-text 原为无效伪类已删 */
 
 /* --- 9. Tab 闪红点 --- */
 .tab-flash { animation: tabFlash 1.2s ease-in-out; }

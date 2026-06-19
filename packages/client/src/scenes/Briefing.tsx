@@ -274,7 +274,7 @@ export function BriefingScene() {
                       </div>
                     </div>
                   ) : (
-                    <div className="empty-state compact">当前剧本没有写入你的开场故事。</div>
+                    <div className="empty-state compact">故事尚未展开,等待序幕拉开</div>
                   )}
                   {openingStory && !story.done && (
                     <div className="briefing-actions" style={{ marginTop: 12 }}>

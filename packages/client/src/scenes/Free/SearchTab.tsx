@@ -129,7 +129,7 @@ export function SearchTab({ view, myCharId, scriptId, canSearch, send, onLightbo
       {selectedSceneClues.length === 0 && unscenedClues.length === 0 && selectedScene ? (
         <div className="empty-state compact">该地点暂无更多线索可搜</div>
       ) : (!view.searchableClues || view.searchableClues.length === 0) && !selectedScene ? (
-        <div className="empty-state compact">当前没有可搜索的线索</div>
+        <div className="empty-state compact">此处已无可搜寻之物,换个地方看看</div>
       ) : null}
     </div>
   );
