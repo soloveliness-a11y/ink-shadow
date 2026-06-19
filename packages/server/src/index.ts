@@ -90,8 +90,17 @@ function serveStatic(req: IncomingMessage, res: ServerResponse) {
   const path = url.pathname;
 
   // /content/<scriptId>/... → content 目录,显式越界校验(P1-3)
+  // H1 防作弊:仅放行公开素材(图片/音频),拒绝 .json/.md/.txt 等含真相/角色剧本的敏感文件。
+  // view.ts 的裁剪只有在 HTTP 层也挡住敏感文件时才有意义。
   if (path.startsWith('/content/')) {
     const rel = path.replace(/^\/content\//, '');
+    const ext = extname(rel).toLowerCase();
+    const PUBLIC_ASSET_EXTS = new Set(['.png', '.jpg', '.jpeg', '.webp', '.svg', '.gif', '.mp3', '.ogg', '.wav']);
+    if (!PUBLIC_ASSET_EXTS.has(ext)) {
+      res.writeHead(403);
+      res.end('Forbidden');
+      return;
+    }
     const filePath = safeResolve(SCRIPT_DIR, rel);
     if (!filePath) {
       res.writeHead(403);
@@ -306,6 +315,18 @@ export async function startServer(): Promise<void> {
   };
   process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
   process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+
+  // H2: 全局异常兜底 —— 任何未捕获的异步异常(unhandledRejection)或同步异常(uncaughtException)
+  // 只记录日志,不让进程退出(否则所有在线房间瞬间全员掉线)。
+  // 只有真正不可恢复的错误(如内存耗尽)才会由 OS 杀进程,届时 gracefulShutdown 的 SIGTERM 不可达,
+  // 但至少不会因一个房间的 bug 拖垮全服。
+  process.on('unhandledRejection', (reason) => {
+    console.error('[unhandledRejection]', reason);
+  });
+  process.on('uncaughtException', (err) => {
+    console.error('[uncaughtException]', err);
+    // 不 exit:保持服务运行。若错误是致命的(如堆损坏),Node 会在下一轮 event loop 自行退出。
+  });
 }
 
 interface Session { ws: WebSocket; playerId: string | null; roomCode: string | null; isAlive: boolean; msgCount: number; msgWindowStart: number }
