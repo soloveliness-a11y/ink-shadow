@@ -153,15 +153,16 @@ function assemble(
   stories: z.infer<typeof zStoryOutput>,
   styleGuide: string,
 ): Script {
-  const characters: Character[] = chars.map((c) => ({
+  const characters = chars.map((c) => ({
     id: c.id, name: c.name, gender: c.gender, age: c.age,
     isVictim: c.isVictim, isMurderer: c.isMurderer,
     publicProfile: c.publicProfile, privateScript: c.privateScript,
     storyByPhase: stories[c.id] ? { round2: stories[c.id]! } : undefined,
-    objectives: c.objectives, secrets: c.secrets,
+    objectives: c.objectives.map((o, i) => ({ ...o, id: o.id ?? `${c.id}_obj_${i + 1}` })),
+    secrets: c.secrets,
     timeline: c.timeline, relationships: c.relationships,
     visual: { kind: 'avatar', prompt: c.visualPrompt, aspect: '3:4' },
-  }));
+  })) as Character[];
 
   const scenes: Scene[] = cluesScenes.scenes.map((s) => ({
     id: s.id, name: s.name, description: s.description,
@@ -300,8 +301,12 @@ function repairMurdererReferences(script: Script): void {
     }
   }
   for (const ending of script.truth!.endings) {
-    if (ending.condition.kind === 'voteResult') {
-      ending.condition.equalsCharId = murdererId;
+    // condition 可能是单条件或数组(多条件组合结局),归一化后处理
+    const conds = Array.isArray(ending.condition) ? ending.condition : [ending.condition];
+    for (const c of conds) {
+      if (c.kind === 'voteResult') {
+        c.equalsCharId = murdererId;
+      }
     }
   }
 }
@@ -326,6 +331,8 @@ function repairConditions(script: Script): void {
   });
 
   script.truth!.endings = script.truth!.endings.map((ending, index) => {
+    // 数组条件(多条件组合结局)不 repair,保持原样
+    if (Array.isArray(ending.condition)) return ending;
     if (ending.condition.kind === 'always') return ending;
     if (ending.condition.kind === 'voteResult') {
       return {

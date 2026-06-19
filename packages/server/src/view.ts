@@ -361,8 +361,11 @@ function buildEnding(
 ): NonNullable<ClientStateView['ending']> {
   // 通用结局:顶层 endings 优先,回退 truth.endings(推理本)
   const endings = script.endings ?? script.truth?.endings ?? [];
-  // 复用 flow 的单点判定,与 DAG 实际走向保持一致(P1-5)
-  let ending = endings.find((en) => evaluateFlowCondition(en.condition, state));
+  // 复用 flow 的单点判定,与 DAG 实际走向保持一致(P1-5);支持多条件组合结局(数组=AND)
+  let ending = endings.find((en) => {
+    const conds = Array.isArray(en.condition) ? en.condition : [en.condition];
+    return conds.every((c) => evaluateFlowCondition(c, state));
+  });
   // 兜底
   if (!ending) ending = endings.at(-1);
   if (!ending) return { title: '结局', narrative: '', truthReveal: script.truth?.reveal ?? '' };

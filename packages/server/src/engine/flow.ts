@@ -85,5 +85,10 @@ export function evaluateFlowCondition(cond: FlowCondition | undefined, state: Ru
     return !!state.flags[`choiceResultMatch:${cond.choiceId}:${cond.value}`];
   }
 
+  // 机制本:加权推荐当选(珠帘异梦继承人推荐)
+  if (cond.kind === 'recommendWin') {
+    return !!state.flags[`recommend_won:${cond.charId}`];
+  }
+
   return false;
 }

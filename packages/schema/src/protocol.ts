@@ -7,7 +7,7 @@ import { zRoomStatus, zGameEvent } from './runtime.js';
  * 协议版本号。每次改动 ClientIntent / ServerMessage / ClientStateView 结构时手动 +1。
  * client join 时上报,server 比对;不一致则提示玩家刷新页面(防旧前端发旧协议的静默故障)。
  */
-export const PROTOCOL_VERSION = 8;
+export const PROTOCOL_VERSION = 9;
 
 /**
  * 客户端 → 服务器:玩家意图。
@@ -32,6 +32,8 @@ export const zClientIntent = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('makeChoice'), choiceId: z.string().max(128), optionId: z.string().max(128) }),
   z.object({ kind: z.literal('adjustCounter'), counter: z.string().max(64), delta: z.number() }),
   z.object({ kind: z.literal('adjustResource'), resourceId: z.string().max(64), delta: z.number() }),
+  z.object({ kind: z.literal('inspectCharItems'), targetCharId: z.string().max(64) }),
+  z.object({ kind: z.literal('expose'), targetCharId: z.string().max(64), severity: z.enum(['minor', 'major']) }),
   z.object({ kind: z.literal('configureDm'), enabled: z.boolean(), provider: z.enum(['anthropic', 'openai']).optional(), apiKey: z.string().max(512).optional(), apiUrl: z.string().max(512).optional(), model: z.string().max(128).optional() }),
 ]);
 export type ClientIntent = z.infer<typeof zClientIntent>;
@@ -154,7 +156,7 @@ export const zClientStateView = z.object({
       maxSearches: z.number().int().optional(),
       mySearchCount: z.number().int().optional(),
       restrictVoteTargets: z.array(z.string()).optional(),
-      voteMode: z.enum(['char', 'team', 'proposal']).optional(),
+      voteMode: z.enum(['char', 'team', 'proposal', 'recommend']).optional(),
       choice: z.object({
         id: z.string(),
         prompt: z.string(),

@@ -21,7 +21,7 @@ zhileyuanbg.cn
 
 女。十八岁。秀丽聪敏，面容却十分憔悴。在校时的成绩很好。
 
-# 章東鎮迷業
+# 章東鎮迷案
 
 <div style="text-align: center;"><img src="imgs/img_in_image_box_1139_401_1386_959.jpg" alt="Image" width="14%" /></div>
 

@@ -21,7 +21,7 @@
 
 男。二十三岁。样貌俊朗，高个子，身穿中山装，神色有些凝重。
 
-# 章東鎮迷業
+# 章東鎮迷案
 
 <div style="text-align: center;"><img src="imgs/img_in_image_box_1079_267_1453_938.jpg" alt="Image" width="22%" /></div>
 

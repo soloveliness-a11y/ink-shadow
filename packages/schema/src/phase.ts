@@ -17,6 +17,8 @@ export const zActionKind = z.enum([
   'makeChoice', // 抉择(豪门本:选项→后果)
   'adjustCounter', // 机制本:主动增减计数器(如投入筹码/计分)
   'adjustResource', // 机制本:主动增减自己持有的资源
+  'inspectCharItems', // 强搜随身物品:花额外 AP 强制查看目标玩家持有的线索(瑾园孤花)
+  'expose', // 揭露:公开目标角色的过失/秘密,扣其推荐分或剥夺资格(珠帘异梦)
 ]);
 export type ActionKind = z.infer<typeof zActionKind>;
 
@@ -49,7 +51,7 @@ export const zPhase = z.object({
   maxSearches: z.number().int().positive().optional(), // 该阶段每位玩家最大搜证次数
   resetVotes: z.boolean().optional(), // 进入此阶段时清空投票记录（决胜轮用）
   restrictVoteTargets: z.union([z.literal('tied'), z.array(z.string())]).optional(), // 限制投票目标;'tied'=运行时从平票者填充
-  voteMode: z.enum(['char', 'team', 'proposal']).optional(), // 投票语义:'char'=投角色(默认),'team'=投阵营,'proposal'=投提案
+  voteMode: z.enum(['char', 'team', 'proposal', 'recommend']).optional(), // 'recommend'=加权推荐(珠帘异梦继承人选)
   choice: z.object({
     id: z.string(),
     prompt: z.string(),
@@ -66,6 +68,7 @@ export const zPhase = z.object({
         z.object({ kind: z.literal('adjustCounter'), counter: z.string(), delta: z.number() }),
         z.object({ kind: z.literal('adjustResource'), resourceId: z.string(), delta: z.number() }),
         z.object({ kind: z.literal('adjustTeamScore'), teamId: z.string(), delta: z.number() }),
+        z.object({ kind: z.literal('switchPersona'), charId: z.string(), personaId: z.string() }), // 双重人格切换(孽岛疑云)
       ])),
     })),
   }).optional(), // 抉择点(进入 phase 展示选项,makeChoice 触发 effects)
@@ -75,6 +78,7 @@ export const zPhase = z.object({
     endTime: z.string(),
   }).optional(), // 时钟指示物(调查阶段前进式时间,如 21:05→22:15)
   maxRounds: z.number().int().positive().optional(), // 轮次搜查上限(每轮每人 1 次,共 N 轮,如丹水 8 轮;强制轮流避免一窝蜂)
+  inspectCost: z.number().int().positive().optional(), // 强搜随身物品的 AP 消耗(默认2,瑾园孤花)
 });
 export type Phase = z.infer<typeof zPhase>;
 
@@ -85,8 +89,9 @@ export const zFlowCondition = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('voteTie') }),
   z.object({ kind: z.literal('flag'), flag: z.string(), equals: z.boolean() }),
   z.object({ kind: z.literal('teamWin'), teamId: z.string() }), // 阵营胜利(本轮实现)
-  z.object({ kind: z.literal('scoreReach'), counter: z.string(), gte: z.number() }), // 占位(机制本):counters[counter] >= gte
-  z.object({ kind: z.literal('choiceResult'), choiceId: z.string(), value: z.string() }), // 占位(情感还原本):选择结果
+  z.object({ kind: z.literal('scoreReach'), counter: z.string(), gte: z.number() }), // 机制本:counters[counter] >= gte
+  z.object({ kind: z.literal('choiceResult'), choiceId: z.string(), value: z.string() }), // 情感还原本:集体抉择结果
+  z.object({ kind: z.literal('recommendWin'), charId: z.string() }), // 机制本:加权推荐当选(珠帘异梦)
 ]);
 export type FlowCondition = z.infer<typeof zFlowCondition>;
 

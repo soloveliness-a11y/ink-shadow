@@ -10,7 +10,7 @@
 <div style="text-align: center;"><img src="imgs/img_in_image_box_94_877_887_1042.jpg" alt="Image" width="47%" /></div>
 
 
-豪门惊情系列剧本《待月弑杀》
+豪门惊情系列剧本《待月 栽 殺》
 
 游戏设计 & 原创故事：刘斯宇 / 美术 & 原画：文博 / 美工：风舞渊 兔淘淘
 

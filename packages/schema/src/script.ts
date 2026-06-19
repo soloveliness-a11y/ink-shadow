@@ -49,6 +49,18 @@ export const zCharacter = z.object({
   faction: z.string().optional(), // 阵营标识(阵营本,如 'red'/'blue'/'neutral')
   team: z.string().optional(), // 队伍标识(可与 faction 不同,机制本预留)
   resources: z.record(z.string(), z.number()).optional(), // 数值资源(金钱/体力/积分,机制本预留)
+  /** 加权推荐投票的权重(珠帘异梦:如林雅珠权重=2,其余=1)。仅 voteMode=recommend 用 */
+  voteWeight: z.number().int().min(1).default(1),
+  /** 双重人格/共体(孽岛疑云):同一玩家可苏醒为不同人格,切换后改变可见信息 */
+  personas: z.array(z.object({
+    id: z.string(),
+    name: z.string(),
+    publicProfile: z.string().optional(),
+    triggerFlag: z.string().optional(), // 该 flag 置位时此人格苏醒(由 makeChoice/unlockStory 触发)
+  })).optional(),
+  /** 替身/身份替换(惊魂醉阳楼):该角色其实是另一人冒名,真相揭晓时揭露 */
+  disguiseOf: z.string().optional(), // 真身 charId(此角色是 disguiseOf 的替身)
+  realName: z.string().optional(), // 真实姓名(替身/双重人格的真名,真相揭晓用)
   keywordMemories: z.array(z.object({
     id: z.string(),
     keyword: z.string(), // 触发关键词(玩家说出/看到时解锁,自己不能主动说)
@@ -76,7 +88,16 @@ export const zClue = z.object({
   isKey: z.boolean(),
   pointsTo: z.array(z.string()), // 指向真相要素 / clue.id(自洽校验用)
   requiredSkill: z.string().optional(),
+  /** 持有指定物品(线索 id 或 prop id)才可解锁 —— 岳麓山下/裂镜重圆的持物解锁秘密线索 */
+  requiredItem: z.string().optional(),
   linkedSecretClueId: z.string().optional(),
+  /** 该线索被公开(revealClue)时触发的副作用 effects —— 嗜睡蔷薇"某线索导致角色死亡" */
+  onReveal: z.array(z.union([
+    z.object({ kind: z.literal('setFlag'), flag: z.string() }),
+    z.object({ kind: z.literal('eliminate'), charId: z.string() }), // 标记角色淘汰/死亡
+    z.object({ kind: z.literal('adjustCounter'), counter: z.string(), delta: z.number() }),
+    z.object({ kind: z.literal('giveClue'), clueId: z.string(), toCharId: z.string().optional() }),
+  ])).optional(),
   visual: zVisualSpec.optional(),
 });
 export type Clue = z.infer<typeof zClue>;
@@ -99,10 +120,10 @@ export const zProp = z.object({
 });
 export type Prop = z.infer<typeof zProp>;
 
-/** 结局分支 */
+/** 结局分支。condition 支持单条件(向后兼容)或多条件数组(全部满足=AND,裂镜重圆等 7 结局本需要) */
 export const zEnding = z.object({
   id: z.string(),
-  condition: zFlowCondition,
+  condition: z.union([zFlowCondition, z.array(zFlowCondition).min(1)]),
   title: z.string(),
   narrative: z.string(),
 });

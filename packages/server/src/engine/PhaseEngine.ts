@@ -254,6 +254,8 @@ export class PhaseEngine {
   }
 
   private validateIntent(charId: string, intent: ClientIntent): ActionResult {
+    // 被淘汰/死亡的角色(由 clue.onReveal eliminate 触发)不能再行动
+    if (this.state.flags[`eliminated:${charId}`]) return { ok: false, error: 'eliminated' };
     const phase = this.current();
     if (!phase) return reject('no_active_phase');
     switch (intent.kind) {
@@ -283,6 +285,17 @@ export class PhaseEngine {
         if (clue.visibility === 'private') {
           // 秘密线索：已解锁且玩家有对应技能，或线索持有者
           if (clue.ownerCharId === charId) break;
+          // requiredItem:持有指定物品(线索/道具)即可解锁 —— 岳麓山下持物解锁秘密线索
+          if (unlocked && clue.requiredItem) {
+            const held = this.state.acquiredClues[charId]?.includes(clue.requiredItem)
+              || this.state.flags[`holds:${charId}:${clue.requiredItem}`];
+            if (held) {
+              const searchErr = this.checkSearchLimit(phase, charId);
+              if (searchErr) return reject(searchErr);
+              break;
+            }
+            return reject('clue_locked');
+          }
           if (unlocked && clue.requiredSkill) {
             const playerChar = this.script.characters.find((c) => c.id === charId);
             if (playerChar?.skills?.includes(clue.requiredSkill)) {
@@ -357,6 +370,30 @@ export class PhaseEngine {
         }
         break;
       }
+      case 'inspectCharItems': {
+        // 强搜随身物品:目标必须存在且不是自己
+        if (intent.targetCharId === charId) return reject('cannot_target_self');
+        const exists = this.script.characters.some((c) => c.id === intent.targetCharId);
+        if (!exists) return reject('target_not_found');
+        // AP 扣减校验:phase.inspectCost(默认2)需有足够 AP(用 counters['ap:<charId>'] 追踪)
+        const cost = phase?.inspectCost ?? 2;
+        const apKey = `ap:${charId}`;
+        const ap = this.state.counters?.[apKey];
+        if (ap !== undefined && ap < cost) return reject('insufficient_ap');
+        break;
+      }
+      case 'expose': {
+        // 揭露过失:目标必须存在,每人只能揭露一次(flags 去重)
+        if (intent.targetCharId === charId) return reject('cannot_target_self');
+        const exists = this.script.characters.some((c) => c.id === intent.targetCharId);
+        if (!exists) return reject('target_not_found');
+        if (this.state.flags[`exposed:${charId}`]) return reject('already_exposed'); // 每人限1次
+        // major 揭露:目标失去推荐资格(写 flag)
+        if (intent.severity === 'major') {
+          this.state.flags[`disqualified:${intent.targetCharId}`] = true;
+        }
+        break;
+      }
     }
     return ok();
   }
@@ -405,6 +442,25 @@ export class PhaseEngine {
         this.state.revealedClues.push(intent.clueId);
         const clue = this.script.clues.find((c) => c.id === intent.clueId);
         this.bus.event({ type: 'reveal_clue', actorCharId: charId, payload: { clueId: intent.clueId, clueTitle: clue?.title } });
+        // onReveal:线索公开时触发的副作用(嗜睡蔷薇"某线索导致角色死亡"等)
+        if (clue?.onReveal) {
+          for (const eff of clue.onReveal) {
+            if (eff.kind === 'setFlag') {
+              this.state.flags[eff.flag] = true;
+            } else if (eff.kind === 'eliminate') {
+              // 标记角色淘汰/死亡:写 flag + 从 actedCharIds 移除(不再可行动)
+              this.state.flags[`eliminated:${eff.charId}`] = true;
+              this.state.phaseRuntime.actedCharIds = this.state.phaseRuntime.actedCharIds.filter((id) => id !== eff.charId);
+              this.bus.event({ type: 'character_eliminated', payload: { charId: eff.charId, triggerClueId: clue.id } });
+            } else if (eff.kind === 'adjustCounter') {
+              this.applyAdjustCounter(eff.counter, eff.delta);
+            } else if (eff.kind === 'giveClue') {
+              const target = eff.toCharId ?? charId;
+              if (!this.state.acquiredClues[target]) this.state.acquiredClues[target] = [];
+              if (!this.state.acquiredClues[target].includes(eff.clueId)) this.state.acquiredClues[target].push(eff.clueId);
+            }
+          }
+        }
         break;
       }
       case 'castVote': {
@@ -463,6 +519,11 @@ export class PhaseEngine {
             this.applyAdjustResource(charId, eff.resourceId, eff.delta);
           } else if (eff.kind === 'adjustTeamScore') {
             this.applyAdjustTeamScore(eff.teamId, eff.delta);
+          } else if (eff.kind === 'switchPersona') {
+            // 双重人格切换:写 activePersona flag(孽岛疑云人格苏醒)
+            this.state.flags[`persona:${eff.charId}`] = false; // 清除当前(占位,flags 是 boolean)
+            this.state.flags[`persona:${eff.charId}:${eff.personaId}`] = true;
+            this.bus.event({ type: 'persona_switched', payload: { charId: eff.charId, personaId: eff.personaId } });
           }
         }
         if (!jumped) this.bus.event({ type: 'choice_made', actorCharId: charId, payload: { choiceId: choice.id, optionId: opt.id } });
@@ -476,6 +537,33 @@ export class PhaseEngine {
       case 'adjustResource': {
         this.applyAdjustResource(charId, intent.resourceId, intent.delta);
         this.bus.event({ type: 'resource_adjusted', actorCharId: charId, payload: { resourceId: intent.resourceId, delta: intent.delta } });
+        break;
+      }
+      case 'inspectCharItems': {
+        // 强搜:花 AP 把目标的随身线索(ownerCharId=target)转给搜查者
+        const phase = this.current();
+        const cost = phase?.inspectCost ?? 2;
+        const apKey = `ap:${charId}`;
+        this.applyAdjustCounter(apKey, -cost);
+        // 把目标持有的随身线索给到搜查者(去重)
+        const givenIds: string[] = [];
+        for (const clue of this.script.clues) {
+          if (clue.ownerCharId === intent.targetCharId && clue.visibility !== 'public') {
+            if (!this.state.acquiredClues[charId]?.includes(clue.id)) {
+              if (!this.state.acquiredClues[charId]) this.state.acquiredClues[charId] = [];
+              this.state.acquiredClues[charId].push(clue.id);
+              givenIds.push(clue.id);
+            }
+          }
+        }
+        this.bus.event({ type: 'items_inspected', actorCharId: charId, payload: { targetCharId: intent.targetCharId, clueIds: givenIds } });
+        break;
+      }
+      case 'expose': {
+        // 揭露:扣目标推荐分(minor -1) + 标记揭露者已用
+        this.state.flags[`exposed:${charId}`] = true;
+        this.applyAdjustCounter(`recommend:${intent.targetCharId}`, intent.severity === 'major' ? -99 : -1);
+        this.bus.event({ type: 'character_exposed', actorCharId: charId, payload: { targetCharId: intent.targetCharId, severity: intent.severity } });
         break;
       }
     }
@@ -648,6 +736,34 @@ export class PhaseEngine {
         const cnt = Object.values(this.state.votes).filter((v) => v === pid).length;
         if (total > 0 && cnt > total / 2) this.state.flags[`proposal_${pid}_won`] = true;
       }
+    }
+
+    // recommend 加权推荐结算(珠帘异梦):每人投1人,目标得票×目标权重 = 推荐分;
+    // 揭露已扣分(minor -1 / major 资格剥夺);排除被剥夺资格者,最高分当选
+    if (phase.voteMode === 'recommend') {
+      const scores: Record<string, number> = {};
+      for (const [voterId, targetId] of Object.entries(this.state.votes)) {
+        // 投票者自己不能投被剥夺资格者(资格检查)
+        if (this.state.flags[`disqualified:${targetId}`]) continue;
+        if (this.state.flags[`disqualified:${voterId}`]) continue; // 被剥夺者投票无效
+        const target = this.script.characters.find((c) => c.id === targetId);
+        const weight = target?.voteWeight ?? 1;
+        scores[targetId] = (scores[targetId] ?? 0) + weight;
+      }
+      // 叠加 expose 扣分(counters['recommend:<charId>'] 已在 expose 时扣减)
+      for (const char of this.script.characters) {
+        const adj = this.state.counters?.[`recommend:${char.id}`];
+        if (adj) scores[char.id] = (scores[char.id] ?? 0) + adj;
+      }
+      // 最高分当选(平票取 characters 定义顺序首个)
+      let winner: string | null = null;
+      let maxScore = -Infinity;
+      for (const char of this.script.characters) {
+        if (this.state.flags[`disqualified:${char.id}`]) continue;
+        const s = scores[char.id] ?? 0;
+        if (s > maxScore) { maxScore = s; winner = char.id; }
+      }
+      if (winner) this.state.flags[`recommend_won:${winner}`] = true;
     }
   }
 

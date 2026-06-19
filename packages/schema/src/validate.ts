@@ -92,14 +92,20 @@ function checkReferences(s: Script, out: ValidationIssue[]): void {
   if (s.truth) {
     for (const id of s.truth.murdererCharIds) if (!charIds.has(id)) err(out, 'ref', 'truth.murdererCharIds', `未知角色 ${id}`);
     for (const en of s.truth.endings) {
-      if (en.condition.kind === 'voteResult' && !charIds.has(en.condition.equalsCharId)) {
-        err(out, 'ref', `truth.endings.${en.id}`, `未知角色 ${en.condition.equalsCharId}`);
+      const conds = Array.isArray(en.condition) ? en.condition : [en.condition];
+      for (const c of conds) {
+        if (c.kind === 'voteResult' && !charIds.has(c.equalsCharId)) {
+          err(out, 'ref', `truth.endings.${en.id}`, `未知角色 ${c.equalsCharId}`);
+        }
       }
     }
   }
   for (const en of s.endings ?? []) {
-    if (en.condition.kind === 'voteResult' && !charIds.has(en.condition.equalsCharId)) {
-      err(out, 'ref', `endings.${en.id}`, `未知角色 ${en.condition.equalsCharId}`);
+    const conds = Array.isArray(en.condition) ? en.condition : [en.condition];
+    for (const c of conds) {
+      if (c.kind === 'voteResult' && !charIds.has(c.equalsCharId)) {
+        err(out, 'ref', `endings.${en.id}`, `未知角色 ${c.equalsCharId}`);
+      }
     }
   }
 }
@@ -266,7 +272,11 @@ function checkFactionStructure(s: Script, out: ValidationIssue[]): void {
     warn(out, 'faction', 'characters', `阵营人数不均:${[...factions.entries()].map(([f, n]) => `${f}=${n}`).join(', ')}`);
   }
   const endings = s.endings ?? s.truth?.endings ?? [];
-  if (!endings.some((e) => e.condition.kind === 'teamWin')) {
+  const hasTeamWin = endings.some((e) => {
+    const conds = Array.isArray(e.condition) ? e.condition : [e.condition];
+    return conds.some((c) => c.kind === 'teamWin');
+  });
+  if (!hasTeamWin) {
     err(out, 'faction', 'endings', '阵营本至少需要一个 teamWin 结局(放在顶层 endings 或 truth.endings)');
   }
 }
