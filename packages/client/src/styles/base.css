@@ -889,7 +889,7 @@ select.input {
 }
 .lightbox-caption { margin-top: var(--sp3); text-align: center; color: var(--tp); font-size: 14px; }
 .lightbox-close {
-  position: absolute; top: -12px; right: -12px; width: 32px; height: 32px; border-radius: 50%;
+  position: absolute; top: -14px; right: -14px; width: 44px; height: 44px; border-radius: 50%;
   background: var(--s3); color: var(--tp); border: 1px solid var(--s4); cursor: pointer; font-size: 14px;
 }
 
@@ -2797,7 +2797,7 @@ html { scroll-behavior: smooth; }
   position: fixed; inset: 0; z-index: var(--z-overlay, 900);
   background: rgba(0,0,0,0.55);
   display: flex; align-items: center; justify-content: center;
-  animation: fade-in 0.15s ease;
+  animation: fadeIn 0.15s ease;
 }
 .confirm-card {
   background: var(--s1);

@@ -27,7 +27,7 @@ export function VoteScene() {
   const votedIds = new Set(Object.keys(view?.votesPublic ?? {}));
   const requiredIds = view?.phaseProgress?.requiredCharIds ?? [];
   const pendingIds = requiredIds.filter((id) => !votedIds.has(id));
-  const myVoteTarget = hasVoted && hasVoted !== '__voted__'
+  const myVoteTarget = hasVoted && typeof hasVoted === 'string' && hasVoted !== '__voted__'
     ? view?.publicCharacters.find((c) => c.id === hasVoted)?.name
     : undefined;
 

@@ -188,11 +188,12 @@ export async function startServer(): Promise<void> {
   const playerIdx = new Map<string, Session>();
   const sendFn = (playerId: string, msg: ServerMessage) => {
     let session = playerIdx.get(playerId);
-    // Pending join: playerId not yet indexed — scan by null + roomCode
+    // Pending join: playerId not yet indexed — scan by pendingRoomCode
     if (!session) {
-      session = [...sessions.values()].find(s => s.playerId === null && s.roomCode);
+      session = [...sessions.values()].find(s => s.playerId === null && s.pendingRoomCode);
       if (session) {
         session.playerId = playerId;
+        session.pendingRoomCode = null;
         playerIdx.set(playerId, session);
       }
     }
@@ -218,7 +219,7 @@ export async function startServer(): Promise<void> {
   });
 
   wss.on('connection', ws => {
-    const session: Session = { ws, playerId: null, roomCode: null, isAlive: true, msgCount: 0, msgWindowStart: Date.now() };
+    const session: Session = { ws, playerId: null, roomCode: null, pendingRoomCode: null, isAlive: true, msgCount: 0, msgWindowStart: 0 };
     sessions.set(ws, session);
     console.log(`+ connection (${sessions.size} total)`);
 
@@ -310,8 +311,8 @@ export async function startServer(): Promise<void> {
       room.destroy();
     }
     manager.destroy();
-    server.close();
-    process.exit(0);
+    server.close(() => process.exit(0));
+    setTimeout(() => process.exit(0), 3000);
   };
   process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
   process.on('SIGINT', () => gracefulShutdown('SIGINT'));
@@ -329,7 +330,7 @@ export async function startServer(): Promise<void> {
   });
 }
 
-interface Session { ws: WebSocket; playerId: string | null; roomCode: string | null; isAlive: boolean; msgCount: number; msgWindowStart: number }
+interface Session { ws: WebSocket; playerId: string | null; roomCode: string | null; pendingRoomCode: string | null; isAlive: boolean; msgCount: number; msgWindowStart: number }
 
 const RATE_LIMIT_WINDOW = 10_000; // 10s 窗口
 const RATE_LIMIT_MAX = 40; // 窗口内最大消息数
@@ -354,10 +355,12 @@ function handleIntent(manager: RoomManager, session: Session, intent: ClientInte
         room.setScriptProvider(manager.listScriptMetas(), (id) => manager.getScript(id));
       }
 
-      // Pre-set roomCode so sendFn can find this session during room.join()
+      // Pre-set roomCode + pendingRoomCode so sendFn can find this session during room.join()
       session.roomCode = roomCode;
+      session.pendingRoomCode = roomCode;
 
       const result = room.join(intent.nickname, intent.sessionToken);
+      session.pendingRoomCode = null;
       if ('error' in result) {
         session.roomCode = null;
         // 透传真实错误码(kicked/room_full/room_not_joinable),供前端映射中文 + 识别被踢

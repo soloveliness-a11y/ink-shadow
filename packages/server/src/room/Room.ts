@@ -37,11 +37,13 @@ export class Room {
     botIds: () => this.botIds,
   });
   private phaseHistory: string[] = [];
-  private kickedTokens = new Set<string>();
+  private kickedTokens = new Map<string, number>();
   private dmService: DmService;
   private dmFullConfig: DmConfig | null = null;
   private onBroadcastFn: (() => void) | null = null;
   private static MAX_LOG = 500;
+  private static MAX_DM_CONCURRENT = 2;
+  private dmActiveCalls = 0;
 
   constructor(sendFn: SendFn, dmConfig: DmConfig | null = null) {
     this.roomCode = generateRoomCode();
@@ -77,6 +79,7 @@ export class Room {
   destroy(): void {
     this.botRunner.stop();
     this.engine?.dispose();
+    this.kickedTokens.clear();
   }
   setScriptProvider(metas: ScriptMeta[], getFn: (id: string) => Script | undefined): void {
     this.availableScripts = metas;
@@ -124,7 +127,7 @@ export class Room {
   /** 玩家加入房间 */
   join(nickname: string, sessionToken?: string): { playerId: string; sessionToken: string } | { error: string } {
     // 被踢者带旧 token 重连 → 拒绝(双层防护的 server 兜底,防止竞态下挤回)
-    if (sessionToken && this.kickedTokens.has(sessionToken)) {
+    if (sessionToken && this.isKicked(sessionToken)) {
       return { error: 'kicked' };
     }
     if (sessionToken) {
@@ -180,7 +183,7 @@ export class Room {
     this.state.players.push({
       playerId,
       charId: undefined,
-      nickname,
+      nickname: nickname.trim(),
       connected: true,
       ready: false,
       isHost,
@@ -234,7 +237,7 @@ export class Room {
     this.sendToPlayer(targetPlayerId, { kind: 'kicked' });
     this.state.players = this.state.players.filter((p) => p.playerId !== targetPlayerId);
     this.playerSockets.delete(targetPlayerId);
-    this.kickedTokens.add(targetPlayerId);
+    this.kickedTokens.set(targetPlayerId, Date.now());
 
     this.broadcastState();
     return {};
@@ -398,12 +401,14 @@ export class Room {
     const p = this.state.players.find((x) => x.playerId === playerId);
     if (!p?.charId) return { error: 'no_char' };
 
+    if (!this.engine) return { error: 'no_script' };
+
     if (intent.kind === 'hostAdvance') {
       if (!p.isHost) return { error: 'not_host' };
-      return this.engine!.hostAdvance(p.charId);
+      return this.engine.hostAdvance(p.charId);
     }
 
-    return this.engine!.handleAction(p.charId, intent);
+    return this.engine.handleAction(p.charId, intent);
   }
 
   getState(): Readonly<RuntimeState> {
@@ -433,7 +438,7 @@ export class Room {
       dmConfig: this.dmFullConfig
         ? { provider: this.dmFullConfig.provider, apiUrl: this.dmFullConfig.apiUrl, model: this.dmFullConfig.model }
         : null,
-      kickedTokens: [...this.kickedTokens],
+      kickedTokens: [...this.kickedTokens.keys()],
       savedAt: new Date().toISOString(),
     };
   }
@@ -454,11 +459,15 @@ export class Room {
     (room as any).isTestMode = snap.isTestMode;
     (room as any).botIds = snap.botIds;
     (room as any).phaseHistory = snap.phaseHistory;
-    (room as any).kickedTokens = new Set(snap.kickedTokens);
+    (room as any).kickedTokens = new Map(snap.kickedTokens.map((t) => [t, Date.now()]));
     // dmFullConfig 不从快照恢复(无 apiKey),保持 null
     // 所有玩家标记为断线（需重新连接）
     for (const p of room.state.players) {
       p.connected = false;
+    }
+    // 已结束房间:刷新 startedAt 防止 cleanFinishedRooms 立即清理
+    if (room.state.status === 'finished') {
+      room.state.phaseRuntime.startedAt = Date.now();
     }
     // 重建剧本和引擎
     room.setScriptProvider(scriptMetas, getScriptFn);
@@ -477,6 +486,18 @@ export class Room {
   }
 
   // ─── 内部 ───
+
+  private static KICK_TTL_MS = 60 * 60 * 1000;
+
+  private isKicked(token: string): boolean {
+    const ts = this.kickedTokens.get(token);
+    if (ts === undefined) return false;
+    if (Date.now() - ts > Room.KICK_TTL_MS) {
+      this.kickedTokens.delete(token);
+      return false;
+    }
+    return true;
+  }
 
   private allAssigned(): boolean {
     return this.state.players.every((p) => p.charId);
@@ -536,8 +557,8 @@ export class Room {
       event: (evt) => {
         const full = { ...evt, ts: Date.now() };
         this.state.log.push(full);
-        // 防止 log 无限增长
-        if (this.state.log.length > Room.MAX_LOG) {
+        // 防止 log 无限增长(批量裁剪减少 GC 压力)
+        if (this.state.log.length > Room.MAX_LOG + 50) {
           this.state.log = this.state.log.slice(-Room.MAX_LOG);
         }
         if (evt.type === 'flow_end') {
@@ -566,6 +587,7 @@ export class Room {
   /** 异步触发 AI DM 旁白（不阻塞游戏流程） */
   private triggerDm(evt: Omit<import('@mmg/schema').GameEvent, 'ts'>): void {
     if (!this.dmService.isEnabled || !this.script) return;
+    if (this.dmActiveCalls >= Room.MAX_DM_CONCURRENT) return;
 
     const payload = (evt.payload ?? {}) as Record<string, string>;
     // 补充角色名
@@ -584,6 +606,7 @@ export class Room {
       characterNames: this.script.characters.filter(c => !c.isVictim).map(c => c.name),
     };
 
+    this.dmActiveCalls++;
     // fire-and-forget: 不 await，LLM 返回后才推送
     this.dmService.onEvent(evt.type, payload, ctx).then((result) => {
       if (!result) return;
@@ -595,7 +618,9 @@ export class Room {
           this.sendToPlayer(p.playerId, { kind: 'dmNarrative', text: result.text, charId: result.charId });
         }
       }
-    }).catch(() => { /* 静默放弃 */ });
+    }).catch(() => { /* 静默放弃 */ }).finally(() => {
+      this.dmActiveCalls--;
+    });
   }
 
   private viewExtra() {
