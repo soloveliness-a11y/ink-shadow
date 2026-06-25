@@ -54,9 +54,8 @@
   ],
   "skills": [],
   "sceneId": "s_xue_home",
-  "mandatoryReveal": [],
-  "investigationReport": "",
   "passiveClueGivers": [],
+  "mandatoryReveal": [],
   "visual": {
     "kind": "avatar",
     "prompt": "Portrait of a wealthy middle-aged Chinese merchant in Republican era, traditional clothing, oil painting style",

@@ -1,0 +1,46 @@
+[
+  {
+    "id": "cl_1",
+    "title": "线索一",
+    "content": "待补充",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth"
+    ]
+  },
+  {
+    "id": "cl_2",
+    "title": "线索二",
+    "content": "待补充",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth"
+    ]
+  },
+  {
+    "id": "cl_3",
+    "title": "线索三",
+    "content": "待补充",
+    "visibility": "searchable",
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_4",
+    "title": "线索四",
+    "content": "待补充",
+    "visibility": "searchable",
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_5",
+    "title": "线索五",
+    "content": "待补充",
+    "visibility": "searchable",
+    "isKey": false,
+    "pointsTo": []
+  }
+]

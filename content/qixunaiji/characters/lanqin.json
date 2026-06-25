@@ -1,0 +1,26 @@
+{
+  "id": "lanqin",
+  "name": "兰秦",
+  "gender": "female",
+  "age": 20,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "女性来宾，20岁。租界芙兰茜西饼店实习生。",
+  "privateScript": "女性来宾，20岁。租界芙兰茜西饼店实习生。",
+  "objectives": [
+    {
+      "id": "obj_lanqin_1",
+      "kind": "main",
+      "description": "查明案件真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese female, oil painting style",
+    "aspect": "3:4"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "id": "kushi",
+  "name": "苦石",
+  "gender": "male",
+  "age": 40,
+  "isVictim": false,
+  "isMurderer": true,
+  "publicProfile": "祭祀，40岁。主持仪式。",
+  "privateScript": "祭祀，40岁。主持仪式。",
+  "objectives": [
+    {
+      "id": "obj_kushi_1",
+      "kind": "main",
+      "description": "查明案件真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese male, oil painting style",
+    "aspect": "3:4"
+  }
+}

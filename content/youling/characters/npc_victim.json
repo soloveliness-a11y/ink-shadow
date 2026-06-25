@@ -1,0 +1,18 @@
+{
+  "id": "npc_victim",
+  "name": "夏三虎",
+  "gender": "male",
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "夏家拳馆馆主，已遇害。",
+  "privateScript": "",
+  "objectives": [],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese martial arts master, oil painting style",
+    "aspect": "3:4"
+  }
+}

@@ -1,14 +1,27 @@
 {
   "id": "cenzhonggu",
   "name": "01岑中古",
-  "role": "角色",
-  "gender": "unknown",
+  "gender": "other",
   "age": 25,
-  "description": "01岑中古，身份待确认。",
-  "background": "与案件有关。",
-  "motivation": "想找出真相。",
-  "secrets": ["与案件有关"],
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "01岑中古，身份待确认。",
+  "privateScript": "与案件有关。",
+  "objectives": [
+    {
+      "id": "obj_cenzhonggu_1",
+      "kind": "main",
+      "description": "你找出真相。"
+    }
+  ],
+  "secrets": [
+    "与案件有关"
+  ],
+  "timeline": [],
   "relationships": [],
-  "endings": [{"id": "ending_1", "name": "结局一", "condition": "找出真相", "description": "你找出真相。"}],
-  "visual": {"kind": "character", "prompt": "1914 Chinese person, oil painting style", "aspect": "3:4"}
+  "visual": {
+    "kind": "avatar",
+    "prompt": "1914 Chinese person, oil painting style",
+    "aspect": "3:4"
+  }
 }

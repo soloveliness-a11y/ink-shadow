@@ -1,0 +1,8 @@
+[
+  {"id": "cl_blood_words", "title": "血字「以死谢罪」", "content": "内院空地上有四个未干的血字「以死谢罪」，死者双手染血紧握三股叉。", "sceneId": "s_inner_court", "visibility": "searchable", "isKey": true, "pointsTo": ["truth_wang_death"], "visual": {"kind": "clue", "prompt": "Blood characters on ground, Chinese ancestral hall, oil painting style", "aspect": "1:1"}},
+  {"id": "cl_locked_door", "title": "从内锁上的院门", "content": "望海祠内院门从里面插上门闩并用楔子固定，需撞门才能进入。", "sceneId": "s_inner_court", "visibility": "searchable", "isKey": true, "pointsTo": ["truth_wang_death"]},
+  {"id": "cl_coffin", "title": "薄板棺材", "content": "荒祠南屋停放着一口薄板棺材，里面写着「以死谢罪」，是以王渚寿名义定的。", "sceneId": "s_ruined_temple", "visibility": "searchable", "isKey": false, "pointsTo": ["lishenang"]},
+  {"id": "cl_jade", "title": "半圆形古玉", "content": "一块半圆形古玉，刻着奇怪的图案。王渚寿和雅梅各有一块相似的。", "sceneId": "s_inner_court", "visibility": "searchable", "isKey": false, "pointsTo": ["truth_jade"]},
+  {"id": "cl_fire", "title": "书房火灾", "content": "望海祠书房起火，墙壁倒塌，藏书烧毁。李福辕的尸体在书房中被发现。", "sceneId": "s_study", "visibility": "searchable", "isKey": true, "pointsTo": ["truth_li_death"]},
+  {"id": "cl_mud", "title": "絮秀身上的泥土", "content": "絮秀身上沾有泥土，与她在荒祠枯井旁挖掘有关。", "sceneId": "s_ruined_temple", "visibility": "searchable", "isKey": false, "pointsTo": ["xuxiu"]}
+]

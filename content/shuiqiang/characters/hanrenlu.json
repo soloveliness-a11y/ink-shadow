@@ -1,81 +1,65 @@
 {
   "id": "hanrenlu",
   "name": "韩仁陆",
-  "realName": "陶孝先",
-  "role": "高瘦男仆",
   "gender": "male",
   "age": 27,
-  "description": "不到三十岁，穿黑衣长裤，又高又瘦，手指细长，说话体面有礼，又十分谨慎。",
-  "background": "本名陶孝先，是陶山德的儿子，化名韩仁陆到蔷薇馆调查父亲被害的真相。",
-  "motivation": "想找出父亲陶山德被害的真凶。",
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "不到三十岁，穿黑衣长裤，又高又瘦，手指细长，说话体面有礼，又十分谨慎。",
+  "privateScript": "本名陶孝先，是陶山德的儿子，化名韩仁陆到蔷薇馆调查父亲被害的真相。",
+  "objectives": [
+    {
+      "id": "obj_hanrenlu_1",
+      "kind": "main",
+      "description": "你被当作真凶，逃入树林，迷失方向。"
+    },
+    {
+      "id": "obj_hanrenlu_2",
+      "kind": "side",
+      "description": "你被当作真凶，但找出真凶，返回报仇。"
+    },
+    {
+      "id": "obj_hanrenlu_3",
+      "kind": "side",
+      "description": "你留在蔷薇馆研究笔记，忘记原本目的。"
+    },
+    {
+      "id": "obj_hanrenlu_4",
+      "kind": "side",
+      "description": "你找出真凶，返回报仇。"
+    },
+    {
+      "id": "obj_hanrenlu_5",
+      "kind": "side",
+      "description": "你找到两个妹妹，返回上海寻找治疗方法。"
+    },
+    {
+      "id": "obj_hanrenlu_6",
+      "kind": "side",
+      "description": "你找到两个妹妹，找出真凶，返回报仇。"
+    },
+    {
+      "id": "obj_hanrenlu_7",
+      "kind": "side",
+      "description": "你成功隐瞒身份，重新登台表演催眠术。"
+    }
+  ],
   "secrets": [
     "本名陶孝先，是陶山德的儿子",
     "是催眠大师",
     "一直在暗中调查父亲被害的真相"
   ],
+  "timeline": [],
   "relationships": [
     {
-      "to": "罗亨理",
-      "relation": "调查对象",
-      "detail": "怀疑罗亨理与父亲被害有关"
-    },
-    {
-      "to": "阿晴",
+      "targetCharId": "xiaoji",
       "relation": "兄妹",
-      "detail": "阿晴是他的妹妹"
-    },
-    {
-      "to": "小霁",
-      "relation": "兄妹",
-      "detail": "小霁是他的妹妹"
+      "isPublic": false
     }
   ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "被当作真凶；没找出杀害父亲的真凶",
-      "description": "你被当作真凶，逃入树林，迷失方向。"
-    },
-    {
-      "id": "ending_2",
-      "name": "结局二",
-      "condition": "被当作真凶；找出杀害父亲的真凶",
-      "description": "你被当作真凶，但找出真凶，返回报仇。"
-    },
-    {
-      "id": "ending_3",
-      "name": "结局三",
-      "condition": "没被当作真凶；没找到两个妹妹；没找出真凶",
-      "description": "你留在蔷薇馆研究笔记，忘记原本目的。"
-    },
-    {
-      "id": "ending_4",
-      "name": "结局四",
-      "condition": "没被当作真凶；没找到两个妹妹；找出真凶",
-      "description": "你找出真凶，返回报仇。"
-    },
-    {
-      "id": "ending_5",
-      "name": "结局五",
-      "condition": "没被当作真凶；找到两个妹妹；没找出真凶",
-      "description": "你找到两个妹妹，返回上海寻找治疗方法。"
-    },
-    {
-      "id": "ending_6",
-      "name": "结局六",
-      "condition": "没被当作真凶；找到两个妹妹；找出真凶",
-      "description": "你找到两个妹妹，找出真凶，返回报仇。"
-    },
-    {
-      "id": "ending_7",
-      "name": "结局七",
-      "condition": "没被当作真凶；找到两个妹妹；找出真凶；成功隐瞒身份",
-      "description": "你成功隐瞒身份，重新登台表演催眠术。"
-    }
-  ],
+  "realName": "陶孝先",
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese servant, tall and thin, black clothes, oil painting style, cautious expression",
     "aspect": "3:4"
   }

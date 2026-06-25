@@ -1,0 +1,18 @@
+{
+  "id": "npc_victim",
+  "name": "贺世珍",
+  "gender": "male",
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "\"海砂馆\"主人，已遇害。",
+  "privateScript": "",
+  "objectives": [],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese scholar, oil painting style",
+    "aspect": "3:4"
+  }
+}

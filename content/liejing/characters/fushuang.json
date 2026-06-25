@@ -1,44 +1,38 @@
 {
   "id": "fushuang",
   "name": "馥霜",
-  "role": "林家丫鬟",
   "gender": "female",
   "age": 18,
-  "description": "林家的丫鬟，与林轶广有复杂的感情关系。",
-  "background": "林家的丫鬟，父亲是方胜元，被卢恩健杀害。",
-  "motivation": "想为父亲报仇，但不知道卢恩健就是杀父仇人。",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "林家的丫鬟，与林轶广有复杂的感情关系。",
+  "privateScript": "林家的丫鬟，父亲是方胜元，被卢恩健杀害。",
+  "objectives": [
+    {
+      "id": "obj_fushuang_1",
+      "kind": "main",
+      "description": "你找出父亲被害的真相，与林轶广一起离开。"
+    },
+    {
+      "id": "obj_fushuang_2",
+      "kind": "side",
+      "description": "你没有找出真相，但与林轶广在一起。"
+    }
+  ],
   "secrets": [
     "父亲是方胜元，被卢恩健杀害",
     "与林轶广有复杂的感情关系"
   ],
+  "timeline": [],
   "relationships": [
     {
-      "to": "林轶广",
+      "targetCharId": "linyiguang",
       "relation": "恋人",
-      "detail": "两人有复杂的感情关系"
-    },
-    {
-      "to": "卢恩健",
-      "relation": "仇人",
-      "detail": "卢恩健杀害了她的父亲"
-    }
-  ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "找出真相",
-      "description": "你找出父亲被害的真相，与林轶广一起离开。"
-    },
-    {
-      "id": "ending_2",
-      "name": "结局二",
-      "condition": "没找出真相",
-      "description": "你没有找出真相，但与林轶广在一起。"
+      "isPublic": false
     }
   ],
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese maid, 18 years old, oil painting style, gentle expression",
     "aspect": "3:4"
   }

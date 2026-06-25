@@ -1,0 +1,18 @@
+{
+  "id": "gengtongxian",
+  "name": "耿通贤",
+  "gender": "male",
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "耿家老爷，已遇害。",
+  "privateScript": "",
+  "objectives": [],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Elderly Chinese man, oil painting style",
+    "aspect": "3:4"
+  }
+}

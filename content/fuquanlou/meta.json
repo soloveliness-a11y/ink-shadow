@@ -1,0 +1,14 @@
+{
+  "id": "fuquanlou",
+  "title": "复泉楼",
+  "theme": "民国济南·旅舍连环命案",
+  "playerCount": {"min": 6, "max": 6},
+  "difficulty": "hard",
+  "durationMin": 240,
+  "synopsis": "1914年9月，日军入侵山东。济南「复泉楼」旅舍内，主管旗劳坠楼身亡，随后家主人苏莫显也被发现死于书房——六位各怀秘密的住客，谁是真凶？",
+  "styleGuide": "1914 Jinan Chinese hotel, Republican era, espionage atmosphere, oil painting style",
+  "cover": {"kind": "cover", "prompt": "1914 Jinan Chinese hotel murder mystery, oil painting style", "aspect": "3:4"},
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "genre": "murder"
+}

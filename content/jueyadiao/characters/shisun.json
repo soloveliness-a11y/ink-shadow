@@ -1,0 +1,28 @@
+{
+  "id": "shisun",
+  "name": "石孙",
+  "gender": "male",
+  "age": 35,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "江湖郎中，35岁。与宝庄有渊源。",
+  "privateScript": "你是石孙，江湖郎中。",
+  "objectives": [
+    {
+      "id": "obj_6",
+      "kind": "main",
+      "description": "查明宝庄命案真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [
+    "知道一些秘密"
+  ],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese man 35, doctor, oil painting style",
+    "aspect": "3:4"
+  }
+}

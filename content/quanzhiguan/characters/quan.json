@@ -1,0 +1,26 @@
+{
+  "id": "quan",
+  "name": "泉",
+  "gender": "female",
+  "age": 25,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "\"文静女人\"，温泉旅馆住客。",
+  "privateScript": "\"文静女人\"，温泉旅馆住客。",
+  "objectives": [
+    {
+      "id": "obj_quan_1",
+      "kind": "main",
+      "description": "查明案件真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese female, oil painting style",
+    "aspect": "3:4"
+  }
+}

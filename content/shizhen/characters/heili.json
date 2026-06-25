@@ -1,0 +1,26 @@
+{
+  "id": "heili",
+  "name": "黑莉",
+  "gender": "female",
+  "age": 22,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "黑莉，22岁。",
+  "privateScript": "你是黑莉。",
+  "objectives": [
+    {
+      "id": "obj_heili",
+      "kind": "main",
+      "description": "查明真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese female, oil painting style",
+    "aspect": "3:4"
+  }
+}

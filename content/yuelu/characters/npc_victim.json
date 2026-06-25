@@ -1,0 +1,18 @@
+{
+  "id": "npc_victim",
+  "name": "易温",
+  "gender": "male",
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "湘福轮船公司老板，被左轮手枪射杀。",
+  "privateScript": "",
+  "objectives": [],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese businessman, oil painting style",
+    "aspect": "3:4"
+  }
+}

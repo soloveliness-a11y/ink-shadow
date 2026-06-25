@@ -1,32 +1,32 @@
 {
   "id": "yuyishi",
   "name": "虞医师",
-  "role": "留洋医师",
   "gender": "male",
   "age": 22,
-  "description": "二十出头，机警灵敏，留洋归来的医师。",
-  "background": "留洋归来的医师，医术精湛。",
-  "motivation": "想救人，找出真相。",
-  "secrets": [
-    "知道一些医学秘密"
-  ],
-  "relationships": [
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "二十出头，机警灵敏，留洋归来的医师。",
+  "privateScript": "留洋归来的医师，医术精湛。",
+  "objectives": [
     {
-      "to": "方医生",
-      "relation": "同事",
-      "detail": "两人都是医生"
-    }
-  ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "找出真相",
+      "id": "obj_yuyishi_1",
+      "kind": "main",
       "description": "你找出真相，救了人。"
     }
   ],
+  "secrets": [
+    "知道一些医学秘密"
+  ],
+  "timeline": [],
+  "relationships": [
+    {
+      "targetCharId": "fangyisheng",
+      "relation": "同事",
+      "isPublic": false
+    }
+  ],
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese doctor, 22 years old, oil painting style",
     "aspect": "3:4"
   }

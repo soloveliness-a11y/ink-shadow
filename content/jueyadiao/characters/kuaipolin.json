@@ -1,0 +1,28 @@
+{
+  "id": "kuaipolin",
+  "name": "快活林",
+  "gender": "male",
+  "age": 40,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "宝庄管家，40岁。史俅昌的表兄。",
+  "privateScript": "你是快活林，宝庄的管家。",
+  "objectives": [
+    {
+      "id": "obj_4",
+      "kind": "main",
+      "description": "查明连环命案真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [
+    "知道史俅昌的秘密"
+  ],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese man 40, oil painting style",
+    "aspect": "3:4"
+  }
+}

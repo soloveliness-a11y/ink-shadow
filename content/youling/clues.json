@@ -1,18 +1,20 @@
 [
   {
     "id": "clue_inner_court",
-    "name": "内宅线索",
-    "type": "location",
-    "description": "夏三虎被发现死在内宅自己的房间床上。",
-    "location": "内宅区域",
-    "scene": "s_inner_court"
+    "title": "内宅线索",
+    "content": "夏三虎被发现死在内宅自己的房间床上。",
+    "sceneId": "s_inner_court",
+    "visibility": "searchable",
+    "isKey": false,
+    "pointsTo": []
   },
   {
     "id": "clue_outer_court",
-    "name": "外院线索",
-    "type": "location",
-    "description": "夏家拳馆外院，有客厅、食堂、宿舍等。",
-    "location": "外院区域",
-    "scene": "s_outer_court"
+    "title": "外院线索",
+    "content": "夏家拳馆外院，有客厅、食堂、宿舍等。",
+    "sceneId": "s_outer_court",
+    "visibility": "searchable",
+    "isKey": false,
+    "pointsTo": []
   }
 ]

@@ -1,40 +1,39 @@
 {
   "id": "jianxiuwen",
   "name": "简修文",
-  "realName": "陆悼悯",
-  "role": "陆家二少爷",
   "gender": "male",
   "age": 24,
-  "description": "二十四岁，诚恳聪勉，一身笔挺中山装，戴眼镜，蓄胡须。",
-  "background": "本名陆悼悯，陆家被灭门时幸免于难，被简家收为义子。",
-  "motivation": "想为陆家报仇，找出灭门案的真凶。",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "二十四岁，诚恳聪勉，一身笔挺中山装，戴眼镜，蓄胡须。",
+  "privateScript": "本名陆悼悯，陆家被灭门时幸免于难，被简家收为义子。",
+  "objectives": [
+    {
+      "id": "obj_jianxiuwen_1",
+      "kind": "main",
+      "description": "你找出灭门案的真凶，为陆家报仇。"
+    },
+    {
+      "id": "obj_jianxiuwen_2",
+      "kind": "side",
+      "description": "你没有找出真凶，但继续生活。"
+    }
+  ],
   "secrets": [
     "本名陆悼悯，是陆家二少爷",
     "想为陆家报仇"
   ],
+  "timeline": [],
   "relationships": [
     {
-      "to": "秦芳君",
+      "targetCharId": "qinfangjun",
       "relation": "亲戚",
-      "detail": "秦芳君与陆家有关"
+      "isPublic": false
     }
   ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "找出真凶",
-      "description": "你找出灭门案的真凶，为陆家报仇。"
-    },
-    {
-      "id": "ending_2",
-      "name": "结局二",
-      "condition": "没找出真凶",
-      "description": "你没有找出真凶，但继续生活。"
-    }
-  ],
+  "realName": "陆悼悯",
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese young man, 24 years old, glasses, oil painting style",
     "aspect": "3:4"
   }

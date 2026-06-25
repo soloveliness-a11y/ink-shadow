@@ -79,9 +79,8 @@
     "猎术"
   ],
   "sceneId": "s_yu_home",
-  "mandatoryReveal": [],
-  "investigationReport": "",
   "passiveClueGivers": [],
+  "mandatoryReveal": [],
   "visual": {
     "kind": "avatar",
     "prompt": "Portrait of a muscular young Chinese hunter in Republican era, sleeveless shirt, carrying a gun and knife, oil painting style",

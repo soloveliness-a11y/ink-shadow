@@ -1,1 +1,10 @@
-[{"id":"clue_cen_home","name":"岑家线索","type":"location"}]
+[
+  {
+    "id": "clue_cen_home",
+    "title": "岑家线索",
+    "content": "",
+    "visibility": "searchable",
+    "isKey": false,
+    "pointsTo": []
+  }
+]

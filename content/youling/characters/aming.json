@@ -1,39 +1,32 @@
 {
   "id": "aming",
   "name": "阿明",
-  "role": "拳馆学徒",
   "gender": "male",
   "age": 23,
-  "description": "夏家拳馆的学徒，忠诚老实。",
-  "background": "夏家拳馆的学徒，对拳馆忠心耿耿。",
-  "motivation": "想保护拳馆，找出杀害馆主的凶手。",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "夏家拳馆的学徒，忠诚老实。",
+  "privateScript": "夏家拳馆的学徒，对拳馆忠心耿耿。",
+  "objectives": [
+    {
+      "id": "obj_aming_1",
+      "kind": "main",
+      "description": "你找出杀害馆主的凶手，为馆主报仇。"
+    },
+    {
+      "id": "obj_aming_2",
+      "kind": "side",
+      "description": "你没有找出凶手，但保护了拳馆。"
+    }
+  ],
   "secrets": [
     "知道拳馆的秘密",
     "曾见过可疑的人"
   ],
-  "relationships": [
-    {
-      "to": "夏三虎",
-      "relation": "师徒",
-      "detail": "夏三虎是他的师父"
-    }
-  ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "找出真凶",
-      "description": "你找出杀害馆主的凶手，为馆主报仇。"
-    },
-    {
-      "id": "ending_2",
-      "name": "结局二",
-      "condition": "没找出真凶",
-      "description": "你没有找出凶手，但保护了拳馆。"
-    }
-  ],
+  "timeline": [],
+  "relationships": [],
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese apprentice, 23 years old, martial arts uniform, oil painting style",
     "aspect": "3:4"
   }

@@ -1,0 +1,26 @@
+{
+  "id": "npc_c6",
+  "name": "镇民己",
+  "gender": "female",
+  "age": 35,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "章东镇居民。",
+  "privateScript": "章东镇居民。",
+  "objectives": [
+    {
+      "id": "obj_npc_c6_1",
+      "kind": "main",
+      "description": "查明案件真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese female, oil painting style",
+    "aspect": "3:4"
+  }
+}

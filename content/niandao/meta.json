@@ -2,11 +2,15 @@
   "id": "niandao",
   "title": "孽岛疑云",
   "theme": "民国·豪门命案",
-  "playerCount": { "min": 5, "max": 5 },
+  "playerCount": {
+    "min": 5,
+    "max": 5
+  },
   "difficulty": "hard",
   "durationMin": 300,
   "synopsis": "民国三年，孽岛疑云。一场精心策划的谋杀正在上演。",
   "schemaVersion": "1.0.0",
   "status": "draft",
-  "genre": "murder"
+  "genre": "murder",
+  "styleGuide": "民国·豪门命案 setting, oil painting style, dramatic lighting"
 }

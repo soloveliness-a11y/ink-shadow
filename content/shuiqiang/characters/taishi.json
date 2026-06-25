@@ -1,63 +1,50 @@
 {
   "id": "taishi",
   "name": "太太",
-  "realName": "小霁",
-  "role": "白裙女人",
   "gender": "female",
   "age": 20,
-  "description": "很瘦，年轻的容貌面色苍白，梳妆齐整却眼神迷离，身体不断颤抖，左手无名指上戴着一枚戒指。",
-  "background": "原名小霁，是阿晴的妹妹。被罗亨理买下后，患有嗜睡症，记忆模糊，被当作太太。",
-  "motivation": "想恢复记忆，找出自己的真实身份。",
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "很瘦，年轻的容貌面色苍白，梳妆齐整却眼神迷离，身体不断颤抖，左手无名指上戴着一枚戒指。",
+  "privateScript": "原名小霁，是阿晴的妹妹。被罗亨理买下后，患有嗜睡症，记忆模糊，被当作太太。",
+  "objectives": [
+    {
+      "id": "obj_taishi_1",
+      "kind": "main",
+      "description": "你被当作真凶，失去最后的希望。"
+    },
+    {
+      "id": "obj_taishi_2",
+      "kind": "side",
+      "description": "罗千海被当作真凶，你作为阿晴被照顾，但记忆恢复后发现自己是另一个人。"
+    },
+    {
+      "id": "obj_taishi_3",
+      "kind": "side",
+      "description": "罗千海照顾你，但你越来越害怕自己不是阿晴。"
+    },
+    {
+      "id": "obj_taishi_4",
+      "kind": "side",
+      "description": "你恢复记忆，想起自己是小霁，罗亨理是魔鬼。"
+    }
+  ],
   "secrets": [
     "本名小霁，是阿晴的妹妹",
     "患有嗜睡症，记忆模糊",
     "曾在地下见到阿晴的尸体"
   ],
+  "timeline": [],
   "relationships": [
     {
-      "to": "罗亨理",
-      "relation": "丈夫/囚禁者",
-      "detail": "罗亨理把她当作太太，实际上囚禁了她"
-    },
-    {
-      "to": "阿晴",
-      "relation": "姐妹",
-      "detail": "阿晴是她的姐姐，已被罗亨理害死"
-    },
-    {
-      "to": "罗千海",
+      "targetCharId": "luoqianhai",
       "relation": "保护者",
-      "detail": "罗千海为救她杀死罗亨理"
+      "isPublic": false
     }
   ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "被当作真凶",
-      "description": "你被当作真凶，失去最后的希望。"
-    },
-    {
-      "id": "ending_2",
-      "name": "结局二",
-      "condition": "罗千海被当作真凶；没找出真实身份",
-      "description": "罗千海被当作真凶，你作为阿晴被照顾，但记忆恢复后发现自己是另一个人。"
-    },
-    {
-      "id": "ending_3",
-      "name": "结局三",
-      "condition": "罗千海没被当作真凶；没找出真实身份",
-      "description": "罗千海照顾你，但你越来越害怕自己不是阿晴。"
-    },
-    {
-      "id": "ending_4",
-      "name": "结局四",
-      "condition": "没被当作真凶；找出真实身份",
-      "description": "你恢复记忆，想起自己是小霁，罗亨理是魔鬼。"
-    }
-  ],
+  "realName": "小霁",
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese woman in white dress, pale, trembling, oil painting style, mysterious atmosphere",
     "aspect": "3:4"
   }

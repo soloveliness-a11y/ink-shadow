@@ -1,39 +1,38 @@
 {
   "id": "lirenshan",
   "name": "李仁山",
-  "role": "富商",
   "gender": "male",
   "age": 40,
-  "description": "四十岁，络腮胡须，目光敏锐多疑，穿宽袖富商缎衣。",
-  "background": "富商，与醉阳楼有生意往来。",
-  "motivation": "想保护生意，找出真相。",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "四十岁，络腮胡须，目光敏锐多疑，穿宽袖富商缎衣。",
+  "privateScript": "富商，与醉阳楼有生意往来。",
+  "objectives": [
+    {
+      "id": "obj_lirenshan_1",
+      "kind": "main",
+      "description": "你找出真相，保护了生意。"
+    },
+    {
+      "id": "obj_lirenshan_2",
+      "kind": "side",
+      "description": "你没有找出真相，生意失败。"
+    }
+  ],
   "secrets": [
     "与醉阳楼有生意往来",
     "知道一些秘密"
   ],
+  "timeline": [],
   "relationships": [
     {
-      "to": "秦芳君",
+      "targetCharId": "qinfangjun",
       "relation": "生意伙伴",
-      "detail": "与秦芳君有生意往来"
-    }
-  ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "找出真相",
-      "description": "你找出真相，保护了生意。"
-    },
-    {
-      "id": "ending_2",
-      "name": "结局二",
-      "condition": "没找出真相",
-      "description": "你没有找出真相，生意失败。"
+      "isPublic": false
     }
   ],
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese businessman, 40 years old, formal clothes, oil painting style",
     "aspect": "3:4"
   }

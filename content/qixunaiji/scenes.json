@@ -1,0 +1,32 @@
+[
+  {
+    "id": "s_0",
+    "name": "荒废别墅",
+    "description": "荒废别墅",
+    "visual": {
+      "kind": "scene",
+      "prompt": "荒废别墅, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_1",
+    "name": "山坡峭壁",
+    "description": "山坡峭壁",
+    "visual": {
+      "kind": "scene",
+      "prompt": "山坡峭壁, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_2",
+    "name": "庭院花园",
+    "description": "庭院花园",
+    "visual": {
+      "kind": "scene",
+      "prompt": "庭院花园, oil painting style",
+      "aspect": "16:9"
+    }
+  }
+]

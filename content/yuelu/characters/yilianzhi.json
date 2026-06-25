@@ -1,44 +1,38 @@
 {
   "id": "yilianzhi",
   "name": "易莲芝",
-  "role": "易温的女儿",
   "gender": "female",
   "age": 18,
-  "description": "易温的女儿，性格坚强。",
-  "background": "易温的女儿，与易温有复杂关系。",
-  "motivation": "想找出杀害父亲的凶手。",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "易温的女儿，性格坚强。",
+  "privateScript": "易温的女儿，与易温有复杂关系。",
+  "objectives": [
+    {
+      "id": "obj_yilianzhi_1",
+      "kind": "main",
+      "description": "你找出杀害父亲的凶手，为父亲报仇。"
+    },
+    {
+      "id": "obj_yilianzhi_2",
+      "kind": "side",
+      "description": "你没有找出凶手，但继承了父亲的遗产。"
+    }
+  ],
   "secrets": [
     "与易温是父女关系",
     "知道易温的秘密"
   ],
+  "timeline": [],
   "relationships": [
     {
-      "to": "易温",
-      "relation": "父女",
-      "detail": "易温是她的父亲"
-    },
-    {
-      "to": "黛妮",
+      "targetCharId": "daini",
       "relation": "继母女",
-      "detail": "黛妮是她的继母"
-    }
-  ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "找出真凶",
-      "description": "你找出杀害父亲的凶手，为父亲报仇。"
-    },
-    {
-      "id": "ending_2",
-      "name": "结局二",
-      "condition": "没找出真凶",
-      "description": "你没有找出凶手，但继承了父亲的遗产。"
+      "isPublic": false
     }
   ],
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese girl, 18 years old, determined expression, oil painting style",
     "aspect": "3:4"
   }

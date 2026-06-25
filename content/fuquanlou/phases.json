@@ -1,0 +1,7 @@
+[
+  {"id": "p_briefing", "kind": "briefing", "title": "阅读剧本", "instruction": "阅读各自的角色剧本。", "participants": "all", "allowedActions": ["readScript", "ready"], "exit": {"kind": "allReady"}},
+  {"id": "p_social", "kind": "free", "title": "寒暄阶段", "instruction": "9月22日，复泉楼内。众人相互了解。", "participants": "all", "allowedActions": ["speak", "searchClue", "revealClue", "privateMessage"], "exit": {"kind": "hostAdvance"}, "unlocks": {"clueIds": ["cl_fall", "cl_keys"]}},
+  {"id": "p_investigation", "kind": "free", "title": "调查阶段", "instruction": "搜查南楼和随身物品。调查3轮后进入下一阶段。", "participants": "all", "allowedActions": ["speak", "searchClue", "revealClue", "privateMessage"], "maxRounds": 3, "exit": {"kind": "hostAdvance"}, "unlocks": {"clueIds": ["cl_study_body", "cl_bullet_hole", "cl_secret_letter"]}},
+  {"id": "p_vote", "kind": "vote", "title": "谁是真凶？", "instruction": "填写你知道吗？", "participants": "all", "allowedActions": ["castVote"], "exit": {"kind": "voteComplete"}},
+  {"id": "p_reveal", "kind": "reveal", "title": "真相揭晓", "instruction": "公布结果和真相。", "participants": "all", "allowedActions": ["submitTheory"], "exit": {"kind": "hostAdvance"}}
+]

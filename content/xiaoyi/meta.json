@@ -2,11 +2,15 @@
   "id": "xiaoyi",
   "title": "孝衣新娘",
   "theme": "民国·豪门命案",
-  "playerCount": { "min": 10, "max": 10 },
+  "playerCount": {
+    "min": 10,
+    "max": 10
+  },
   "difficulty": "hard",
   "durationMin": 300,
   "synopsis": "民国三年，孝衣新娘。一场精心策划的谋杀正在上演。",
   "schemaVersion": "1.0.0",
   "status": "draft",
-  "genre": "murder"
+  "genre": "murder",
+  "styleGuide": "民国·豪门命案 setting, oil painting style, dramatic lighting"
 }

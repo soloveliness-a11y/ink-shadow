@@ -1,0 +1,16 @@
+{
+  "id": "jinger", "name": "井儿", "gender": "male", "age": 17,
+  "isVictim": false, "isMurderer": false,
+  "publicProfile": "谷虎门徒，17岁，桑尘子的徒弟。幼时与狐狸为伴。",
+  "privateScript": "你是井儿，桑尘子的徒弟。你4岁时被桑尘子发现，与狐狸在一起。你有「妖性」，需要用药物抑制。",
+  "objectives": [
+    {"id": "obj_je_1", "kind": "main", "description": "查明师父桑尘子失踪的真相。(5分)", "scoring": 5},
+    {"id": "obj_je_2", "kind": "hidden", "description": "隐瞒你的「妖性」。(3分)", "scoring": 3}
+  ],
+  "secrets": ["幼时与狐狸为伴", "有妖性需要药物抑制", "曾伤过师父"],
+  "timeline": [],
+  "relationships": [
+    {"targetCharId": "heqiancheng", "relation": "师叔", "isPublic": true}
+  ],
+  "visual": {"kind": "avatar", "prompt": "Chinese teenage boy 17 years old, Taoist apprentice, oil painting style", "aspect": "3:4"}
+}

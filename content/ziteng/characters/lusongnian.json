@@ -68,9 +68,8 @@
     "厨艺"
   ],
   "sceneId": "s_lv_tavern",
-  "mandatoryReveal": [],
-  "investigationReport": "",
   "passiveClueGivers": [],
+  "mandatoryReveal": [],
   "visual": {
     "kind": "avatar",
     "prompt": "Portrait of a middle-aged Chinese tavern cook, serious expression, oil painting style",

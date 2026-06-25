@@ -1,36 +1,28 @@
 {
-  "victim": {
-    "name": "夏三虎",
-    "cause": "待确认",
-    "location": "夏家拳馆内宅",
-    "time": "民国三年（1914年）立秋前五天"
-  },
-  "killer": {
-    "name": "待确认",
-    "motive": "待确认",
-    "method": "待确认",
-    "alibi": "待确认"
-  },
-  "truth": {
-    "main_truth": "夏三虎被发现死在内宅，需要调查找出真凶。",
-    "sub_truths": [
-      "夏三虎是夏家拳馆馆主",
-      "夏仲鹏是夏三虎的兄弟",
-      "夏叔娥是夏三虎的女儿"
-    ]
-  },
-  "relationships": [
+  "murdererCharIds": [
+    "xiashue"
+  ],
+  "method": "待补充",
+  "motive": "夏三虎被发现死在内宅，需要调查找出真凶。",
+  "crimeTimeline": [],
+  "solutionChain": [],
+  "reveal": "夏三虎被发现死在内宅，需要调查找出真凶。",
+  "endings": [
     {
-      "from": "夏三虎",
-      "to": "夏仲鹏",
-      "relation": "兄弟",
-      "detail": "夏仲鹏是夏三虎的兄弟"
+      "id": "end_good",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "真相揭晓",
+      "narrative": "凶手被找出。"
     },
     {
-      "from": "夏三虎",
-      "to": "夏叔娥",
-      "relation": "父女",
-      "detail": "夏叔娥是夏三虎的女儿"
+      "id": "end_bad",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "真相掩埋",
+      "narrative": "真相被掩埋。"
     }
   ]
 }

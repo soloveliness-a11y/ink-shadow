@@ -1,44 +1,32 @@
 {
   "id": "tonghuai",
   "name": "同槐",
-  "role": "林家仆人",
   "gender": "male",
   "age": 25,
-  "description": "林家的仆人，忠诚老实。",
-  "background": "林家的仆人，对林家忠心耿耿。",
-  "motivation": "想保护林家，找出杀害林老爷的凶手。",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "林家的仆人，忠诚老实。",
+  "privateScript": "林家的仆人，对林家忠心耿耿。",
+  "objectives": [
+    {
+      "id": "obj_tonghuai_1",
+      "kind": "main",
+      "description": "你找出杀害林老爷的凶手，为林家报仇。"
+    },
+    {
+      "id": "obj_tonghuai_2",
+      "kind": "side",
+      "description": "你没有找出凶手，林家陷入困境。"
+    }
+  ],
   "secrets": [
     "知道一些林家的秘密",
     "曾见过可疑的人"
   ],
-  "relationships": [
-    {
-      "to": "林居尚",
-      "relation": "主仆",
-      "detail": "林居尚是他的主人"
-    },
-    {
-      "to": "林轸远",
-      "relation": "主仆",
-      "detail": "林轸远是他的少主人"
-    }
-  ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "找出真凶",
-      "description": "你找出杀害林老爷的凶手，为林家报仇。"
-    },
-    {
-      "id": "ending_2",
-      "name": "结局二",
-      "condition": "没找出真凶",
-      "description": "你没有找出凶手，林家陷入困境。"
-    }
-  ],
+  "timeline": [],
+  "relationships": [],
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese servant, loyal expression, oil painting style",
     "aspect": "3:4"
   }

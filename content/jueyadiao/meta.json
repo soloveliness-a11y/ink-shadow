@@ -1,0 +1,21 @@
+{
+  "id": "jueyadiao",
+  "title": "绝崖雕",
+  "theme": "民国石家庄·宝庄连环毒杀案",
+  "playerCount": {
+    "min": 6,
+    "max": 6
+  },
+  "difficulty": "hard",
+  "durationMin": 240,
+  "synopsis": "1914年，石家庄宝庄。太监史俅昌隐居此地，家中一妻一妾，连环毒杀事件接连发生——发顺被毒杀、姨娘被毒杀、夫人被毒杀、史俅昌被杀——六人各怀心事，谁是真凶？",
+  "styleGuide": "1914 Shijiazhuang Chinese mansion, oil painting style, mysterious atmosphere",
+  "cover": {
+    "kind": "cover",
+    "prompt": "Jueyadiao murder mystery, oil painting style",
+    "aspect": "3:4"
+  },
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "genre": "murder"
+}

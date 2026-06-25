@@ -25,7 +25,17 @@
       "ready"
     ],
     "unlocks": {
-      "storyKey": "act1"
+      "clueIds": [
+        "cl_ge_home_letter",
+        "cl_zhang_pharmacy",
+        "cl_cemetery_gunshot",
+        "cl_old_house_blood",
+        "cl_tavern_wine",
+        "cl_xue_gesture",
+        "cl_yu_tablet",
+        "cl_lv_tavern_hole",
+        "cl_ge_grave"
+      ]
     },
     "exit": {
       "kind": "allReady"
@@ -77,7 +87,17 @@
       "ready"
     ],
     "unlocks": {
-      "storyKey": "act3"
+      "clueIds": [
+        "cl_ge_home_letter",
+        "cl_zhang_pharmacy",
+        "cl_cemetery_gunshot",
+        "cl_old_house_blood",
+        "cl_tavern_wine",
+        "cl_xue_gesture",
+        "cl_yu_tablet",
+        "cl_lv_tavern_hole",
+        "cl_ge_grave"
+      ]
     },
     "maxSearches": 3,
     "exit": {
@@ -98,7 +118,17 @@
       "ready"
     ],
     "unlocks": {
-      "storyKey": "act4"
+      "clueIds": [
+        "cl_ge_home_letter",
+        "cl_zhang_pharmacy",
+        "cl_cemetery_gunshot",
+        "cl_old_house_blood",
+        "cl_tavern_wine",
+        "cl_xue_gesture",
+        "cl_yu_tablet",
+        "cl_lv_tavern_hole",
+        "cl_ge_grave"
+      ]
     },
     "maxSearches": 2,
     "exit": {

@@ -1,0 +1,26 @@
+{
+  "id": "mirong",
+  "name": "弥生",
+  "gender": "female",
+  "age": 20,
+  "isVictim": false,
+  "isMurderer": true,
+  "publicProfile": "\"202住客\"，年轻女子。",
+  "privateScript": "\"202住客\"，年轻女子。",
+  "objectives": [
+    {
+      "id": "obj_mirong_1",
+      "kind": "main",
+      "description": "查明案件真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese female, oil painting style",
+    "aspect": "3:4"
+  }
+}

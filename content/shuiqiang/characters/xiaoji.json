@@ -1,81 +1,70 @@
 {
   "id": "xiaoji",
   "name": "小霁",
-  "realName": "黄昭然",
-  "role": "戴眼镜的少女",
   "gender": "female",
   "age": 20,
-  "description": "二十岁上下模样，戴着眼镜，身穿一件蓝色布衣，黑色长裙，举止充满活力。",
-  "background": "本名黄昭然，冒充小霁来投奔罗千海。实际上是杀害真小霁的凶手。",
-  "motivation": "想利用罗千海帮助自己上学，隐瞒杀害小霁的真相。",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "二十岁上下模样，戴着眼镜，身穿一件蓝色布衣，黑色长裙，举止充满活力。",
+  "privateScript": "本名黄昭然，冒充小霁来投奔罗千海。实际上是杀害真小霁的凶手。",
+  "objectives": [
+    {
+      "id": "obj_xiaoji_1",
+      "kind": "main",
+      "description": "你被当作真凶，伪装被揭穿，从山上滚落。"
+    },
+    {
+      "id": "obj_xiaoji_2",
+      "kind": "side",
+      "description": "你被当作真凶，但伪装未被揭穿，从山上滚落。"
+    },
+    {
+      "id": "obj_xiaoji_3",
+      "kind": "side",
+      "description": "你没被当作真凶，但伪装被揭穿，成为局外人。"
+    },
+    {
+      "id": "obj_xiaoji_4",
+      "kind": "side",
+      "description": "罗千海被当作真凶，你作为小霁被照顾。"
+    },
+    {
+      "id": "obj_xiaoji_5",
+      "kind": "side",
+      "description": "罗千海没被当作真凶，但你被揭穿，被送回武昌。"
+    },
+    {
+      "id": "obj_xiaoji_6",
+      "kind": "side",
+      "description": "罗千海没被当作真凶，你作为小霁被照顾，但越来越害怕。"
+    },
+    {
+      "id": "obj_xiaoji_7",
+      "kind": "side",
+      "description": "你发现别人的秘密，成为独立女性。"
+    }
+  ],
   "secrets": [
     "本名黄昭然，不是小霁",
     "杀害了真小霁",
     "冒充小霁来投奔罗千海"
   ],
+  "timeline": [],
   "relationships": [
     {
-      "to": "罗千海",
+      "targetCharId": "luoqianhai",
       "relation": "利用者",
-      "detail": "利用罗千海帮助自己上学"
+      "isPublic": false
     },
     {
-      "to": "太太",
+      "targetCharId": "taishi",
       "relation": "冒充者",
-      "detail": "冒充太太的妹妹小霁"
-    },
-    {
-      "to": "真小霁",
-      "relation": "杀害者",
-      "detail": "把真小霁推入江中"
+      "isPublic": false
     }
   ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "被当作真凶；被发现伪装",
-      "description": "你被当作真凶，伪装被揭穿，从山上滚落。"
-    },
-    {
-      "id": "ending_2",
-      "name": "结局二",
-      "condition": "被当作真凶；没被发现伪装",
-      "description": "你被当作真凶，但伪装未被揭穿，从山上滚落。"
-    },
-    {
-      "id": "ending_3",
-      "name": "结局三",
-      "condition": "没被当作真凶；被发现伪装",
-      "description": "你没被当作真凶，但伪装被揭穿，成为局外人。"
-    },
-    {
-      "id": "ending_4",
-      "name": "结局四",
-      "condition": "罗千海被当作真凶；没被发现伪装",
-      "description": "罗千海被当作真凶，你作为小霁被照顾。"
-    },
-    {
-      "id": "ending_5",
-      "name": "结局五",
-      "condition": "罗千海没被当作真凶；被发现伪装",
-      "description": "罗千海没被当作真凶，但你被揭穿，被送回武昌。"
-    },
-    {
-      "id": "ending_6",
-      "name": "结局六",
-      "condition": "罗千海没被当作真凶；没被发现伪装",
-      "description": "罗千海没被当作真凶，你作为小霁被照顾，但越来越害怕。"
-    },
-    {
-      "id": "ending_7",
-      "name": "结局七",
-      "condition": "没被当作真凶；没被发现伪装；发现至少2个人的秘密",
-      "description": "你发现别人的秘密，成为独立女性。"
-    }
-  ],
+  "realName": "黄昭然",
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese girl with glasses, blue clothes, black skirt, oil painting style, lively expression",
     "aspect": "3:4"
   }

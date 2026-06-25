@@ -1,0 +1,21 @@
+{
+  "id": "qixunaiji",
+  "title": "期须乃至",
+  "theme": "民国上海·荒废别墅葬礼命案",
+  "playerCount": {
+    "min": 6,
+    "max": 6
+  },
+  "difficulty": "hard",
+  "durationMin": 240,
+  "synopsis": "豪门惊情系列·期须乃至",
+  "styleGuide": "1914 Chinese setting, oil painting style, mysterious atmosphere",
+  "cover": {
+    "kind": "cover",
+    "prompt": "期须乃至 murder mystery, oil painting style",
+    "aspect": "3:4"
+  },
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "genre": "murder"
+}

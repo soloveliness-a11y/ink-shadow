@@ -1,0 +1,28 @@
+{
+  "murdererCharIds": [
+    "zhangfanghao"
+  ],
+  "method": "待补充",
+  "motive": "待补充",
+  "crimeTimeline": [],
+  "solutionChain": [],
+  "reveal": "章东镇迷案的真相待补充。",
+  "endings": [
+    {
+      "id": "end_good",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "真相揭晓",
+      "narrative": "凶手被找出。"
+    },
+    {
+      "id": "end_bad",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "真相掩埋",
+      "narrative": "真相被掩埋。"
+    }
+  ]
+}

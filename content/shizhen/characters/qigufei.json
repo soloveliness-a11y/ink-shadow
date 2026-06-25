@@ -1,0 +1,26 @@
+{
+  "id": "qigufei",
+  "name": "齐故飞",
+  "gender": "male",
+  "age": 25,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "齐故飞，25岁。",
+  "privateScript": "你是齐故飞。",
+  "objectives": [
+    {
+      "id": "obj_qigufei",
+      "kind": "main",
+      "description": "查明真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese male, oil painting style",
+    "aspect": "3:4"
+  }
+}

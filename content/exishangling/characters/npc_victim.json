@@ -1,0 +1,18 @@
+{
+  "id": "npc_victim",
+  "name": "鬼印",
+  "gender": "male",
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "寨中人物，已遇害。",
+  "privateScript": "",
+  "objectives": [],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese man, oil painting style",
+    "aspect": "3:4"
+  }
+}

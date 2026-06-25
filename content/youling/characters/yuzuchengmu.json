@@ -1,39 +1,32 @@
 {
   "id": "yuzuchengmu",
   "name": "宇祖成木",
-  "role": "日本商人",
   "gender": "male",
   "age": 37,
-  "description": "日本关东田吉株式会社的专务，与夏家拳馆有生意往来。",
-  "background": "日本关东田吉株式会社的专务，与夏家拳馆有生意往来。",
-  "motivation": "想完成生意，找出真相。",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "日本关东田吉株式会社的专务，与夏家拳馆有生意往来。",
+  "privateScript": "日本关东田吉株式会社的专务，与夏家拳馆有生意往来。",
+  "objectives": [
+    {
+      "id": "obj_yuzuchengmu_1",
+      "kind": "main",
+      "description": "你找出真相，完成了生意。"
+    },
+    {
+      "id": "obj_yuzuchengmu_2",
+      "kind": "side",
+      "description": "你没有找出真相，生意失败。"
+    }
+  ],
   "secrets": [
     "与夏家拳馆有生意往来",
     "知道一些秘密"
   ],
-  "relationships": [
-    {
-      "to": "夏三虎",
-      "relation": "生意伙伴",
-      "detail": "与夏三虎有生意往来"
-    }
-  ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "找出真相",
-      "description": "你找出真相，完成了生意。"
-    },
-    {
-      "id": "ending_2",
-      "name": "结局二",
-      "condition": "没找出真相",
-      "description": "你没有找出真相，生意失败。"
-    }
-  ],
+  "timeline": [],
+  "relationships": [],
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Japanese businessman, 37 years old, formal suit, oil painting style",
     "aspect": "3:4"
   }

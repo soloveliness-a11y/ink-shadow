@@ -1,33 +1,33 @@
 {
   "id": "zhudi",
   "name": "朱迪",
-  "role": "洋人买办",
   "gender": "male",
   "age": 32,
-  "description": "三十出头，唇上蓄须，在上海给洋人做买办。",
-  "background": "在上海给洋人做买办，与案件有关。",
-  "motivation": "想保护生意，找出真相。",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "三十出头，唇上蓄须，在上海给洋人做买办。",
+  "privateScript": "在上海给洋人做买办，与案件有关。",
+  "objectives": [
+    {
+      "id": "obj_zhudi_1",
+      "kind": "main",
+      "description": "你找出真相，保护了生意。"
+    }
+  ],
   "secrets": [
     "与案件有关",
     "知道一些秘密"
   ],
+  "timeline": [],
   "relationships": [
     {
-      "to": "姚仲义",
+      "targetCharId": "yaozhongyi",
       "relation": "生意伙伴",
-      "detail": "与姚仲义有生意往来"
-    }
-  ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "找出真相",
-      "description": "你找出真相，保护了生意。"
+      "isPublic": false
     }
   ],
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese businessman, 32 years old, oil painting style",
     "aspect": "3:4"
   }

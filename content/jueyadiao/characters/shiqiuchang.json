@@ -1,0 +1,19 @@
+{
+  "id": "shiqiuchang",
+  "name": "史俅昌",
+  "gender": "male",
+  "age": 50,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "宝庄庄主，太监隐居。被挑铁所杀。",
+  "privateScript": "",
+  "objectives": [],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese eunuch 50, oil painting style",
+    "aspect": "3:4"
+  }
+}

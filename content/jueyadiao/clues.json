@@ -1,0 +1,52 @@
+[
+  {
+    "id": "cl_poison",
+    "title": "毒药",
+    "content": "法蓝瓶中的毒药，被用于多起毒杀。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_poison"
+    ]
+  },
+  {
+    "id": "cl_ladder",
+    "title": "梯子动向",
+    "content": "梯子在多起事件中被使用，上面有毛发证据。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_escape"
+    ]
+  },
+  {
+    "id": "cl_eunuch",
+    "title": "太监身份",
+    "content": "史俅昌是太监，私自出宫是死罪。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_identity"
+    ]
+  },
+  {
+    "id": "cl_silver",
+    "title": "官银",
+    "content": "死者身上有官银，与史俅昌有关。",
+    "visibility": "searchable",
+    "isKey": false,
+    "pointsTo": [
+      "truth_identity"
+    ]
+  },
+  {
+    "id": "cl_letter",
+    "title": "威胁信",
+    "content": "发顺写的威胁史俅昌的信。",
+    "visibility": "searchable",
+    "isKey": false,
+    "pointsTo": [
+      "truth_motive"
+    ]
+  }
+]

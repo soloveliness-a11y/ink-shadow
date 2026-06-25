@@ -1,0 +1,24 @@
+{
+  "id": "npc_killer",
+  "name": "卢恩健",
+  "gender": "male",
+  "isVictim": false,
+  "isMurderer": true,
+  "publicProfile": "杀害林居尚的凶手。",
+  "privateScript": "",
+  "objectives": [
+    {
+      "id": "obj_npc",
+      "kind": "main",
+      "description": "杀害林居尚"
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese man, oil painting style",
+    "aspect": "3:4"
+  }
+}

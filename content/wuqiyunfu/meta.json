@@ -1,0 +1,21 @@
+{
+  "id": "wuqiyunfu",
+  "title": "雾起云浮",
+  "theme": "民国武汉·云浮馆命案",
+  "playerCount": {
+    "min": 5,
+    "max": 5
+  },
+  "difficulty": "hard",
+  "durationMin": 240,
+  "synopsis": "豪门惊情系列·雾起云浮",
+  "styleGuide": "1914 Chinese setting, oil painting style",
+  "cover": {
+    "kind": "cover",
+    "prompt": "雾起云浮, oil painting style",
+    "aspect": "3:4"
+  },
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "genre": "murder"
+}

@@ -1,0 +1,6 @@
+[
+  {"id": "s_temple_outside", "name": "望海祠外", "description": "望海祠门前空地，可看到祠堂大门和周边环境。", "visual": {"kind": "scene", "prompt": "Chinese ancestral hall exterior, Guangdong village 1914, oil painting style", "aspect": "16:9"}},
+  {"id": "s_inner_court", "name": "望海祠内院", "description": "望海祠内院，三间屋子。王渚寿被发现死于此处。", "visual": {"kind": "scene", "prompt": "Chinese ancestral hall inner courtyard, three rooms, oil painting style", "aspect": "16:9"}},
+  {"id": "s_study", "name": "望海祠书房", "description": "望海祠前院书房，火灾后墙壁倒塌。", "visual": {"kind": "scene", "prompt": "Chinese study room after fire, collapsed walls, oil painting style", "aspect": "16:9"}},
+  {"id": "s_ruined_temple", "name": "荒祠", "description": "村中废弃的祠堂，有薄板棺材和枯井。", "visual": {"kind": "scene", "prompt": "Abandoned Chinese temple, coffin, dry well, oil painting style", "aspect": "16:9"}}
+]

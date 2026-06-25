@@ -1,0 +1,28 @@
+{
+  "id": "chunya",
+  "name": "春娅",
+  "gender": "female",
+  "age": 18,
+  "isVictim": false,
+  "isMurderer": true,
+  "publicProfile": "侄女，18岁。韩奉饶之女。毒杀了夫人。",
+  "privateScript": "你是春娅，韩奉饶的女儿。你毒杀了夫人。",
+  "objectives": [
+    {
+      "id": "obj_1",
+      "kind": "main",
+      "description": "隐瞒你毒杀夫人的事。(10分)",
+      "scoring": 10
+    }
+  ],
+  "secrets": [
+    "毒杀了夫人"
+  ],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese young woman 18, oil painting style",
+    "aspect": "3:4"
+  }
+}

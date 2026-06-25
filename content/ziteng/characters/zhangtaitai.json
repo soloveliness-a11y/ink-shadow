@@ -79,9 +79,8 @@
     "驾驶"
   ],
   "sceneId": "s_zhang_home",
-  "mandatoryReveal": [],
-  "investigationReport": "",
   "passiveClueGivers": [],
+  "mandatoryReveal": [],
   "visual": {
     "kind": "avatar",
     "prompt": "Portrait of a modern Chinese woman in Republican era clothing, permed hair, Western-style blouse and vest, confident expression, oil painting style",

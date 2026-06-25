@@ -1,86 +1,69 @@
 {
   "id": "luoqianhai",
   "name": "罗千海",
-  "role": "商行经理",
   "gender": "male",
   "age": 26,
-  "description": "不到三十岁，个子不算高，下巴上有一道很深的疤痕，拄着拐杖，走路时右脚拖在地上。",
-  "background": "从小被卖进罗家，曾为罗亨理杀人。1909年为保护罗亨理受伤，腿瘸了，后被派去武汉做商行经理。",
-  "motivation": "想救太太（小霁），决定杀死罗亨理。",
+  "isVictim": false,
+  "isMurderer": true,
+  "publicProfile": "不到三十岁，个子不算高，下巴上有一道很深的疤痕，拄着拐杖，走路时右脚拖在地上。",
+  "privateScript": "从小被卖进罗家，曾为罗亨理杀人。1909年为保护罗亨理受伤，腿瘸了，后被派去武汉做商行经理。",
+  "objectives": [
+    {
+      "id": "obj_luoqianhai_1",
+      "kind": "main",
+      "description": "你被当作真凶，从山上滚落。"
+    },
+    {
+      "id": "obj_luoqianhai_2",
+      "kind": "side",
+      "description": "你带着小霁和太太回宁波，但小霁开始害怕太太。"
+    },
+    {
+      "id": "obj_luoqianhai_3",
+      "kind": "side",
+      "description": "你揭穿小霁的伪装，送她回家。"
+    },
+    {
+      "id": "obj_luoqianhai_4",
+      "kind": "side",
+      "description": "罗明纱被当作真凶，你从山上滚落。"
+    },
+    {
+      "id": "obj_luoqianhai_5",
+      "kind": "side",
+      "description": "小霁被当作真凶，你留下照顾太太。"
+    },
+    {
+      "id": "obj_luoqianhai_6",
+      "kind": "side",
+      "description": "太太被当作真凶，你从山上滚落。"
+    },
+    {
+      "id": "obj_luoqianhai_7",
+      "kind": "side",
+      "description": "你发现自己杀害了陶山德，被陶孝先报仇。"
+    },
+    {
+      "id": "obj_luoqianhai_8",
+      "kind": "side",
+      "description": "你留在蔷薇馆，研究罗亨理的笔记，准备用自己作为祭品复活阿晴。"
+    }
+  ],
   "secrets": [
     "曾为罗亨理杀人",
     "腿是为保护罗亨理受伤的",
     "偷用公款送黄昭然读书"
   ],
+  "timeline": [],
   "relationships": [
     {
-      "to": "罗亨理",
-      "relation": "主仆/凶手",
-      "detail": "杀死罗亨理"
-    },
-    {
-      "to": "太太",
+      "targetCharId": "taishi",
       "relation": "保护者",
-      "detail": "为救太太杀死罗亨理"
-    },
-    {
-      "to": "阿晴",
-      "relation": "感恩者",
-      "detail": "阿晴救过他的命"
-    }
-  ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "被当作真凶",
-      "description": "你被当作真凶，从山上滚落。"
-    },
-    {
-      "id": "ending_2",
-      "name": "结局二",
-      "condition": "没被当作真凶；不知道小霁的秘密",
-      "description": "你带着小霁和太太回宁波，但小霁开始害怕太太。"
-    },
-    {
-      "id": "ending_3",
-      "name": "结局三",
-      "condition": "没被当作真凶；知道小霁的秘密",
-      "description": "你揭穿小霁的伪装，送她回家。"
-    },
-    {
-      "id": "ending_4",
-      "name": "结局四",
-      "condition": "罗明纱被当作真凶",
-      "description": "罗明纱被当作真凶，你从山上滚落。"
-    },
-    {
-      "id": "ending_5",
-      "name": "结局五",
-      "condition": "小霁被当作真凶；知道小霁的秘密",
-      "description": "小霁被当作真凶，你留下照顾太太。"
-    },
-    {
-      "id": "ending_6",
-      "name": "结局六",
-      "condition": "太太被当作真凶",
-      "description": "太太被当作真凶，你从山上滚落。"
-    },
-    {
-      "id": "ending_7",
-      "name": "结局七",
-      "condition": "发现杀害山德先生的真相",
-      "description": "你发现自己杀害了陶山德，被陶孝先报仇。"
-    },
-    {
-      "id": "ending_8",
-      "name": "结局八",
-      "condition": "没被当作真凶；知道小霁的秘密；没人发现你下药",
-      "description": "你留在蔷薇馆，研究罗亨理的笔记，准备用自己作为祭品复活阿晴。"
+      "isPublic": false
     }
   ],
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese merchant, scar on chin, limp, oil painting style, somber expression",
     "aspect": "3:4"
   }

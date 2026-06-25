@@ -1,34 +1,34 @@
 {
   "id": "qinfangjun",
   "name": "秦芳君",
-  "realName": "陆芳瑶",
-  "role": "酒楼女主人",
   "gender": "female",
   "age": 35,
-  "description": "年龄不详的美妇人，身段曼妙，仪态风流，卷发旗袍。",
-  "background": "醉阳楼的女主人，本名陆芳瑶，与陆家灭门案有关。",
-  "motivation": "想保护自己，但最终被杀。",
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "年龄不详的美妇人，身段曼妙，仪态风流，卷发旗袍。",
+  "privateScript": "醉阳楼的女主人，本名陆芳瑶，与陆家灭门案有关。",
+  "objectives": [
+    {
+      "id": "obj_qinfangjun_1",
+      "kind": "main",
+      "description": "你被杀害，真相大白。"
+    }
+  ],
   "secrets": [
     "本名陆芳瑶",
     "与陆家灭门案有关"
   ],
+  "timeline": [],
   "relationships": [
     {
-      "to": "吴丽人",
+      "targetCharId": "wuliren",
       "relation": "雇主",
-      "detail": "吴丽人是她的员工"
+      "isPublic": false
     }
   ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "被杀",
-      "description": "你被杀害，真相大白。"
-    }
-  ],
+  "realName": "陆芳瑶",
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese woman, 35 years old, beautiful, oil painting style",
     "aspect": "3:4"
   }

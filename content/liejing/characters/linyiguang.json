@@ -1,49 +1,38 @@
 {
   "id": "linyiguang",
   "name": "林轶广",
-  "role": "林家二少爷",
   "gender": "male",
   "age": 20,
-  "description": "林家的二少爷，林轸远的胞弟。",
-  "background": "林家的二少爷，与馥霜有复杂的感情关系。",
-  "motivation": "想保护馥霜，找出杀害父亲的凶手。",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "林家的二少爷，林轸远的胞弟。",
+  "privateScript": "林家的二少爷，与馥霜有复杂的感情关系。",
+  "objectives": [
+    {
+      "id": "obj_linyiguang_1",
+      "kind": "main",
+      "description": "你找出杀害父亲的凶手，为父亲报仇。"
+    },
+    {
+      "id": "obj_linyiguang_2",
+      "kind": "side",
+      "description": "你没有找出凶手，但保护了馥霜。"
+    }
+  ],
   "secrets": [
     "与馥霜有复杂的感情关系",
     "知道一些林家的秘密"
   ],
+  "timeline": [],
   "relationships": [
     {
-      "to": "林居尚",
-      "relation": "父子",
-      "detail": "林居尚是他的父亲"
-    },
-    {
-      "to": "林轸远",
-      "relation": "兄弟",
-      "detail": "林轸远是他的哥哥"
-    },
-    {
-      "to": "馥霜",
+      "targetCharId": "fushuang",
       "relation": "恋人",
-      "detail": "两人有复杂的感情关系"
-    }
-  ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "找出真凶",
-      "description": "你找出杀害父亲的凶手，为父亲报仇。"
-    },
-    {
-      "id": "ending_2",
-      "name": "结局二",
-      "condition": "没找出真凶",
-      "description": "你没有找出凶手，但保护了馥霜。"
+      "isPublic": false
     }
   ],
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese young man, 20 years old, oil painting style, determined expression",
     "aspect": "3:4"
   }

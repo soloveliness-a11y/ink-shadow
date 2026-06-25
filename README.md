@@ -151,7 +151,7 @@ npx tsx scripts/split-script.ts content/新剧本
 pnpm exec tsx scripts/sync-assets.ts 新剧本
 ```
 
-完整字段规范见 [content/SCRIPT-SPEC.md](content/SCRIPT-SPEC.md)。
+完整字段规范见 [docs/SCRIPT-SPEC.md](docs/SCRIPT-SPEC.md)。
 
 ## 内置剧本
 
@@ -183,12 +183,20 @@ pnpm --filter @mmg/client build  # 构建前端
 
 | 文档 | 内容 |
 |------|------|
-| [content/SCRIPT-SPEC.md](content/SCRIPT-SPEC.md) | 剧本创作规范（完整字段 + 设计原则） |
-| [content/PROMPT.md](content/PROMPT.md) | LLM 生成剧本的 Prompt 模板 |
+| [docs/SCRIPT-SPEC.md](docs/SCRIPT-SPEC.md) | 剧本创作规范（完整字段 + 设计原则） |
+| [docs/PROMPT.md](docs/PROMPT.md) | LLM 生成剧本的 Prompt 模板 |
+| [docs/ADAPT-GUIDE.md](docs/ADAPT-GUIDE.md) | 现有剧本适配规范（基于实战经验） |
+| [docs/TRACKING.md](docs/TRACKING.md) | 豪门系列适配进度跟踪 |
+| [docs/COMPATIBILITY-ANALYSIS.md](docs/COMPATIBILITY-ANALYSIS.md) | 剧本兼容性分析报告 |
+| [docs/QUALITY-CHECKLIST.md](docs/QUALITY-CHECKLIST.md) | 剧本质量检查流程 |
 | [PLAN/00-architecture.md](PLAN/00-architecture.md) | 总体架构、模块边界、技术栈选型 |
 | [PLAN/01-script-schema.md](PLAN/01-script-schema.md) | 剧本数据契约（TS 类型 + Zod + DAG） |
 | [PLAN/02-m1-script-generation.md](PLAN/02-m1-script-generation.md) | 剧本生成引擎 |
 | [PLAN/03-m2-visual-pipeline.md](PLAN/03-m2-visual-pipeline.md) | 视觉管线 |
 | [PLAN/04-m3-multiplayer-engine.md](PLAN/04-m3-multiplayer-engine.md) | 联机引擎 |
 | [PLAN/05-roadmap-acceptance.md](PLAN/05-roadmap-acceptance.md) | 里程碑与验收标准 |
+| [PLAN/06-narrative-enhancement.md](PLAN/06-narrative-enhancement.md) | 叙事系统增强设计 |
+| [PLAN/07-narrative-content.md](PLAN/07-narrative-content.md) | 增强剧本叙事内容 |
+| [PLAN/08-narrative-audit.md](PLAN/08-narrative-audit.md) | 全剧本逻辑验证与一致性审计 |
+| [PLAN/09-narrative-depth-audit.md](PLAN/09-narrative-depth-audit.md) | 剧本深度审计（行为逻辑/信息节奏/反转梯度） |
 | [PLAN/10-distribution.md](PLAN/10-distribution.md) | 分发方案 |

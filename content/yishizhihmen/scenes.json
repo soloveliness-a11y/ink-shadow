@@ -1,0 +1,32 @@
+[
+  {
+    "id": "s_0",
+    "name": "仪式大厅",
+    "description": "仪式大厅",
+    "visual": {
+      "kind": "scene",
+      "prompt": "仪式大厅, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_1",
+    "name": "祭坛",
+    "description": "祭坛",
+    "visual": {
+      "kind": "scene",
+      "prompt": "祭坛, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_2",
+    "name": "密室",
+    "description": "密室",
+    "visual": {
+      "kind": "scene",
+      "prompt": "密室, oil painting style",
+      "aspect": "16:9"
+    }
+  }
+]

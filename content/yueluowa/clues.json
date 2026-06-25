@@ -1,1 +1,10 @@
-[{"id":"clue_manor","name":"庄园线索","type":"location"}]
+[
+  {
+    "id": "clue_manor",
+    "title": "庄园线索",
+    "content": "",
+    "visibility": "searchable",
+    "isKey": false,
+    "pointsTo": []
+  }
+]

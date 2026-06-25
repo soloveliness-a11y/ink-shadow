@@ -1,1 +1,12 @@
-[{"id":"s_cen_home","name":"岑家","description":"上海的岑家宅邸，发生命案。"}]
+[
+  {
+    "id": "s_cen_home",
+    "name": "岑家",
+    "description": "上海的岑家宅邸，发生命案。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "岑家, oil painting style",
+      "aspect": "16:9"
+    }
+  }
+]

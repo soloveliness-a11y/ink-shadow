@@ -1,0 +1,26 @@
+{
+  "id": "guilang",
+  "name": "贵郎",
+  "gender": "male",
+  "age": 20,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "贵郎，20岁。",
+  "privateScript": "你是贵郎。",
+  "objectives": [
+    {
+      "id": "obj_guilang",
+      "kind": "main",
+      "description": "查明真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese male, oil painting style",
+    "aspect": "3:4"
+  }
+}

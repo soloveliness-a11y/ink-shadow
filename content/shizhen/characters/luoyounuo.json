@@ -1,0 +1,26 @@
+{
+  "id": "luoyounuo",
+  "name": "罗有诺",
+  "gender": "male",
+  "age": 22,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "罗有诺，22岁。",
+  "privateScript": "你是罗有诺。",
+  "objectives": [
+    {
+      "id": "obj_luoyounuo",
+      "kind": "main",
+      "description": "查明真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese male, oil painting style",
+    "aspect": "3:4"
+  }
+}

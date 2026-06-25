@@ -1,0 +1,19 @@
+{
+  "id": "sumoxian",
+  "name": "苏莫显",
+  "gender": "male",
+  "age": 50,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "复泉楼家主人，被发现死于书房。",
+  "privateScript": "",
+  "objectives": [],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese man 50 years old, hotel owner, oil painting style",
+    "aspect": "3:4"
+  }
+}

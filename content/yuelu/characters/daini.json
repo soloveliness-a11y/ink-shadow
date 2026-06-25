@@ -1,44 +1,38 @@
 {
   "id": "daini",
   "name": "黛妮",
-  "role": "易温的遗孀",
   "gender": "female",
   "age": 22,
-  "description": "易温的遗孀，性格坚强。",
-  "background": "易温的遗孀，湘福轮船公司继承人。",
-  "motivation": "想找出杀害丈夫的凶手，但不想继承湘福轮船公司。",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "易温的遗孀，性格坚强。",
+  "privateScript": "易温的遗孀，湘福轮船公司继承人。",
+  "objectives": [
+    {
+      "id": "obj_daini_1",
+      "kind": "main",
+      "description": "你找出杀害丈夫的凶手，但放弃了湘福轮船公司。"
+    },
+    {
+      "id": "obj_daini_2",
+      "kind": "side",
+      "description": "你没有找出凶手，但继承了湘福轮船公司。"
+    }
+  ],
   "secrets": [
     "不想继承湘福轮船公司",
     "曾与宋言沪是恋人"
   ],
+  "timeline": [],
   "relationships": [
     {
-      "to": "易温",
-      "relation": "夫妻",
-      "detail": "易温是她的丈夫"
-    },
-    {
-      "to": "宋言沪",
+      "targetCharId": "songyanhu",
       "relation": "前恋人",
-      "detail": "两人曾是恋人"
-    }
-  ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "找出真凶",
-      "description": "你找出杀害丈夫的凶手，但放弃了湘福轮船公司。"
-    },
-    {
-      "id": "ending_2",
-      "name": "结局二",
-      "condition": "没找出真凶",
-      "description": "你没有找出凶手，但继承了湘福轮船公司。"
+      "isPublic": false
     }
   ],
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese widow, 22 years old, determined expression, oil painting style",
     "aspect": "3:4"
   }

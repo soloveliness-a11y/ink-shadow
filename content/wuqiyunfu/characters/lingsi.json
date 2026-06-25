@@ -1,0 +1,26 @@
+{
+  "id": "lingsi",
+  "name": "零四",
+  "gender": "male",
+  "age": 30,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "零四，30岁。",
+  "privateScript": "你是零四。",
+  "objectives": [
+    {
+      "id": "obj_lingsi",
+      "kind": "main",
+      "description": "查明真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese male, oil painting style",
+    "aspect": "3:4"
+  }
+}

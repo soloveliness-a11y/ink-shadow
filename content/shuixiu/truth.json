@@ -1,75 +1,53 @@
 {
-  "victim": {
-    "name": "常晚亭",
-    "cause": "被绳索吊死",
-    "location": "戏楼二层平台",
-    "time": "民国三年（1914年）9月4日下午"
-  },
-  "killer": {
-    "name": "叶牡丹",
-    "realName": "白雪生",
-    "motive": "常晚亭发现叶牡丹是男性，以此要挟。叶牡丹为了保住女主角地位，决定除掉常晚亭。",
-    "method": "利用布景升降的时机，用绳索将常晚亭从戏楼二层吊死。",
-    "alibi": "下半场开始时，叶牡丹独自在舞台东侧等待上场时机，第一个摇杆松开后，他趁机跑到后面解开麻袋，制造尸体落下的假象。"
-  },
-  "accomplice": {
-    "name": "林园生",
-    "realName": "田绪园",
-    "role": "打昏并绑住常晚亭",
-    "motive": "常晚亭多次威胁戏班成员，林园生决定教训他。"
-  },
-  "events": [
+  "murdererCharIds": [
+    "yemudan"
+  ],
+  "method": "待补充",
+  "motive": "待补充",
+  "crimeTimeline": [
     {
       "time": "9月4日下午",
-      "event": "林园生用铁杆花枪打昏常晚亭，将其绑在戏楼二层柱子上，用旧锦帕塞住他的嘴。",
-      "character": "林园生"
+      "location": "",
+      "action": "",
+      "isPublic": false
     },
     {
       "time": "9月4日下午",
-      "event": "叶牡丹爬梯子上二层，看到被绑的常晚亭，决定除掉他。",
-      "character": "叶牡丹"
+      "location": "",
+      "action": "",
+      "isPublic": false
     },
     {
       "time": "9月4日下午",
-      "event": "彩排开始后，叶牡丹趁女一号去后面的时间，将麻袋里的土倒出窗外，用绳索将常晚亭吊死。",
-      "character": "叶牡丹"
+      "location": "",
+      "action": "",
+      "isPublic": false
     },
     {
       "time": "9月5日",
-      "event": "下半场开始时，叶牡丹趁摇杆松开，跑到后面解开麻袋，制造尸体落下的假象。",
-      "character": "叶牡丹"
+      "location": "",
+      "action": "",
+      "isPublic": false
     }
   ],
-  "relationships": [
+  "solutionChain": [],
+  "reveal": "真相待补充",
+  "endings": [
     {
-      "from": "常晚亭",
-      "to": "叶牡丹",
-      "relation": "要挟者-被要挟者",
-      "detail": "常晚亭发现叶牡丹是男性，以此要挟"
+      "id": "end_good",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "真相揭晓",
+      "narrative": "凶手被找出。"
     },
     {
-      "from": "林园生",
-      "to": "常晚亭",
-      "relation": "教训者-被教训者",
-      "detail": "林园生打昏并绑住常晚亭"
-    },
-    {
-      "from": "柳阳关",
-      "to": "姬霞",
-      "relation": "恋人",
-      "detail": "两人互赠定情信物"
-    },
-    {
-      "from": "白延秋",
-      "to": "花彩珠",
-      "relation": "旧情人",
-      "detail": "两人曾私会"
+      "id": "end_bad",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "真相掩埋",
+      "narrative": "真相被掩埋。"
     }
-  ],
-  "hints": [
-    "叶牡丹无法搬动常晚亭，唯一能做到的只有体格更加魁梧的林园生。",
-    "林园生绑人后关上了窗户，柳阳关上去时，窗户是打开的（叶牡丹离开）。",
-    "尸体腿上的苔藓是原本麻袋里的，在二层平台的地上有洒落。",
-    "叶牡丹没有姬霞高，年纪也比姬霞小，明明体态轻盈，体重却超过姬霞。"
   ]
 }

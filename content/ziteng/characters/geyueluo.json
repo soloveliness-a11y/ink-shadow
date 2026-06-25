@@ -85,9 +85,8 @@
     "用毒"
   ],
   "sceneId": "s_ge_home",
-  "mandatoryReveal": [],
-  "investigationReport": "",
   "passiveClueGivers": [],
+  "mandatoryReveal": [],
   "visual": {
     "kind": "avatar",
     "prompt": "Portrait of a melancholy Chinese woman with long hair, pale complexion, wearing nightclothes, oil painting style, dark atmosphere",

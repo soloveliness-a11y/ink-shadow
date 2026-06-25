@@ -1,0 +1,32 @@
+[
+  {
+    "id": "s_main",
+    "name": "宝庄",
+    "description": "石家庄东的清末庄园。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_inner",
+    "name": "内院",
+    "description": "宝庄内院，夫人的居所。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese inner courtyard, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_east",
+    "name": "东院晨楼",
+    "description": "宝庄东院，姨娘的居所。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese east building, oil painting style",
+      "aspect": "16:9"
+    }
+  }
+]

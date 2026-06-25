@@ -1,1 +1,71 @@
-[{"id":"p_briefing","name":"自我介绍","type":"briefing"},{"id":"p_investigation","name":"调查阶段","type":"search"},{"id":"p_voting","name":"指认真凶","type":"voting"},{"id":"p_reveal","name":"真相揭晓","type":"reveal"}]
+[
+  {
+    "id": "p_briefing",
+    "kind": "briefing",
+    "title": "自我介绍",
+    "instruction": "",
+    "participants": "all",
+    "allowedActions": [
+      "readScript",
+      "ready"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    }
+  },
+  {
+    "id": "p_investigation",
+    "kind": "free",
+    "title": "调查阶段",
+    "instruction": "",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "searchClue",
+      "revealClue",
+      "privateMessage"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    },
+    "unlocks": {
+      "clueIds": [
+        "clue_main"
+      ]
+    }
+  },
+  {
+    "id": "p_voting",
+    "kind": "free",
+    "title": "指认真凶",
+    "instruction": "",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "searchClue",
+      "revealClue",
+      "privateMessage"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    },
+    "unlocks": {
+      "clueIds": [
+        "clue_main"
+      ]
+    }
+  },
+  {
+    "id": "p_reveal",
+    "kind": "reveal",
+    "title": "真相揭晓",
+    "instruction": "",
+    "participants": "all",
+    "allowedActions": [
+      "submitTheory"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    }
+  }
+]

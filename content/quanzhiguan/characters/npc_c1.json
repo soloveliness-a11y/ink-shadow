@@ -1,0 +1,26 @@
+{
+  "id": "npc_c1",
+  "name": "住客甲",
+  "gender": "male",
+  "age": 35,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "温泉旅馆住客。",
+  "privateScript": "温泉旅馆住客。",
+  "objectives": [
+    {
+      "id": "obj_npc_c1_1",
+      "kind": "main",
+      "description": "查明案件真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese male, oil painting style",
+    "aspect": "3:4"
+  }
+}

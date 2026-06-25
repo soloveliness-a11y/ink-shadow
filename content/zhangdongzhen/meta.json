@@ -1,0 +1,21 @@
+{
+  "id": "zhangdongzhen",
+  "title": "章东镇迷案",
+  "theme": "民国·章东镇连环命案",
+  "playerCount": {
+    "min": 7,
+    "max": 7
+  },
+  "difficulty": "hard",
+  "durationMin": 240,
+  "synopsis": "豪门惊情系列·章东镇迷案",
+  "styleGuide": "1914 Chinese setting, oil painting style, mysterious atmosphere",
+  "cover": {
+    "kind": "cover",
+    "prompt": "章东镇迷案 murder mystery, oil painting style",
+    "aspect": "3:4"
+  },
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "genre": "murder"
+}

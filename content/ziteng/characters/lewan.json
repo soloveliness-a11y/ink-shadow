@@ -88,9 +88,8 @@
   ],
   "skills": [],
   "sceneId": "s_zhang_home",
-  "mandatoryReveal": [],
-  "investigationReport": "",
   "passiveClueGivers": [],
+  "mandatoryReveal": [],
   "visual": {
     "kind": "avatar",
     "prompt": "Portrait of a thin, gentle Chinese woman in traditional Republican era clothing, flat shoes, modest appearance, warm sepia tones, oil painting style",

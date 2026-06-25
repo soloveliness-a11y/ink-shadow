@@ -9,6 +9,10 @@ content/*/.visual-progress.json
 .DS_Store
 豪门系列/
 
+# OCR/图片临时产物
+temp_ocr/
+temp_images/
+
 # 版权剧本资源（不入库）
 content/danshui/
 

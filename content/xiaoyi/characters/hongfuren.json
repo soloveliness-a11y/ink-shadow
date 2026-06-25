@@ -1,32 +1,32 @@
 {
   "id": "hongfuren",
   "name": "红夫人",
-  "role": "姚长寿继室",
   "gender": "female",
   "age": 29,
-  "description": "二十九岁，平日艳妆打扮。",
-  "background": "姚长寿的继室，与姚家有复杂关系。",
-  "motivation": "想保护自己，找出真相。",
-  "secrets": [
-    "与姚家有复杂关系"
-  ],
-  "relationships": [
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "二十九岁，平日艳妆打扮。",
+  "privateScript": "姚长寿的继室，与姚家有复杂关系。",
+  "objectives": [
     {
-      "to": "姚仲义",
-      "relation": "继母子",
-      "detail": "姚仲义是她的继子"
-    }
-  ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "找出真相",
+      "id": "obj_hongfuren_1",
+      "kind": "main",
       "description": "你找出真相，保护了自己。"
     }
   ],
+  "secrets": [
+    "与姚家有复杂关系"
+  ],
+  "timeline": [],
+  "relationships": [
+    {
+      "targetCharId": "yaozhongyi",
+      "relation": "继母子",
+      "isPublic": false
+    }
+  ],
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese woman, 29 years old, beautiful, oil painting style",
     "aspect": "3:4"
   }

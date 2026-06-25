@@ -1,0 +1,19 @@
+{
+  "id": "qilao",
+  "name": "旗劳",
+  "gender": "male",
+  "age": 40,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "复泉楼主管，坠楼身亡。",
+  "privateScript": "",
+  "objectives": [],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese man 40 years old, hotel manager, oil painting style",
+    "aspect": "3:4"
+  }
+}

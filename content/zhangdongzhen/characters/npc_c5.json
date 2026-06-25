@@ -1,0 +1,26 @@
+{
+  "id": "npc_c5",
+  "name": "镇民戊",
+  "gender": "male",
+  "age": 45,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "章东镇居民。",
+  "privateScript": "章东镇居民。",
+  "objectives": [
+    {
+      "id": "obj_npc_c5_1",
+      "kind": "main",
+      "description": "查明案件真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese male, oil painting style",
+    "aspect": "3:4"
+  }
+}

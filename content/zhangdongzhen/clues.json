@@ -1,0 +1,52 @@
+[
+  {
+    "id": "cl_body",
+    "title": "尸体",
+    "content": "章东镇发现尸体。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth"
+    ]
+  },
+  {
+    "id": "cl_witness",
+    "title": "目击者",
+    "content": "有目击者看到可疑人物。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth"
+    ]
+  },
+  {
+    "id": "cl_evidence",
+    "title": "物证",
+    "content": "现场留下的关键物证。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth"
+    ]
+  },
+  {
+    "id": "cl_motive",
+    "title": "动机",
+    "content": "杀人动机相关线索。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth"
+    ]
+  },
+  {
+    "id": "cl_alibi",
+    "title": "不在场证明",
+    "content": "某人的不在场证明有漏洞。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth"
+    ]
+  }
+]

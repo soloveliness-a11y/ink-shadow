@@ -1,0 +1,18 @@
+{
+  "id": "npc_victim",
+  "name": "常晚亭",
+  "gender": "male",
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "戏班中人，被绳索吊死。",
+  "privateScript": "",
+  "objectives": [],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese man, oil painting style",
+    "aspect": "3:4"
+  }
+}

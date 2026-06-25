@@ -1,0 +1,29 @@
+{
+  "id": "tiaotie",
+  "name": "挑铁",
+  "gender": "male",
+  "age": 18,
+  "isVictim": false,
+  "isMurderer": true,
+  "publicProfile": "护院，18岁。杀了史俅昌。",
+  "privateScript": "你是挑铁，宝庄的护院。你杀了史俅昌。",
+  "objectives": [
+    {
+      "id": "obj_5",
+      "kind": "main",
+      "description": "隐瞒你杀史俅昌的事。(10分)",
+      "scoring": 10
+    }
+  ],
+  "secrets": [
+    "杀了史俅昌",
+    "知道亲生父亲被害"
+  ],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese young man 18, oil painting style",
+    "aspect": "3:4"
+  }
+}

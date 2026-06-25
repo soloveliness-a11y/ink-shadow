@@ -1,0 +1,16 @@
+{
+  "murdererCharIds": ["npc_victim2"],
+  "method": "钱广有误杀黄氏（以为是狐妖），随后自己也口鼻出血而死（可能与「神通鬼使」或毒药有关）。",
+  "motive": "钱广有相信黄氏是狐妖附体，出于保护家人的目的将其斩杀。真正的连环杀人与「神通鬼使」的秘密有关。",
+  "crimeTimeline": [
+    {"time": "10月4日", "location": "丹琳家", "action": "钱长英口鼻出血离奇死亡", "isPublic": true},
+    {"time": "10月4日", "location": "丹琳家院子", "action": "钱广有斩杀黄氏（以为是狐妖）", "isPublic": true},
+    {"time": "10月5日", "location": "中玉家", "action": "钱广有口鼻出血死亡", "isPublic": true}
+  ],
+  "solutionChain": ["cl_poison_symptom", "cl_pledge", "cl_ghost_servant"],
+  "reveal": "钱长英和钱广有的死状相同（口鼻出血），与「神通鬼使」的秘密有关。钱广有误杀黄氏，随后自己也死于同样的原因。",
+  "endings": [
+    {"id": "end_good", "condition": {"kind": "always"}, "title": "真相揭晓", "narrative": "连环命案的真相大白，「神通鬼使」的秘密被揭开。"},
+    {"id": "end_bad", "condition": {"kind": "always"}, "title": "真相掩埋", "narrative": "真相被掩埋，卫风邑的诅咒仍在继续。"}
+  ]
+}

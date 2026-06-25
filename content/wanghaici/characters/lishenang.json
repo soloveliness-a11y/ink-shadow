@@ -1,0 +1,18 @@
+{
+  "id": "lishenang",
+  "name": "李身昂",
+  "gender": "male",
+  "age": 23,
+  "isVictim": false,
+  "isMurderer": true,
+  "publicProfile": "李福辕的侄子，23岁，寄居李宅。杀害赵芷娆。",
+  "privateScript": "你是李身昂，李福辕的侄子。你杀了赵芷娆。你想独占叔叔的遗产。",
+  "objectives": [{"id": "obj_ls_1", "kind": "main", "description": "隐瞒你杀了赵芷娆。(10分)", "scoring": 10}],
+  "secrets": ["杀害了赵芷娆", "想独占李福辕遗产", "与兰如秘密交往"],
+  "timeline": [
+    {"time": "9月7日 约10:30", "location": "荒祠", "action": "掐死赵芷娆，藏尸于薄板棺材", "isPublic": false},
+    {"time": "9月7日 约12:00", "location": "望海祠", "action": "与絮秀一起赶到火灾现场", "isPublic": true}
+  ],
+  "relationships": [],
+  "visual": {"kind": "avatar", "prompt": "Chinese young man 23 years old, oil painting style", "aspect": "3:4"}
+}

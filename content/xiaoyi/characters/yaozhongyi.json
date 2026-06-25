@@ -1,32 +1,32 @@
 {
   "id": "yaozhongyi",
   "name": "姚仲义",
-  "role": "姚家次子",
   "gender": "male",
   "age": 22,
-  "description": "二十出头，白净斯文，曾在京城读书。",
-  "background": "姚家次子，在京城读书，回到百里村。",
-  "motivation": "想找出真相，保护家人。",
-  "secrets": [
-    "知道家族的秘密"
-  ],
-  "relationships": [
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "二十出头，白净斯文，曾在京城读书。",
+  "privateScript": "姚家次子，在京城读书，回到百里村。",
+  "objectives": [
     {
-      "to": "红夫人",
-      "relation": "兄弟",
-      "detail": "红夫人是他的继母"
-    }
-  ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "找出真相",
+      "id": "obj_yaozhongyi_1",
+      "kind": "main",
       "description": "你找出真相，保护了家人。"
     }
   ],
+  "secrets": [
+    "知道家族的秘密"
+  ],
+  "timeline": [],
+  "relationships": [
+    {
+      "targetCharId": "hongfuren",
+      "relation": "兄弟",
+      "isPublic": false
+    }
+  ],
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese young man, 22 years old, scholar, oil painting style",
     "aspect": "3:4"
   }

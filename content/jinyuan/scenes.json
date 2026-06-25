@@ -1,1 +1,12 @@
-[{"id":"s_main","name":"主要场景","description":"案发地点"}]
+[
+  {
+    "id": "s_main",
+    "name": "主要场景",
+    "description": "案发地点",
+    "visual": {
+      "kind": "scene",
+      "prompt": "主要场景, oil painting style",
+      "aspect": "16:9"
+    }
+  }
+]

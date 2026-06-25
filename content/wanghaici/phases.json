@@ -1,0 +1,7 @@
+[
+  {"id": "p_briefing", "kind": "briefing", "title": "阅读剧本", "instruction": "阅读各自的角色剧本，了解背景故事和人物关系。", "participants": "all", "allowedActions": ["readScript", "ready"], "exit": {"kind": "allReady"}},
+  {"id": "p_social", "kind": "free", "title": "寒暄阶段", "instruction": "9月7日9:00，望海祠外。众人相互了解，交流信息。", "participants": "all", "allowedActions": ["speak", "searchClue", "revealClue", "privateMessage"], "exit": {"kind": "hostAdvance"}, "unlocks": {"clueIds": ["cl_blood_words", "cl_locked_door", "cl_jade"]}},
+  {"id": "p_investigation", "kind": "free", "title": "调查阶段", "instruction": "增加调查区域：望海祠内院、码头。搜查线索，推理真相。", "participants": "all", "allowedActions": ["speak", "searchClue", "revealClue", "privateMessage"], "exit": {"kind": "hostAdvance"}, "unlocks": {"clueIds": ["cl_coffin", "cl_fire", "cl_mud"]}},
+  {"id": "p_vote", "kind": "vote", "title": "谁是真凶？", "instruction": "填写你知道吗？包括指认凶手等。", "participants": "all", "allowedActions": ["castVote"], "exit": {"kind": "voteComplete"}},
+  {"id": "p_reveal", "kind": "reveal", "title": "真相揭晓", "instruction": "公布投票结果和案件真相。", "participants": "all", "allowedActions": ["submitTheory"], "exit": {"kind": "hostAdvance"}}
+]

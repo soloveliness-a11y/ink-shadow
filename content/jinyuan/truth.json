@@ -1,1 +1,28 @@
-{"victim":{"name":"待确认","cause":"待确认"},"killer":{"name":"待确认","motive":"待确认"}}
+{
+  "murdererCharIds": [
+    "liyan"
+  ],
+  "method": "待补充",
+  "motive": "待补充",
+  "crimeTimeline": [],
+  "solutionChain": [],
+  "reveal": "真相待补充",
+  "endings": [
+    {
+      "id": "end_good",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "真相揭晓",
+      "narrative": "凶手被找出。"
+    },
+    {
+      "id": "end_bad",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "真相掩埋",
+      "narrative": "真相被掩埋。"
+    }
+  ]
+}

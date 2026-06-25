@@ -1,0 +1,28 @@
+{
+  "id": "heer",
+  "name": "禾儿",
+  "gender": "female",
+  "age": 18,
+  "isVictim": false,
+  "isMurderer": true,
+  "publicProfile": "姨娘之女，18岁。毒杀了发顺。",
+  "privateScript": "你是禾儿，姨娘的女儿。你毒杀了发顺。",
+  "objectives": [
+    {
+      "id": "obj_3",
+      "kind": "main",
+      "description": "隐瞒你毒杀发顺的事。(10分)",
+      "scoring": 10
+    }
+  ],
+  "secrets": [
+    "毒杀了发顺"
+  ],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese young woman 18, oil painting style",
+    "aspect": "3:4"
+  }
+}

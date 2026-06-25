@@ -1,0 +1,28 @@
+{
+  "id": "hanxiao",
+  "name": "寒宵",
+  "gender": "female",
+  "age": 20,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "年轻女子，20岁。在复泉楼住宿。",
+  "privateScript": "你是寒宵，来到复泉楼有自己的目的。",
+  "objectives": [
+    {
+      "id": "obj_hx_1",
+      "kind": "main",
+      "description": "查明命案真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [
+    "有自己的秘密"
+  ],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese young woman 20 years old, oil painting style",
+    "aspect": "3:4"
+  }
+}

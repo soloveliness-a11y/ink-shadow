@@ -1,0 +1,17 @@
+{
+  "id": "sunjiaomei", "name": "孙娇眉", "gender": "female", "age": 16,
+  "isVictim": false, "isMurderer": false,
+  "publicProfile": "苗条少女，16岁，孙芦坡之女。与钱中玉定亲。",
+  "privateScript": "你是孙娇眉，孙芦坡的女儿。你与钱中玉定亲。你知道关于狐妖的传说。",
+  "objectives": [
+    {"id": "obj_sj_1", "kind": "main", "description": "查明连环命案的真相。(5分)", "scoring": 5},
+    {"id": "obj_sj_2", "kind": "side", "description": "保护钱中玉不受怀疑。(2分)", "scoring": 2}
+  ],
+  "secrets": ["知道狐妖被杀后会借尸还魂的传说"],
+  "timeline": [],
+  "relationships": [
+    {"targetCharId": "qianzhongyu", "relation": "未婚夫", "isPublic": true},
+    {"targetCharId": "qiandanlin", "relation": "好友", "isPublic": true}
+  ],
+  "visual": {"kind": "avatar", "prompt": "Chinese young woman 16 years old, slender, oil painting style", "aspect": "3:4"}
+}

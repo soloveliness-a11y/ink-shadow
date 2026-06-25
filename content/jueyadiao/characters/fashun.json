@@ -1,0 +1,19 @@
+{
+  "id": "fashun",
+  "name": "发顺",
+  "gender": "male",
+  "age": 30,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "宝庄仆人。被禾儿毒杀。",
+  "privateScript": "",
+  "objectives": [],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese man 30, servant, oil painting style",
+    "aspect": "3:4"
+  }
+}

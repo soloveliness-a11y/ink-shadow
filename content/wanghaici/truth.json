@@ -1,0 +1,16 @@
+{
+  "murdererCharIds": ["lishenang"],
+  "method": "李身昂在荒祠掐死赵芷娆，藏尸于薄板棺材。李福辕在望海祠书房被杀。",
+  "motive": "李身昂想独占叔叔李福辕的遗产，杀害赵芷娆灭口。",
+  "crimeTimeline": [
+    {"time": "9月5日 19:15", "location": "望海祠内院", "action": "王渚寿被发现死于内院，手握三股叉，地上血字「以死谢罪」", "isPublic": true},
+    {"time": "9月7日 约10:30", "location": "荒祠", "action": "李身昂掐死赵芷娆，藏尸于薄板棺材", "isPublic": false},
+    {"time": "9月7日 约11:30", "location": "望海祠书房", "action": "李福辕被发现死于书房火灾中", "isPublic": true}
+  ],
+  "solutionChain": ["cl_blood_words", "cl_locked_door", "cl_coffin", "cl_mud"],
+  "reveal": "王渚寿之死疑为自杀，但随后的连环命案揭示真相远非如此简单。李身昂为独占遗产杀害赵芷娆。",
+  "endings": [
+    {"id": "end_good", "condition": {"kind": "always"}, "title": "真相揭晓", "narrative": "凶手李身昂被找出，连环命案的真相大白于天下。"},
+    {"id": "end_bad", "condition": {"kind": "always"}, "title": "真相掩埋", "narrative": "真凶逍遥法外，望海祠的诅咒仍在继续。"}
+  ]
+}

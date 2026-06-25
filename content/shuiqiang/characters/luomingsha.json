@@ -1,68 +1,59 @@
 {
   "id": "luomingsha",
   "name": "罗明纱",
-  "role": "黑衣贵妇",
   "gender": "female",
   "age": 37,
-  "description": "神情高傲，纤瘦，穿立领高腰的黑色蕾丝裙，戴宝石项坠。无论举止还是谈吐，都体现出从小培养的仪态。",
-  "background": "罗亨理的妹妹，相信女巫传说，认为太太是女巫。",
-  "motivation": "想揭露太太的真面目，保护哥哥。",
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "神情高傲，纤瘦，穿立领高腰的黑色蕾丝裙，戴宝石项坠。无论举止还是谈吐，都体现出从小培养的仪态。",
+  "privateScript": "罗亨理的妹妹，相信女巫传说，认为太太是女巫。",
+  "objectives": [
+    {
+      "id": "obj_luomingsha_1",
+      "kind": "main",
+      "description": "你被当作真凶，从山上滚落。"
+    },
+    {
+      "id": "obj_luomingsha_2",
+      "kind": "side",
+      "description": "王怀武救了你，你揭露太太的真面目，但罗家被贷款陷阱吞噬。"
+    },
+    {
+      "id": "obj_luomingsha_3",
+      "kind": "side",
+      "description": "王怀武救了你，你继承罗家财产，但被贷款陷阱吞噬。"
+    },
+    {
+      "id": "obj_luomingsha_4",
+      "kind": "side",
+      "description": "王怀武被当作真凶，你继承罗家财产，但被贷款陷阱吞噬。"
+    },
+    {
+      "id": "obj_luomingsha_5",
+      "kind": "side",
+      "description": "你揭露太太的真面目，发现罗亨理的笔记，了解真相。"
+    }
+  ],
   "secrets": [
     "相信女巫传说",
     "曾在太太的食物里下药",
     "看到过蝙蝠尸体和咒符"
   ],
+  "timeline": [],
   "relationships": [
     {
-      "to": "罗亨理",
-      "relation": "兄妹",
-      "detail": "罗亨理是她的哥哥"
-    },
-    {
-      "to": "太太",
+      "targetCharId": "taishi",
       "relation": "敌对",
-      "detail": "认为太太是女巫"
+      "isPublic": false
     },
     {
-      "to": "王怀武",
+      "targetCharId": "wanghuaiwu",
       "relation": "被救者",
-      "detail": "王怀武从地下救出她"
-    }
-  ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "被当作真凶",
-      "description": "你被当作真凶，从山上滚落。"
-    },
-    {
-      "id": "ending_2",
-      "name": "结局二",
-      "condition": "王怀武没被当作真凶；揭露太太真面目",
-      "description": "王怀武救了你，你揭露太太的真面目，但罗家被贷款陷阱吞噬。"
-    },
-    {
-      "id": "ending_3",
-      "name": "结局三",
-      "condition": "王怀武没被当作真凶；没揭露太太真面目",
-      "description": "王怀武救了你，你继承罗家财产，但被贷款陷阱吞噬。"
-    },
-    {
-      "id": "ending_4",
-      "name": "结局四",
-      "condition": "王怀武被当作真凶",
-      "description": "王怀武被当作真凶，你继承罗家财产，但被贷款陷阱吞噬。"
-    },
-    {
-      "id": "ending_5",
-      "name": "结局五",
-      "condition": "没被当作真凶；揭露太太真面目",
-      "description": "你揭露太太的真面目，发现罗亨理的笔记，了解真相。"
+      "isPublic": false
     }
   ],
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese noblewoman in black lace dress,宝石项坠, oil painting style, arrogant expression",
     "aspect": "3:4"
   }

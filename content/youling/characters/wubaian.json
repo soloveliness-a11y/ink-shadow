@@ -1,44 +1,38 @@
 {
   "id": "wubaian",
   "name": "吴百安",
-  "role": "药剂师",
   "gender": "male",
   "age": 48,
-  "description": "岳氏药材公司的药剂师，与夏家拳馆有往来。",
-  "background": "岳氏药材公司的药剂师，与夏家拳馆有往来。",
-  "motivation": "想保护公司，找出真相。",
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "岳氏药材公司的药剂师，与夏家拳馆有往来。",
+  "privateScript": "岳氏药材公司的药剂师，与夏家拳馆有往来。",
+  "objectives": [
+    {
+      "id": "obj_wubaian_1",
+      "kind": "main",
+      "description": "你找出真相，保护了公司。"
+    },
+    {
+      "id": "obj_wubaian_2",
+      "kind": "side",
+      "description": "你没有找出真相，公司陷入困境。"
+    }
+  ],
   "secrets": [
     "知道一些秘密",
     "与夏家拳馆有往来"
   ],
+  "timeline": [],
   "relationships": [
     {
-      "to": "岳东汶",
+      "targetCharId": "yuedongwen",
       "relation": "同事",
-      "detail": "岳东汶是他的老板"
-    },
-    {
-      "to": "夏三虎",
-      "relation": "往来者",
-      "detail": "与夏三虎有往来"
-    }
-  ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "找出真相",
-      "description": "你找出真相，保护了公司。"
-    },
-    {
-      "id": "ending_2",
-      "name": "结局二",
-      "condition": "没找出真相",
-      "description": "你没有找出真相，公司陷入困境。"
+      "isPublic": false
     }
   ],
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese pharmacist, 48 years old, formal clothes, oil painting style",
     "aspect": "3:4"
   }

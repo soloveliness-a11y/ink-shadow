@@ -1,0 +1,87 @@
+[
+  {
+    "id": "p_briefing",
+    "kind": "briefing",
+    "title": "阅读剧本",
+    "instruction": "阅读角色剧本。",
+    "participants": "all",
+    "allowedActions": [
+      "readScript",
+      "ready"
+    ],
+    "exit": {
+      "kind": "allReady"
+    }
+  },
+  {
+    "id": "p_social",
+    "kind": "free",
+    "title": "寒暄阶段",
+    "instruction": "1914年9月21日，宝庄。众人相互了解。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "searchClue",
+      "revealClue",
+      "privateMessage"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    },
+    "unlocks": {
+      "clueIds": [
+        "cl_poison",
+        "cl_eunuch"
+      ]
+    }
+  },
+  {
+    "id": "p_investigation",
+    "kind": "free",
+    "title": "调查阶段",
+    "instruction": "搜查宝庄各处，寻找线索。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "searchClue",
+      "revealClue",
+      "privateMessage"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    },
+    "unlocks": {
+      "clueIds": [
+        "cl_ladder",
+        "cl_silver",
+        "cl_letter"
+      ]
+    }
+  },
+  {
+    "id": "p_vote",
+    "kind": "vote",
+    "title": "谁是真凶？",
+    "instruction": "填写你知道吗？",
+    "participants": "all",
+    "allowedActions": [
+      "castVote"
+    ],
+    "exit": {
+      "kind": "voteComplete"
+    }
+  },
+  {
+    "id": "p_reveal",
+    "kind": "reveal",
+    "title": "真相揭晓",
+    "instruction": "公布真相。",
+    "participants": "all",
+    "allowedActions": [
+      "submitTheory"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    }
+  }
+]

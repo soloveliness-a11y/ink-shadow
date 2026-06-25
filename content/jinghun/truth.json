@@ -1,36 +1,28 @@
 {
-  "victim": {
-    "name": "秦芳君",
-    "cause": "待确认",
-    "location": "醉阳楼内宅",
-    "time": "民国三年（1914年）"
-  },
-  "killer": {
-    "name": "待确认",
-    "motive": "待确认",
-    "method": "待确认",
-    "alibi": "待确认"
-  },
-  "truth": {
-    "main_truth": "秦芳君被发现死在内宅，需要调查找出真凶。",
-    "sub_truths": [
-      "秦芳君是醉阳楼的女主人",
-      "秦芳君本名陆芳瑶",
-      "与陆家灭门案有关"
-    ]
-  },
-  "relationships": [
+  "murdererCharIds": [
+    "wuyiren"
+  ],
+  "method": "待补充",
+  "motive": "秦芳君被发现死在内宅，需要调查找出真凶。",
+  "crimeTimeline": [],
+  "solutionChain": [],
+  "reveal": "秦芳君被发现死在内宅，需要调查找出真凶。",
+  "endings": [
     {
-      "from": "秦芳君",
-      "to": "吴丽人",
-      "relation": "雇主",
-      "detail": "吴丽人是她的员工"
+      "id": "end_good",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "真相揭晓",
+      "narrative": "凶手被找出。"
     },
     {
-      "from": "秦芳君",
-      "to": "简修文",
-      "relation": "亲戚",
-      "detail": "简修文与陆家有关"
+      "id": "end_bad",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "真相掩埋",
+      "narrative": "真相被掩埋。"
     }
   ]
 }

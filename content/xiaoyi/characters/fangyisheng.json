@@ -1,34 +1,34 @@
 {
   "id": "fangyisheng",
   "name": "方医生",
-  "realName": "方敏月",
-  "role": "女医生",
   "gender": "female",
   "age": 29,
-  "description": "二十九岁，独身，头发齐肩。上海闸北西医院的女医生。",
-  "background": "上海闸北西医院的女医生，是陈均梦的姐姐。",
-  "motivation": "想保护妹妹，找出真相。",
+  "isVictim": false,
+  "isMurderer": true,
+  "publicProfile": "二十九岁，独身，头发齐肩。上海闸北西医院的女医生。",
+  "privateScript": "上海闸北西医院的女医生，是陈均梦的姐姐。",
+  "objectives": [
+    {
+      "id": "obj_fangyisheng_1",
+      "kind": "main",
+      "description": "你找出真相，保护了妹妹。"
+    }
+  ],
   "secrets": [
     "是陈均梦的姐姐",
     "知道一些秘密"
   ],
+  "timeline": [],
   "relationships": [
     {
-      "to": "陈均梦",
+      "targetCharId": "chenjunmeng",
       "relation": "姐妹",
-      "detail": "陈均梦是她的妹妹"
+      "isPublic": false
     }
   ],
-  "endings": [
-    {
-      "id": "ending_1",
-      "name": "结局一",
-      "condition": "找出真相",
-      "description": "你找出真相，保护了妹妹。"
-    }
-  ],
+  "realName": "方敏月",
   "visual": {
-    "kind": "character",
+    "kind": "avatar",
     "prompt": "1914 Chinese female doctor, 29 years old, oil painting style",
     "aspect": "3:4"
   }

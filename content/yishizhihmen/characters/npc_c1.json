@@ -1,0 +1,26 @@
+{
+  "id": "npc_c1",
+  "name": "参与者甲",
+  "gender": "male",
+  "age": 30,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "仪式参与者。",
+  "privateScript": "仪式参与者。",
+  "objectives": [
+    {
+      "id": "obj_npc_c1_1",
+      "kind": "main",
+      "description": "查明案件真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese male, oil painting style",
+    "aspect": "3:4"
+  }
+}
