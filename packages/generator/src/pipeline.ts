@@ -473,7 +473,7 @@ function repairPhaseFlow(script: Script): void {
   if (tieEdges.length === 0) {
     const voteEdges = script.flow.edges.filter((e) => e.from === vote.id);
     for (const e of voteEdges) {
-      script.flow.edges.push({ from: 'p_vote_tiebreak', to: e.to, condition: e.condition ? { ...e.condition } : undefined });
+      script.flow.edges.push({ from: 'p_vote_tiebreak', to: e.to, condition: { ...e.condition } });
     }
   }
 }

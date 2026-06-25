@@ -1,5 +1,5 @@
 import { zScript } from './script.js';
-import type { Script, Clue } from './script.js';
+import type { Script, Clue, Character } from './script.js';
 
 export interface ValidationIssue {
   level: 'error' | 'warn';
@@ -64,14 +64,29 @@ function checkReferences(s: Script, out: ValidationIssue[]): void {
   const sceneIds = new Set(s.scenes.map((x) => x.id));
   const clueIds = new Set(s.clues.map((c) => c.id));
   const phaseIds = new Set(s.phases.map((p) => p.id));
+  const propIds = new Set((s.props ?? []).map((p) => p.id));
+  const itemIds = new Set<string>([...clueIds, ...propIds]);
 
   for (const c of s.clues) {
     if (c.sceneId && !sceneIds.has(c.sceneId)) err(out, 'ref', `clues.${c.id}.sceneId`, `未知场景 ${c.sceneId}`);
     if (c.ownerCharId && !charIds.has(c.ownerCharId)) err(out, 'ref', `clues.${c.id}.ownerCharId`, `未知角色 ${c.ownerCharId}`);
+    if (c.requiredItem && !itemIds.has(c.requiredItem)) err(out, 'ref', `clues.${c.id}.requiredItem`, `未知物品 ${c.requiredItem}`);
+    for (const eff of c.onReveal ?? []) {
+      if (eff.kind === 'giveClue' && !clueIds.has(eff.clueId)) err(out, 'ref', `clues.${c.id}.onReveal.giveClue`, `未知线索 ${eff.clueId}`);
+      if (eff.kind === 'eliminate' && !charIds.has(eff.charId)) err(out, 'ref', `clues.${c.id}.onReveal.eliminate`, `未知角色 ${eff.charId}`);
+    }
   }
   for (const ch of s.characters) {
+    if (ch.sceneId && !sceneIds.has(ch.sceneId)) err(out, 'ref', `characters.${ch.id}.sceneId`, `未知场景 ${ch.sceneId}`);
+    if (ch.disguiseOf && !charIds.has(ch.disguiseOf)) err(out, 'ref', `characters.${ch.id}.disguiseOf`, `未知角色 ${ch.disguiseOf}`);
     for (const r of ch.relationships) {
       if (!charIds.has(r.targetCharId)) err(out, 'ref', `characters.${ch.id}.relationships`, `未知角色 ${r.targetCharId}`);
+    }
+    if (ch.storyByPhase) {
+      const storyKeys = new Set(s.phases.map((p) => p.unlocks?.storyKey).filter(Boolean));
+      for (const key of Object.keys(ch.storyByPhase)) {
+        if (!storyKeys.has(key)) warn(out, 'ref', `characters.${ch.id}.storyByPhase`, `storyByPhase key "${key}" 未被任何环节的 unlocks.storyKey 引用`);
+      }
     }
   }
   for (const p of s.phases) {
@@ -80,6 +95,21 @@ function checkReferences(s: Script, out: ValidationIssue[]): void {
     }
     for (const id of p.turnOrder ?? []) if (!charIds.has(id)) err(out, 'ref', `phases.${p.id}.turnOrder`, `未知角色 ${id}`);
     for (const id of p.unlocks?.clueIds ?? []) if (!clueIds.has(id)) err(out, 'ref', `phases.${p.id}.unlocks.clueIds`, `未知线索 ${id}`);
+    if (p.choice) {
+      for (const opt of p.choice.options) {
+        for (const eff of opt.effects) {
+          if (eff.kind === 'jumpPhase' && !phaseIds.has(eff.phaseId)) err(out, 'ref', `phases.${p.id}.choice.${opt.id}.jumpPhase`, `未知环节 ${eff.phaseId}`);
+          if (eff.kind === 'switchPersona') {
+            if (!charIds.has(eff.charId)) err(out, 'ref', `phases.${p.id}.choice.${opt.id}.switchPersona.charId`, `未知角色 ${eff.charId}`);
+            const ch = s.characters.find((c) => c.id === eff.charId);
+            if (ch && !(ch.personas ?? []).some((ps) => ps.id === eff.personaId)) {
+              err(out, 'ref', `phases.${p.id}.choice.${opt.id}.switchPersona.personaId`, `角色 ${eff.charId} 没有 persona ${eff.personaId}`);
+            }
+          }
+          if (eff.kind === 'giveClue' && !clueIds.has(eff.clueId)) err(out, 'ref', `phases.${p.id}.choice.${opt.id}.giveClue`, `未知线索 ${eff.clueId}`);
+        }
+      }
+    }
   }
   if (!phaseIds.has(s.flow.entry)) err(out, 'ref', 'flow.entry', `未知环节 ${s.flow.entry}`);
   for (const e of s.flow.edges) {
@@ -117,7 +147,8 @@ function checkSolvability(s: Script, out: ValidationIssue[]): void {
 
   const unlocked = new Set<string>();
   for (const p of s.phases) for (const id of p.unlocks?.clueIds ?? []) unlocked.add(id);
-  const reachable = (c: Clue): boolean => c.visibility === 'public' || unlocked.has(c.id) || Boolean(c.ownerCharId);
+  const victimIds = new Set(s.characters.filter((c) => c.isVictim).map((c) => c.id));
+  const reachable = (c: Clue): boolean => c.visibility === 'public' || unlocked.has(c.id) || (Boolean(c.ownerCharId) && !victimIds.has(c.ownerCharId!));
 
   for (const c of s.clues) {
     if (!c.isKey) continue;
@@ -197,15 +228,20 @@ function checkGameplayStructure(s: Script, out: ValidationIssue[]): void {
     }
   }
 
-  const round1Ids = new Set(s.clues.filter((c) => c.visibility === 'searchable' && c.round === 1).map((c) => c.id));
-  const round2Ids = new Set(s.clues.filter((c) => c.visibility === 'searchable' && c.round === 2).map((c) => c.id));
+  const roundClueIds = new Map<number, Set<string>>();
+  for (const c of s.clues) {
+    if (c.visibility === 'searchable' && c.round != null) {
+      let set = roundClueIds.get(c.round);
+      if (!set) { set = new Set(); roundClueIds.set(c.round, set); }
+      set.add(c.id);
+    }
+  }
   const unlockedIds = new Set<string>();
   for (const p of s.phases) for (const id of p.unlocks?.clueIds ?? []) unlockedIds.add(id);
-  if (round1Ids.size > 0 && ![...round1Ids].some((id) => unlockedIds.has(id))) {
-    err(out, 'gameplay', 'clues.round1', '第一轮 searchable 线索没有被任何环节解锁');
-  }
-  if (round2Ids.size > 0 && ![...round2Ids].some((id) => unlockedIds.has(id))) {
-    err(out, 'gameplay', 'clues.round2', '第二轮 searchable 线索没有被任何环节解锁');
+  for (const [round, ids] of roundClueIds) {
+    if (ids.size > 0 && ![...ids].some((id) => unlockedIds.has(id))) {
+      err(out, 'gameplay', `clues.round${round}`, `第${round}轮 searchable 线索没有被任何环节解锁`);
+    }
   }
 
   for (const p of s.phases.filter((phase) => phase.kind === 'sequential')) {

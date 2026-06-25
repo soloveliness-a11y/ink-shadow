@@ -31,10 +31,31 @@ export const zPhaseRuntime = z.object({
 });
 export type PhaseRuntime = z.infer<typeof zPhaseRuntime>;
 
+/** 游戏事件类型 */
+export const zGameEventType = z.enum([
+  'phase_enter',
+  'speak',
+  'search_clue',
+  'round_advanced',
+  'reveal_clue',
+  'character_eliminated',
+  'vote_cast',
+  'submit_theory',
+  'choice_made',
+  'persona_switched',
+  'counter_adjusted',
+  'resource_adjusted',
+  'items_inspected',
+  'character_exposed',
+  'clock_advanced',
+  'flow_end',
+]);
+export type GameEventType = z.infer<typeof zGameEventType>;
+
 /** 游戏事件(广播/回放) */
 export const zGameEvent = z.object({
   ts: z.number(),
-  type: z.string(),
+  type: zGameEventType,
   actorCharId: z.string().optional(),
   payload: z.unknown().optional(),
 });
@@ -80,3 +101,24 @@ export interface RoomSnapshot {
   kickedTokens: string[];
   savedAt: string;
 }
+
+/** RoomSnapshot Zod schema，用于运行时持久化数据校验。passthrough 保证前向兼容。 */
+export const zRoomSnapshot = z.object({
+  version: z.number(),
+  state: zRuntimeState,
+  hostId: z.string(),
+  scriptId: z.string(),
+  isTestMode: z.boolean(),
+  botIds: z.array(z.string()),
+  phaseHistory: z.array(z.string()),
+  dmConfig: z.union([
+    z.object({
+      provider: z.enum(['anthropic', 'openai']),
+      apiUrl: z.string().optional(),
+      model: z.string(),
+    }),
+    z.null(),
+  ]),
+  kickedTokens: z.array(z.string()),
+  savedAt: z.string(),
+}).passthrough();
