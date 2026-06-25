@@ -26,7 +26,10 @@ export type ActionKind = z.infer<typeof zActionKind>;
 export const zExitCondition = z.object({
   kind: z.enum(['allReady', 'allActed', 'timer', 'hostAdvance', 'voteComplete']),
   timerSec: z.number().int().positive().optional(),
-});
+}).refine(
+  (v) => v.kind !== 'timer' || (typeof v.timerSec === 'number' && v.timerSec > 0),
+  { message: 'exit.kind=timer 时必须提供 timerSec', path: ['timerSec'] },
+);
 export type ExitCondition = z.infer<typeof zExitCondition>;
 
 /** 进入环节时解锁的内容 */
@@ -99,7 +102,7 @@ export type FlowCondition = z.infer<typeof zFlowCondition>;
 export const zPhaseEdge = z.object({
   from: z.string(),
   to: z.string(),
-  condition: zFlowCondition.optional(), // 缺省 = always
+  condition: zFlowCondition.optional().default({ kind: 'always' }), // 缺省 = always
 });
 export type PhaseEdge = z.infer<typeof zPhaseEdge>;
 

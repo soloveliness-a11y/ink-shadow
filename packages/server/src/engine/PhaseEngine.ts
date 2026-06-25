@@ -388,10 +388,12 @@ export class PhaseEngine {
         const exists = this.script.characters.some((c) => c.id === intent.targetCharId);
         if (!exists) return reject('target_not_found');
         if (this.state.flags[`exposed:${charId}`]) return reject('already_exposed'); // 每人限1次
-        // major 揭露:目标失去推荐资格(写 flag)
-        if (intent.severity === 'major') {
-          this.state.flags[`disqualified:${intent.targetCharId}`] = true;
-        }
+        break;
+      }
+      case 'privateMessage': {
+        // 被淘汰角色不能发私信(与 speak 等一致)
+        const targetExists = this.script.characters.some((c) => c.id === intent.toCharId);
+        if (!targetExists) return reject('target_not_found');
         break;
       }
     }
@@ -560,8 +562,11 @@ export class PhaseEngine {
         break;
       }
       case 'expose': {
-        // 揭露:扣目标推荐分(minor -1) + 标记揭露者已用
+        // 揭露:扣目标推荐分(minor -1) + 标记揭露者已用 + major 失去推荐资格
         this.state.flags[`exposed:${charId}`] = true;
+        if (intent.severity === 'major') {
+          this.state.flags[`disqualified:${intent.targetCharId}`] = true;
+        }
         this.applyAdjustCounter(`recommend:${intent.targetCharId}`, intent.severity === 'major' ? -99 : -1);
         this.bus.event({ type: 'character_exposed', actorCharId: charId, payload: { targetCharId: intent.targetCharId, severity: intent.severity } });
         break;
