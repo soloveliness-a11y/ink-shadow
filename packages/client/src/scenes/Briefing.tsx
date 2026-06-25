@@ -74,7 +74,7 @@ export function BriefingScene() {
     speed: 26, startDelay: sharedFraming ? 600 : 300, enabled: !!unlockedStoryKey,
   });
 
-  const isNarrativeMode = !!(unlockedStoryKey || (sharedFraming && !unlockedStoryKey));
+  const isNarrativeMode = !!(unlockedStoryKey || sharedFraming);
 
   // ★ 叙事模式 UI (p_social / p_afternoon 等有 narrativeText 的阶段)
   if (isNarrativeMode) {

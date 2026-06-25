@@ -16,6 +16,15 @@ function getCtx(): AudioContext | null {
   }
 }
 
+if (typeof window !== 'undefined') {
+  window.addEventListener('beforeunload', () => {
+    if (ctx && ctx.state !== 'closed') {
+      ctx.close();
+      ctx = null;
+    }
+  });
+}
+
 /** Short single beep (~60ms) */
 export function playTick() {
   const ac = getCtx();

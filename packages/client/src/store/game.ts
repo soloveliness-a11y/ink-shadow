@@ -31,6 +31,7 @@ interface GameState {
 
 const MAX_EVENTS = 200;
 const MAX_PRIVATE = 100;
+let phaseToastTimer: number | undefined;
 
 /**
  * 后台预加载剧本图片资源。优先级:头像 > 场景 > 线索缩略图。
@@ -63,12 +64,15 @@ function preloadAssets(view: ClientStateView): void {
   }
 
   // 后台拉取,持有引用防止 GC 中断加载
-  preloadedImages.length = 0;
+  // 先构建新数组再一次性替换,避免清空在途图片引用
+  const fresh: HTMLImageElement[] = [];
   for (const url of urls) {
     const img = new Image();
     img.src = url;
-    preloadedImages.push(img);
+    fresh.push(img);
   }
+  preloadedImages.length = 0;
+  preloadedImages.push(...fresh);
 }
 
 /**
@@ -106,7 +110,9 @@ export function handleServerMessage(
         const newPhase = phaseKey && phaseKey !== s.seenPhaseKey;
         // 微小延迟让 transition 跑完再 toast
         if (newPhase && phaseKey) {
-          window.setTimeout(() => {
+          if (phaseToastTimer !== undefined) window.clearTimeout(phaseToastTimer);
+          phaseToastTimer = window.setTimeout(() => {
+            phaseToastTimer = undefined;
             const p = newView.currentPhase;
             if (!p) return;
             pushToast(`${p.title} · ${p.instruction}`, 'info', 4500);

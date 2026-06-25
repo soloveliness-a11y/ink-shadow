@@ -14,9 +14,7 @@ export function AssigningScene() {
     players.map((p) => p.charId).filter(Boolean) as string[],
   );
 
-  const available = allChars.filter(
-    (c) => !c.isVictim && !takenIds.has(c.id),
-  );
+  const available = allChars.filter((c) => !c.isVictim);
   const myChar = allChars.find((c) => c.id === myCharId);
   const playableCount = allChars.filter((c) => !c.isVictim).length;
   const assignedCount = players.filter((p) => p.charId).length;

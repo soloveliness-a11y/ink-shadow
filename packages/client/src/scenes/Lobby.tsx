@@ -396,7 +396,7 @@ function DmSettingsPanel({ send }: { send: (intent: any) => void }) {
   return (
     <div className="dm-settings">
       <button className="dm-settings-toggle" onClick={() => setExpanded(!expanded)}>
-        <span>🎭</span>
+        <span className="dm-icon">DM</span>
         <span>{expanded ? '收起说书人设置' : '说书人 AI DM'}</span>
         {config.enabled && <span className="badge badge-teal">已启用</span>}
         <span className={`phase-narrative-arrow ${expanded ? 'up' : 'down'}`}>▾</span>

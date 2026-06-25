@@ -116,11 +116,11 @@ export class DmService {
     const userPrompt = buildUserPrompt(eventType, payload, context);
     if (!userPrompt) return null;
 
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 2000);
+
     try {
-      const text = await Promise.race([
-        this.generateText(SYSTEM_PROMPT, userPrompt),
-        timeoutReject(2000, 'DM timeout'),
-      ]);
+      const text = await this.generateText(SYSTEM_PROMPT, userPrompt, controller.signal as unknown as AbortSignal);
 
       // 维护轻量历史（最近 5 轮）
       this.history.push({ role: 'user', content: userPrompt });
@@ -133,18 +133,20 @@ export class DmService {
     } catch {
       // 超时或 API 错误 — 静默放弃
       return null;
+    } finally {
+      clearTimeout(timer);
     }
   }
 
-  private async generateText(system: string, user: string): Promise<string> {
+  private async generateText(system: string, user: string, signal?: AbortSignal): Promise<string> {
     if (this.config.provider === 'anthropic') {
-      return this.generateAnthropic(system, user);
+      return this.generateAnthropic(system, user, signal);
     } else {
-      return this.generateOpenAI(system, user);
+      return this.generateOpenAI(system, user, signal);
     }
   }
 
-  private async generateAnthropic(system: string, user: string): Promise<string> {
+  private async generateAnthropic(system: string, user: string, signal?: AbortSignal): Promise<string> {
     if (!this.anthropicClient) throw new Error('No Anthropic client');
 
     const messages: Anthropic.MessageParam[] = this.history.map(m => ({
@@ -158,14 +160,14 @@ export class DmService {
       max_tokens: 200,
       system,
       messages,
-    });
+    }, { signal: signal as any });
 
     const block = resp.content[0];
     if (block && block.type === 'text') return block.text.trim();
     throw new Error('No text in response');
   }
 
-  private async generateOpenAI(system: string, user: string): Promise<string> {
+  private async generateOpenAI(system: string, user: string, signal?: AbortSignal): Promise<string> {
     const baseUrl = this.config.apiUrl?.replace(/\/$/, '') ?? 'https://api.openai.com/v1';
     const messages = [
       { role: 'system' as const, content: system },
@@ -185,14 +187,11 @@ export class DmService {
         max_tokens: 200,
         temperature: 0.8,
       }),
+      signal,
     });
 
     if (!resp.ok) throw new Error(`OpenAI API error: ${resp.status}`);
     const data = await resp.json() as any;
     return data.choices?.[0]?.message?.content?.trim() ?? '';
   }
-}
-
-function timeoutReject(ms: number, msg: string): Promise<never> {
-  return new Promise((_, reject) => setTimeout(() => reject(new Error(msg)), ms));
 }

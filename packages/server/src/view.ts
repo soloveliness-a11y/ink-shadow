@@ -45,6 +45,7 @@ export function buildView(
   const pub = shared ?? buildSharedParts(script, state);
 
   // 可搜证线索(已解锁、未被任何人获取,只含 id+title) — 依赖玩家技能,逐玩家算
+  const charMap = new Map(script.characters.map((ch) => [ch.id, ch]));
   const searchableClues: SearchableClueStub[] = script.clues
     .filter((c) => {
       // 必须已解锁
@@ -57,7 +58,7 @@ export function buildView(
       } else if (c.visibility === 'private') {
         // 秘密线索：需玩家有对应技能才能看到
         if (!c.requiredSkill || !charId) return false;
-        const playerChar = script.characters.find((ch) => ch.id === charId);
+        const playerChar = charMap.get(charId);
         if (!playerChar?.skills?.includes(c.requiredSkill)) return false;
       } else {
         return false;
