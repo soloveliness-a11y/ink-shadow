@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { useGameStore } from '../store/game.js';
 import { PhaseStatus } from '../components/PhaseStatus.js';
 import { SPEECH_MAX } from '../lib/limits.js';
@@ -26,7 +26,7 @@ export function IntroScene() {
   const publicCharacters = view?.publicCharacters ?? [];
   const turnOrder = view?.phaseProgress?.requiredCharIds ?? [];
   const actedIds = new Set(view?.phaseProgress?.actedCharIds ?? []);
-  const speeches = view?.log.filter((e) => e.type === 'speak').slice(-8) ?? [];
+  const speeches = useMemo(() => view?.log.filter((e) => e.type === 'speak').slice(-8) ?? [], [view?.log]);
   const speak = () => {
     const trimmed = text.trim();
     if (!trimmed) return;

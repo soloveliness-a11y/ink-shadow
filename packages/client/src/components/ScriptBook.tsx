@@ -58,6 +58,7 @@ export function ScriptBook() {
   const scriptId = view?.selectedScript?.id ?? '_mock';
 
   const [open, setOpen] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
   const annotations = useAnnotationStore((s) => s.list);
   const annoAdd = useAnnotationStore((s) => s.add);
   const annoRemove = useAnnotationStore((s) => s.remove);
@@ -72,6 +73,20 @@ export function ScriptBook() {
   const leftPageRef = useRef<HTMLDivElement>(null);
   const rightPageRef = useRef<HTMLDivElement>(null);
   const charId = self?.charId ?? '';
+
+  // Escape 关闭 + 锁定背景滚动
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('keydown', onKey);
+    modalRef.current?.focus();
+    return () => {
+      document.body.style.overflow = prev;
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
 
   // 加载标注
   useEffect(() => {
@@ -273,7 +288,7 @@ export function ScriptBook() {
       {/* 仿纸质书弹窗 */}
       {open && (
         <div className="scriptbook-overlay" onClick={() => setOpen(false)}>
-          <div className="scriptbook-modal" onClick={(e) => e.stopPropagation()}>
+          <div className="scriptbook-modal" ref={modalRef} tabIndex={-1} onClick={(e) => e.stopPropagation()}>
             {/* 顶部工具栏 */}
             <div className="scriptbook-topbar">
               <div className="scriptbook-topbar-left">

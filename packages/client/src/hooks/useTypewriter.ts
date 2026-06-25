@@ -8,8 +8,9 @@ export function useTypewriter(
   options: { speed?: number; startDelay?: number; enabled?: boolean } = {},
 ): { displayed: string; done: boolean; skip: () => void } {
   const { speed = 28, startDelay = 80, enabled = true } = options;
-  const [displayed, setDisplayed] = useState(enabled ? '' : text);
-  const [done, setDone] = useState(!enabled);
+  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const [displayed, setDisplayed] = useState(enabled && !prefersReducedMotion ? '' : text);
+  const [done, setDone] = useState(!enabled || prefersReducedMotion);
   const cancelledRef = useRef(false);
   // #8: 保存 interval handle,使 cleanup 能在 startTimer 已 fire 后清理 interval,避免泄漏
   const intervalRef = useRef<number | null>(null);
@@ -25,7 +26,7 @@ export function useTypewriter(
   }, [text]);
 
   useEffect(() => {
-    if (!enabled) {
+    if (!enabled || prefersReducedMotion) {
       setDisplayed(text);
       setDone(true);
       return;

@@ -320,6 +320,9 @@ export function FreeScene() {
           </div>
 
           <div className="free-tab-body">
+            {!effectiveTab && (
+              <div className="empty-state">当前环节暂无可用操作，请等待主持人推进。</div>
+            )}
             {effectiveTab === 'search' && (
               <SearchTab
                 view={view!}

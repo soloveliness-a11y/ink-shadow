@@ -100,11 +100,11 @@ export function PrivateTab({
       </div>
       <div className="pm-thread" ref={pmThreadRef}>
         {pmTarget ? (
-          currentThread.length > 0 ? currentThread.slice(-20).map((msg) => {
+          currentThread.length > 0 ? currentThread.slice(-20).map((msg, i) => {
             const mine = msg.fromCharId === myCharId;
             const name = mine ? '我' : publicCharacters.find((c) => c.id === msg.fromCharId)?.name ?? '对方';
             return (
-              <div key={`${msg.ts}-${msg.fromCharId}-${msg.text}`} className={`pm-msg${mine ? ' mine' : ''}`}>
+              <div key={`${msg.ts}-${msg.fromCharId}-${i}`} className={`pm-msg${mine ? ' mine' : ''}`}>
                 <div className="pm-author">{name}</div>
                 <div>{msg.text}</div>
               </div>

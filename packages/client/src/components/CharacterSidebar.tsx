@@ -99,7 +99,7 @@ export function CharacterSidebar() {
               const owner = view?.players.find(p => p.charId === c.id);
               return (
                 <CharacterCard
-                  key={c.id} char={c} owner={owner} note={note} scriptId={scriptId}
+                  key={c.id} char={c} owner={owner} note={note} scriptId={scriptId} allChars={chars}
                   expanded={expandedId === c.id}
                   isEditing={editingId === c.id} noteText={noteText}
                   onToggle={() => setExpandedId(expandedId === c.id ? null : c.id)}
@@ -139,7 +139,7 @@ export function CharacterSidebar() {
   );
 }
 
-function CharacterCard({ char, owner, note, scriptId, expanded, isEditing, noteText, onToggle, onEdit, onSave, onCancel, onTextChange }: {
+function CharacterCard({ char, owner, note, scriptId, allChars, expanded, isEditing, noteText, onToggle, onEdit, onSave, onCancel, onTextChange }: {
   char: {
     id: string;
     name: string;
@@ -153,6 +153,7 @@ function CharacterCard({ char, owner, note, scriptId, expanded, isEditing, noteT
   owner?: { nickname: string; connected: boolean; isHost: boolean };
   note: string;
   scriptId?: string;
+  allChars: { id: string; name: string }[];
   expanded: boolean;
   isEditing: boolean;
   noteText: string;
@@ -204,7 +205,7 @@ function CharacterCard({ char, owner, note, scriptId, expanded, isEditing, noteT
                 {relations.map((r, i) => (
                   <span key={i} className="board-relation-chip">
                     <span className="board-relation-tag">{r.relation}</span>
-                    <RelationName charId={r.targetCharId} />
+                    <span className="board-relation-name">{allChars.find(c2 => c2.id === r.targetCharId)?.name ?? r.targetCharId}</span>
                   </span>
                 ))}
               </div>
@@ -258,7 +259,4 @@ function CharacterCard({ char, owner, note, scriptId, expanded, isEditing, noteT
   );
 }
 
-function RelationName({ charId }: { charId: string }) {
-  const name = useGameStore((s) => s.view?.publicCharacters.find((c) => c.id === charId)?.name ?? charId);
-  return <span className="board-relation-name">{name}</span>;
-}
+
