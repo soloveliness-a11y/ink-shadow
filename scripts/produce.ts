@@ -124,6 +124,6 @@ async function main() {
 }
 
 main().catch(err => {
-  console.error(`\nProduce failed: ${err.message}`);
+  console.error(`\nProduce failed: ${err instanceof Error ? err.message : err}`);
   process.exit(1);
 });

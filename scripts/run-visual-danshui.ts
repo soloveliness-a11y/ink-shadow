@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { VisualRunner } from '../packages/visual-pipeline/src/runner.js';
 
-async function main() {
+export async function runVisualDanshui(label = 'Running visual pipeline for danshui...') {
   const scriptPath = resolve('content/danshui/script.json');
   const script = JSON.parse(readFileSync(scriptPath, 'utf-8'));
 
@@ -14,11 +14,14 @@ async function main() {
     resume: true,
   });
 
-  console.log('Running visual pipeline for danshui...');
+  console.log(label);
   const { script: updated, result } = await runner.run(script, scriptPath);
 
   writeFileSync(scriptPath, JSON.stringify(updated, null, 2), 'utf-8');
   console.log(`Done: ${result.done} done, ${result.failed} failed / ${result.total} total`);
 }
 
-main().catch(err => { console.error(err); process.exit(1); });
+const isDirectRun = process.argv[1]?.endsWith('run-visual-danshui.ts');
+if (isDirectRun) {
+  runVisualDanshui().catch(err => { console.error(err); process.exit(1); });
+}

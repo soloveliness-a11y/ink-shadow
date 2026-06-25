@@ -130,7 +130,7 @@ function toString(val: any): string {
     // 取 main_truth 或第一个字符串值
     if (val.main_truth) return val.main_truth;
     const vals = Object.values(val).filter(v => typeof v === 'string');
-    return vals[0] as string ?? JSON.stringify(val);
+    return typeof vals[0] === 'string' ? vals[0] : JSON.stringify(val);
   }
   return String(val);
 }

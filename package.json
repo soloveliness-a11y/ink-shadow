@@ -13,7 +13,8 @@
     "test": "pnpm -r test",
     "start": "pnpm build && pnpm --filter @mmg/server dev",
     "dev": "pnpm --filter @mmg/server dev",
-    "produce": "tsx scripts/produce.ts"
+    "produce": "tsx scripts/produce.ts",
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@eslint/js": "^9",
@@ -21,7 +22,6 @@
     "eslint": "^9",
     "eslint-plugin-react-hooks": "^5",
     "tsx": "^4.19.2",
-    "typescript-eslint": "^8",
-    "ws": "^8.18.0"
+    "typescript-eslint": "^8"
   }
 }

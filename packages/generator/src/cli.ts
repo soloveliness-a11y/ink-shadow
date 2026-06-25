@@ -1,3 +1,4 @@
+#!/usr/bin/env -S npx tsx
 import 'dotenv/config';
 import { generate } from './pipeline.js';
 import type { GenParams } from './types.js';

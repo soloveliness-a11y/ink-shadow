@@ -22,7 +22,7 @@ if (!existsSync(scriptPath)) {
 const script = JSON.parse(readFileSync(scriptPath, 'utf-8'));
 const files = new Set(existsSync(assetsDir) ? readdirSync(assetsDir) : []);
 const now = new Date().toISOString();
-const model = process.env.VISUAL_MODEL ?? 'gpt-5.5';
+const model = process.env.MMG_MODEL ?? process.env.VISUAL_MODEL ?? 'stub';
 
 function mkAsset(file: string) {
   return { path: `assets/${file}`, model, generatedAt: now, status: 'done' as const };

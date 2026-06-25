@@ -9,8 +9,9 @@
 import { writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function writeScriptSplit(script: any, dir: string): void {
+import type { Script } from '@mmg/schema';
+
+export function writeScriptSplit(script: Script, dir: string): void {
   if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
   const w = (path: string, data: unknown) => writeFileSync(join(dir, path), JSON.stringify(data, null, 2) + '\n');
 

@@ -1,3 +1,7 @@
+// NOTE: loadScript is imported from @mmg/server internals — this couples a
+// standalone verification script to the server package. In the future,
+// loadScript should be extracted to @mmg/schema or a shared @mmg/utils package
+// so scripts like this can depend on a stable public API.
 import { loadScript } from '../packages/server/src/loader.js';
 import { resolve } from 'node:path';
 import { readdirSync, existsSync } from 'node:fs';

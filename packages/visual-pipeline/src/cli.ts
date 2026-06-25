@@ -1,3 +1,4 @@
+#!/usr/bin/env -S npx tsx
 import 'dotenv/config';
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
