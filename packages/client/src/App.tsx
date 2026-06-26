@@ -1,13 +1,7 @@
-import { useEffect } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { useGameStore } from './store/game.js';
 import { useKeyboardCompensation } from './hooks/useKeyboardCompensation.js';
 import { LobbyScene } from './scenes/Lobby.js';
-import { BriefingScene } from './scenes/Briefing.js';
-import { IntroScene } from './scenes/Intro.js';
-import { FreeScene } from './scenes/Free.js';
-import { VoteScene } from './scenes/Vote.js';
-import { RevealScene, FinishedScene } from './scenes/Reveal.js';
-import { AssigningScene } from './scenes/Assigning.js';
 import { Header } from './components/Header.js';
 import { CharacterSidebar } from './components/CharacterSidebar.js';
 import { BgmControl } from './components/BgmControl.js';
@@ -17,6 +11,15 @@ import { WaitingPanel } from './components/WaitingPanel.js';
 import { ToastViewport } from './lib/toast-viewport.js';
 import { useBgmUnlock } from './audio/useBgmState.js';
 import { useBgmPhaseRouter } from './audio/useBgmPhaseRouter.js';
+
+// 路由级懒加载：首屏只加载 Lobby，其余 scene 按需加载
+const AssigningScene = lazy(() => import('./scenes/Assigning.js').then(m => ({ default: m.AssigningScene })));
+const BriefingScene = lazy(() => import('./scenes/Briefing.js').then(m => ({ default: m.BriefingScene })));
+const IntroScene = lazy(() => import('./scenes/Intro.js').then(m => ({ default: m.IntroScene })));
+const FreeScene = lazy(() => import('./scenes/Free.js').then(m => ({ default: m.FreeScene })));
+const VoteScene = lazy(() => import('./scenes/Vote.js').then(m => ({ default: m.VoteScene })));
+const RevealScene = lazy(() => import('./scenes/Reveal.js').then(m => ({ default: m.RevealScene })));
+const FinishedScene = lazy(() => import('./scenes/Reveal.js').then(m => ({ default: m.FinishedScene })));
 
 export function App() {
   // P0-2: 移动端键盘弹起时补偿视口高度,避免输入框被遮挡
@@ -99,15 +102,17 @@ function SceneRoot({ connected, hasView, status, phaseKind, phaseId }: {
 
   return (
     <div key={`${status}-${phaseId ?? phaseKind ?? 'none'}`} className="scene-fade">
-      {status === 'lobby' && <LobbyScene />}
-      {status === 'assigning' && <AssigningScene />}
-      {status === 'playing' && phaseKind === 'briefing' && <BriefingScene />}
-      {status === 'playing' && phaseKind === 'sequential' && <IntroScene />}
-      {status === 'playing' && phaseKind === 'free' && <FreeScene />}
-      {status === 'playing' && phaseKind === 'vote' && <VoteScene />}
-      {status === 'playing' && phaseKind === 'reveal' && <RevealScene />}
-      {status === 'finished' && <FinishedScene />}
-      {status === 'playing' && !phaseKind && <LoadingScreen tip="加载环节..." />}
+      <Suspense fallback={<LoadingScreen tip="加载中..." />}>
+        {status === 'lobby' && <LobbyScene />}
+        {status === 'assigning' && <AssigningScene />}
+        {status === 'playing' && phaseKind === 'briefing' && <BriefingScene />}
+        {status === 'playing' && phaseKind === 'sequential' && <IntroScene />}
+        {status === 'playing' && phaseKind === 'free' && <FreeScene />}
+        {status === 'playing' && phaseKind === 'vote' && <VoteScene />}
+        {status === 'playing' && phaseKind === 'reveal' && <RevealScene />}
+        {status === 'finished' && <FinishedScene />}
+        {status === 'playing' && !phaseKind && <LoadingScreen tip="加载环节..." />}
+      </Suspense>
     </div>
   );
 }
