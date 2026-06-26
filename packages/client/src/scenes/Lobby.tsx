@@ -3,6 +3,7 @@ import { useGameStore } from '../store/game.js';
 import { assetUrl } from '../lib/asset.js';
 import { pushToast } from '../lib/toast.js';
 import { ConfirmDialog } from '../components/ConfirmDialog.js';
+import { InvitePanel } from '../components/InvitePanel.js';
 
 export function LobbyScene() {
   const joinRoom = useGameStore((s) => s.joinRoom);
@@ -66,6 +67,8 @@ export function LobbyScene() {
           >{copied ? '已复制' : '复制'}</button>
           <span className="lobby-room-online">{onlineCount} 人在场</span>
         </div>
+
+        <InvitePanel />
 
         {/* Hero:剧本封面 + 标题 + 元信息 */}
         <div className="lobby-hero">
