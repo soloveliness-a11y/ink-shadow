@@ -7,7 +7,7 @@ import { zRoomStatus, zGameEvent } from './runtime.js';
  * 协议版本号。每次改动 ClientIntent / ServerMessage / ClientStateView 结构时手动 +1。
  * client join 时上报,server 比对;不一致则提示玩家刷新页面(防旧前端发旧协议的静默故障)。
  */
-export const PROTOCOL_VERSION = 10;
+export const PROTOCOL_VERSION = 11;
 
 /**
  * 客户端 → 服务器:玩家意图。
@@ -35,6 +35,7 @@ export const zClientIntent = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('inspectCharItems'), targetCharId: z.string().max(64) }),
   z.object({ kind: z.literal('expose'), targetCharId: z.string().max(64), severity: z.enum(['minor', 'major']) }),
   z.object({ kind: z.literal('configureDm'), enabled: z.boolean(), provider: z.enum(['anthropic', 'openai']).optional(), apiKey: z.string().max(512).optional(), apiUrl: z.string().max(512).optional(), model: z.string().max(128).optional() }),
+  z.object({ kind: z.literal('listRooms') }),
 ]);
 export type ClientIntent = z.infer<typeof zClientIntent>;
 
@@ -215,6 +216,13 @@ export const zServerMessage = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('kicked'), reason: z.string().optional() }), // 被房主移出房间
   z.object({ kind: z.literal('dmNarrative'), text: z.string(), charId: z.string().optional() }), // AI DM 旁白
   z.object({ kind: z.literal('keywordMemory'), charId: z.string(), memId: z.string(), keyword: z.string(), text: z.string() }), // 私发:关键词解锁的记忆片段
+  z.object({ kind: z.literal('roomList'), rooms: z.array(z.object({
+    roomCode: z.string(),
+    scriptTitle: z.string(),
+    playerCount: z.number().int(),
+    maxPlayers: z.number().int(),
+    hostName: z.string(),
+  })) }),
   z.object({ kind: z.literal('error'), code: z.string().optional(), message: z.string() }),
 ]);
 export type ServerMessage = z.infer<typeof zServerMessage>;

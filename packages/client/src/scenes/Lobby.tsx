@@ -5,6 +5,7 @@ import { assetUrl } from '../lib/asset.js';
 import { pushToast } from '../lib/toast.js';
 import { ConfirmDialog } from '../components/ConfirmDialog.js';
 import { InvitePanel } from '../components/InvitePanel.js';
+import { PublicRoomList } from '../components/PublicRoomList.js';
 
 export function LobbyScene() {
   const joinRoom = useGameStore((s) => s.joinRoom);
@@ -326,6 +327,13 @@ export function LobbyScene() {
           </button>
           <p className="login-tip">提示:房主开房后会获得 6 位房间号,其他玩家凭此加入。</p>
         </div>
+
+        <div className="login-divider"><span>或</span></div>
+        <PublicRoomList nickname={nickname} onJoinRoom={(code) => {
+          if (!nickname.trim()) return;
+          if (!conn) connect();
+          joinRoom(code, nickname.trim());
+        }} />
       </div>
     </div>
   );

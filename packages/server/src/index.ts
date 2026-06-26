@@ -337,6 +337,11 @@ const RATE_LIMIT_MAX = 40; // 窗口内最大消息数
 
 function handleIntent(manager: RoomManager, session: Session, intent: ClientIntent, _fallbackScriptId: string, playerIdx: Map<string, Session>): void {
   switch (intent.kind) {
+    case 'listRooms': {
+      const rooms = manager.listPublicRooms();
+      send(session.ws, { kind: 'roomList', rooms });
+      return;
+    }
     case 'join': {
       // 协议版本校验:旧前端连新 server → 提示刷新,不继续 join(防静默故障)
       const cv = (intent as { clientVersion?: number }).clientVersion;

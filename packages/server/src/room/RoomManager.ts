@@ -56,6 +56,28 @@ export class RoomManager {
     return this.rooms.get(roomCode);
   }
 
+  /** 列出可加入的公开房间 */
+  listPublicRooms(): Array<{ roomCode: string; scriptTitle: string; playerCount: number; maxPlayers: number; hostName: string }> {
+    const MAX_PLAYERS = 12;
+    const results: Array<{ roomCode: string; scriptTitle: string; playerCount: number; maxPlayers: number; hostName: string }> = [];
+    for (const [, room] of this.rooms) {
+      const state = room.getState();
+      if (state.status !== 'lobby') continue;
+      const connectedCount = state.players.filter(p => p.connected).length;
+      if (connectedCount >= MAX_PLAYERS) continue;
+      const host = state.players.find(p => p.isHost);
+      const script = room.getScript();
+      results.push({
+        roomCode: room.roomCode,
+        scriptTitle: script?.meta.title ?? '未选剧本',
+        playerCount: connectedCount,
+        maxPlayers: MAX_PLAYERS,
+        hostName: host?.nickname ?? '未知',
+      });
+    }
+    return results;
+  }
+
   /** 列出可用剧本元信息 */
   listScriptMetas(): ScriptMeta[] {
     return [...this.scripts.values()].map((s) => s.meta);
