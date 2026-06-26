@@ -22,6 +22,8 @@ interface GameState {
   conn: GameConnection | null;
   /** 已看到的 phase_enter event key,避免重复 toast */
   seenPhaseKey: string | null;
+  /** 公开房间列表（listRooms 响应） */
+  publicRooms: Array<{ roomCode: string; scriptTitle: string; playerCount: number; maxPlayers: number; hostName: string }>;
 
   // Actions
   connect: (url?: string) => void;
@@ -88,6 +90,8 @@ export function handleServerMessage(
 ): void {
   switch (msg.kind) {
     case 'joined':
+      // 重连恢复:服务端 Room.join() 在 sessionToken 匹配或 nickname 匹配断线玩家时,
+      // 会立即发送 joined + stateSync(全量),客户端无需等待下次 broadcast 即可拿到最新状态。
       setState((s) => {
         writeSession({
           roomCode: s.roomCode,
@@ -126,7 +130,11 @@ export function handleServerMessage(
           seenPhaseKey: phaseKey ?? s.seenPhaseKey,
         };
       });
-      // 游戏开始(lobby/assigning → playing)时后台预加载资源
+      // 大厅阶段有剧本选择时即后台预加载资源,不等到 playing 才开始
+      if (newView.status === 'lobby' && newView.selectedScript) {
+        preloadAssets(newView);
+      }
+      // playing 状态变更时也触发一次,覆盖 assigning→playing 过渡中资源未加载的情况
       if (newView.status === 'playing' && oldStatus && oldStatus !== 'playing') {
         preloadAssets(newView);
       }
@@ -180,6 +188,9 @@ export function handleServerMessage(
     case 'keywordMemory':
       pushToast(`听到「${msg.keyword}」触发了一段记忆,已加入你的剧本`, 'info', 4000);
       break;
+    case 'roomList':
+      setState({ publicRooms: msg.rooms });
+      break;
     case 'assigned':
       // assignment handled via stateSync
       break;
@@ -210,6 +221,7 @@ export const useGameStore = create<GameState>((set, get) => ({
   error: null,
   conn: null,
   seenPhaseKey: null,
+  publicRooms: [],
 
   connect: (url) => {
     // #3: 幂等守卫 — 已有连接时直接复用,避免 React 批处理下重复调用产生多条 WS + 多套重连
