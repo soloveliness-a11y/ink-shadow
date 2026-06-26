@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useGameStore } from '../store/game.js';
 import { ConfirmDialog } from './ConfirmDialog.js';
 import { playTick, playWarning } from '../audio/timerAudio.js';
+import { renderEvent } from '../scenes/Free/renderEvent.js';
 
 export function PhaseStatus() {
   const view = useGameStore((s) => s.view);
@@ -11,6 +12,8 @@ export function PhaseStatus() {
   const progress = view?.phaseProgress;
   const [now, setNow] = useState(Date.now());
   const [advanceConfirm, setAdvanceConfirm] = useState(false);
+  const [showHostLog, setShowHostLog] = useState(false);
+  const events = useGameStore((s) => s.events);
 
   useEffect(() => {
     if (!phase?.deadline) return;
@@ -170,6 +173,28 @@ export function PhaseStatus() {
             <button onClick={() => send({ kind: 'manualAdvance' })} className="btn btn-primary btn-sm">
               推进下一阶段
             </button>
+          )}
+        </div>
+      )}
+      {/* 房主全局日志 */}
+      {isHost && (
+        <div className="phase-host-log">
+          <button className="btn btn-ghost btn-xs" onClick={() => setShowHostLog(!showHostLog)}>
+            {showHostLog ? '收起日志' : `全局日志 (${events.length})`}
+          </button>
+          {showHostLog && (
+            <div className="host-log-list">
+              {events.slice(-30).reverse().map((e, i) => {
+                const actor = view?.publicCharacters.find(c => c.id === e.actorCharId)?.name;
+                const { icon, iconClass, content } = renderEvent(e, actor, false);
+                return (
+                  <div key={i} className="ev-row" style={{ fontSize: 11, padding: '2px 0' }}>
+                    <span className={`ev-icon ${iconClass}`} style={{ width: 16, height: 16, fontSize: 9 }}>{icon}</span>
+                    <span className="ev-content">{content}</span>
+                  </div>
+                );
+              })}
+            </div>
           )}
         </div>
       )}

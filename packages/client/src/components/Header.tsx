@@ -1,9 +1,12 @@
+import { useState } from 'react';
 import { useGameStore } from '../store/game.js';
 import { assetUrl } from '../lib/asset.js';
 import { ThemeSwitcher } from './ThemeSwitcher.js';
+import { AchievementsPanel } from './AchievementsPanel.js';
 import type { JSX } from 'react';
 
 export function Header() {
+  const [showAch, setShowAch] = useState(false);
   const view = useGameStore((s) => s.view);
   const savedRoomCode = useGameStore((s) => s.roomCode);
   const roomCode = view?.roomCode || savedRoomCode;
@@ -54,8 +57,10 @@ export function Header() {
         {playerCount > 0 && <span className="header-pill">{onlineCount}/{playerCount} 在线</span>}
         {me?.isHost && <span className="header-pill host">房主</span>}
         {roomCode && <span className="room-badge">{roomCode}</span>}
+        <button className="header-ach-btn" onClick={() => setShowAch(true)} title="战绩与成就">🏆</button>
         <ThemeSwitcher />
       </div>
+      {showAch && <AchievementsPanel onClose={() => setShowAch(false)} />}
     </header>
   );
 }
