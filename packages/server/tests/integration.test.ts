@@ -3,7 +3,6 @@ import assert from 'node:assert/strict';
 import { loadScript } from '../src/loader.js';
 import { Room } from '../src/room/Room.js';
 import { PhaseEngine } from '../src/engine/PhaseEngine.js';
-import { buildView } from '../src/view.js';
 import type { Script, ServerMessage, ClientStateView, GameEvent } from '@mmg/schema';
 
 // ─── 测试基础设施 ───
@@ -14,15 +13,57 @@ function createSendCapture() {
     if (!mailboxes.has(playerId)) mailboxes.set(playerId, []);
     mailboxes.get(playerId)!.push(msg);
   };
+  /** 从消息流中重建最新 view：找到最后一个 stateSync，再叠加后续 statePatch */
   const lastView = (playerId: string): ClientStateView | undefined => {
     const msgs = mailboxes.get(playerId) ?? [];
+    let base: Record<string, unknown> | undefined;
+    let baseIdx = -1;
     for (let i = msgs.length - 1; i >= 0; i--) {
-      if (msgs[i].kind === 'stateSync') return (msgs[i] as { view: ClientStateView }).view;
+      if (msgs[i]!.kind === 'stateSync') {
+        base = (msgs[i] as { view: ClientStateView }).view as unknown as Record<string, unknown>;
+        baseIdx = i;
+        break;
+      }
     }
-    return undefined;
+    if (!base) return undefined;
+    base = { ...base };
+    for (let i = baseIdx + 1; i < msgs.length; i++) {
+      const m = msgs[i]!;
+      if (m.kind === 'statePatch') {
+        const { patches, removes } = m as { patches: Record<string, unknown>; removes?: string[] };
+        for (const [path, value] of Object.entries(patches)) setByPathTest(base!, path, value);
+        for (const path of removes ?? []) deleteByPathTest(base!, path);
+      }
+    }
+    return base as unknown as ClientStateView;
   };
   const messages = (playerId: string): ServerMessage[] => mailboxes.get(playerId) ?? [];
   return { send, lastView, messages };
+}
+
+function setByPathTest(obj: Record<string, unknown>, path: string, value: unknown): void {
+  const parts = path.split('/').filter(Boolean);
+  if (parts.length === 0) return;
+  let cur: Record<string, unknown> = obj;
+  for (let i = 0; i < parts.length - 1; i++) {
+    const key = parts[i]!;
+    const next = cur[key];
+    if (next == null || typeof next !== 'object') cur[key] = {};
+    cur = cur[key] as Record<string, unknown>;
+  }
+  cur[parts[parts.length - 1]!] = value;
+}
+
+function deleteByPathTest(obj: Record<string, unknown>, path: string): void {
+  const parts = path.split('/').filter(Boolean);
+  if (parts.length === 0) return;
+  let cur: Record<string, unknown> = obj;
+  for (let i = 0; i < parts.length - 1; i++) {
+    const next = cur[parts[i]!];
+    if (next == null || typeof next !== 'object') return;
+    cur = next as Record<string, unknown>;
+  }
+  delete cur[parts[parts.length - 1]!];
 }
 
 import { fileURLToPath } from 'node:url';
@@ -104,7 +145,7 @@ test('loader: mock 剧本加载成功', () => {
 });
 
 test('Room 生命周期: lobby → selecting → assigning → playing', () => {
-  const { room, playerIds } = setupFullRoom();
+  const { room } = setupFullRoom();
   assert.equal(room.getState().status, 'playing');
   assert.equal(room.getState().currentPhaseId, 'p_brief');
   assert.equal(room.getState().players.length, 6);
@@ -481,7 +522,7 @@ test('防作弊: vote 阶段只公开已投状态,不泄露其他人的投票目
 });
 
 test('防作弊: buildView 非终局不泄露凶手身份', () => {
-  const { room, playerIds, cap } = setupFullRoom();
+  const { playerIds, cap } = setupFullRoom();
 
   const view = cap.lastView(playerIds[0]!);
   assert.ok(view, '应有 stateSync');

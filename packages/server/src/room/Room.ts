@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 import type { Script, ScriptMeta, RuntimeState, ClientIntent, ServerMessage, RoomSnapshot } from '@mmg/schema';
 import { PhaseEngine, type Broadcaster } from '../engine/PhaseEngine.js';
 import { buildView, buildViewBatch } from '../view.js';
+import { diffViews } from '../diff.js';
 import { DmService, type DmConfig } from '../dm/DmService.js';
 import { BotRunner } from './BotRunner.js';
 import { SnapshotStore } from './SnapshotStore.js';
@@ -24,6 +25,7 @@ export class Room {
   private engine: PhaseEngine | null = null;
   private sendFn: SendFn;
   private playerSockets = new Map<string, { charId?: string }>();
+  private cachedViews = new Map<string, Record<string, unknown>>();
   private isTestMode = false;
   private botIds: string[] = [];
   private availableScripts: ScriptMeta[] = [];
@@ -136,6 +138,7 @@ export class Room {
         existing.nickname = nickname.trim() || existing.nickname;
         existing.connected = true;
         this.playerSockets.set(existing.playerId, { charId: existing.charId });
+        this.clearCachedView(existing.playerId);
         this.sendToPlayer(existing.playerId, { kind: 'joined', playerId: existing.playerId, sessionToken: existing.playerId });
         this.sendToPlayer(existing.playerId, {
           kind: 'stateSync',
@@ -155,6 +158,7 @@ export class Room {
       if (byNickname) {
         byNickname.connected = true;
         this.playerSockets.set(byNickname.playerId, { charId: byNickname.charId });
+        this.clearCachedView(byNickname.playerId);
         this.sendToPlayer(byNickname.playerId, { kind: 'joined', playerId: byNickname.playerId, sessionToken: byNickname.playerId });
         this.sendToPlayer(byNickname.playerId, {
           kind: 'stateSync',
@@ -191,6 +195,7 @@ export class Room {
     this.playerSockets.set(playerId, {});
 
     // 加入成功
+    this.clearCachedView(playerId);
     this.sendToPlayer(playerId, { kind: 'joined', playerId, sessionToken: playerId });
     this.broadcastState();
     return { playerId, sessionToken: playerId };
@@ -453,6 +458,7 @@ export class Room {
     // 安全:apiKey 不落盘,重启后 DM 默认关闭。房主需重新 configureDm 填 key 才能恢复旁白。
     const room = new Room(sendFn, null);
     // 恢复状态
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     (room as any).roomCode = snap.state.roomCode;
     (room as any).state = snap.state;
     (room as any).hostId = snap.hostId || null;
@@ -460,6 +466,7 @@ export class Room {
     (room as any).botIds = snap.botIds;
     (room as any).phaseHistory = snap.phaseHistory;
     (room as any).kickedTokens = new Map(snap.kickedTokens.map((t) => [t, Date.now()]));
+    /* eslint-enable @typescript-eslint/no-explicit-any */
     // dmFullConfig 不从快照恢复(无 apiKey),保持 null
     // 所有玩家标记为断线（需重新连接）
     for (const p of room.state.players) {
@@ -474,11 +481,13 @@ export class Room {
     if (snap.scriptId) {
       const script = getScriptFn(snap.scriptId);
       if (script) {
+        /* eslint-disable @typescript-eslint/no-explicit-any */
         (room as any).script = script;
         if (snap.state.status === 'playing') {
           const engine = new PhaseEngine(script, room.state, (room as any).createBroadcaster());
           if (room.isTestMode) engine.setBlockAdvance(true);
           (room as any).engine = engine;
+        /* eslint-enable @typescript-eslint/no-explicit-any */
         }
       }
     }
@@ -643,17 +652,37 @@ export class Room {
   }
 
   /**
-   * 给所有在线玩家下发各自裁剪后的 stateSync。
-   * 用 buildViewBatch 只算一次公共部分,再为每个玩家算私有部分 —— 取代原来的
-   * N 次独立 buildView,把每广播的 O(N×全量) 降为 O(公共 + N×私有)。
+   * 给所有在线玩家下发各自裁剪后的 stateSync/statePatch。
+   * 用 buildViewBatch 只算一次公共部分,再为每个玩家算私有部分。
+   * 有缓存时发增量 patch（1-3KB），无缓存时发全量 stateSync（25-60KB）。
    */
   private fanOutStateSync(): void {
     const connectedIds = this.state.players.filter((p) => p.connected).map((p) => p.playerId);
     if (connectedIds.length === 0) return;
     const extra = this.viewExtra();
     for (const { playerId, view } of buildViewBatch(this.script, this.state, connectedIds, this.availableScripts, extra)) {
-      this.sendToPlayer(playerId, { kind: 'stateSync', view });
+      const newView = view as unknown as Record<string, unknown>;
+      const prevView = this.cachedViews.get(playerId);
+      if (prevView) {
+        const { patches, removes } = diffViews(prevView, newView);
+        if (Object.keys(patches).length > 0 || removes.length > 0) {
+          this.sendToPlayer(playerId, { kind: 'statePatch', patches, removes });
+        }
+      } else {
+        this.sendToPlayer(playerId, { kind: 'stateSync', view });
+      }
+      this.cachedViews.set(playerId, newView);
     }
+  }
+
+  /** 清除指定玩家的 view 缓存（下次广播发全量 stateSync） */
+  private clearCachedView(playerId: string): void {
+    this.cachedViews.delete(playerId);
+  }
+
+  /** 清除所有玩家的 view 缓存（phase 切换等全局事件后） */
+  private clearAllCachedViews(): void {
+    this.cachedViews.clear();
   }
 
   // ─── 状态快照(测试模式用) ───
@@ -672,6 +701,7 @@ export class Room {
       this.engine.setBlockAdvance(true);
     }
     this.phaseHistory.pop();
+    this.clearAllCachedViews();
     this.broadcastState();
     return {};
   }

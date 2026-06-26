@@ -7,7 +7,7 @@ import { zRoomStatus, zGameEvent } from './runtime.js';
  * 协议版本号。每次改动 ClientIntent / ServerMessage / ClientStateView 结构时手动 +1。
  * client join 时上报,server 比对;不一致则提示玩家刷新页面(防旧前端发旧协议的静默故障)。
  */
-export const PROTOCOL_VERSION = 9;
+export const PROTOCOL_VERSION = 10;
 
 /**
  * 客户端 → 服务器:玩家意图。
@@ -209,6 +209,7 @@ export const zServerMessage = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('joined'), playerId: z.string(), sessionToken: z.string() }),
   z.object({ kind: z.literal('assigned'), charId: z.string() }), // 私密:仅发本人
   z.object({ kind: z.literal('stateSync'), view: zClientStateView }),
+  z.object({ kind: z.literal('statePatch'), patches: z.record(z.string(), z.unknown()), removes: z.array(z.string()).optional() }),
   z.object({ kind: z.literal('event'), event: zGameEvent }),
   z.object({ kind: z.literal('privateMessage'), fromCharId: z.string(), text: z.string() }),
   z.object({ kind: z.literal('kicked'), reason: z.string().optional() }), // 被房主移出房间

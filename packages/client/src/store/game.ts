@@ -5,6 +5,7 @@ import { GameConnection, createGameUrl, type ConnectionStatus } from '../net/con
 import { pushToast } from '../lib/toast.js';
 import { friendlyError } from '../lib/errorMap.js';
 import { assetUrl } from '../lib/asset.js';
+import { setByPath, deleteByPath } from '../lib/patch.js';
 
 interface GameState {
   connected: boolean;
@@ -129,6 +130,20 @@ export function handleServerMessage(
       if (newView.status === 'playing' && oldStatus && oldStatus !== 'playing') {
         preloadAssets(newView);
       }
+      break;
+    }
+    case 'statePatch': {
+      setState((s) => {
+        if (!s.view) return {};
+        const view = structuredClone(s.view) as unknown as Record<string, unknown>;
+        for (const [path, value] of Object.entries(msg.patches)) {
+          setByPath(view, path, value);
+        }
+        for (const path of msg.removes ?? []) {
+          deleteByPath(view, path);
+        }
+        return { view: view as ClientStateView };
+      });
       break;
     }
     case 'event':
@@ -353,3 +368,5 @@ function writeSession(session: { roomCode?: string | null; nickname?: string | n
     // Browser storage can be disabled; reconnect simply becomes manual.
   }
 }
+
+
