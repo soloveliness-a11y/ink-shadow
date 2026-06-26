@@ -8,6 +8,7 @@ import { BgmControl } from './components/BgmControl.js';
 import { ScriptBook } from './components/ScriptBook.js';
 import { DmNarrative } from './components/DmNarrative.js';
 import { WaitingPanel } from './components/WaitingPanel.js';
+import { DmObserver } from './components/DmObserver.js';
 import { ToastViewport } from './lib/toast-viewport.js';
 import { useBgmUnlock } from './audio/useBgmState.js';
 import { useBgmPhaseRouter } from './audio/useBgmPhaseRouter.js';
@@ -84,6 +85,7 @@ export function App() {
       <ToastViewport />
       <BgmControl />
       {status === 'playing' && <WaitingPanel />}
+      {(status === 'playing' || status === 'finished') && <DmObserver />}
       {(status === 'playing' || status === 'finished') && <ScriptBook />}
       <DmNarrative />
     </>

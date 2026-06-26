@@ -6,6 +6,8 @@ import { useExcerptSelection } from '../hooks/useExcerptSelection.js';
 import { useCallback, useRef } from 'react';
 import { pushToast } from '../lib/toast.js';
 import { recordGame } from '../lib/achievements.js';
+import { rateScript, getRating } from '../lib/ratings.js';
+import { EndingPaths } from '../components/EndingPaths.js';
 
 export function RevealScene() {
   const view = useGameStore((s) => s.view);
@@ -120,6 +122,9 @@ export function FinishedScene() {
         )}
 
         <RevealRecap />
+
+        <div className="reveal-divider" />
+        <ScriptRating scriptId={view?.selectedScript?.id ?? ''} />
 
         <div className="reveal-divider" />
         <TheoryComparison />
@@ -442,5 +447,62 @@ function RecapCardButton() {
     <button onClick={generate} disabled={generating} className="btn btn-primary btn-lg">
       {generating ? '生成中...' : '保存推理成绩单'}
     </button>
+  );
+}
+
+function ScriptRating({ scriptId }: { scriptId: string }) {
+  const existing = getRating(scriptId);
+  const [score, setScore] = useState(existing?.score ?? 0);
+  const [hoverScore, setHoverScore] = useState(0);
+  const [comment, setComment] = useState(existing?.comment ?? '');
+  const [saved, setSaved] = useState(false);
+
+  const handleRate = (s: number) => {
+    setScore(s);
+    rateScript(scriptId, s, comment || undefined);
+    setSaved(true);
+    setTimeout(() => setSaved(false), 1500);
+  };
+
+  const handleCommentChange = (val: string) => {
+    setComment(val);
+    if (score > 0) {
+      rateScript(scriptId, score, val || undefined);
+    }
+  };
+
+  if (!scriptId) return null;
+
+  return (
+    <div className="script-rating">
+      <div className="section-label reveal-truth-label">剧本评分</div>
+      <div className="rating-stars">
+        {[1, 2, 3, 4, 5].map((s) => (
+          <button
+            key={s}
+            className={`rating-star${s <= (hoverScore || score) ? ' active' : ''}`}
+            onClick={() => handleRate(s)}
+            onMouseEnter={() => setHoverScore(s)}
+            onMouseLeave={() => setHoverScore(0)}
+          >
+            ★
+          </button>
+        ))}
+        {saved && <span className="rating-saved">已保存</span>}
+      </div>
+      <textarea
+        className="input rating-comment"
+        value={comment}
+        onChange={(e) => handleCommentChange(e.target.value)}
+        placeholder="说说你的感受（可选）"
+        maxLength={200}
+        rows={2}
+      />
+      {existing && (
+        <div className="rating-existing">
+          你之前评了 {existing.score} 星
+        </div>
+      )}
+    </div>
   );
 }
