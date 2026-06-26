@@ -44,6 +44,21 @@ function createSendCapture() {
 function setByPathTest(obj: Record<string, unknown>, path: string, value: unknown): void {
   const parts = path.split('/').filter(Boolean);
   if (parts.length === 0) return;
+  // 特殊处理: '/log/-' → 追加到 log 数组
+  if (parts.length >= 2 && parts[parts.length - 1] === '-') {
+    let cur: Record<string, unknown> = obj;
+    for (let i = 0; i < parts.length - 2; i++) {
+      const key = parts[i]!;
+      const next = cur[key];
+      if (next == null || typeof next !== 'object') cur[key] = {};
+      cur = cur[key] as Record<string, unknown>;
+    }
+    const arrKey = parts[parts.length - 2]!;
+    const arr = cur[arrKey];
+    if (Array.isArray(arr) && Array.isArray(value)) arr.push(...value);
+    else if (Array.isArray(value)) cur[arrKey] = value;
+    return;
+  }
   let cur: Record<string, unknown> = obj;
   for (let i = 0; i < parts.length - 1; i++) {
     const key = parts[i]!;

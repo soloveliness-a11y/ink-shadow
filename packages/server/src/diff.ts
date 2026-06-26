@@ -1,6 +1,7 @@
 /**
  * 增量状态 diff 引擎。
  * 比较两个 ClientStateView 快照，输出变更路径映射（JSON Pointer）。
+ * 特殊路径约定: '/log/-' 表示 log 数组追加（值为新增元素数组）。
  */
 
 /** 浅比较两个值是否相等（引用相同或 JSON.stringify 相同） */
@@ -9,17 +10,27 @@ function shallowEqual(a: unknown, b: unknown): boolean {
   if (a == null || b == null) return a === b;
   if (typeof a !== typeof b) return false;
   if (typeof a !== 'object') return false;
-  // 对象/数组：引用相同即等（buildView 中静态字段会复用引用）
   if (a === b) return true;
-  // 退化为 JSON 比较（仅在引用不同时）
   try { return JSON.stringify(a) === JSON.stringify(b); } catch { return false; }
+}
+
+/** 检测数组是否仅追加了新元素（prev 是 next 的前缀） */
+function isArrayAppend(prev: unknown[], next: unknown[]): boolean {
+  if (next.length < prev.length) return false;
+  for (let i = 0; i < prev.length; i++) {
+    if (!shallowEqual(prev[i], next[i])) return false;
+  }
+  return true;
 }
 
 /**
  * 比较两个 view 快照，返回变更路径 → 新值 的映射。
  * 只做顶层 + 二级字段 diff，不做深度递归（避免 CPU 开销）。
  *
- * @returns patches: 变更路径映射（JSON Pointer 格式如 '/log'、'/phaseProgress/actedCount'）
+ * 特殊处理: log 数组如果仅追加新元素，发送 '/log/-' 路径（值为新增元素数组），
+ * 客户端据此 append 而非全量替换，大幅减少带宽。
+ *
+ * @returns patches: 变更路径映射（JSON Pointer 格式如 '/log/-', '/phaseProgress/actedCount'）
  * @returns removes: 需要删除的路径
  */
 export function diffViews(
@@ -34,7 +45,6 @@ export function diffViews(
     const prevVal = prev[key];
 
     if (prevVal === undefined && nextVal !== undefined) {
-      // 新增字段
       patches[`/${key}`] = nextVal;
       continue;
     }
@@ -51,7 +61,7 @@ export function diffViews(
       continue;
     }
 
-    // 对于对象字段，做二级 diff
+    // 对象字段:二级 diff
     if (
       typeof nextVal === 'object' && nextVal !== null && !Array.isArray(nextVal) &&
       typeof prevVal === 'object' && prevVal !== null && !Array.isArray(prevVal)
@@ -66,7 +76,15 @@ export function diffViews(
       continue;
     }
 
-    // 对于数组和原始类型，引用不同则全量替换
+    // 数组字段:检测纯追加（log 是最热路径）
+    if (Array.isArray(nextVal) && Array.isArray(prevVal) && key === 'log') {
+      if (isArrayAppend(prevVal, nextVal) && nextVal.length > prevVal.length) {
+        patches[`/${key}/-`] = nextVal.slice(prevVal.length);
+        continue;
+      }
+    }
+
+    // 其他类型:引用不同则全量替换
     if (!shallowEqual(prevVal, nextVal)) {
       patches[`/${key}`] = nextVal;
     }

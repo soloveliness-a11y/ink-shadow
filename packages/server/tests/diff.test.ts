@@ -70,12 +70,44 @@ test('diffViews: 嵌套对象删除子字段 → removes', () => {
 });
 
 test('diffViews: 数组字段变更 → 全量替换', () => {
-  const prev = { log: [{ text: 'a' }] };
-  const next = { log: [{ text: 'a' }, { text: 'b' }] };
+  // 非 log 数组仍然全量替换
+  const prev = { players: ['a'] };
+  const next = { players: ['a', 'b'] };
+  const { patches, removes } = diffViews(prev as any, next as any);
+  assert.deepEqual(patches['/players'], ['a', 'b']);
+  assert.deepEqual(removes, []);
+});
+
+test('diffViews: log 追加 → /log/- 增量路径', () => {
+  const prev = { log: [{ type: 'speak', actorCharId: 'c1' }, { type: 'search_clue', actorCharId: 'c2' }] };
+  const next = { log: [{ type: 'speak', actorCharId: 'c1' }, { type: 'search_clue', actorCharId: 'c2' }, { type: 'reveal_clue', actorCharId: 'c3' }] };
   const { patches, removes } = diffViews(prev as any, next as any);
   assert.equal(Object.keys(patches).length, 1);
-  assert.deepEqual(patches['/log'], [{ text: 'a' }, { text: 'b' }]);
+  assert.deepEqual(patches['/log/-'], [{ type: 'reveal_clue', actorCharId: 'c3' }]);
   assert.deepEqual(removes, []);
+});
+
+test('diffViews: log 无变化 → 空 patches', () => {
+  const log = [{ type: 'speak' }];
+  const prev = { log };
+  const next = { log };
+  const { patches, removes } = diffViews(prev as any, next as any);
+  assert.deepEqual(patches, {});
+  assert.deepEqual(removes, []);
+});
+
+test('diffViews: log 被截断（长度变短）→ 全量替换', () => {
+  const prev = { log: [{ type: 'a' }, { type: 'b' }, { type: 'c' }] };
+  const next = { log: [{ type: 'b' }, { type: 'c' }] };
+  const { patches, removes } = diffViews(prev as any, next as any);
+  assert.deepEqual(patches['/log'], [{ type: 'b' }, { type: 'c' }]);
+});
+
+test('diffViews: log 中间元素变化 → 全量替换', () => {
+  const prev = { log: [{ type: 'a' }, { type: 'b' }] };
+  const next = { log: [{ type: 'a' }, { type: 'X' }, { type: 'c' }] };
+  const { patches, removes } = diffViews(prev as any, next as any);
+  assert.deepEqual(patches['/log'], [{ type: 'a' }, { type: 'X' }, { type: 'c' }]);
 });
 
 test('diffViews: players 数组变更 → 全量替换', () => {

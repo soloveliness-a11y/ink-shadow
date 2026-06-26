@@ -86,3 +86,29 @@ test('deleteByPath: 删除后对象仍存在', () => {
   assert.ok('parent' in obj);
   assert.equal((obj as any).parent.other, 2);
 });
+
+// ── setByPath: log 追加特殊路径 ──
+
+test('setByPath: /log/- 追加到已有数组', () => {
+  const obj = { log: [{ type: 'a' }, { type: 'b' }] };
+  setByPath(obj as any, '/log/-', [{ type: 'c' }]);
+  assert.deepEqual(obj.log, [{ type: 'a' }, { type: 'b' }, { type: 'c' }]);
+});
+
+test('setByPath: /log/- 追加多个元素', () => {
+  const obj = { log: [{ type: 'a' }] };
+  setByPath(obj as any, '/log/-', [{ type: 'b' }, { type: 'c' }]);
+  assert.deepEqual(obj.log, [{ type: 'a' }, { type: 'b' }, { type: 'c' }]);
+});
+
+test('setByPath: /log/- 目标不存在时创建数组', () => {
+  const obj: Record<string, unknown> = {};
+  setByPath(obj, '/log/-', [{ type: 'a' }]);
+  assert.deepEqual(obj['log'], [{ type: 'a' }]);
+});
+
+test('setByPath: /log/- 空追加数组 → 无变化', () => {
+  const obj = { log: [{ type: 'a' }] };
+  setByPath(obj as any, '/log/-', []);
+  assert.deepEqual(obj.log, [{ type: 'a' }]);
+});
