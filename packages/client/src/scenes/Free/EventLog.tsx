@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { renderEvent } from './renderEvent.js';
-import type { ClientStateView, GameEvent, PublicCharacter } from '@mmg/schema';
+import type { ClientStateView, PublicCharacter } from '@mmg/schema';
 
 interface EventLogProps {
   view: ClientStateView;

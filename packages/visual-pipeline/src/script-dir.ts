@@ -19,8 +19,8 @@
  * 用途:生图脚本(M2)不再要求合成全量 script.json,直接读多文件,
  *      回写时也只回写各分文件,clues.json 保持单一真相。
  */
-import { readFileSync, writeFileSync, existsSync, readdirSync } from 'node:fs';
-import { join, resolve, dirname } from 'node:path';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { join, resolve } from 'node:path';
 import { zScript, type Script, type Clue, type Scene, type Prop, type Character } from '@mmg/schema';
 
 export interface ScriptDir {

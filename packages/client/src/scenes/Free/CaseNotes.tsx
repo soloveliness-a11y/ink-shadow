@@ -11,7 +11,7 @@ function readCaseNote(key: string | null): string {
 }
 
 function writeCaseNote(key: string, text: string): void {
-  try { localStorage.setItem(key, text); } catch {}
+  try { localStorage.setItem(key, text); } catch { /* ignore */ }
 }
 
 export function CaseNotes({ noteKey }: CaseNotesProps) {

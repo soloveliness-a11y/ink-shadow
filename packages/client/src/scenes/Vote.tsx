@@ -94,7 +94,7 @@ export function VoteScene() {
   // 唱票动画:逐票揭示
   const allVoteEntries = view?.votesPublic
     ? Object.entries(view.votesPublic)
-        .filter(([_, t]) => t !== '__voted__')
+        .filter(([, t]) => t !== '__voted__')
         .map(([voterId, targetId]) => ({
           voter: view.publicCharacters.find(c => c.id === voterId)?.name ?? voterId,
           target: view.publicCharacters.find(c => c.id === targetId)?.name ?? String(targetId),

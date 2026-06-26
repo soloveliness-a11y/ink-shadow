@@ -1,4 +1,4 @@
-import type { Script, ScriptMeta, RuntimeState, ClientStateView, Clue, Phase, PhaseKind, ActionKind, SearchableClueStub } from '@mmg/schema';
+import type { Script, ScriptMeta, RuntimeState, ClientStateView, Clue, PhaseKind, ActionKind, SearchableClueStub } from '@mmg/schema';
 import { evaluateFlowCondition } from './engine/flow.js';
 
 /**

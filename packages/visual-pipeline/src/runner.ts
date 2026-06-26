@@ -1,8 +1,8 @@
 import { writeFileSync, readFileSync, mkdirSync, existsSync, renameSync, unlinkSync } from 'node:fs';
-import { dirname, join, resolve, extname } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { planVisualTasks, listAllVisualEntries, promptFingerprint, type VisualTask } from './planner.js';
 import { ImageClient } from './image-client.js';
-import type { Script, VisualSpec, VisualAsset } from '@mmg/schema';
+import type { Script, VisualAsset } from '@mmg/schema';
 import { saveToDir } from './script-dir.js';
 
 /** 尝试用 sharp 将 PNG Buffer 转为 WebP。失败则返回原始 buffer。 */
@@ -282,7 +282,6 @@ export class VisualRunner {
           } catch { /* 迁移失败,保留 .png */ }
         }
 
-        const finalPath = hasWebp || migrated > 0 ? webpFile : actualPath;
         // 重新检查:迁移后可能有 .webp 了
         const usePath = existsSync(join(assetsDir, webpFile)) ? webpFile : actualPath;
         const desired: VisualAsset = {

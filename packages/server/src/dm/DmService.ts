@@ -160,7 +160,7 @@ export class DmService {
       max_tokens: 200,
       system,
       messages,
-    }, { signal: signal as any });
+    }, { signal: signal as AbortSignal | undefined });
 
     const block = resp.content[0];
     if (block && block.type === 'text') return block.text.trim();
@@ -191,7 +191,7 @@ export class DmService {
     });
 
     if (!resp.ok) throw new Error(`OpenAI API error: ${resp.status}`);
-    const data = await resp.json() as any;
+    const data = await resp.json() as { choices?: Array<{ message?: { content?: string } }> };
     return data.choices?.[0]?.message?.content?.trim() ?? '';
   }
 }

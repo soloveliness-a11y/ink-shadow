@@ -18,7 +18,7 @@ export function DmNarrative() {
   return <DmNarrativeInner narratives={dmNarratives} enabled={!!dmEnabled} />;
 }
 
-function DmNarrativeInner({ narratives, enabled }: { narratives: Array<{ text: string; ts: number }>; enabled: boolean }) {
+function DmNarrativeInner({ narratives, enabled: _enabled }: { narratives: Array<{ text: string; ts: number }>; enabled: boolean }) {
   const [expanded, setExpanded] = useState(true);
   const latest = narratives[narratives.length - 1];
   const prevLatestTs = useRef(latest?.ts);

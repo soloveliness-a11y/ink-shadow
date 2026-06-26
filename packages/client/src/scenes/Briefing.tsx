@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { useGameStore } from '../store/game.js';
 import { assetUrl } from '../lib/asset.js';
 import { PhaseStatus } from '../components/PhaseStatus.js';
@@ -75,6 +75,7 @@ export function BriefingScene() {
   });
 
   const isNarrativeMode = !!(unlockedStoryKey || sharedFraming);
+  const [activeTab, setActiveTab] = useState<BriefingTab>('identity');
 
   // ★ 叙事模式 UI (p_social / p_afternoon 等有 narrativeText 的阶段)
   if (isNarrativeMode) {
@@ -155,7 +156,6 @@ export function BriefingScene() {
   }
 
   // ★ Tab 模式 UI (p_opening 等无 narrativeText 的阶段)
-  const [activeTab, setActiveTab] = useState<BriefingTab>('identity');
   const privateRels = self?.relationships?.filter(r => !r.isPublic) ?? [];
 
   const tabs: { key: BriefingTab; label: string; count?: number }[] = [

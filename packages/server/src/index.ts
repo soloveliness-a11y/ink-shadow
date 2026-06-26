@@ -201,7 +201,7 @@ export async function startServer(): Promise<void> {
   };
   const manager = new RoomManager(sendFn, DM_CONFIG);
   for (const { script } of scripts) manager.registerScript(script);
-  const scriptMetas = manager.listScriptMetas();
+  const _scriptMetas = manager.listScriptMetas();
 
   // 3. HTTP server (static + WS upgrade)
   const server = createServer(serveStatic);

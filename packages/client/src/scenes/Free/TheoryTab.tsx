@@ -1,10 +1,11 @@
+import type { ClientIntent } from "@mmg/schema";
 import { useState } from 'react';
 import { THEORY_MAX } from '../../lib/limits.js';
 import { counterColor } from './ChatTab.js';
 
 interface TheoryTabProps {
   myTheory?: string;
-  send: (intent: any) => void;
+  send: (intent: ClientIntent) => void;
 }
 
 export function TheoryTab({ myTheory, send }: TheoryTabProps) {

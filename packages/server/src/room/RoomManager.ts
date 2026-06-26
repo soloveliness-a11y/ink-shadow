@@ -2,7 +2,7 @@ import type { Script, ScriptMeta } from '@mmg/schema';
 import type { ServerMessage, RoomSnapshot } from '@mmg/schema';
 import { Room } from './Room.js';
 import type { DmConfig } from '../dm/DmService.js';
-import { ensureDir, debouncedWrite, writeJsonFile, readJsonFile, scanDirectory, deleteFile, cancelDebouncedWrite } from '../persistence.js';
+import { ensureDir, debouncedWrite, readJsonFile, scanDirectory, deleteFile, cancelDebouncedWrite } from '../persistence.js';
 import { join } from 'node:path';
 
 /** 已完成房间最大存活时间(30 分钟) */

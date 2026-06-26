@@ -3569,19 +3569,276 @@ html { overscroll-behavior: none; }
   .theme-picker .theme-swatch { width: 24px; height: 24px; }
 }
 
-/* ═══ 浅色主题(dawn)组件级适配 ═══ */
-/* 浅底上:边框/阴影要更明显,深底文字色 ti 反转 */
+/* ═══════════════════════════════════════════════════
+   浅色主题(dawn) 组件级适配
+   ─────────────────────────────────────────────────
+   tokens.css 已提供 --s0~s4 / --tp / --ts / --tm / --accent 等变量翻转,
+   这里处理无法用变量覆盖的硬编码 rgba / box-shadow / backdrop 场景。
+   ═══════════════════════════════════════════════════ */
+
+/* ── 颗粒 & 烟雾:浅色下降强度 ── */
+[data-theme="dawn"] .stage-grain { opacity: 0.03; }
+[data-theme="dawn"] .stage-ambient { opacity: 0.35; }
+[data-theme="dawn"] .stage-ambient::before { opacity: 0.3; }
+[data-theme="dawn"] .stage-ambient::after  { opacity: 0.2; }
+
+/* ── 通用卡片阴影 ── */
 [data-theme="dawn"] .card {
   box-shadow: 0 2px 8px rgba(60,50,40,0.08);
 }
+
+/* ── 按钮 ── */
 [data-theme="dawn"] .btn-primary {
+  color: #F5F3EE;
   box-shadow: 0 1px 4px rgba(139,111,71,0.2);
 }
-[data-theme="dawn"] .app-header,
-[data-theme="dawn"] .sidebar {
+[data-theme="dawn"] .btn-danger { color: #fff; }
+
+/* ── Header / Sidebar:半透明背景适配浅色 ── */
+[data-theme="dawn"] .app-header {
+  background: rgba(239,235,227,0.88);
   box-shadow: 0 1px 4px rgba(60,50,40,0.06);
 }
+[data-theme="dawn"] .sidebar {
+  background: rgba(239,235,227,0.75);
+  box-shadow: 0 1px 4px rgba(60,50,40,0.06);
+}
+
+/* ── 滚动条 ── */
 [data-theme="dawn"] ::-webkit-scrollbar-thumb { background: var(--s4); }
 [data-theme="dawn"] ::-webkit-scrollbar-thumb:hover { background: var(--tm); }
-/* 浅色主题下,深底文字(如 btn-primary 的 label)需用深色保证可读 */
-[data-theme="dawn"] .btn-primary { color: #F5F3EE; }
+
+/* ── 输入框聚焦 ── */
+[data-theme="dawn"] .input:focus {
+  box-shadow: 0 0 0 3px rgba(139,111,71,0.1);
+}
+
+/* ── 品牌标识阴影 ── */
+[data-theme="dawn"] .app-header .brand-mark {
+  box-shadow: 0 0 0 1px rgba(139,111,71,0.3), 0 0 12px rgba(139,111,71,0.12);
+}
+[data-theme="dawn"] .login-mark {
+  box-shadow:
+    0 0 0 1px rgba(139,111,71,0.35),
+    0 0 30px rgba(139,111,71,0.15),
+    0 12px 40px rgba(60,50,40,0.15);
+}
+[data-theme="dawn"] .lobby-hero-mark {
+  box-shadow: 0 0 0 1px rgba(139,111,71,0.35), 0 0 30px rgba(139,111,71,0.12);
+}
+
+/* ── 登录卡:半透明背景适配 ── */
+[data-theme="dawn"] .login-card {
+  background: rgba(239,235,227,0.78);
+  box-shadow: 0 24px 80px rgba(60,50,40,0.12);
+}
+[data-theme="dawn"] .login-title {
+  text-shadow: 0 4px 28px rgba(60,50,40,0.12);
+}
+
+/* ── 大厅:渐变背景适配 ── */
+[data-theme="dawn"] .lobby-hero {
+  background: linear-gradient(135deg, rgba(239,235,227,0.9), rgba(228,222,211,0.7));
+}
+[data-theme="dawn"] .lobby-cover {
+  box-shadow: 0 16px 48px rgba(60,50,40,0.15);
+}
+[data-theme="dawn"] .lobby-script-card:hover {
+  box-shadow: 0 8px 24px rgba(60,50,40,0.1);
+}
+[data-theme="dawn"] .lobby-players {
+  background: rgba(239,235,227,0.65);
+}
+
+/* ── Phase Status 渐变 ── */
+[data-theme="dawn"] .phase-status {
+  background: linear-gradient(180deg, var(--s1) 0%, rgba(239,235,227,0.6) 100%);
+}
+[data-theme="dawn"] .phase-current { box-shadow: 0 0 8px rgba(139,111,71,0.3); }
+[data-theme="dawn"] .phase-guidance.ready .phase-guidance-dot {
+  box-shadow: 0 0 10px rgba(139,111,71,0.4);
+}
+[data-theme="dawn"] .phase-guidance.done .phase-guidance-dot {
+  box-shadow: 0 0 10px rgba(90,122,74,0.3);
+}
+
+/* ── Stage panel / Intro 渐变 ── */
+[data-theme="dawn"] .stage-panel {
+  background: linear-gradient(180deg, var(--s1) 0%, rgba(239,235,227,0.5) 100%);
+}
+[data-theme="dawn"] .free-action-panel,
+[data-theme="dawn"] .free-event-panel {
+  background: linear-gradient(180deg, var(--s1) 0%, rgba(239,235,227,0.6) 100%);
+}
+
+/* ── 投票面板 ── */
+[data-theme="dawn"] .vote-status-board {
+  background: linear-gradient(135deg, rgba(160,72,72,0.05), rgba(239,235,227,0.6));
+}
+[data-theme="dawn"] .vote-confirm-panel {
+  background: rgba(239,235,227,0.9);
+  box-shadow: 0 14px 40px rgba(60,50,40,0.1);
+}
+[data-theme="dawn"] .vote-done {
+  background: linear-gradient(180deg, var(--s1), rgba(239,235,227,0.62));
+}
+[data-theme="dawn"] .vote-suspect-card.accused {
+  box-shadow: 0 0 0 1px var(--crimson), 0 10px 28px rgba(160,72,72,0.1);
+}
+[data-theme="dawn"] .vote-suspect-card.locked::after {
+  box-shadow: 0 2px 8px rgba(60,50,40,0.1);
+}
+[data-theme="dawn"] .vote-tally-card {
+  box-shadow: 0 12px 48px rgba(60,50,40,0.12);
+}
+
+/* ── 调查页渐变 ── */
+[data-theme="dawn"] .investigation-summary {
+  background: linear-gradient(135deg, rgba(139,111,71,0.04), rgba(239,235,227,0.6));
+}
+
+/* ── Briefing 卡片 ── */
+[data-theme="dawn"] .briefing-card {
+  background: linear-gradient(180deg, var(--s1) 0%, rgba(239,235,227,0.6) 100%);
+}
+[data-theme="dawn"] .briefing-portrait-img,
+[data-theme="dawn"] .briefing-portrait-fallback {
+  box-shadow:
+    0 14px 34px rgba(60,50,40,0.12),
+    0 0 0 4px rgba(245,243,238,0.7),
+    0 0 0 5px rgba(139,111,71,0.12);
+}
+[data-theme="dawn"] .briefing-name {
+  text-shadow: 0 2px 18px rgba(60,50,40,0.08), 0 0 1px rgba(139,111,71,0.15);
+}
+[data-theme="dawn"] .briefing-story-card.primary {
+  background: rgba(245,243,238,0.7);
+}
+[data-theme="dawn"] .briefing-script {
+  background: linear-gradient(180deg, rgba(139,111,71,0.06), rgba(245,243,238,0.3));
+}
+[data-theme="dawn"] .briefing-section--secret {
+  background: linear-gradient(135deg, rgba(160,72,72,0.04), rgba(245,243,238,0.35));
+}
+
+/* ── 叙事文本 ── */
+[data-theme="dawn"] .narrative-body {
+  background: linear-gradient(180deg, rgba(139,111,71,0.04), rgba(239,235,227,0.4));
+}
+
+/* ── Portrait 画框阴影 ── */
+[data-theme="dawn"] .portrait-card {
+  box-shadow: 0 0 0 3px rgba(245,243,238,0.6), 0 0 0 4px rgba(139,111,71,0.06), 0 8px 22px rgba(60,50,40,0.1);
+}
+[data-theme="dawn"] .portrait-card:hover {
+  box-shadow: 0 0 0 3px rgba(245,243,238,0.6), 0 0 0 4px rgba(139,111,71,0.15), 0 14px 32px rgba(60,50,40,0.12);
+}
+[data-theme="dawn"] .portrait-card.selected {
+  box-shadow: 0 0 0 1px var(--accent), 0 0 0 4px rgba(245,243,238,0.6), 0 0 0 5px var(--accent), 0 12px 30px rgba(60,50,40,0.12);
+}
+[data-theme="dawn"] .portrait-overlay {
+  background: linear-gradient(to top, rgba(44,37,32,0.92), rgba(44,37,32,0.5) 55%, transparent);
+}
+
+/* ── 选角页 ── */
+[data-theme="dawn"] .assigning-title {
+  text-shadow: 0 4px 24px rgba(60,50,40,0.1);
+}
+[data-theme="dawn"] .assigning-progress {
+  background: rgba(239,235,227,0.6);
+}
+
+/* ── Lightbox 遮罩:浅色用暖灰 ── */
+[data-theme="dawn"] .lightbox {
+  background: rgba(245,243,238,0.92);
+}
+[data-theme="dawn"] .lightbox-inner img {
+  box-shadow: 0 24px 80px rgba(60,50,40,0.18), 0 0 0 1px rgba(139,111,71,0.15);
+}
+
+/* ── 全屏遮罩:投票/揭晓/成就 ── */
+[data-theme="dawn"] .ach-overlay,
+[data-theme="dawn"] .vote-tally-overlay {
+  background: rgba(245,243,238,0.82);
+}
+[data-theme="dawn"] .vote-countdown-overlay {
+  background: radial-gradient(ellipse at center, rgba(160,72,72,0.1), rgba(245,243,238,0.85) 70%);
+}
+[data-theme="dawn"] .vote-countdown-number {
+  text-shadow: 0 0 60px rgba(160,72,72,0.4), 0 0 20px rgba(160,72,72,0.25);
+}
+[data-theme="dawn"] .ach-panel,
+[data-theme="dawn"] .vote-tally-card {
+  box-shadow: 0 12px 48px rgba(60,50,40,0.12);
+}
+
+/* ── Scriptbook 遮罩 ── */
+[data-theme="dawn"] .scriptbook-overlay {
+  background: rgba(245,243,238,0.85);
+}
+[data-theme="dawn"] .scriptbook-modal {
+  background: linear-gradient(180deg, var(--s1), var(--s0));
+  box-shadow: 0 24px 80px rgba(60,50,40,0.15);
+}
+[data-theme="dawn"] .scriptbook-trigger {
+  box-shadow: 0 4px 20px rgba(60,50,40,0.15), 0 0 0 0 var(--accent);
+}
+[data-theme="dawn"] .scriptbook-trigger:hover {
+  box-shadow: 0 6px 28px rgba(60,50,40,0.2), 0 0 16px rgba(139,111,71,0.2);
+}
+
+/* ── Toast:半透明背景适配 ── */
+[data-theme="dawn"] .toast-card {
+  background: rgba(239,235,227,0.94);
+  box-shadow: 0 12px 32px rgba(60,50,40,0.12);
+}
+
+/* ── Reveal 揭晓页 ── */
+[data-theme="dawn"] .reveal-card {
+  background: linear-gradient(180deg, rgba(239,235,227,0.9), rgba(228,222,211,0.7));
+  box-shadow: 0 24px 80px rgba(60,50,40,0.12), inset 0 1px 0 rgba(139,111,71,0.06);
+}
+[data-theme="dawn"] .reveal-cover {
+  box-shadow:
+    0 18px 50px rgba(60,50,40,0.15),
+    0 0 0 4px rgba(245,243,238,0.7),
+    0 0 0 5px rgba(139,111,71,0.12);
+}
+[data-theme="dawn"] .reveal-title {
+  text-shadow: 0 4px 24px rgba(60,50,40,0.1);
+}
+[data-theme="dawn"] .reveal-bg-veil {
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 30%, transparent, rgba(245,243,238,0.85) 70%),
+    linear-gradient(180deg, rgba(245,243,238,0.5), rgba(245,243,238,0.95));
+}
+[data-theme="dawn"] .reveal-recap-metric {
+  background: rgba(245,243,238,0.6);
+}
+[data-theme="dawn"] .reveal-event-list {
+  background: rgba(245,243,238,0.5);
+}
+[data-theme="dawn"] .reveal-compare-card.correct {
+  background: rgba(90,122,74,0.06);
+}
+[data-theme="dawn"] .reveal-compare-card.wrong {
+  background: rgba(160,72,72,0.04);
+}
+
+/* ── 私信 / 聊天输入框背景 ── */
+[data-theme="dawn"] .case-notes-input {
+  background: rgba(245,243,238,0.8);
+}
+[data-theme="dawn"] .search-clue-row {
+  background: rgba(245,243,238,0.65);
+}
+
+/* ── 提及选择器 ── */
+[data-theme="dawn"] .mention-picker {
+  box-shadow: 0 12px 32px rgba(60,50,40,0.12);
+}
+
+/* ── 移动端侧栏阴影 ── */
+[data-theme="dawn"] .sidebar.suspect-board {
+  box-shadow: 0 -4px 20px rgba(60,50,40,0.08);
+}

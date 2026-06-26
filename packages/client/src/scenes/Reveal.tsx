@@ -3,7 +3,7 @@ import { useGameStore } from '../store/game.js';
 import { assetUrl } from '../lib/asset.js';
 import { useTypewriter } from '../hooks/useTypewriter.js';
 import { useExcerptSelection } from '../hooks/useExcerptSelection.js';
-import { useMemo, useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { pushToast } from '../lib/toast.js';
 import { recordGame } from '../lib/achievements.js';
 
@@ -88,9 +88,9 @@ export function FinishedScene() {
     const myVoteTargetId = myCharId && view.votesPublic ? (view.votesPublic[myCharId] as string | undefined) : undefined;
     const myVoteTarget = myVoteTargetId && myVoteTargetId !== '__voted__'
       ? view.publicCharacters.find(c => c.id === myVoteTargetId)?.name ?? null : null;
-    const voteEntries = view.votesPublic ? Object.entries(view.votesPublic).filter(([_, t]) => t !== '__voted__') : [];
+    const voteEntries = view.votesPublic ? Object.entries(view.votesPublic).filter(([, t]) => t !== '__voted__') : [];
     const voteTally = new Map<string, number>();
-    for (const [_, tid] of voteEntries) voteTally.set(tid as string, (voteTally.get(tid as string) ?? 0) + 1);
+    for (const [, tid] of voteEntries) voteTally.set(tid as string, (voteTally.get(tid as string) ?? 0) + 1);
     const topTargetId = [...voteTally.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
     const topTarget = topTargetId ? view.publicCharacters.find(c => c.id === topTargetId)?.name ?? null : null;
     const isCorrect = !!myVoteTargetId && myVoteTargetId === topTargetId;
@@ -146,9 +146,9 @@ function RevealRecap() {
 
   // 票型汇总
   const votesPublic = view.votesPublic;
-  const voteEntries = votesPublic ? Object.entries(votesPublic).filter(([_, t]) => t !== '__voted__') : [];
+  const voteEntries = votesPublic ? Object.entries(votesPublic).filter(([, t]) => t !== '__voted__') : [];
   const voteTally = new Map<string, number>();
-  for (const [_, targetId] of voteEntries) {
+  for (const [, targetId] of voteEntries) {
     voteTally.set(targetId, (voteTally.get(targetId) ?? 0) + 1);
   }
 
@@ -219,10 +219,10 @@ function TheoryComparison() {
 
   // 票型汇总
   const voteEntries = votesPublic
-    ? Object.entries(votesPublic).filter(([_, t]) => t !== '__voted__')
+    ? Object.entries(votesPublic).filter(([, t]) => t !== '__voted__')
     : [];
   const voteTally = new Map<string, number>();
-  for (const [_, targetId] of voteEntries) {
+  for (const [, targetId] of voteEntries) {
     const tid = targetId as string;
     voteTally.set(tid, (voteTally.get(tid) ?? 0) + 1);
   }
@@ -373,7 +373,7 @@ function RecapCardButton() {
 
       const cardW = 100, cardH = 70, gap = 16;
       const totalW = metrics.length * cardW + (metrics.length - 1) * gap;
-      let startX = (W - totalW) / 2;
+      const startX = (W - totalW) / 2;
 
       metrics.forEach((m, i) => {
         const x = startX + i * (cardW + gap);

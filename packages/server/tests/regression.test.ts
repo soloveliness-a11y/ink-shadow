@@ -11,7 +11,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { PhaseEngine } from '../src/engine/PhaseEngine.js';
 import { Room } from '../src/room/Room.js';
-import type { Script, RuntimeState, GameEvent, ServerMessage, ClientStateView } from '@mmg/schema';
+import type { Script, RuntimeState, GameEvent, ClientStateView } from '@mmg/schema';
 
 // ─── 共用 mock ───
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { readdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 
@@ -62,7 +63,7 @@ for (const id of SCRIPTS) {
 
   // 4. 从 truth 推断 isVictim / isMurderer
   const murdererIds = (truth?.murdererCharIds ?? []).filter((m: any) => typeof m === 'string' && charIds.includes(m));
-  let victimIds: string[] = [];
+  const victimIds: string[] = [];
 
   // 尝试从 truth 中找受害者
   if (truth?.victim && typeof truth.victim === 'string') {

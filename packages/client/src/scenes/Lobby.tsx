@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import type { ClientIntent } from '@mmg/schema';
 import { useGameStore } from '../store/game.js';
 import { assetUrl } from '../lib/asset.js';
 import { pushToast } from '../lib/toast.js';
@@ -353,11 +354,11 @@ function loadDmConfig(): DmConfig {
   try {
     const saved = localStorage.getItem(DM_STORAGE_KEY);
     if (saved) return { ...DM_DEFAULTS, ...JSON.parse(saved) };
-  } catch {}
+  } catch { /* ignore */ }
   return { ...DM_DEFAULTS };
 }
 
-function DmSettingsPanel({ send }: { send: (intent: any) => void }) {
+function DmSettingsPanel({ send }: { send: (intent: ClientIntent) => void }) {
   const [expanded, setExpanded] = useState(false);
   const [config, setConfig] = useState<DmConfig>(loadDmConfig);
   const [showKey, setShowKey] = useState(false);

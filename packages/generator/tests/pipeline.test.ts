@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import type { Script, Character, Clue, Scene, Phase, PhaseFlow } from '@mmg/schema';
+import type { Script } from '@mmg/schema';
 import { validateScript } from '@mmg/schema';
 import { repairScript } from '../src/pipeline.js';
 

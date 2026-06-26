@@ -3,7 +3,7 @@ import { bgmEngine } from '../audio/bgmEngine.js';
 import './BgmControl.css';
 
 export function BgmControl() {
-  const { muted, currentSlot, unlocked, currentTrackId } = useBgmState();
+  const { muted, currentSlot, unlocked } = useBgmState();
 
   return (
     <div className="bgm-panel">

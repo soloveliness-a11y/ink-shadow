@@ -1,5 +1,5 @@
 import { zScript } from './script.js';
-import type { Script, Clue, Character } from './script.js';
+import type { Script, Clue } from './script.js';
 
 export interface ValidationIssue {
   level: 'error' | 'warn';

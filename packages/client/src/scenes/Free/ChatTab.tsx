@@ -1,3 +1,4 @@
+import type { ClientIntent } from "@mmg/schema";
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { SPEECH_MAX } from '../../lib/limits.js';
 import type { ClientStateView, PublicCharacter } from '@mmg/schema';
@@ -7,13 +8,13 @@ interface ChatTabProps {
   myCharId: string | undefined;
   publicCharacters: PublicCharacter[];
   mentionCandidates: PublicCharacter[];
-  send: (intent: any) => void;
+  send: (intent: ClientIntent) => void;
 }
 
 export function ChatTab({ view, myCharId, publicCharacters, mentionCandidates, send }: ChatTabProps) {
   const [chatText, setChatText] = useState('');
   const [mentionPicker, setMentionPicker] = useState<{ anchor: number; options: { id: string; name: string }[] } | null>(null);
-  const [isScrolledUp, setIsScrolledUp] = useState(false);
+  const [_isScrolledUp, setIsScrolledUp] = useState(false);
   const [hasNewMsg, setHasNewMsg] = useState(false);
   const chatThreadRef = useRef<HTMLDivElement>(null);
   const prevLogLenRef = useRef(0);

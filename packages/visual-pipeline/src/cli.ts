@@ -1,6 +1,6 @@
 #!/usr/bin/env -S npx tsx
 import 'dotenv/config';
-import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { zScript, type Script } from '@mmg/schema';
 import { planVisualTasks } from './planner.js';
@@ -185,7 +185,7 @@ async function main() {
     minIntervalMs: opts.intervalMs,
   });
 
-  const { script: updated, result } = await runner.run(script, { mode: opts.targetMode, path: opts.scriptPath });
+  const { result } = await runner.run(script, { mode: opts.targetMode, path: opts.scriptPath });
 
   console.log(`\n[mode=${opts.targetMode}] Result: ${result.done} done, ${result.failed} failed, ${result.skipped} skipped / ${result.total} total`);
 

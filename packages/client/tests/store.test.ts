@@ -1,3 +1,4 @@
+ 
 /**
  * Store 消息处理单元测试。
  * 直接测试 handleServerMessage，mock getState/setState/exitKicked。

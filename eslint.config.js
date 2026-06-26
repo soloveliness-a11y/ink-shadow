@@ -9,9 +9,16 @@ export default tseslint.config(
     plugins: { 'react-hooks': reactHooks },
     rules: {
       ...reactHooks.configs.recommended.rules,
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
     },
   },
   {
-    ignores: ['dist/', 'node_modules/', 'content/'],
+    ignores: ['**/dist/', 'node_modules/', 'content/', 'scripts/**/*.cjs', 'scripts/**/*.mjs'],
+  },
+  {
+    files: ['**/*.test.ts'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
   },
 );

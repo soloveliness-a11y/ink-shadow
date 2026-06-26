@@ -1,3 +1,4 @@
+import type { ClientIntent } from "@mmg/schema";
 import { useEffect, useRef, useState } from 'react';
 import { SPEECH_MAX } from '../../lib/limits.js';
 import { counterColor } from './ChatTab.js';
@@ -21,11 +22,11 @@ interface PrivateTabProps {
   pmTarget: string;
   onPmTargetChange: (target: string) => void;
   onUpdateLastSeen: () => void;
-  send: (intent: any) => void;
+  send: (intent: ClientIntent) => void;
 }
 
 export function PrivateTab({
-  view, myCharId, publicCharacters, pmCandidates, privateMessages,
+  view: _view, myCharId, publicCharacters, pmCandidates, privateMessages,
   pmStats, lastSeenPmTs, pmTarget, onPmTargetChange, onUpdateLastSeen, send,
 }: PrivateTabProps) {
   const [pmText, setPmText] = useState('');

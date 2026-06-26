@@ -13,7 +13,7 @@ function getNotes(scriptId: string, playerId: string, charId: string): string {
   catch { return ''; }
 }
 function setNotes(scriptId: string, playerId: string, charId: string, text: string): void {
-  try { localStorage.setItem(`notes:${scriptId}:${playerId}:${charId}`, text); } catch {}
+  try { localStorage.setItem(`notes:${scriptId}:${playerId}:${charId}`, text); } catch { /* ignore */ }
 }
 
 export function CharacterSidebar() {

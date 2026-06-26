@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { readdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 
@@ -18,7 +19,7 @@ function writeJson(p: string, data: unknown) {
   writeFileSync(p, JSON.stringify(data, null, 2) + '\n', 'utf-8');
 }
 
-function repairCharacter(char: Record<string, any>, scriptDir: string): Record<string, any> {
+function repairCharacter(char: Record<string, any>, _scriptDir: string): Record<string, any> {
   const out: Record<string, any> = {
     id: char.id,
     name: char.name,

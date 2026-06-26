@@ -80,6 +80,7 @@ test('SnapshotStore: clear 清空栈', () => {
 // ─── BotRunner ───
 
 /** 构造一个 mock PhaseEngine,记录收到的意图,可配置 handleAction 的返回。 */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function mockEngine(overrides: { handleAction?: (c: string, i: ClientIntent) => { ok: boolean; error?: string } } = {}): PhaseEngine {
   return {
     handleAction: overrides.handleAction ?? (() => ({ ok: true })),

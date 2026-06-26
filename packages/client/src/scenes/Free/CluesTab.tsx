@@ -1,22 +1,23 @@
+import type { ClientIntent } from "@mmg/schema";
 import { useState } from 'react';
 import { assetUrl } from '../../lib/asset.js';
 import { pushToast } from '../../lib/toast.js';
 import { ClueCard, RevealClueButton } from './shared.js';
-import type { ClientStateView, Clue, PublicCharacter } from '@mmg/schema';
+import type { ClientStateView, Clue } from '@mmg/schema';
 
 interface CluesTabProps {
   view: ClientStateView;
   myCharId: string | undefined;
   scriptId: string | undefined;
   allowed: Set<string>;
-  send: (intent: any) => void;
+  send: (intent: ClientIntent) => void;
   onLightbox: (lb: { src: string; caption?: string }) => void;
 }
 
-export function CluesTab({ view, myCharId, scriptId, allowed, send, onLightbox }: CluesTabProps) {
+export function CluesTab({ view, myCharId: _myCharId, scriptId, allowed, send, onLightbox }: CluesTabProps) {
   const [clueSceneId, setClueSceneId] = useState<string | null>(null);
 
-  const revealedIds = new Set(view?.revealedClues?.map((cl) => cl.id) ?? []);
+  const _revealedIds = new Set(view?.revealedClues?.map((cl) => cl.id) ?? []);
 
   // Merge my clues + revealed clues (deduplicated)
   const allMyClues = (() => {

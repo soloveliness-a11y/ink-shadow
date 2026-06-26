@@ -1,3 +1,4 @@
+import type { ClientIntent } from "@mmg/schema";
 import { useEffect, useRef, useState } from 'react';
 import { assetUrl } from '../../lib/asset.js';
 import { pushToast } from '../../lib/toast.js';
@@ -10,7 +11,7 @@ interface SearchTabProps {
   myCharId: string | undefined;
   scriptId: string | undefined;
   canSearch: boolean;
-  send: (intent: any) => void;
+  send: (intent: ClientIntent) => void;
   onLightbox: (lb: { src: string; caption?: string }) => void;
 }
 

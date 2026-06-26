@@ -152,7 +152,7 @@ export class PhaseEngine {
   }
 
   /** 房主手动推进 */
-  hostAdvance(charId: string): ActionResult {
+  hostAdvance(_charId: string): ActionResult {
     const phase = this.current();
     if (!phase) return reject('no_active_phase');
     if (!['hostAdvance', 'timer'].includes(phase.exit.kind)) return reject('not_host_advance_phase');
