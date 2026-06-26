@@ -25,25 +25,46 @@ function getOffsetInContainer(container: HTMLElement, range: Range): number {
 }
 
 /** 把页面文本按标注区间切成片段;标注片段套带样式的 span,重叠部分取先到的标注 */
-function buildMarkedSegments(pageText: string, marks: ScriptAnnotation[]): ReactNode[] {
-  if (marks.length === 0) return [pageText];
-  const sorted = [...marks].sort((a, b) => a.startOffset - b.startOffset);
-  const result: ReactNode[] = [];
-  let cursor = 0;
-  for (const m of sorted) {
-    const start = Math.max(m.startOffset, cursor);
-    const end = Math.min(m.endOffset, pageText.length);
-    if (start >= end) continue;
-    if (start > cursor) result.push(pageText.slice(cursor, start));
-    result.push(
-      <span key={m.id} className={`anno-mark anno-${m.type}`}>
-        {pageText.slice(start, end)}
-      </span>,
-    );
-    cursor = end;
+function buildMarkedSegments(pageText: string, marks: ScriptAnnotation[], entityNames: string[]): ReactNode[] {
+  // 先按标注切分
+  let baseSegments: ReactNode[] = [pageText];
+  if (marks.length > 0) {
+    const sorted = [...marks].sort((a, b) => a.startOffset - b.startOffset);
+    const result: ReactNode[] = [];
+    let cursor = 0;
+    for (const m of sorted) {
+      const start = Math.max(m.startOffset, cursor);
+      const end = Math.min(m.endOffset, pageText.length);
+      if (start >= end) continue;
+      if (start > cursor) result.push(pageText.slice(cursor, start));
+      result.push(
+        <span key={m.id} className={`anno-mark anno-${m.type}`}>
+          {pageText.slice(start, end)}
+        </span>,
+      );
+      cursor = end;
+    }
+    if (cursor < pageText.length) result.push(pageText.slice(cursor));
+    baseSegments = result;
   }
-  if (cursor < pageText.length) result.push(pageText.slice(cursor));
-  return result;
+
+  // 实体高亮:只对纯文本片段做替换,跳过已标注的 React 元素
+  if (entityNames.length === 0) return baseSegments;
+  const namePattern = new RegExp(entityNames.map(n => n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g');
+  const finalResult: ReactNode[] = [];
+  let keyIdx = 0;
+  for (const seg of baseSegments) {
+    if (typeof seg !== 'string') { finalResult.push(seg); continue; }
+    let lastIdx = 0;
+    for (const match of seg.matchAll(namePattern)) {
+      const start = match.index!;
+      if (start > lastIdx) finalResult.push(seg.slice(lastIdx, start));
+      finalResult.push(<span key={`ent-${keyIdx++}`} className="anno-mark anno-entity">{match[0]}</span>);
+      lastIdx = start + match[0].length;
+    }
+    if (lastIdx < seg.length) finalResult.push(seg.slice(lastIdx));
+  }
+  return finalResult;
 }
 
 interface ScriptSegment { title: string; body: string }
@@ -69,6 +90,7 @@ export function ScriptBook() {
   } | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [activeTab, setActiveTab] = useState<'script' | 'excerpts'>('script');
+  const [readPages, setReadPages] = useState<Set<number>>(() => new Set());
 
   const leftPageRef = useRef<HTMLDivElement>(null);
   const rightPageRef = useRef<HTMLDivElement>(null);
@@ -127,6 +149,26 @@ export function ScriptBook() {
     self?.unlockedKeywordMemories,
   ]);
   const clampedPage = Math.max(0, Math.min(currentPage, totalPages - 1));
+
+  // 标记当前页为已读
+  useEffect(() => {
+    if (!open) return;
+    setReadPages((prev) => {
+      const next = new Set(prev);
+      next.add(clampedPage);
+      if (clampedPage + 1 < totalPages) next.add(clampedPage + 1);
+      return next;
+    });
+  }, [clampedPage, open, totalPages]);
+
+  // 实体名列表(角色名 + 常见时间词),用于自动高亮
+  const entityNames = useMemo(() => {
+    const names = (view?.publicCharacters ?? []).map(c => c.name).filter(n => n.length >= 2);
+    return [...new Set(names)];
+  }, [view?.publicCharacters]);
+
+  // 阅读进度
+  const readPct = totalPages > 0 ? Math.round((readPages.size / totalPages) * 100) : 0;
 
   // 添加标注
   const addAnnotation = useCallback(
@@ -246,7 +288,7 @@ export function ScriptBook() {
         return (
           <section key={segIdx} className="scriptbook-segment">
             <h4 className="scriptbook-segment-title">{seg.title}</h4>
-            <p className="scriptbook-page-text">{buildMarkedSegments(seg.body, marks)}</p>
+            <p className="scriptbook-page-text">{buildMarkedSegments(seg.body, marks, entityNames)}</p>
           </section>
         );
       })}
@@ -294,6 +336,12 @@ export function ScriptBook() {
               <div className="scriptbook-topbar-left">
                 <span className="scriptbook-book-title">我的剧本</span>
                 {myChar && <span className="scriptbook-char-name">{myChar.name}</span>}
+                <div className="scriptbook-read-progress" title={`已读 ${readPct}%`}>
+                  <div className="scriptbook-read-bar">
+                    <div className="scriptbook-read-fill" style={{ width: `${readPct}%` }} />
+                  </div>
+                  <span className="scriptbook-read-pct">{readPct}%</span>
+                </div>
               </div>
               <div className="scriptbook-topbar-right">
                 {excerptCount > 0 && (
@@ -381,7 +429,16 @@ export function ScriptBook() {
                   <div className="scriptbook-notes-list">
                     {excerptList.map((a) => (
                       <div key={a.id} className="scriptbook-note-item">
-                        「{a.text.slice(0, 200)}{a.text.length > 200 ? '…' : ''}」
+                        <span
+                          className="scriptbook-note-text"
+                          role="button"
+                          tabIndex={0}
+                          onClick={() => { setActiveTab('script'); setCurrentPage(a.pageIndex); }}
+                          onKeyDown={(e) => { if (e.key === 'Enter') { setActiveTab('script'); setCurrentPage(a.pageIndex); } }}
+                          title={`跳到第 ${a.pageIndex + 1} 页`}
+                        >
+                          「{a.text.slice(0, 200)}{a.text.length > 200 ? '…' : ''}」
+                        </span>
                         {a.source && <div className="scriptbook-note-source">来自 · {a.source}</div>}
                         <button className="scriptbook-anno-del" onClick={() => removeAnnotation(a.id)} title="删除摘录">×</button>
                       </div>

@@ -375,6 +375,19 @@ select.input {
   margin-top: var(--sp3); padding-top: var(--sp3); border-top: 1px solid var(--s4);
   color: var(--ts); font-size: 13px;
 }
+.phase-host-log {
+  margin-top: var(--sp3);
+  padding-top: var(--sp3);
+  border-top: 1px solid var(--s4);
+}
+.host-log-list {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 6px;
+  padding: 6px 8px;
+  background: var(--s2);
+  border-radius: var(--r-sm, 6px);
+}
 
 /* ============================================================
    Login(入场页) — 左右舞台布局,压缩首屏高度
@@ -2080,6 +2093,12 @@ select.input {
   .narrative-text { font-size: 15px; line-height: 1.9; }
   .clue-card-text { font-size: 14px; line-height: 1.7; }
   .free-action-panel { min-height: auto; }
+  .vote-suspect-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: var(--sp3); }
+  .invite-actions { flex-direction: column; }
+  .invite-actions .btn { width: 100%; }
+  .ach-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .reveal-actions { flex-direction: column; align-items: stretch; }
+  .reveal-actions .btn { width: 100%; }
 }
 
 @media (max-width: 480px) {
@@ -2206,6 +2225,296 @@ select.input {
   60%  { transform: scale(1); }
   100% { opacity: 0.5; transform: scale(0.95); }
 }
+
+/* --- 3b. 唱票动画 --- */
+.vote-tally-overlay {
+  position: fixed; inset: 0; z-index: var(--z-overlay);
+  background: rgba(8, 8, 13, 0.88);
+  display: flex; align-items: center; justify-content: center;
+  animation: fadeIn 300ms var(--ease);
+}
+.vote-tally-card {
+  background: var(--s1);
+  border: 1px solid var(--s3);
+  border-radius: var(--r-lg, 12px);
+  padding: 28px 32px;
+  min-width: 280px;
+  max-width: 380px;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+}
+.vote-tally-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: center;
+  font-family: var(--fh);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--th);
+  margin-bottom: 20px;
+}
+.vote-tally-line {
+  flex: 1;
+  height: 1px;
+  background: var(--s3);
+}
+.vote-tally-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.vote-tally-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: var(--s2);
+  border-radius: var(--r-md, 8px);
+  animation: tallySlideIn 400ms var(--ease) both;
+}
+@keyframes tallySlideIn {
+  from { opacity: 0; transform: translateX(-16px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.vote-tally-voter {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--th);
+  min-width: 60px;
+}
+.vote-tally-arrow {
+  color: var(--ts);
+  font-size: 13px;
+}
+.vote-tally-target {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--crimson);
+}
+.vote-tally-pending {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  padding: 12px 0;
+}
+.vote-tally-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ts);
+  animation: tallyDotPulse 1s ease infinite;
+}
+.vote-tally-dot:nth-child(2) { animation-delay: 200ms; }
+.vote-tally-dot:nth-child(3) { animation-delay: 400ms; }
+@keyframes tallyDotPulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+.vote-tally-done {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 13px;
+  color: var(--accent);
+  font-weight: 600;
+  animation: fadeIn 400ms var(--ease);
+}
+
+/* --- 3c. 推理 vs 真相对比 --- */
+.reveal-compare {
+  margin-top: 20px;
+}
+.reveal-compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 10px;
+}
+.reveal-compare-card {
+  padding: 14px;
+  background: var(--s2);
+  border: 1px solid var(--s3);
+  border-radius: var(--r-md, 8px);
+}
+.reveal-compare-card.correct {
+  border-color: var(--sage, #6B9E6B);
+  background: rgba(107, 158, 107, 0.08);
+}
+.reveal-compare-card.wrong {
+  border-color: var(--crimson);
+  background: rgba(196, 84, 84, 0.06);
+}
+.reveal-compare-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ts);
+  margin-bottom: 6px;
+}
+.reveal-compare-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--th);
+}
+.reveal-compare-verdict {
+  text-align: center;
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: var(--r-md, 8px);
+  font-weight: 700;
+  font-size: 14px;
+}
+.reveal-compare-verdict.correct {
+  background: rgba(107, 158, 107, 0.12);
+  color: var(--sage, #6B9E6B);
+}
+.reveal-compare-verdict.wrong {
+  background: rgba(196, 84, 84, 0.1);
+  color: var(--crimson);
+}
+
+/* --- 3d. 推理回顾操作按钮 --- */
+.reveal-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+/* --- 4. 邀请面板 --- */
+.invite-panel {
+  padding: 12px 16px;
+  background: var(--s2);
+  border: 1px solid var(--s3);
+  border-radius: var(--r-md, 8px);
+  margin-bottom: var(--sp4);
+}
+.invite-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.invite-hint {
+  font-size: 11px;
+  color: var(--tm);
+  margin-top: 6px;
+}
+
+/* --- 5. 战绩成就面板 --- */
+.header-ach-btn {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 2px 4px;
+  line-height: 1;
+  transition: transform 0.15s;
+}
+.header-ach-btn:hover { transform: scale(1.15); }
+
+.ach-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay, 20);
+  background: rgba(8, 8, 13, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 200ms ease;
+}
+.ach-panel {
+  background: var(--s1);
+  border: 1px solid var(--s3);
+  border-radius: var(--r-lg, 12px);
+  padding: 20px 24px;
+  max-width: 480px;
+  width: 92%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+}
+.ach-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.ach-title {
+  font-family: var(--fh);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--th);
+}
+.ach-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.ach-stat {
+  text-align: center;
+  padding: 12px 8px;
+  background: var(--s2);
+  border-radius: var(--r-md, 8px);
+}
+.ach-stat-value {
+  display: block;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--accent);
+  font-family: var(--fh);
+}
+.ach-stat-label {
+  display: block;
+  font-size: 11px;
+  color: var(--ts);
+  margin-top: 2px;
+}
+.ach-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.ach-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--s2);
+  border: 1px solid var(--s3);
+  border-radius: var(--r-md, 8px);
+  opacity: 0.45;
+  transition: opacity 0.2s;
+}
+.ach-card.unlocked {
+  opacity: 1;
+  border-color: rgba(196, 166, 106, 0.3);
+}
+.ach-icon { font-size: 20px; flex-shrink: 0; }
+.ach-info { flex: 1; min-width: 0; }
+.ach-name { font-size: 13px; font-weight: 700; color: var(--th); }
+.ach-desc { font-size: 11px; color: var(--ts); }
+.ach-check { color: var(--sage, #6B9E6B); font-weight: 700; font-size: 14px; }
+.ach-history {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ach-history-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  background: var(--s2);
+  border-radius: var(--r-sm, 6px);
+  font-size: 12px;
+}
+.ach-history-script { flex: 1; font-weight: 600; color: var(--th); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ach-history-char { color: var(--ts); flex-shrink: 0; }
+.ach-history-vote { font-weight: 700; flex-shrink: 0; color: var(--crimson); }
+.ach-history-vote.correct { color: var(--sage, #6B9E6B); }
+.ach-history-date { color: var(--tm); flex-shrink: 0; font-size: 10px; }
 
 /* --- 4. Toast 视图 --- */
 .toast-viewport {
@@ -2709,6 +3018,46 @@ html { scroll-behavior: smooth; }
 .anno-mark.anno-highlight-green { background: rgba(125, 206, 160, 0.4); }
 .anno-mark.anno-highlight-blue { background: rgba(133, 193, 233, 0.4); }
 .anno-mark.anno-underline { text-decoration: underline; text-decoration-color: #C4A66A; text-decoration-thickness: 2px; }
+.anno-mark.anno-entity {
+  background: rgba(160, 190, 230, 0.18);
+  border-bottom: 1px solid rgba(160, 190, 230, 0.4);
+  font-weight: 600;
+  cursor: default;
+}
+
+/* 阅读进度 */
+.scriptbook-read-progress {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 4px;
+}
+.scriptbook-read-bar {
+  width: 48px;
+  height: 4px;
+  background: var(--s3);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.scriptbook-read-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+.scriptbook-read-pct {
+  font-size: 10px;
+  color: var(--ts);
+  font-weight: 600;
+  min-width: 24px;
+}
+
+/* 摘录可点击 */
+.scriptbook-note-text {
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.scriptbook-note-text:hover { color: var(--accent); }
 .scriptbook-note-source {
   font-size: 11px;
   color: #9a8466;

@@ -14,8 +14,10 @@ export function VoteScene() {
   const [selected, setSelected] = useState('');
   const [confirming, setConfirming] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  // 终局倒数(全部投完后)
+  // 终局倒数(全部投完后) → 唱票动画
   const [countdown, setCountdown] = useState<{ n: number; key: number } | null>(null);
+  const [tallyPhase, setTallyPhase] = useState(false);
+  const [revealedVotes, setRevealedVotes] = useState<Array<{ voter: string; target: string }>>([]);
   const prevVotedCount = useRef<number>(0);
   const selectedChar = view?.publicCharacters.find((c) => c.id === selected);
   const voteMode = view?.currentPhase?.voteMode ?? 'char';
@@ -76,13 +78,37 @@ export function VoteScene() {
     if (!countdown) return;
     if (countdown.n <= 0) {
       setCountdown(null);
+      // 倒数结束 → 进入唱票阶段
+      if (!tallyPhase) {
+        setTallyPhase(true);
+        setRevealedVotes([]);
+      }
       return;
     }
     const t = window.setTimeout(() => {
       setCountdown({ n: countdown.n - 1, key: countdown.key });
     }, 900);
     return () => window.clearTimeout(t);
-  }, [countdown]);
+  }, [countdown, tallyPhase]);
+
+  // 唱票动画:逐票揭示
+  const allVoteEntries = view?.votesPublic
+    ? Object.entries(view.votesPublic)
+        .filter(([_, t]) => t !== '__voted__')
+        .map(([voterId, targetId]) => ({
+          voter: view.publicCharacters.find(c => c.id === voterId)?.name ?? voterId,
+          target: view.publicCharacters.find(c => c.id === targetId)?.name ?? String(targetId),
+        }))
+    : [];
+
+  useEffect(() => {
+    if (!tallyPhase) return;
+    if (revealedVotes.length >= allVoteEntries.length) return;
+    const t = window.setTimeout(() => {
+      setRevealedVotes((prev) => [...prev, allVoteEntries[prev.length]!]);
+    }, 800);
+    return () => window.clearTimeout(t);
+  }, [tallyPhase, revealedVotes.length, allVoteEntries]);
 
   return (
     <div className="vote-stage">
@@ -228,9 +254,40 @@ export function VoteScene() {
         </>
       )}
 
+      {/* 倒计时 → 唱票动画 */}
       {countdown && (
         <div className="vote-countdown-overlay" key={countdown.key}>
           <div className="vote-countdown-number">{countdown.n > 0 ? countdown.n : 'GO'}</div>
+        </div>
+      )}
+
+      {/* 唱票阶段:逐票揭示 */}
+      {tallyPhase && (
+        <div className="vote-tally-overlay">
+          <div className="vote-tally-card">
+            <div className="vote-tally-header">
+              <span className="vote-tally-line" /> 唱票 <span className="vote-tally-line" />
+            </div>
+            <div className="vote-tally-list">
+              {revealedVotes.map((v, i) => (
+                <div key={i} className="vote-tally-row" style={{ animationDelay: '0ms' }}>
+                  <span className="vote-tally-voter">{v.voter}</span>
+                  <span className="vote-tally-arrow">→</span>
+                  <span className="vote-tally-target">{v.target}</span>
+                </div>
+              ))}
+              {revealedVotes.length < allVoteEntries.length && (
+                <div className="vote-tally-pending">
+                  <span className="vote-tally-dot" />
+                  <span className="vote-tally-dot" />
+                  <span className="vote-tally-dot" />
+                </div>
+              )}
+            </div>
+            {revealedVotes.length >= allVoteEntries.length && (
+              <div className="vote-tally-done">票型已全部揭示</div>
+            )}
+          </div>
         </div>
       )}
     </div>

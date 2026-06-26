@@ -300,6 +300,23 @@ export const useGameStore = create<GameState>((set, get) => ({
   },
 }));
 
+/** 当前玩家是否已在当前环节行动过 */
+export function useHasActed(): boolean {
+  return useGameStore((s) => {
+    const myCharId = s.view?.self?.charId;
+    return !!myCharId && (s.view?.phaseProgress?.actedCharIds.includes(myCharId) ?? false);
+  });
+}
+
+/** 当前环节是否已结束（所有必需玩家都已行动） */
+export function usePhaseEnded(): boolean {
+  return useGameStore((s) => {
+    const progress = s.view?.phaseProgress;
+    if (!progress) return false;
+    return progress.actedCount >= progress.totalRequired;
+  });
+}
+
 function currentCharId(view: ClientStateView | null): string | null {
   return view?.self?.charId ?? null;
 }

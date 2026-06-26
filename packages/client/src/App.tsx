@@ -13,6 +13,7 @@ import { CharacterSidebar } from './components/CharacterSidebar.js';
 import { BgmControl } from './components/BgmControl.js';
 import { ScriptBook } from './components/ScriptBook.js';
 import { DmNarrative } from './components/DmNarrative.js';
+import { WaitingPanel } from './components/WaitingPanel.js';
 import { ToastViewport } from './lib/toast-viewport.js';
 import { useBgmUnlock } from './audio/useBgmState.js';
 import { useBgmPhaseRouter } from './audio/useBgmPhaseRouter.js';
@@ -79,6 +80,7 @@ export function App() {
       </div>
       <ToastViewport />
       <BgmControl />
+      {status === 'playing' && <WaitingPanel />}
       {(status === 'playing' || status === 'finished') && <ScriptBook />}
       <DmNarrative />
     </>
