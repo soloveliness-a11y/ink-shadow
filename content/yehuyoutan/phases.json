@@ -1,7 +1,0 @@
-[
-  {"id": "p_briefing", "kind": "briefing", "title": "阅读剧本", "instruction": "阅读各自的角色剧本，了解背景故事。", "participants": "all", "allowedActions": ["readScript", "ready"], "exit": {"kind": "allReady"}},
-  {"id": "p_social", "kind": "free", "title": "寒暄阶段", "instruction": "10月4日，卫风邑。众人相互了解，交流信息。", "participants": "all", "allowedActions": ["speak", "searchClue", "revealClue", "privateMessage"], "exit": {"kind": "hostAdvance"}, "unlocks": {"clueIds": ["cl_poison_symptom", "cl_pledge", "cl_fox_spirit"]}},
-  {"id": "p_investigation", "kind": "free", "title": "调查阶段", "instruction": "搜查线索，推理真相。", "participants": "all", "allowedActions": ["speak", "searchClue", "revealClue", "privateMessage"], "exit": {"kind": "hostAdvance"}, "unlocks": {"clueIds": ["cl_ghost_servant", "cl_incense"]}},
-  {"id": "p_vote", "kind": "vote", "title": "谁是真凶？", "instruction": "填写你知道吗？包括指认凶手等。", "participants": "all", "allowedActions": ["castVote"], "exit": {"kind": "voteComplete"}},
-  {"id": "p_reveal", "kind": "reveal", "title": "真相揭晓", "instruction": "公布投票结果和案件真相。", "participants": "all", "allowedActions": ["submitTheory"], "exit": {"kind": "hostAdvance"}}
-]

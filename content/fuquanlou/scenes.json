@@ -1,5 +1,0 @@
-[
-  {"id": "s_south_building", "name": "南楼", "description": "复泉楼南栋，住客的房间所在。", "visual": {"kind": "scene", "prompt": "Chinese hotel south building, Republican era, oil painting style", "aspect": "16:9"}},
-  {"id": "s_north_building", "name": "北楼", "description": "复泉楼北栋，书房和家主人居所。", "visual": {"kind": "scene", "prompt": "Chinese hotel north building, study room, oil painting style", "aspect": "16:9"}},
-  {"id": "s_courtyard", "name": "复泉楼院子", "description": "复泉楼内院，连接南北两栋。", "visual": {"kind": "scene", "prompt": "Chinese hotel courtyard, oil painting style", "aspect": "16:9"}}
-]

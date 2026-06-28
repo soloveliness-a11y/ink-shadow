@@ -1,7 +1,0 @@
-[
-  {"id": "cl_fall", "title": "旗劳坠楼", "content": "复泉楼主管旗劳从楼梯坠落，头破血流而死。", "visibility": "searchable", "isKey": true, "pointsTo": ["truth_qilao"]},
-  {"id": "cl_study_body", "title": "书房尸体", "content": "家主人苏莫显被发现死于北楼书房，与椅子一起倒在地上。", "visibility": "searchable", "isKey": true, "pointsTo": ["truth_sumo"]},
-  {"id": "cl_bullet_hole", "title": "墙上的小孔", "content": "书房南侧墙上有一个仿佛弹孔的小孔。", "visibility": "searchable", "isKey": true, "pointsTo": ["truth_sumo"]},
-  {"id": "cl_keys", "title": "尸体上的钥匙", "content": "旗劳尸体上有戊房和己房的钥匙，但没有丙房钥匙。", "visibility": "searchable", "isKey": false, "pointsTo": ["truth_qilao"]},
-  {"id": "cl_secret_letter", "title": "密信", "content": "一份关系到袁大总统的密报。", "visibility": "searchable", "isKey": true, "pointsTo": ["truth_mission"]}
-]

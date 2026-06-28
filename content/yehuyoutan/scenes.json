@@ -1,6 +1,0 @@
-[
-  {"id": "s_dalin_home", "name": "丹琳家", "description": "钱长英的家，灵堂中停放着棺木。", "visual": {"kind": "scene", "prompt": "Chinese village house with funeral altar, oil painting style", "aspect": "16:9"}},
-  {"id": "s_zhongyu_home", "name": "中玉家", "description": "钱广有的家，发现第二具尸体。", "visual": {"kind": "scene", "prompt": "Chinese village house, oil painting style", "aspect": "16:9"}},
-  {"id": "s_sun_house", "name": "孙宅", "description": "孙芦坡的家。", "visual": {"kind": "scene", "prompt": "Chinese traditional house, oil painting style", "aspect": "16:9"}},
-  {"id": "s_guhu_temple", "name": "谷虎观", "description": "桑尘子的道观，后由何千程和井儿居住。", "visual": {"kind": "scene", "prompt": "Chinese Taoist temple, mountain setting, oil painting style", "aspect": "16:9"}}
-]

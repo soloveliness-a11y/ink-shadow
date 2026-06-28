@@ -1,7 +1,0 @@
-[
-  {"id": "cl_poison_symptom", "title": "口鼻出血的死状", "content": "钱长英和钱广有都是口鼻出血而死，死状相同。", "visibility": "searchable", "isKey": true, "pointsTo": ["truth_poison"]},
-  {"id": "cl_pledge", "title": "发毒誓", "content": "钱长英死前说何千程让他发毒誓不能告诉别人关于「神通鬼使」的事。", "visibility": "searchable", "isKey": true, "pointsTo": ["truth_secret"]},
-  {"id": "cl_fox_spirit", "title": "瘸腿老狐传说", "content": "传说桑尘子斩杀狐妖时逃掉一只披着人衣的瘸腿老狐。", "visibility": "searchable", "isKey": false, "pointsTo": ["truth_fox"]},
-  {"id": "cl_ghost_servant", "title": "神通鬼使", "content": "桑尘子和何千程一直在寻找「神通鬼使」的下落。", "visibility": "searchable", "isKey": true, "pointsTo": ["truth_secret"]},
-  {"id": "cl_incense", "title": "古旧香囊", "content": "钱中玉在荒坟旁捡到的古旧香囊。", "visibility": "searchable", "isKey": false, "pointsTo": ["truth_fox"]}
-]
