@@ -1,0 +1,21 @@
+{
+  "entry": "p_briefing",
+  "edges": [
+    {
+      "from": "p_briefing",
+      "to": "p_social"
+    },
+    {
+      "from": "p_social",
+      "to": "p_investigate"
+    },
+    {
+      "from": "p_investigate",
+      "to": "p_vote"
+    },
+    {
+      "from": "p_vote",
+      "to": "p_reveal"
+    }
+  ]
+}

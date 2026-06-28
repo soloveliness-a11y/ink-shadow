@@ -1,0 +1,65 @@
+{
+  "id": "zhichang",
+  "name": "知常",
+  "gender": "male",
+  "age": 25,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "丘家大少爷，性格沉稳。",
+  "privateScript": "你是丘家长孙，一直在丘宅生活，对家族煤矿事务有所了解。",
+  "objectives": [
+    {
+      "id": "obj_zc_1",
+      "kind": "main",
+      "description": "找到3号矿道塌方真相。(5分)",
+      "scoring": 5
+    },
+    {
+      "id": "obj_zc_2",
+      "kind": "main",
+      "description": "找出每个命案真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [
+    "知道煤矿的一些内幕"
+  ],
+  "timeline": [
+    {
+      "time": "1910年5月",
+      "location": "煤矿宿舍",
+      "action": "去找大蔡密谈",
+      "isPublic": false
+    },
+    {
+      "time": "1910年5月17日",
+      "location": "煤矿入口",
+      "action": "目睹塌方事故",
+      "isPublic": false
+    },
+    {
+      "time": "1914年8月24日",
+      "location": "洋馆",
+      "action": "参加葬礼",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "qingdu",
+      "relation": "堂兄弟",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "fandongzheng",
+      "relation": "叔侄",
+      "isPublic": true
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "知常, male, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

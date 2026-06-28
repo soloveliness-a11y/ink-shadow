@@ -26,7 +26,7 @@ function makeBus(events: string[] = []) {
 function makeState(opts: { players?: { playerId: string; charId: string; nickname: string }[]; phaseId?: string } = {}): RuntimeState {
   return {
     roomCode: 'TEST',
-    scriptId: '_mock',
+    scriptId: 'mock',
     status: 'playing' as const,
     players: (opts.players ?? [
       { playerId: 'p1', charId: 'c_wife', nickname: 'A', connected: true, ready: true, isHost: true },
@@ -53,7 +53,7 @@ test('B1: 进入非决胜投票环节时,残留的 tieCharIds 被清空', () => 
   // 构造剧本:决胜轮 p_tiebreak(restrictVoteTargets='tied') 后跟普通投票 p_vote2
   // flow edges 让 p_vote2 从 p_tiebreak 可达(无条件边)
   const script: Script = {
-    id: '_mock', meta: { id: '_mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
+    id: 'mock', meta: { id: 'mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
     characters: [
       { id: 'c_wife', name: '妻', gender: 'female' as const, publicProfile: '', visual: {} } as never,
       { id: 'c_butler', name: '仆', gender: 'male' as const, publicProfile: '', visual: {} } as never,
@@ -94,14 +94,14 @@ test('B1: 进入非决胜投票环节时,残留的 tieCharIds 被清空', () => 
 
 test('B4: Room.destroy() 可安全调用,不抛错', () => {
   const send = () => {};
-  const room = new Room('DESTROY', send);
+  const room = new Room(send);
   // destroy 在未初始化剧本的状态下也应安全
   assert.doesNotThrow(() => room.destroy());
 });
 
 test('B4: PhaseEngine.dispose() 清理 timer 后不抛错', () => {
   const script = {
-    id: '_mock', meta: { id: '_mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
+    id: 'mock', meta: { id: 'mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
     characters: [], scenes: [], clues: [],
     flow: { entry: 'p_timer', edges: [] },
     phases: [{
@@ -120,7 +120,7 @@ test('B4: PhaseEngine.dispose() 清理 timer 后不抛错', () => {
 test('R2: 有技能的角色搜 private 线索受 maxSearches 限制', () => {
   // 两条不同的 private 线索,maxSearches=1 → 第 2 条应触发 search_limit_reached
   const script: Script = {
-    id: '_mock', meta: { id: '_mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
+    id: 'mock', meta: { id: 'mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
     characters: [{ id: 'c_doctor', name: '医生', gender: 'male' as const, publicProfile: '', visual: {}, skills: ['medical'] } as never],
     scenes: [],
     clues: [
@@ -188,7 +188,7 @@ test('B2: reveal 阶段(status=playing)只下发自己的 theory;finished 后全
 
 test('scoreReach: adjustCounter 累计后 flow 条件命中', () => {
   const script: Script = {
-    id: '_mock', meta: { id: '_mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
+    id: 'mock', meta: { id: 'mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
     characters: [{ id: 'c_wife', name: '妻', gender: 'female' as const, publicProfile: '', visual: {} } as never],
     scenes: [], clues: [],
     flow: { entry: 'p_act', edges: [
@@ -213,7 +213,7 @@ test('scoreReach: adjustCounter 累计后 flow 条件命中', () => {
 
 test('adjustCounter: effect via makeChoice 也能累计', () => {
   const script: Script = {
-    id: '_mock', meta: { id: '_mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
+    id: 'mock', meta: { id: 'mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
     characters: [{ id: 'c_wife', name: '妻', gender: 'female' as const, publicProfile: '', visual: {} } as never],
     scenes: [], clues: [],
     flow: { entry: 'p_choice', edges: [{ from: 'p_choice', to: 'p_end', condition: { kind: 'always' as const } }] },
@@ -236,7 +236,7 @@ test('adjustCounter: effect via makeChoice 也能累计', () => {
 
 test('adjustResource: 正常增减 + 透支保护', () => {
   const script: Script = {
-    id: '_mock', meta: { id: '_mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
+    id: 'mock', meta: { id: 'mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
     characters: [{ id: 'c_wife', name: '妻', gender: 'female' as const, publicProfile: '', visual: {} } as never],
     scenes: [], clues: [],
     flow: { entry: 'p_act', edges: [] },
@@ -260,7 +260,7 @@ test('adjustResource: 正常增减 + 透支保护', () => {
 
 test('choiceResult: 多数票结算写入 flag,flow 条件命中', () => {
   const script: Script = {
-    id: '_mock', meta: { id: '_mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
+    id: 'mock', meta: { id: 'mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
     characters: [
       { id: 'c_a', name: 'A', gender: 'female' as const, publicProfile: '', visual: {} } as never,
       { id: 'c_b', name: 'B', gender: 'male' as const, publicProfile: '', visual: {} } as never,
@@ -301,7 +301,7 @@ test('choiceResult: 多数票结算写入 flag,flow 条件命中', () => {
 
 test('proposal: 过半投票置 flag', () => {
   const script: Script = {
-    id: '_mock', meta: { id: '_mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
+    id: 'mock', meta: { id: 'mock', title: 't', players: 3, duration: 60, difficulty: 1, themes: [], tags: [] },
     characters: [
       { id: 'c_a', name: 'A', gender: 'female' as const, publicProfile: '', visual: {} } as never,
       { id: 'c_b', name: 'B', gender: 'male' as const, publicProfile: '', visual: {} } as never,

@@ -1,4 +1,7 @@
 import { Suspense, lazy, useEffect } from 'react';
+import { Trans } from '@lingui/macro';
+import { I18nProvider } from '@lingui/react';
+import { i18n, activateLocale } from './i18n.js';
 import { useGameStore } from './store/game.js';
 import { useKeyboardCompensation } from './hooks/useKeyboardCompensation.js';
 import { LobbyScene } from './scenes/Lobby.js';
@@ -23,6 +26,10 @@ const RevealScene = lazy(() => import('./scenes/Reveal.js').then(m => ({ default
 const FinishedScene = lazy(() => import('./scenes/Reveal.js').then(m => ({ default: m.FinishedScene })));
 
 export function App() {
+  useEffect(() => {
+    activateLocale('zh-CN');
+  }, []);
+
   // P0-2: 移动端键盘弹起时补偿视口高度,避免输入框被遮挡
   useKeyboardCompensation();
   const status = useGameStore((s) => s.view?.status);
@@ -62,7 +69,7 @@ export function App() {
   }, [status]);
 
   return (
-    <>
+    <I18nProvider i18n={i18n}>
       <div className="stage-ambient" aria-hidden />
       <div className="stage-grain" aria-hidden />
       <div className="app-shell">
@@ -88,7 +95,7 @@ export function App() {
       {(status === 'playing' || status === 'finished') && <DmObserver />}
       {(status === 'playing' || status === 'finished') && <ScriptBook />}
       <DmNarrative />
-    </>
+    </I18nProvider>
   );
 }
 
@@ -100,11 +107,11 @@ function SceneRoot({ connected, hasView, status, phaseKind, phaseId }: {
   phaseId: string | undefined;
 }) {
   if (!connected) return <LobbyScene />;
-  if (!hasView) return <LoadingScreen tip="连接中..." />;
+  if (!hasView) return <LoadingScreen tip={<Trans>连接中...</Trans>} />;
 
   return (
     <div key={`${status}-${phaseId ?? phaseKind ?? 'none'}`} className="scene-fade">
-      <Suspense fallback={<LoadingScreen tip="加载中..." />}>
+      <Suspense fallback={<LoadingScreen tip={<Trans>加载中...</Trans>} />}>
         {status === 'lobby' && <LobbyScene />}
         {status === 'assigning' && <AssigningScene />}
         {status === 'playing' && phaseKind === 'briefing' && <BriefingScene />}
@@ -113,13 +120,13 @@ function SceneRoot({ connected, hasView, status, phaseKind, phaseId }: {
         {status === 'playing' && phaseKind === 'vote' && <VoteScene />}
         {status === 'playing' && phaseKind === 'reveal' && <RevealScene />}
         {status === 'finished' && <FinishedScene />}
-        {status === 'playing' && !phaseKind && <LoadingScreen tip="加载环节..." />}
+        {status === 'playing' && !phaseKind && <LoadingScreen tip={<Trans>加载环节...</Trans>} />}
       </Suspense>
     </div>
   );
 }
 
-function LoadingScreen({ tip, tone }: { tip: string; tone?: 'error' }) {
+function LoadingScreen({ tip, tone }: { tip: React.ReactNode; tone?: 'error' }) {
   return (
     <div className="loading-screen">
       <div className="loading-spinner" />

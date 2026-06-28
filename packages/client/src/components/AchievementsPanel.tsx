@@ -1,13 +1,36 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { getStats, getAllAchievements } from '../lib/achievements.js';
 
 export function AchievementsPanel({ onClose }: { onClose: () => void }) {
+  const panelRef = useRef<HTMLDivElement>(null);
   const stats = useMemo(() => getStats(), []);
   const achievements = useMemo(() => getAllAchievements(stats.unlocked), [stats.unlocked]);
 
-  return (
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    panelRef.current?.focus();
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'Tab') {
+        const panel = panelRef.current;
+        if (!panel) return;
+        const focusable = panel.querySelectorAll<HTMLElement>('button, [tabindex]:not([tabindex="-1"])');
+        if (focusable.length === 0) return;
+        const first = focusable[0]!;
+        const last = focusable[focusable.length - 1]!;
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener('keydown', handler);
+    return () => { document.body.style.overflow = prev; document.removeEventListener('keydown', handler); };
+  }, [onClose]);
+
+  return createPortal(
     <div className="ach-overlay" onClick={onClose}>
-      <div className="ach-panel" onClick={(e) => e.stopPropagation()}>
+      <div className="ach-panel" ref={panelRef} role="dialog" aria-modal="true" aria-label="战绩与成就" tabIndex={-1} onClick={(e) => e.stopPropagation()}>
         <div className="ach-header">
           <span className="ach-title">战绩与成就</span>
           <button className="btn btn-ghost btn-sm" onClick={onClose}>关闭</button>
@@ -64,6 +87,7 @@ export function AchievementsPanel({ onClose }: { onClose: () => void }) {
           </>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

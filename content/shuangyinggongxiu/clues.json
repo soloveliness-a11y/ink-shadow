@@ -1,0 +1,60 @@
+[
+  {
+    "id": "cl_yinchan_body",
+    "title": "银蟾客尸体",
+    "content": "银蟾客死在正殿南侧屋竹床上，颈部缠着腰带。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_yinchan"
+    ]
+  },
+  {
+    "id": "cl_niee_body",
+    "title": "霓娥尸体",
+    "content": "霓娥的尸体在祭赛当天从映天湖中打捞上来。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_niee"
+    ]
+  },
+  {
+    "id": "cl_zhu_massacre",
+    "title": "竺家惨案",
+    "content": "竺家大门侧门从内插上，院内一地尸体，只有童郎活着。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_zhu"
+    ]
+  },
+  {
+    "id": "cl_statue_missing",
+    "title": "鲛婵塑像失踪",
+    "content": "灵应祠内殿中鲛婵塑像突然消失。",
+    "visibility": "searchable",
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_two_xiaotu",
+    "title": "两个小菟",
+    "content": "井边出现两个容貌相似的小菟，一个蓬头乱发，一个赤足披红布。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_xiaotu"
+    ]
+  },
+  {
+    "id": "cl_jiaoshi_death",
+    "title": "贾氏之死",
+    "content": "贾氏被发现死在湖畔，竺江善断定是失足落水。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_jiaoshi"
+    ]
+  }
+]

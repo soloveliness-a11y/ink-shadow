@@ -25,7 +25,7 @@ function makeBus(events: string[] = [], pmMailboxes?: Map<string, Array<{ fromCh
 function makeState(opts: { players?: { playerId: string; charId: string; nickname: string }[]; phaseId?: string } = {}): RuntimeState {
   return {
     roomCode: 'TEST',
-    scriptId: '_mock',
+    scriptId: 'mock',
     status: 'playing' as const,
     players: (opts.players ?? [
       { playerId: 'p1', charId: 'c_wife', nickname: 'A', connected: true, ready: true, isHost: true },
@@ -333,18 +333,16 @@ test('Team voting: 无过半(最终)时走 always 兜底', () => {
   const engine = new PhaseEngine(script, state, makeBus(events));
   engine.start();
 
-  // 三方各 1 票:alpha 先投时 1/1=100%会暂时设 flag,但最终 1/3<50%
-  // teamWin 条件检查的是 flag + eliminated,flag 已被首票锁存
-  // 但 flow 的 teamWin 条件还会检查 teams[id].eliminated
+  // 三方各 1 票:alpha 先投时 1/1=100%,但最终 1/3<50%
+  // 修复后:flag 仅在 settlePhaseOnExit 时结算,不在投票过程中实时锁存
   engine.handleAction('c_wife', { kind: 'castVote', targetCharId: 'alpha' });
   engine.handleAction('c_butler', { kind: 'castVote', targetCharId: 'beta' });
   engine.handleAction('c_doctor', { kind: 'castVote', targetCharId: 'gamma' });
 
-  // team_alpha_won 在首票时被锁存(1/1>50%),但 beta/gamma 从未过半
-  assert.equal(state.flags['team_alpha_won'], true, 'alpha 首票时锁存了 flag(1/1>50%)');
-  assert.equal(state.flags['team_beta_won'], undefined, 'beta 从未在任意时刻过半');
-  assert.equal(state.flags['team_gamma_won'], undefined, 'gamma 从未在任意时刻过半');
-  assert.equal(state.currentPhaseId, 'p_alpha_win', 'alpha flag 已设 + flow 有 teamWin 条件 → 走 alpha_win');
+  // 投票过程中不再实时锁存 flag
+  assert.equal(state.flags['team_alpha_won'], undefined, 'alpha flag 不在投票过程中锁存');
+  assert.equal(state.flags['team_beta_won'], undefined, 'beta 从未过半');
+  assert.equal(state.flags['team_gamma_won'], undefined, 'gamma 从未过半');
 });
 
 test('Team voting: restrictVoteTargets 限制可投阵营', () => {

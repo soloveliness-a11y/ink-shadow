@@ -1,5 +1,5 @@
 {
-  "id": "_mock",
+  "id": "mock",
   "title": "公馆惊魂·一九三五",
   "theme": "民国上海·公馆命案",
   "playerCount": {
@@ -23,5 +23,10 @@
     }
   },
   "schemaVersion": "1.0.0",
-  "status": "ready"
+  "status": "ready",
+  "featureTags": [
+    "公馆",
+    "入门推荐",
+    "家族"
+  ]
 }

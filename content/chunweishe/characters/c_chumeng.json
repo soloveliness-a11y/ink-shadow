@@ -1,0 +1,126 @@
+{
+  "id": "c_chumeng",
+  "name": "楚梦",
+  "gender": "male",
+  "age": 23,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "春味社成员，饰演「许拉斯」（1908）/「忒修斯」（1914）。广东原籍，祖父迁居浙江经商，家资丰厚。1906年入南京江南高等学堂预科。现任民国文教司特派专员，调查各地怪力乱神违法事。已婚。",
+  "privateScript": "你全名【顾楚梦】，生于清光绪十八年（1892年），原籍广东，祖父迁居浙江经商，家资丰厚。你6岁时被送去济南学武，三年后因义和拳兴起被接回江南。\n\n你15岁时（1906年），父亲送你去南京的「江南高等学堂」上预科，同班男生【清岷】【仰名】与你同岁。1908年你叫上他们一起加入「春味社」。你看到【晚弦】在井边骂【悦绮】，就过去帮悦绮解围。你被团长指定出演美少年「许拉斯」。\n\n秋末彩排前一天，天快黑时你收到一张匿名「信笺」，约你晚上去中院湖中亭相见——但你等到晚上去了却无人来。\n\n你19岁时（1910年），年少多金去了秦淮河游玩，被族兄来信痛斥「不知亡国恨」后幡然醒悟。1912年返回南京做公职，1913年加入文教司任特派专员。\n\n1914年10月7日，你重返秋瑟园。彩排时你抽出铜剑，团长激动抱住你。之后你和清岷在东院准备角色。梢衣在假山后向你告白，你已娶妻不知如何回应。晚弦给你细绳和利刃做彩排道具，你按吩咐走进花园。\n\n大约下午1点半，你走近亭子，突然看到一具裹在黑袍里的无头身体！你看出是真人的尸体，手中的绳团掉了。你看到清岷躺在墙边草丛里，赶紧扶起他。随后晚弦尖叫，梢衣、斌持和语桐赶来。",
+  "objectives": [
+    {
+      "id": "obj_chumeng_1",
+      "kind": "main",
+      "description": "找出悦绮失踪的真相",
+      "scoring": 5
+    },
+    {
+      "id": "obj_chumeng_2",
+      "kind": "main",
+      "description": "找出无头尸体的真相",
+      "scoring": 5
+    },
+    {
+      "id": "obj_chumeng_3",
+      "kind": "main",
+      "description": "找出每个命案的真相",
+      "scoring": 25
+    },
+    {
+      "id": "obj_chumeng_4",
+      "kind": "main",
+      "description": "不被当作真凶",
+      "scoring": 5
+    },
+    {
+      "id": "obj_chumeng_5",
+      "kind": "side",
+      "description": "触发全部3条回忆",
+      "scoring": 2
+    }
+  ],
+  "secrets": [
+    "1908年收到匿名信笺约湖中亭相见，赴约无人来，字迹像女生写的",
+    "梢衣在假山后向你表白「早就喜欢你」，你已婚不知如何回应",
+    "团长臣柳可能是你的亲生父亲（铜剑为信物，团长认你为好儿子）",
+    "族兄（广州名厨之子）曾痛斥你沉溺秦淮风月，教诲你救亡图存",
+    "你第一个发现无头尸体和昏迷的清岷"
+  ],
+  "timeline": [
+    {
+      "time": "1908年秋末·夜晚",
+      "location": "秋瑟园·中院湖中亭",
+      "action": "收到匿名信笺赴约，无人来",
+      "isPublic": false
+    },
+    {
+      "time": "1914年10月7日·约9点",
+      "location": "秋瑟园·前院/东院",
+      "action": "从团长手中接过铜剑和剧本大纲，去东院换衣",
+      "isPublic": true
+    },
+    {
+      "time": "1914年10月7日·约10点",
+      "location": "秋瑟园·南院舞台",
+      "action": "彩排第一幕，抽出铜剑，团长认你为好儿子",
+      "isPublic": true
+    },
+    {
+      "time": "1914年10月7日·约12点",
+      "location": "秋瑟园·东院",
+      "action": "与清岷对戏，梢衣来约你彩排",
+      "isPublic": true
+    },
+    {
+      "time": "1914年10月7日·约13点",
+      "location": "秋瑟园·后院假山",
+      "action": "梢衣向你表白，晚弦来给道具",
+      "isPublic": false
+    },
+    {
+      "time": "1914年10月7日·约13点",
+      "location": "秋瑟园·花园",
+      "action": "进入花园沿竹林系绳，在亭子发现无头尸体和昏迷的清岷",
+      "isPublic": true
+    },
+    {
+      "time": "1914年10月7日·约13点半",
+      "location": "秋瑟园·花园",
+      "action": "扶起清岷，晚弦尖叫，众人赶到",
+      "isPublic": true
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "c_qingmin",
+      "relation": "同班好友，常同住，悦绮的弟弟",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_binchi",
+      "relation": "1908年同住东院室友，深信不疑的挚友",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_shaoyi",
+      "relation": "梢衣暗恋你，你已婚无法回应",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "c_wanxian",
+      "relation": "曾因帮悦绮解围与她有冲突",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_yutong",
+      "relation": "社团成员，服装由她制作",
+      "isPublic": true
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Young Chinese man, 23 years old, 1914 Republican era, wearing ancient Greek hero costume (Theseus) with copper sword, handsome and noble bearing, oil painting style, dramatic lighting",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

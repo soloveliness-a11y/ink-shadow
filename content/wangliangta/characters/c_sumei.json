@@ -1,0 +1,108 @@
+{
+  "id": "c_sumei",
+  "name": "熙素梅",
+  "gender": "female",
+  "age": 28,
+  "isVictim": false,
+  "isMurderer": true,
+  "publicProfile": "女，二十多岁，熙家长女。熙勤兼名义女儿，实际亲生父亲是王两。被安排嫁给守言，心中爱的是景帆（实为王两）。",
+  "privateScript": "你名叫熙素梅，生于1886年，是熙勤兼的名义女儿。你不知道的是——你的亲生父亲是大盗王两（年某），他当年冒死潜入熙宅与你母亲林氏暗续前缘。\n\n你母亲林氏病故后，你一直以为是熙励辛（熙郎中）逼死了母亲。1902年端午节，大胡子（王两的化身）喝雄黄酒后吐血身亡。你以为是熙励辛毒杀了亲父（大胡子），于五月初六在茶中下毒（药房「慎用」瓷瓶中的毒药），将熙励辛毒杀。\n\n你被安排嫁给守言，但心中爱的是景帆（实际是王两，即你的亲生父亲——你不知道这层关系）。\n\n你一直在寻找景帆受伤的真相、艾柳失踪的真相，以及传说中的宝藏。",
+  "objectives": [
+    {
+      "id": "obj_sumei_1",
+      "kind": "hidden",
+      "description": "隐瞒你毒杀熙励辛的事实。（10分）",
+      "scoring": 10
+    },
+    {
+      "id": "obj_sumei_2",
+      "kind": "main",
+      "description": "找出别熙乡连环命案的真相。（5分）",
+      "scoring": 5
+    },
+    {
+      "id": "obj_sumei_3",
+      "kind": "side",
+      "description": "找到景帆受伤的真相。（3分）",
+      "scoring": 3
+    },
+    {
+      "id": "obj_sumei_4",
+      "kind": "side",
+      "description": "找到传说中的宝藏。（3分）",
+      "scoring": 3
+    }
+  ],
+  "secrets": [
+    "1902年五月初六在茶中下毒毒杀熙励辛（熙郎中），以为他逼死母亲又毒杀亲父",
+    "亲生父亲是大盗王两（她不知道）",
+    "被安排嫁给守言，心中爱的是景帆（实为王两，即亲父）",
+    "母亲林氏病故的真正原因"
+  ],
+  "timeline": [
+    {
+      "time": "1886年",
+      "location": "熙宅",
+      "action": "出生，熙勤兼名义女儿",
+      "isPublic": true
+    },
+    {
+      "time": "1900年",
+      "location": "熙宅",
+      "action": "母亲林氏病故",
+      "isPublic": true
+    },
+    {
+      "time": "1902.5.5",
+      "location": "熙宅",
+      "action": "端午节，大胡子喝雄黄酒后吐血身亡",
+      "isPublic": true
+    },
+    {
+      "time": "1902.5.6",
+      "location": "医馆",
+      "action": "在茶中下毒毒杀熙励辛",
+      "isPublic": false
+    },
+    {
+      "time": "1904年",
+      "location": "别熙乡",
+      "action": "被安排嫁给守言",
+      "isPublic": true
+    },
+    {
+      "time": "1914.10.19",
+      "location": "熙宅",
+      "action": "发现熙勤兼顾已死，众人聚集调查",
+      "isPublic": true
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "c_jingfan",
+      "relation": "暗恋对象（实为亲父，她不知）",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "c_shouyan",
+      "relation": "名义夫妻",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_ailiu",
+      "relation": "妯娌（守言之妹）",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_zizhuo",
+      "relation": "同乡",
+      "isPublic": true
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese young woman 28 years old, Republican era, elegant but melancholic, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

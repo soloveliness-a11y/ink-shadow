@@ -1,0 +1,22 @@
+{
+  "id": "c_chuoyuan",
+  "name": "绰元",
+  "gender": "male",
+  "age": 27,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "春味社副团长，张记洋贸老板。1914年被晚弦杀死。",
+  "privateScript": "绰元是春味社副团长，玩弄晚弦感情后抛弃，选择梢衣订婚又退婚，后追求宜湘。1914年被晚弦用裹石外衣砸死于北院船首下。",
+  "objectives": [],
+  "secrets": [
+    "玩弄晚弦感情"
+  ],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "1914 Chinese man, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

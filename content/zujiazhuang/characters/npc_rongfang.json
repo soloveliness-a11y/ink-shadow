@@ -1,0 +1,27 @@
+{
+  "id": "npc_rongfang",
+  "name": "容芳",
+  "gender": "female",
+  "age": 25,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "容芳，在祖家庄遇害",
+  "privateScript": "",
+  "objectives": [
+    {
+      "id": "obj_npc_rongfang_1",
+      "kind": "main",
+      "description": "了解真相",
+      "scoring": 5
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese female 25 years old",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

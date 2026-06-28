@@ -1,0 +1,61 @@
+{
+  "id": "aixue",
+  "name": "皑雪",
+  "gender": "female",
+  "age": 20,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "林宗斐之女，利志的准新娘。身怀六甲。",
+  "privateScript": "你是林宗斐的女儿，本要嫁给利志，却在婚礼前遭遇父亲被杀、未婚夫死于大火。多年后带着遗腹子回到涨秋园。",
+  "objectives": [
+    {
+      "id": "obj_ax_1",
+      "kind": "main",
+      "description": "找出父亲林宗斐死亡真相。(5分)",
+      "scoring": 5
+    },
+    {
+      "id": "obj_ax_2",
+      "kind": "main",
+      "description": "找出每个命案真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [
+    "怀着利志的遗腹子",
+    "曾被人(紫袖)试图勒杀未遂"
+  ],
+  "timeline": [
+    {
+      "time": "1906年农历六月十六",
+      "location": "涨秋园北屋",
+      "action": "差点被紫袖勒杀",
+      "isPublic": false
+    },
+    {
+      "time": "1906年农历六月十七",
+      "location": "涨秋园",
+      "action": "发现父亲和未婚夫死亡",
+      "isPublic": false
+    },
+    {
+      "time": "1914年10月22日",
+      "location": "涨秋园",
+      "action": "带着孩子回到故园",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "lianchou",
+      "relation": "姑嫂",
+      "isPublic": false
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "皑雪, female, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

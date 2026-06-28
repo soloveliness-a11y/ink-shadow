@@ -1,0 +1,395 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2025-01-01 00:00+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/scenes/Lobby.tsx:233
+msgid "{count}人"
+msgstr "{count} players"
+
+#: src/scenes/Lobby.tsx:786
+msgid "{min}-{max}人"
+msgstr "{min}-{max} players"
+
+#: src/scenes/Lobby.tsx:786
+msgid "{min}人"
+msgstr "{min} players"
+
+#: src/scenes/Lobby.tsx:749
+msgid "✓ 已保存"
+msgstr "✓ Saved"
+
+#: src/scenes/Lobby.tsx:266
+#: src/scenes/Lobby.tsx:313
+msgid "4小时+"
+msgstr "4h+"
+
+#: src/scenes/Lobby.tsx:700
+msgid "Anthropic 直连"
+msgstr "Anthropic Direct"
+
+#: src/scenes/Lobby.tsx:705
+msgid "API Key"
+msgstr "API Key"
+
+#: src/scenes/Lobby.tsx:723
+msgid "API 地址"
+msgstr "API URL"
+
+#: src/scenes/Lobby.tsx:697
+msgid "API 服务"
+msgstr "API Provider"
+
+#: src/scenes/Lobby.tsx:483
+msgid "Bot 填充 · 快速预览"
+msgstr "Bot Fill · Quick Preview"
+
+#: src/scenes/Lobby.tsx:538
+msgid "Ink Shadow · 推理与谎言的舞台"
+msgstr "Ink Shadow · Stage of Deduction & Deceit"
+
+#: src/scenes/Lobby.tsx:699
+msgid "OpenAI 兼容（中转站）"
+msgstr "OpenAI Compatible (Proxy)"
+
+#: src/scenes/Lobby.tsx:250
+#: src/scenes/Lobby.tsx:781
+msgid "专家"
+msgstr "Expert"
+
+#: src/scenes/Lobby.tsx:248
+msgid "中等"
+msgstr "Normal"
+
+#: src/scenes/Lobby.tsx:152
+msgid "人在场"
+msgstr "online"
+
+#: src/scenes/Lobby.tsx:224
+msgid "人数"
+msgstr "Players"
+
+#: src/scenes/Lobby.tsx:434
+msgid "你"
+msgstr "You"
+
+#: src/scenes/Lobby.tsx:561
+msgid "你的昵称"
+msgstr "Your Nickname"
+
+#: src/scenes/Lobby.tsx:749
+msgid "保存配置"
+msgstr "Save Config"
+
+#: src/scenes/Lobby.tsx:550
+msgid "先填写昵称"
+msgstr "Enter nickname first"
+
+#: src/scenes/Lobby.tsx:541
+msgid "入场"
+msgstr "Enter"
+
+#: src/scenes/Lobby.tsx:781
+msgid "入门"
+msgstr "Beginner"
+
+#: src/scenes/Lobby.tsx:231
+#: src/scenes/Lobby.tsx:246
+#: src/scenes/Lobby.tsx:262
+#: src/scenes/Lobby.tsx:278
+#: src/scenes/Lobby.tsx:291
+#: src/scenes/Lobby.tsx:304
+msgid "全部"
+msgstr "All"
+
+#: src/App.tsx:114
+msgid "加载中..."
+msgstr "Loading..."
+
+#: src/App.tsx:123
+msgid "加载环节..."
+msgstr "Loading phase..."
+
+#: src/scenes/Lobby.tsx:451
+msgid "取消"
+msgstr "Cancel"
+
+#: src/scenes/Lobby.tsx:586
+msgid "启幕 · 开启新局"
+msgstr "Start New Game"
+
+#: src/scenes/Lobby.tsx:476
+msgid "启幕 · 开始游戏"
+msgstr "Start Game"
+
+#: src/scenes/Lobby.tsx:682
+msgid "启用说书人"
+msgstr "Enable DM"
+
+#: src/scenes/Lobby.tsx:553
+msgid "回到上次房间"
+msgstr "Return to last room"
+
+#: src/scenes/Lobby.tsx:550
+msgid "回到上次的房间"
+msgstr "Return to last room"
+
+#: src/scenes/Lobby.tsx:249
+#: src/scenes/Lobby.tsx:781
+msgid "困难"
+msgstr "Hard"
+
+#: src/scenes/Lobby.tsx:405
+msgid "在场玩家"
+msgstr "Players Present"
+
+#: src/scenes/Lobby.tsx:271
+#: src/scenes/Lobby.tsx:318
+msgid "场景"
+msgstr "Scene"
+
+#: src/scenes/Lobby.tsx:151
+msgid "复制"
+msgstr "Copy"
+
+#: src/scenes/Lobby.tsx:150
+msgid "复制房间号"
+msgstr "Copy room code"
+
+#: src/scenes/Lobby.tsx:568
+msgid "如何称呼你"
+msgstr "What should we call you"
+
+#: src/scenes/Lobby.tsx:673
+#: src/scenes/Lobby.tsx:690
+msgid "已启用"
+msgstr "Enabled"
+
+#: src/scenes/Lobby.tsx:151
+msgid "已复制"
+msgstr "Copied"
+
+#: src/scenes/Lobby.tsx:498
+msgid "已就座,等待房主启幕…"
+msgstr "Seated, waiting for host to start..."
+
+#. placeholder {0}: Math.floor(waitSeconds / 60)
+#: src/scenes/Lobby.tsx:512
+msgid "已等待 {0} 分钟,可邀请更多朋友加入"
+msgstr "Waited {0} min — invite more friends!"
+
+#: src/scenes/Lobby.tsx:
+#~ msgid "已等待 {minutes} 分钟,可邀请更多朋友加入"
+#~ msgstr "Waited {minutes} min — invite more friends!"
+
+#: src/scenes/Lobby.tsx:591
+msgid "或"
+msgstr "or"
+
+#: src/scenes/Lobby.tsx:433
+msgid "房主"
+msgstr "Host"
+
+#: src/scenes/Lobby.tsx:145
+#: src/scenes/Lobby.tsx:574
+msgid "房间号"
+msgstr "Room Code"
+
+#: src/scenes/Lobby.tsx:588
+msgid "提示:房主开房后会获得 6 位房间号,其他玩家凭此加入。"
+msgstr "Tip: The host gets a 6-character room code for others to join."
+
+#: src/scenes/Lobby.tsx:212
+msgid "搜索剧本..."
+msgstr "Search scripts..."
+
+#: src/scenes/Lobby.tsx:672
+msgid "收起说书人设置"
+msgstr "Collapse DM Settings"
+
+#: src/scenes/Lobby.tsx:255
+#: src/scenes/Lobby.tsx:312
+msgid "时长"
+msgstr "Duration"
+
+#: src/scenes/Lobby.tsx:715
+msgid "显示 API Key"
+msgstr "Show API Key"
+
+#: src/scenes/Lobby.tsx:781
+msgid "普通"
+msgstr "Normal"
+
+#: src/scenes/Lobby.tsx:189
+msgid "更换"
+msgstr "Change"
+
+#: src/scenes/Lobby.tsx:690
+msgid "未启用"
+msgstr "Disabled"
+
+#: src/scenes/Lobby.tsx:735
+msgid "模型"
+msgstr "Model"
+
+#: src/scenes/Lobby.tsx:395
+msgid "没有找到匹配的剧本"
+msgstr "No matching scripts found"
+
+#: src/scenes/Lobby.tsx:217
+msgid "清除搜索"
+msgstr "Clear search"
+
+#: src/scenes/Lobby.tsx:349
+msgid "清除筛选"
+msgstr "Clear filters"
+
+#: src/scenes/Lobby.tsx:581
+msgid "留空 = 开新局"
+msgstr "Leave empty for new game"
+
+#. placeholder {0}: kickTarget.name
+#: src/scenes/Lobby.tsx:449
+msgid "确认将「{0}」移出房间？"
+msgstr "Remove \"{0}\" from the room?"
+
+#: src/scenes/Lobby.tsx:
+#~ msgid "确认将「{name}」移出房间？"
+#~ msgstr "Remove \"{name}\" from the room?"
+
+#: src/scenes/Lobby.tsx:450
+msgid "确认移出"
+msgstr "Confirm"
+
+#. placeholder {0}: p.nickname
+#: src/scenes/Lobby.tsx:440
+msgid "移出 {0}"
+msgstr "Remove {0}"
+
+#: src/scenes/Lobby.tsx:
+#~ msgid "移出 {nickname}"
+#~ msgstr "Remove {nickname}"
+
+#: src/scenes/Lobby.tsx:439
+msgid "移出房间"
+msgstr "Remove from room"
+
+#: src/scenes/Lobby.tsx:448
+msgid "移出玩家"
+msgstr "Remove Player"
+
+#: src/scenes/Lobby.tsx:459
+msgid "等待加入"
+msgstr "Waiting..."
+
+#: src/scenes/Lobby.tsx:176
+msgid "等待房主选择剧本"
+msgstr "Waiting for host to select a script"
+
+#: src/scenes/Lobby.tsx:506
+msgid "等待房主选择剧本…"
+msgstr "Waiting for host to select a script..."
+
+#: src/scenes/Lobby.tsx:476
+msgid "等待玩家就位 {onlineCount}/{requiredPlayers}"
+msgstr "Waiting for players {onlineCount}/{requiredPlayers}"
+
+#: src/scenes/Lobby.tsx:247
+msgid "简单"
+msgstr "Easy"
+
+#. placeholder {0}: selectedScript.durationMin
+#: src/scenes/Lobby.tsx:186
+msgid "约 {0} 分钟"
+msgstr "~{0} min"
+
+#: src/scenes/Lobby.tsx:
+#~ msgid "约 {durationMin} 分钟"
+#~ msgstr "~{durationMin} min"
+
+#: src/scenes/Lobby.tsx:263
+#: src/scenes/Lobby.tsx:313
+msgid "约1小时"
+msgstr "~1 hour"
+
+#: src/scenes/Lobby.tsx:264
+#: src/scenes/Lobby.tsx:313
+msgid "约2小时"
+msgstr "~2 hours"
+
+#: src/scenes/Lobby.tsx:265
+#: src/scenes/Lobby.tsx:313
+msgid "约3小时"
+msgstr "~3 hours"
+
+#: src/scenes/Lobby.tsx:672
+msgid "说书人 AI DM"
+msgstr "AI DM Settings"
+
+#: src/scenes/Lobby.tsx:441
+msgid "踢出"
+msgstr "Kick"
+
+#: src/scenes/Lobby.tsx:542
+msgid "输入昵称与房间号,或开启一局新游戏"
+msgstr "Enter your nickname and room code, or start a new game"
+
+#: src/scenes/Lobby.tsx:421
+msgid "还差 {missingSeats} 位玩家入座"
+msgstr "{missingSeats} more player(s) needed"
+
+#: src/scenes/Lobby.tsx:490
+msgid "还需 <0>{missingSeats}</0> 位玩家加入"
+msgstr "<0>{missingSeats}</0> more player(s) needed"
+
+#: src/scenes/Lobby.tsx:586
+msgid "进入房间 {roomCode}"
+msgstr "Join Room {roomCode}"
+
+#: src/App.tsx:110
+msgid "连接中..."
+msgstr "Connecting..."
+
+#: src/scenes/Lobby.tsx:201
+msgid "选择剧本"
+msgstr "Select Script"
+
+#: src/scenes/Lobby.tsx:679
+msgid "配置 AI 说书人，自动为游戏生成旁白和氛围渲染。需要 API Key。"
+msgstr "Configure AI DM to auto-generate narration and atmosphere. Requires API Key."
+
+#: src/scenes/Lobby.tsx:715
+msgid "隐藏 API Key"
+msgstr "Hide API Key"
+
+#: src/scenes/Lobby.tsx:239
+msgid "难度"
+msgstr "Difficulty"
+
+#: src/scenes/Lobby.tsx:284
+#: src/scenes/Lobby.tsx:324
+msgid "题材"
+msgstr "Theme"
+
+#: src/scenes/Lobby.tsx:297
+#: src/scenes/Lobby.tsx:330
+msgid "风格"
+msgstr "Style"
+
+#: src/scenes/Lobby.tsx:537
+msgid "墨影"
+msgstr "Ink Shadow"
+
+#: src/scenes/Lobby.tsx:175
+msgid "墨影 · 剧本杀"
+msgstr "Ink Shadow · Murder Mystery"

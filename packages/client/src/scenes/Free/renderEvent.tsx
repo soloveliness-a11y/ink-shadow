@@ -10,7 +10,7 @@ export function renderEvent(e: GameEvent, actor: string | undefined, isSelf: boo
   const actorName = actor ?? '未知角色';
   if (e.type === 'speak') {
     return {
-      icon: '聊',
+      icon: '💬',
       iconClass: 'ev-chat',
       content: (
         <>
@@ -22,7 +22,7 @@ export function renderEvent(e: GameEvent, actor: string | undefined, isSelf: boo
   }
   if (e.type === 'search_clue') {
     return {
-      icon: '搜',
+      icon: '🔍',
       iconClass: 'ev-search',
       content: (
         <>
@@ -33,7 +33,7 @@ export function renderEvent(e: GameEvent, actor: string | undefined, isSelf: boo
   }
   if (e.type === 'reveal_clue') {
     return {
-      icon: '公',
+      icon: '📢',
       iconClass: 'ev-reveal',
       content: (
         <>
@@ -44,14 +44,14 @@ export function renderEvent(e: GameEvent, actor: string | undefined, isSelf: boo
   }
   if (e.type === 'phase_enter') {
     return {
-      icon: '阶',
+      icon: '📋',
       iconClass: 'ev-phase',
       content: <span className="ev-muted">进入：{payload.phaseTitle ?? '新环节'}</span>,
     };
   }
   if (e.type === 'vote_cast') {
     return {
-      icon: '投',
+      icon: '🗳️',
       iconClass: 'ev-reveal',
       content: (
         <>
@@ -62,7 +62,7 @@ export function renderEvent(e: GameEvent, actor: string | undefined, isSelf: boo
   }
   if (e.type === 'submit_theory') {
     return {
-      icon: '理',
+      icon: '💡',
       iconClass: 'ev-theory',
       content: (
         <>

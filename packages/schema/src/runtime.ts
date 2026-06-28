@@ -12,6 +12,8 @@ export const zPlayerSlot = z.object({
   connected: z.boolean(),
   ready: z.boolean(),
   isHost: z.boolean(),
+  isObserver: z.boolean().optional(),
+  disconnectedAt: z.number().optional(),
 });
 export type PlayerSlot = z.infer<typeof zPlayerSlot>;
 
@@ -28,6 +30,7 @@ export const zPhaseRuntime = z.object({
   round: z.number().int().optional(), // 当前搜查轮次(maxRounds phase 用,从 0 起)
   searchedThisRound: z.array(z.string()).optional(), // 本轮已搜查的 charId(maxRounds 强制轮流)
   choices: z.record(z.string(), z.string()).optional(), // makeChoice 记录:charId → optionId(集体抉择结算用)
+  pausedRemaining: z.number().optional(), // 暂停时剩余毫秒数
 });
 export type PhaseRuntime = z.infer<typeof zPhaseRuntime>;
 
@@ -61,6 +64,16 @@ export const zGameEvent = z.object({
 });
 export type GameEvent = z.infer<typeof zGameEvent>;
 
+/** 私聊消息 */
+export const zPrivateMessage = z.object({
+  id: z.string(),
+  fromCharId: z.string(),
+  toCharId: z.string(),
+  text: z.string(),
+  ts: z.number(),
+});
+export type PrivateMessage = z.infer<typeof zPrivateMessage>;
+
 /** 服务器权威的完整运行态(不直接下发,需经裁剪) */
 export const zRuntimeState = z.object({
   roomCode: z.string(),
@@ -83,6 +96,8 @@ export const zRuntimeState = z.object({
   resources: z.record(z.string(), z.record(z.string(), z.number())).optional(), // charId -> {resourceId: amount}(机制本预留)
   counters: z.record(z.string(), z.number()).optional(), // 任意数值计数器(补 flags 只能 boolean 的短板)
   log: z.array(zGameEvent),
+  paused: z.boolean().optional(),
+  privateMessages: z.array(zPrivateMessage).optional(),
 });
 export type RuntimeState = z.infer<typeof zRuntimeState>;
 

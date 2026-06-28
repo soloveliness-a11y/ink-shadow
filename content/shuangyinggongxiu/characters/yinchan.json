@@ -1,0 +1,42 @@
+{
+  "id": "yinchan",
+  "name": "银蟾客",
+  "gender": "male",
+  "age": 64,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "灵应祠祠主，游方先生。供奉鲛婵塑像。",
+  "privateScript": "你是灵应祠的祠主，多年来主持祭赛。你被发现死在床上，颈部缠着腰带。",
+  "objectives": [],
+  "secrets": [
+    "曾与素儿有不正当关系",
+    "知道鲛婵的真相"
+  ],
+  "timeline": [
+    {
+      "time": "1890年",
+      "location": "月秀村",
+      "action": "感应湖中有非凡之物，建立灵应祠",
+      "isPublic": false
+    },
+    {
+      "time": "1899年",
+      "location": "灵应祠",
+      "action": "昏迷后传达鲛婵要降凶灾",
+      "isPublic": false
+    },
+    {
+      "time": "1914年10月17日",
+      "location": "灵应祠",
+      "action": "被发现死在床上",
+      "isPublic": false
+    }
+  ],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "银蟾客, male, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

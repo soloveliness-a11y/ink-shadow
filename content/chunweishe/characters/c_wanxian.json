@@ -1,0 +1,120 @@
+{
+  "id": "c_wanxian",
+  "name": "晚弦",
+  "gender": "female",
+  "age": 24,
+  "isVictim": false,
+  "isMurderer": true,
+  "publicProfile": "春味社成员，饰演「大珀利阿得斯」（1908）/「阿里阿德涅」（1914）。南京女子学堂学生，父亲是万家银号经理，母亲出身优伶。表演天赋极高，性格骄傲敏感。",
+  "privateScript": "你全名苏晚弦，生于1891年。父亲苏负慎是南京富商万家聘来的银号经理，在苏州另有家室；母亲出身优伶，被父亲养在南京。1906年入女子学堂，与梢衣、宜湘同班。1908年与梢衣加入春味社，副团长绰元邀请你们入团——你对他一见钟情，视他为「伊阿宋」化身。你嫉恨悦绮被绰元夸奖，常骂她，楚梦帮悦绮解围让你更加气愤。1908年悦绮失踪后，绰元主动找你，你帮他从父亲处借到低息巨款。1909年绰元让你退学等他来娶。1911年武昌起义，你劝母亲拒绝跟父亲回苏州，留在南京等绰元。1913年战乱后绰元不再露面。1914年10月初，宜湘告诉你她家已决定让她嫁给绰元——你发誓就算堕入塔尔塔洛斯也要拉他们下冥界！10月7日，你穿两层外衣来到秋瑟园，先去花园竹林设下细绳活结连接北院船首像，约绰元到北院船首后见面（借口要分手费）。约11点后，你用裹着石块的外衣砸死绰元，用细绳替换系船首像的粗绳，割断粗绳毁灭证据，将血衣和粗绳扔入前院井中。随后从舞台取走浓酸倒入瓷碗，趁宜湘口渴骗她喝下，喉咙被烧无法呼救，你将剩余浓酸泼到她身上后关门离去。约下午1点，你去仓库取细绳和利刃交给楚梦（作为忒修斯的道具），趁机去竹林拉开活结，让船首像坠落毁灭证据。",
+  "objectives": [
+    {
+      "id": "obj_wanxian_1",
+      "kind": "main",
+      "description": "找出悦绮失踪的真相",
+      "scoring": 5
+    },
+    {
+      "id": "obj_wanxian_2",
+      "kind": "hidden",
+      "description": "隐瞒你杀了绰元和宜湘",
+      "scoring": 20
+    },
+    {
+      "id": "obj_wanxian_3",
+      "kind": "main",
+      "description": "找出无头尸体的真相",
+      "scoring": 5
+    },
+    {
+      "id": "obj_wanxian_4",
+      "kind": "main",
+      "description": "找出每个命案的真相",
+      "scoring": 25
+    },
+    {
+      "id": "obj_wanxian_5",
+      "kind": "main",
+      "description": "不被当作真凶",
+      "scoring": 5
+    },
+    {
+      "id": "obj_wanxian_6",
+      "kind": "side",
+      "description": "触发全部3条回忆",
+      "scoring": 2
+    }
+  ],
+  "secrets": [
+    "杀害绰元——用裹石外衣砸死他于北院船首下，伪装成船首像坠落意外",
+    "杀害宜湘——用舞台浓酸倒入瓷碗骗她喝下，喉咙被烧无法呼救",
+    "身世秘密：外室之女，母亲出身优伶，从不透露真实家世",
+    "为绰元退学、劝母亲拒绝回苏州，全部牺牲换来的是被抛弃",
+    "在花园竹林设下细绳活结机关，连接北院船首像，事后拉下活结毁灭证据"
+  ],
+  "timeline": [
+    {
+      "time": "1914年10月7日·约9点",
+      "location": "秋瑟园·花园竹林",
+      "action": "穿两层外衣入园，先去竹林设下细绳活结连接北院船首像",
+      "isPublic": false
+    },
+    {
+      "time": "1914年10月7日·约11点后",
+      "location": "秋瑟园·北院",
+      "action": "约绰元到船首后见面，用裹石外衣砸死他",
+      "isPublic": false
+    },
+    {
+      "time": "1914年10月7日·约11-12点",
+      "location": "秋瑟园·南院舞台/西院北屋",
+      "action": "从舞台取浓酸倒入瓷碗，趁宜湘口渴骗她喝下毒杀",
+      "isPublic": false
+    },
+    {
+      "time": "1914年10月7日·约13点",
+      "location": "秋瑟园·仓库/花园",
+      "action": "取细绳利刃交给楚梦，趁机拉下竹林活结让船首像坠落",
+      "isPublic": false
+    },
+    {
+      "time": "1914年10月7日·约13点半",
+      "location": "秋瑟园·花园",
+      "action": "众人发现无头尸体，晚弦在亭外尖叫",
+      "isPublic": true
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "c_shaoyi",
+      "relation": "最亲近的同学好友，同住西院南屋",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_chumeng",
+      "relation": "曾因帮悦绮解围而讨厌他，后逐渐同情",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_binchi",
+      "relation": "社团成员，无特别关系",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_qingmin",
+      "relation": "悦绮的弟弟，社团成员",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_yutong",
+      "relation": "宜湘的好友，社团成员",
+      "isPublic": true
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Young Chinese woman, 24 years old, 1914 Republican era, wearing ancient Greek princess costume (Ariadne), proud and intense expression, theatrical beauty, oil painting style, dramatic lighting",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

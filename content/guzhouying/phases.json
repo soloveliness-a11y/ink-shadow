@@ -1,0 +1,154 @@
+[
+  {
+    "id": "p_briefing",
+    "kind": "briefing",
+    "title": "阅读剧本",
+    "instruction": "阅读各自的角色剧本（01-04页），了解你为什么会出现在这里。",
+    "participants": "all",
+    "allowedActions": [
+      "readScript",
+      "ready"
+    ],
+    "exit": {
+      "kind": "allReady"
+    }
+  },
+  {
+    "id": "p_social",
+    "kind": "free",
+    "title": "第一幕·寒暄",
+    "instruction": "10月15日下午，大码头前。众人相互寒暄、自我介绍，尝试完成各自的目的。此阶段是集体寒暄，可以隐瞒秘密，没有私聊。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "searchClue",
+      "revealClue",
+      "privateMessage"
+    ],
+    "maxRounds": 3,
+    "exit": {
+      "kind": "hostAdvance"
+    },
+    "unlocks": {
+      "clueIds": [
+        "cl_qianyuan_01",
+        "cl_qianyuan_02",
+        "cl_qianyuan_03",
+        "cl_qianyuan_04",
+        "cl_qianyuan_05",
+        "cl_qianyuan_06",
+        "cl_qianyuan_07",
+        "cl_qianyuan_08",
+        "cl_qianyuan_09",
+        "cl_qianyuan_10",
+        "cl_qianyuan_11"
+      ]
+    }
+  },
+  {
+    "id": "p_investigation2",
+    "kind": "free",
+    "title": "第二幕·画舫调查",
+    "instruction": "10月15日夜至16日晨，画舫上。阅读剧本05-06页后，在画舫和附近区域调查。调查3轮（共18次），从周持同开始，不可私聊。宿年、琏逸不能调查他们的住处（二层乙房、丙房）。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "searchClue",
+      "revealClue"
+    ],
+    "maxRounds": 3,
+    "exit": {
+      "kind": "hostAdvance"
+    },
+    "unlocks": {
+      "clueIds": [
+        "cl_chuanshang_01",
+        "cl_chuanshang_02",
+        "cl_chuanshang_03",
+        "cl_chuanshang_04",
+        "cl_chuanshang_05",
+        "cl_chuanshang_06",
+        "cl_chuanshang_07",
+        "cl_chuanshang_08",
+        "cl_chuanshang_09",
+        "cl_chuanshang_10",
+        "cl_chuanshang_11",
+        "cl_chuanshang_12",
+        "cl_chuanshang_13",
+        "cl_chuanshang_14",
+        "cl_chuanshang_15",
+        "cl_chuanshang_16",
+        "cl_nongtian_01",
+        "cl_nongtian_02",
+        "cl_nongtian_03",
+        "cl_nongtian_04",
+        "cl_nongtian_05",
+        "cl_nongtian_06",
+        "cl_nongtian_07",
+        "cl_nongtian_08",
+        "cl_nongtian_09",
+        "cl_nongtian_10"
+      ]
+    }
+  },
+  {
+    "id": "p_investigation3",
+    "kind": "free",
+    "title": "第三幕·崔庄调查",
+    "instruction": "10月16日，崔庄内。阅读剧本07-08页后，可以私聊，从昔颜开始，调查所有区域直到拿完线索。昔颜、嫣楠不能调查她们的住处（昔颜房、嫣楠房），周持同、琏逸、宿年、甜愁不能调查曾住过的地方（客房、杂物房、北院西屋）。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "searchClue",
+      "revealClue",
+      "privateMessage"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    },
+    "unlocks": {
+      "clueIds": [
+        "cl_beiyuan_01",
+        "cl_beiyuan_02",
+        "cl_beiyuan_03",
+        "cl_beiyuan_04",
+        "cl_beiyuan_05",
+        "cl_beiyuan_06",
+        "cl_beiyuan_07",
+        "cl_beiyuan_08",
+        "cl_mimi_01",
+        "cl_mimi_02",
+        "cl_mimi_03",
+        "cl_mimi_04",
+        "cl_mimi_05",
+        "cl_mimi_06"
+      ]
+    }
+  },
+  {
+    "id": "p_vote",
+    "kind": "vote",
+    "title": "谁是真凶？",
+    "instruction": "填写「你知道吗？」——指认凶手，完成任务，揭露秘密。",
+    "participants": "all",
+    "allowedActions": [
+      "castVote"
+    ],
+    "exit": {
+      "kind": "voteComplete"
+    }
+  },
+  {
+    "id": "p_reveal",
+    "kind": "reveal",
+    "title": "真相揭晓",
+    "instruction": "公布结果和真相。各角色根据游戏效果阅读对应结局。",
+    "participants": "all",
+    "allowedActions": [
+      "submitTheory"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    }
+  }
+]

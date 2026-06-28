@@ -1,0 +1,72 @@
+[
+  {
+    "id": "s_guta",
+    "name": "古塔",
+    "description": "问景山下的古塔，塔内有四尊塑像，传说封印着恶鬼魍魉。塑像各对应一次复活机会，毁掉塑像即可令死者复生。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Ancient Chinese pagoda at the foot of a mountain, dark and mysterious, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_biejia",
+    "name": "别家",
+    "description": "别家宅院，自卓和母亲居住之处。院中留有大盗王两入赘时的痕迹。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese traditional courtyard house, Republican era Shandong village, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_xizhai",
+    "name": "熙宅",
+    "description": "熙家大宅，熙勤兼一家居住。门上曾被人钉纸条威胁。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese wealthy family mansion courtyard, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_yiguan",
+    "name": "医馆",
+    "description": "别熙乡医馆，由熙励辛（熙郎中）创办，现由良真继承。药房中有标着「慎用」的毒药瓷瓶。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese traditional medicine clinic, wooden cabinets with herbal drawers, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_jiuguan",
+    "name": "酒馆",
+    "description": "别熙乡集市上的酒馆，自卓和小节曾在此当伙计。守言曾在此骚扰小节。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese rural tavern in a market town, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_kujing",
+    "name": "枯井",
+    "description": "熙宅附近的枯井，传说通向地下秘道。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Abandoned dry well in a Chinese village, overgrown with weeds, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_wenjingshan",
+    "name": "问景山",
+    "description": "别熙乡附近的山，山上有亭子和隐蔽洞穴。守言在此遇害。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mountain with pavilion and hidden cave, autumn scenery, oil painting style",
+      "aspect": "16:9"
+    }
+  }
+]

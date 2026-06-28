@@ -17,5 +17,11 @@
   },
   "schemaVersion": "1.0.0",
   "status": "draft",
-  "genre": "murder"
+  "genre": "murder",
+  "featureTags": [
+    "戏班",
+    "身份悬疑",
+    "爱情",
+    "密室"
+  ]
 }

@@ -12,15 +12,19 @@ import type { RuntimeState } from '@mmg/schema';
  */
 export class SnapshotStore {
   private stack: RuntimeState[] = [];
+  private static MAX_DEPTH = 10;
 
   /** 当前栈深度(测试断言/调试用)。 */
   get depth(): number {
     return this.stack.length;
   }
 
-  /** 保存当前状态的深拷贝。 */
+  /** 保存当前状态的深拷贝。超过上限时移除最旧快照。 */
   push(state: RuntimeState): void {
     this.stack.push(structuredClone(state));
+    if (this.stack.length > SnapshotStore.MAX_DEPTH) {
+      this.stack.shift();
+    }
   }
 
   /**

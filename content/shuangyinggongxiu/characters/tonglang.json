@@ -1,0 +1,78 @@
+{
+  "id": "tonglang",
+  "name": "童郎",
+  "gender": "male",
+  "age": 20,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "竺江善与霓娥之子，银蟾客的徒弟。",
+  "privateScript": "你是竺家唯一幸存的孩子，在邬家寄人篱下后投奔灵应祠。你暗恋小菟，为她将吉旺推入湖中，还将鲛婵塑像沉入湖中。",
+  "objectives": [
+    {
+      "id": "obj_tl_1",
+      "kind": "main",
+      "description": "找出银蟾客死亡真相。(5分)",
+      "scoring": 5
+    },
+    {
+      "id": "obj_tl_2",
+      "kind": "main",
+      "description": "找出竺家惨案真相。(10分)",
+      "scoring": 10
+    },
+    {
+      "id": "obj_tl_3",
+      "kind": "main",
+      "description": "隐瞒打伤吉旺和沉湖塑像。(2x2分)",
+      "scoring": 4
+    }
+  ],
+  "secrets": [
+    "将吉旺推入湖中",
+    "将鲛婵塑像沉入湖中",
+    "暗恋小菟"
+  ],
+  "timeline": [
+    {
+      "time": "1899年农历九月初一",
+      "location": "竺家",
+      "action": "目睹惨案，身上染血",
+      "isPublic": false
+    },
+    {
+      "time": "1910年",
+      "location": "映天湖畔",
+      "action": "将吉旺推入湖中",
+      "isPublic": false
+    },
+    {
+      "time": "1914年10月",
+      "location": "灵应祠",
+      "action": "将鲛婵塑像沉入湖中",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "suier",
+      "relation": "义姐",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "niee",
+      "relation": "母亲",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "gongjing",
+      "relation": "养父",
+      "isPublic": false
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "童郎, male, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

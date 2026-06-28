@@ -1,0 +1,25 @@
+{
+  "id": "manna",
+  "title": "曼娜",
+  "theme": "民国上海·谭公馆连环命案",
+  "playerCount": {
+    "min": 6,
+    "max": 6
+  },
+  "difficulty": "hard",
+  "durationMin": 240,
+  "synopsis": "1914年9月28日，上海郊外峭壁之上的「谭公馆」内接连发生多起命案——吊死的大厅、被刺的阳台、戴面具的女尸——六位各怀秘密的人，谁是真凶？",
+  "styleGuide": "1914 Shanghai clifftop mansion, Republican era, gothic mystery, oil painting style, dark atmosphere",
+  "cover": {
+    "kind": "cover",
+    "prompt": "1914 Shanghai clifftop mansion murder mystery, Republican era, oil painting style, dark gothic atmosphere",
+    "aspect": "3:4"
+  },
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "genre": "murder",
+  "featureTags": [
+    "大宅",
+    "身份悬疑"
+  ]
+}

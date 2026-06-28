@@ -1,0 +1,79 @@
+{
+  "id": "c_wanximing",
+  "name": "万溪明",
+  "gender": "male",
+  "age": 23,
+  "isVictim": false,
+  "isMurderer": true,
+  "publicProfile": "男，约二十三岁，万茂林与陶氏之子，万家旁系。管理青蕖舫，觊觎万金英的遗产。",
+  "privateScript": "你名叫万溪明，是万茂林与陶氏之子，陶尽恭的侄子。你管理着青蕖舫。\n\n你得知万金英有一个秘密遗孤后，心生觊觎——如果找不到真正的继承人，你作为旁系就有机会继承万家遗产。\n\n9月27日，纪方原来到碧荷庄，声称知道万金英的孩子是谁，要来卖这个消息。你在花园水池旁与他争执，将他推入水池溺死。你知道花园水池有秘密排水机关——只有万家嫡系知晓——暴雨时池水会排入湖中，尸体也随之冲走。\n\n你要隐瞒杀害纪方原的事实，也要阻止徐轻马找到正确的继承人。你要夺取万家遗产。",
+  "objectives": [
+    {
+      "id": "obj_wanximing_1",
+      "kind": "hidden",
+      "description": "隐瞒你溺杀纪方原的事实。（10分）",
+      "scoring": 10
+    },
+    {
+      "id": "obj_wanximing_2",
+      "kind": "main",
+      "description": "阻止徐轻马找到正确继承人，夺取遗产。（10分）",
+      "scoring": 10
+    },
+    {
+      "id": "obj_wanximing_3",
+      "kind": "side",
+      "description": "查明万金英遗孤的真实身份。（3分）",
+      "scoring": 3
+    }
+  ],
+  "secrets": [
+    "9月27日在花园水池溺杀纪方原",
+    "知道花园水池的秘密排水机关（只有万家嫡系知晓）",
+    "觊觎万金英的遗产，企图以旁系身份继承",
+    "纪方原的尸体被暴雨冲入湖中"
+  ],
+  "timeline": [
+    {
+      "time": "1891年",
+      "location": "碧荷庄",
+      "action": "出生，万茂林与陶氏之子",
+      "isPublic": true
+    },
+    {
+      "time": "1914.9.27",
+      "location": "花园水池",
+      "action": "将纪方原推入水池溺死",
+      "isPublic": false
+    },
+    {
+      "time": "1914.9.28",
+      "location": "碧荷庄",
+      "action": "出席宴会，企图夺取遗产",
+      "isPublic": true
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "c_ruofu",
+      "relation": "竞争者（争夺继承权）",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "c_chunhan",
+      "relation": "竞争者（争夺继承权）",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "c_xuqingma",
+      "relation": "万家经理",
+      "isPublic": true
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese young man 23 years old, wealthy family heir, Republican era, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

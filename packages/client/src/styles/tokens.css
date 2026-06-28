@@ -9,8 +9,8 @@
   /* Text */
   --th: #F2F0EC;
   --tp: #E8E5E0;
-  --ts: #9A9AA0;
-  --tm: #5E5E68;
+  --ts: #ABABB1;
+  --tm: #8A8A94;
   --ti: #08080D;
 
   /* Accents — exact match to prototype */
@@ -23,18 +23,15 @@
   --crimson-m: rgba(196, 84, 84, 0.16);
   --sage: #6A9F7A;
   --sage-m: rgba(106, 159, 122, 0.16);
-  --smoke: #7A7A88;
-
   /* Typography */
   --fb: "Noto Serif SC", "Songti SC", "STSong", serif;
-  --fd: "Inter", "Noto Sans SC", -apple-system, sans-serif;
+  --fh: "Noto Serif SC", "Songti SC", "STSong", serif;
   --fm: "JetBrains Mono", "Noto Sans SC", monospace;
   --font-serif: "Noto Serif SC", "Songti SC", "STSong", serif;
-  --font-sans: "Inter", "Noto Sans SC", -apple-system, sans-serif;
 
   /* Spacing */
   --sp1: 4px; --sp2: 8px; --sp3: 12px; --sp4: 16px;
-  --sp5: 24px; --sp6: 32px; --sp8: 48px; --sp10: 64px;
+  --sp5: 24px; --sp6: 32px;
 
   /* Radius */
   --r-sm: 4px; --r-md: 6px; --r-lg: 8px; --r-xl: 10px; --r-2xl: 12px;
@@ -44,7 +41,6 @@
   --dur: 150ms;
 
   /* Z-index scale */
-  --z-base: 0;
   --z-header: 10;
   --z-sidebar: 5;
   --z-overlay: 20;
@@ -112,7 +108,6 @@
   --crimson-m: rgba(160,72,72,0.12);
   --sage: #5A7A4A;
   --sage-m: rgba(90,122,74,0.12);
-  --smoke: #8A8484;
 }
 
 /* ─── 主题:紫罗星空(科幻/奇幻)─── */

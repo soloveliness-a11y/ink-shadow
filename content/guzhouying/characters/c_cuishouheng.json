@@ -1,0 +1,55 @@
+{
+  "id": "c_cuishouheng",
+  "name": "崔寿亨",
+  "gender": "male",
+  "age": 38,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "崔庄庄主，年近四旬，家资殷实，广有田产。喜欢在宅内登高眺望湖光美景，爱乘画舫游湖饮酒。先后有二妻一妾，膝下只得原配汪氏所生的女儿嫣楠。",
+  "privateScript": "你是崔寿亨，崔庄的主人。你的故事已在其他角色的剧本中被讲述。你于1914年10月15日深夜至16日凌晨，在家主房内中炭毒身亡。",
+  "objectives": [],
+  "secrets": [],
+  "timeline": [
+    {
+      "time": "10月15日 下午",
+      "location": "崔庄",
+      "action": "与周持同乘车出门赴约",
+      "isPublic": true
+    },
+    {
+      "time": "10月15日 傍晚",
+      "location": "画舫宴会厅",
+      "action": "与周蒙当畅饮，被轮番劝酒",
+      "isPublic": true
+    },
+    {
+      "time": "10月15日 深夜",
+      "location": "崔庄家主房",
+      "action": "被送回家后插门睡觉，中炭毒身亡",
+      "isPublic": true
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "c_taitai",
+      "relation": "妻子（续弦）",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_yiniang",
+      "relation": "姨娘（妾）",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_xiaojie",
+      "relation": "女儿",
+      "isPublic": true
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese wealthy middle-aged man 38 years old, Republican era, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

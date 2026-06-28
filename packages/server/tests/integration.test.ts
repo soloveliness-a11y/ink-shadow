@@ -154,7 +154,7 @@ function fastForwardTo(room: Room, playerIds: string[], targetPhaseId: string): 
 
 test('loader: mock 剧本加载成功', () => {
   const { script } = loadScript(mockScriptPath);
-  assert.equal(script.meta.id, '_mock');
+  assert.equal(script.meta.id, 'mock');
   assert.equal(script.characters.length, 7);
   assert.equal(script.phases.length, 19);
 });
@@ -367,7 +367,7 @@ test('PhaseEngine:投票管家 → end_good;投其他人 → end_bad', () => {
 
   const makeState = () => ({
     roomCode: 'TEST',
-    scriptId: '_mock',
+    scriptId: 'mock',
     status: 'playing' as const,
     players: [
       { playerId: 'p1', charId: 'c_wife', nickname: 'A', connected: true, ready: true, isHost: true },
@@ -425,7 +425,7 @@ test('PhaseEngine:投票分支缺 always 时平票仍进入 reveal 兜底,不直
   };
   const state = {
     roomCode: 'TEST',
-    scriptId: '_mock',
+    scriptId: 'mock',
     status: 'playing' as const,
     players: [
       { playerId: 'p1', charId: 'c_wife', nickname: 'A', connected: true, ready: true, isHost: true },
@@ -593,12 +593,15 @@ test('Room: 未选剧本不能开始', () => {
   assert.equal(res.error, 'no_script_selected');
 });
 
-test('Room: 选剧本后全员可见 selectedScript', () => {
+test('Room: 选剧本后全员可见 selectedScript', async () => {
   const cap = createSendCapture();
   const room = createRoomWithScript(cap.send);
   const host = room.join('房主');
   assert.ok('playerId' in host);
   const hostId = (host as { playerId: string }).playerId;
+
+  // 等待 broadcastState 的 setTimeout(0) 完成
+  await new Promise(r => setTimeout(r, 10));
 
   // 选本前
   let view = cap.lastView(hostId);
@@ -607,6 +610,10 @@ test('Room: 选剧本后全员可见 selectedScript', () => {
 
   // 选本后
   room.selectScript(hostId, mockScript.meta.id);
+
+  // 等待 broadcastState 的 setTimeout(0) 完成
+  await new Promise(r => setTimeout(r, 10));
+
   view = cap.lastView(hostId);
   assert.ok(view);
   assert.equal(view!.selectedScript?.title, '公馆惊魂·一九三五');

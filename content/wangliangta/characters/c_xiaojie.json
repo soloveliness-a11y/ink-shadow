@@ -1,0 +1,108 @@
+{
+  "id": "c_xiaojie",
+  "name": "时小节",
+  "gender": "female",
+  "age": 27,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "女，二十多岁，时家姑娘，时成达之女。9岁丧母，在酒馆当伙计。深爱王两，知道王两身份和复活秘密。",
+  "privateScript": "你名叫时小节，生于1887年，是时成达（时老板）之女。9岁丧母。\n\n你在古塔撞倒塑像意外救活王两（第一次复活）。1903年与王两在济南秘道中幽会，被父亲发现后强行分开。你深爱王两，知道他的身份和复活秘密。\n\n10月18日晚，守言在酒馆抱住你骚扰，以王两下落为饵。良真目睹了这一幕。\n\n你持有王两给你的信笺：「年年岁岁无相忘，时时刻刻在心中。破封救我死又生，有缘黄泉亦可通」。你一直在寻找王两的下落和传说中的宝藏。",
+  "objectives": [
+    {
+      "id": "obj_xiaojie_1",
+      "kind": "main",
+      "description": "找到王两的下落。（5分）",
+      "scoring": 5
+    },
+    {
+      "id": "obj_xiaojie_2",
+      "kind": "hidden",
+      "description": "隐瞒你与王两的关系。（5分）",
+      "scoring": 5
+    },
+    {
+      "id": "obj_xiaojie_3",
+      "kind": "main",
+      "description": "找出别熙乡连环命案的真相。（5分）",
+      "scoring": 5
+    },
+    {
+      "id": "obj_xiaojie_4",
+      "kind": "side",
+      "description": "找到传说中的宝藏。（3分）",
+      "scoring": 3
+    }
+  ],
+  "secrets": [
+    "深爱王两，知道王两的身份和复活秘密",
+    "1903年与王两在济南秘道中幽会，被父亲发现后强行分开",
+    "在古塔撞倒塑像意外救活王两（第一次复活）",
+    "10月18日晚被守言骚扰，以王两下落为饵"
+  ],
+  "timeline": [
+    {
+      "time": "1887年",
+      "location": "时家",
+      "action": "出生，时成达之女",
+      "isPublic": true
+    },
+    {
+      "time": "1896年",
+      "location": "古塔",
+      "action": "撞倒塑像意外救活王两（第一次复活）",
+      "isPublic": false
+    },
+    {
+      "time": "1903年",
+      "location": "济南秘道",
+      "action": "与王两幽会，被父亲发现后分开",
+      "isPublic": false
+    },
+    {
+      "time": "1912年",
+      "location": "济南",
+      "action": "父亲时成达被熙扬隆杀害",
+      "isPublic": false
+    },
+    {
+      "time": "1914.10.18晚",
+      "location": "酒馆",
+      "action": "被守言骚扰，良真目睹",
+      "isPublic": false
+    },
+    {
+      "time": "1914.10.19",
+      "location": "别熙乡",
+      "action": "发现熙勤兼顾已死，众人聚集调查",
+      "isPublic": true
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "c_jingfan",
+      "relation": "深爱之人（实为王两）",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "c_zizhuo",
+      "relation": "同事（自卓深爱她）",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_liangzhen",
+      "relation": "朋友（良真深爱她）",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_shouyan",
+      "relation": "骚扰者（守言曾骚扰她）",
+      "isPublic": false
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese young woman 27 years old, Republican era, tavern worker, simple but pretty, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

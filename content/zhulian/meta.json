@@ -12,5 +12,9 @@
   "schemaVersion": "1.0.0",
   "status": "draft",
   "genre": "murder",
-  "styleGuide": "民国·豪门命案 setting, oil painting style, dramatic lighting"
+  "styleGuide": "民国·豪门命案 setting, oil painting style, dramatic lighting",
+  "featureTags": [
+    "大宅",
+    "家族"
+  ]
 }

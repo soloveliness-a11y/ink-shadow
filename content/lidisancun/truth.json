@@ -1,0 +1,63 @@
+{
+  "murdererCharIds": [
+    "chenzhi"
+  ],
+  "method": "晨枝用寿衣闷死大伯野芦。其他命案另有原因：旺远被僵尸所害，麻氏被野芦按家法处置，施升坠崖身亡，施香溺水而亡。",
+  "motive": "晨枝认定大伯野芦当年见死不救导致母亲麻氏死亡，趁野芦受伤之际用寿衣将其闷死复仇。",
+  "crimeTimeline": [
+    {
+      "time": "1903年农历三月十五",
+      "location": "义庄附近",
+      "action": "麻氏遭遇僵尸后被野芦按家法处置，不治身亡",
+      "isPublic": true
+    },
+    {
+      "time": "1911年农历三月",
+      "location": "义庄",
+      "action": "旺远在义庄验尸时遭遇僵尸被害",
+      "isPublic": false
+    },
+    {
+      "time": "1911年农历三月廿三",
+      "location": "偃勾河",
+      "action": "施香尸体在河中被发现",
+      "isPublic": true
+    },
+    {
+      "time": "1911年农历四月十二",
+      "location": "村西山峭壁",
+      "action": "施升尸体被发现",
+      "isPublic": true
+    },
+    {
+      "time": "1914年11月2日",
+      "location": "宝瑟庄东屋",
+      "action": "晨枝用寿衣闷死野芦",
+      "isPublic": false
+    }
+  ],
+  "solutionChain": [
+    "cl_wangyuan_body",
+    "cl_mother_death",
+    "cl_shixiang_body"
+  ],
+  "reveal": "晨枝为报母亲之仇闷死大伯野芦。当年麻氏遭遇僵尸后，野芦按家法不许救治，导致麻氏死亡。其他命案则与僵尸传说和家族恩怨有关。",
+  "endings": [
+    {
+      "id": "end_good",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "真相揭晓",
+      "narrative": "凶手被找出，陵下村的秘密被揭开。"
+    },
+    {
+      "id": "end_bad",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "真相掩埋",
+      "narrative": "真相被掩埋，僵尸传说继续困扰陵下村。"
+    }
+  ]
+}

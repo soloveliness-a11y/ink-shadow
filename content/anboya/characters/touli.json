@@ -1,0 +1,42 @@
+{
+  "id": "touli",
+  "name": "头励",
+  "gender": "male",
+  "age": 8,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "侯动木收养的男孩，仙仪的新徒弟。真实身份是老四的孩子。",
+  "privateScript": "你是侯动木收养的男孩，被带到异法馆记入门派名录。你的亲生父母是个谜。",
+  "objectives": [
+    {
+      "id": "obj_tl_1",
+      "kind": "main",
+      "description": "找到自己的亲生父母。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [
+    "真实身份是老四的孩子"
+  ],
+  "timeline": [
+    {
+      "time": "1914年10月1日",
+      "location": "异法馆",
+      "action": "被带去拜师",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "xiaoyi_anbo",
+      "relation": "师父",
+      "isPublic": true
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "头励, male, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

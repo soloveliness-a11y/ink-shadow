@@ -12,5 +12,10 @@
   "schemaVersion": "1.0.0",
   "status": "ready",
   "genre": "murder",
-  "styleGuide": "民国油画风,暖色调,戏剧性光影"
+  "styleGuide": "民国油画风,暖色调,戏剧性光影",
+  "featureTags": [
+    "舞厅",
+    "身份悬疑",
+    "谍战"
+  ]
 }

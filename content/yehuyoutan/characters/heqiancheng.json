@@ -1,16 +1,42 @@
 {
-  "id": "heqiancheng", "name": "何千程", "gender": "male", "age": 40,
-  "isVictim": false, "isMurderer": false,
+  "id": "heqiancheng",
+  "name": "何千程",
+  "gender": "male",
+  "age": 40,
+  "isVictim": false,
+  "isMurderer": false,
   "publicProfile": "谷虎术士，40岁，桑尘子的师弟。精通道术。",
   "privateScript": "你是何千程，桑尘子的师弟。你一直在寻找「神通鬼使」的下落。你告诉过钱长英关于此事的秘密。",
   "objectives": [
-    {"id": "obj_hq_1", "kind": "main", "description": "查明连环命案是否与「神通鬼使」有关。(5分)", "scoring": 5},
-    {"id": "obj_hq_2", "kind": "hidden", "description": "找到「神通鬼使」的下落。(5分)", "scoring": 5}
+    {
+      "id": "obj_hq_1",
+      "kind": "main",
+      "description": "查明连环命案是否与「神通鬼使」有关。(5分)",
+      "scoring": 5
+    },
+    {
+      "id": "obj_hq_2",
+      "kind": "hidden",
+      "description": "找到「神通鬼使」的下落。(5分)",
+      "scoring": 5
+    }
   ],
-  "secrets": ["知道神通鬼使的秘密", "让钱长英发毒誓"],
+  "secrets": [
+    "知道神通鬼使的秘密",
+    "让钱长英发毒誓"
+  ],
   "timeline": [],
   "relationships": [
-    {"targetCharId": "jinger", "relation": "师侄", "isPublic": true}
+    {
+      "targetCharId": "jinger",
+      "relation": "师侄",
+      "isPublic": true
+    }
   ],
-  "visual": {"kind": "avatar", "prompt": "Chinese Taoist priest 40 years old, oil painting style", "aspect": "3:4"}
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese Taoist priest 40 years old, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
 }

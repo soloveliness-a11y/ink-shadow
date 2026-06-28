@@ -18,12 +18,22 @@ export function ConfirmDialog({
 }: ConfirmDialogProps) {
   const confirmRef = useRef<HTMLButtonElement>(null);
 
-  // Auto-focus confirm button on open; trap Escape to cancel
+  // Auto-focus confirm button on open; trap Escape to cancel; trap Tab within dialog
   useEffect(() => {
     if (!open) return;
     confirmRef.current?.focus();
     const handler = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onCancel();
+      if (e.key === 'Tab') {
+        const card = document.querySelector('.confirm-card');
+        if (!card) return;
+        const focusable = card.querySelectorAll<HTMLElement>('button, [tabindex]:not([tabindex="-1"])');
+        if (focusable.length === 0) return;
+        const first = focusable[0]!;
+        const last = focusable[focusable.length - 1]!;
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
@@ -35,7 +45,7 @@ export function ConfirmDialog({
 
   return (
     <div className="confirm-backdrop" onClick={onCancel}>
-      <div className={`confirm-card ${toneClass}`} onClick={(e) => e.stopPropagation()}>
+      <div className={`confirm-card ${toneClass}`} role="dialog" aria-modal="true" aria-label={title} onClick={(e) => e.stopPropagation()}>
         <div className="confirm-title">{title}</div>
         <div className="confirm-message">{message}</div>
         <div className="confirm-actions">

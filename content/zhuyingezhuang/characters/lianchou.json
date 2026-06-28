@@ -1,0 +1,59 @@
+{
+  "id": "lianchou",
+  "name": "利愁",
+  "gender": "female",
+  "age": 16,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "庄亨本与金棠之女，利志的妹妹。温柔善良。",
+  "privateScript": "你是庄家小姐，兄长利志在婚前遭遇不测，母亲卓氏也惨遭杀害。你必须找出真相。",
+  "objectives": [
+    {
+      "id": "obj_lc_1",
+      "kind": "main",
+      "description": "找出母亲卓氏死亡真相。(5分)",
+      "scoring": 5
+    },
+    {
+      "id": "obj_lc_2",
+      "kind": "main",
+      "description": "找出每个命案真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [
+    "知道母亲与联升(实为房远)的冲突"
+  ],
+  "timeline": [
+    {
+      "time": "1906年农历六月十七",
+      "location": "涨秋园厨房",
+      "action": "发现尸体",
+      "isPublic": false
+    },
+    {
+      "time": "1914年10月22日",
+      "location": "涨秋园",
+      "action": "发现母亲尸体",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "zhuanghengben",
+      "relation": "父女",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "aixue",
+      "relation": "姑嫂",
+      "isPublic": true
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "利愁, female, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

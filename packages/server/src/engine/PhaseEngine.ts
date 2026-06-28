@@ -468,16 +468,6 @@ export class PhaseEngine {
       case 'castVote': {
         this.state.votes[charId] = intent.targetCharId;
         this.bus.event({ type: 'vote_cast', actorCharId: charId });
-        // 阵营投票(voteMode='team'):实时统计,某阵营过半 → 设 flag:team_<id>_won(供 teamWin 条件判定)
-        const voteMode = this.current()?.voteMode ?? 'char';
-        if (voteMode === 'team') {
-          const counts: Record<string, number> = {};
-          for (const t of Object.values(this.state.votes)) counts[t] = (counts[t] ?? 0) + 1;
-          const total = Object.keys(this.state.votes).length;
-          for (const [faction, count] of Object.entries(counts)) {
-            if (total > 0 && count > total / 2) this.state.flags[`team_${faction}_won`] = true;
-          }
-        }
         break;
       }
       case 'privateMessage': {
@@ -732,14 +722,24 @@ export class PhaseEngine {
       }
     }
 
-    // proposal 投票过半结算
+    // proposal 投票过半结算(至少2票才结算,单人投票走 always 兜底)
     if (phase.voteMode === 'proposal' && phase.restrictVoteTargets) {
       const proposals = Array.isArray(phase.restrictVoteTargets) ? phase.restrictVoteTargets : [];
       const total = Object.keys(this.state.votes).length;
       for (const pid of proposals) {
         if (this.state.flags[`proposal_${pid}_won`]) continue;
         const cnt = Object.values(this.state.votes).filter((v) => v === pid).length;
-        if (total > 0 && cnt > total / 2) this.state.flags[`proposal_${pid}_won`] = true;
+        if (total > 1 && cnt > total / 2) this.state.flags[`proposal_${pid}_won`] = true;
+      }
+    }
+
+    // 阵营投票(voteMode='team'):环节退出时一次性结算过半 flag(至少2票才结算)
+    if (phase.voteMode === 'team') {
+      const counts: Record<string, number> = {};
+      for (const t of Object.values(this.state.votes)) counts[t] = (counts[t] ?? 0) + 1;
+      const total = Object.keys(this.state.votes).length;
+      for (const [faction, count] of Object.entries(counts)) {
+        if (total > 1 && count > total / 2) this.state.flags[`team_${faction}_won`] = true;
       }
     }
 
@@ -768,7 +768,7 @@ export class PhaseEngine {
         const s = scores[char.id] ?? 0;
         if (s > maxScore) { maxScore = s; winner = char.id; }
       }
-      if (winner) this.state.flags[`recommend_won:${winner}`] = true;
+      if (winner && maxScore > 0) this.state.flags[`recommend_won:${winner}`] = true;
     }
   }
 

@@ -2,7 +2,7 @@
   {
     "id": "clue_cen_home",
     "title": "岑家线索",
-    "content": "",
+    "content": "岑家线索",
     "visibility": "searchable",
     "isKey": false,
     "pointsTo": []

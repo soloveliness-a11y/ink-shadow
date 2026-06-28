@@ -11,6 +11,10 @@
     },
     {
       "from": "p_voting",
+      "to": "p_vote"
+    },
+    {
+      "from": "p_vote",
       "to": "p_reveal"
     }
   ]

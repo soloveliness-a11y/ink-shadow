@@ -17,5 +17,10 @@
   },
   "schemaVersion": "1.0.0",
   "status": "draft",
-  "genre": "murder"
+  "genre": "murder",
+  "featureTags": [
+    "小镇",
+    "夺宝",
+    "复仇"
+  ]
 }

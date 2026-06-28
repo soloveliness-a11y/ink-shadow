@@ -1,0 +1,103 @@
+{
+  "id": "c_zizhuo",
+  "name": "别自卓",
+  "gender": "male",
+  "age": 28,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "男，二十多岁，别家少爷，幼年丧父随母姓。在酒馆当伙计，与小节共事，深爱小节。",
+  "privateScript": "你名叫别自卓，生于1886年。幼年丧父，随母姓「别」。你不知道父亲的真实身份——他就是大盗王两，入赘别家后出走。\n\n你在酒馆当伙计，与时小节共事，深爱她。与付艾柳是表兄妹，差点成婚。\n\n10月18日晚，你偷偷去了古塔，损毁了最后一尊塑像（刻「因年毁之」），完成了第四次复活条件。你在熙宅门上钉了纸条：「大盗王两，死而复生，有仇当报，不死难休」。\n\n你持有银鱼（年年有余），刻「年」字——这是父亲留下的信物。你一直在寻找父亲的下落和传说中的宝藏。",
+  "objectives": [
+    {
+      "id": "obj_zizhuo_1",
+      "kind": "main",
+      "description": "找出别熙乡连环命案的真相。（5分）",
+      "scoring": 5
+    },
+    {
+      "id": "obj_zizhuo_2",
+      "kind": "hidden",
+      "description": "隐瞒你毁掉古塔塑像的事。（10分）",
+      "scoring": 10
+    },
+    {
+      "id": "obj_zizhuo_3",
+      "kind": "side",
+      "description": "找到父亲王两的下落。（5分）",
+      "scoring": 5
+    },
+    {
+      "id": "obj_zizhuo_4",
+      "kind": "side",
+      "description": "找到传说中的宝藏。（3分）",
+      "scoring": 3
+    }
+  ],
+  "secrets": [
+    "10月18日晚在古塔损毁最后一尊塑像（刻「因年毁之」），完成第四次复活条件",
+    "在熙宅门上钉纸条威胁：「大盗王两，死而复生，有仇当报，不死难休」",
+    "父亲就是大盗王两——入赘别家后出走的大盗",
+    "深爱小节，但小节心中只有王两"
+  ],
+  "timeline": [
+    {
+      "time": "1886年",
+      "location": "别家",
+      "action": "出生，随母姓「别」",
+      "isPublic": true
+    },
+    {
+      "time": "1900年",
+      "location": "别熙乡",
+      "action": "庚子国难，艾柳和守言家破人亡被带回别熙乡",
+      "isPublic": true
+    },
+    {
+      "time": "1901年",
+      "location": "酒馆",
+      "action": "去酒馆当伙计，与小节共事",
+      "isPublic": true
+    },
+    {
+      "time": "1914.10.18晚",
+      "location": "古塔",
+      "action": "损毁最后一尊塑像，完成第四次复活条件",
+      "isPublic": false
+    },
+    {
+      "time": "1914.10.18晚",
+      "location": "熙宅",
+      "action": "在熙宅门上钉纸条威胁",
+      "isPublic": false
+    },
+    {
+      "time": "1914.10.19",
+      "location": "别熙乡",
+      "action": "发现熙勤兼顾已死，众人聚集调查",
+      "isPublic": true
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "c_xiaojie",
+      "relation": "深爱之人",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "c_ailiu",
+      "relation": "表兄妹（差点成婚）",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_jingfan",
+      "relation": "陌生人（实为亲父王两）",
+      "isPublic": false
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese young man 28 years old, Republican era, tavern worker, simple clothes, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

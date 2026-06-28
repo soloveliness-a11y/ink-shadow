@@ -1,0 +1,77 @@
+{
+  "id": "shangli",
+  "name": "马尚力",
+  "gender": "male",
+  "age": 23,
+  "isVictim": false,
+  "isMurderer": true,
+  "publicProfile": "尚远之弟，体格结实。暗恋伊水已久。",
+  "privateScript": "你在樊动征指使下引爆炸药造成矿道塌方，后因暗恋伊水，毒杀虐待她的丘芊娇。",
+  "objectives": [
+    {
+      "id": "obj_sl_1",
+      "kind": "main",
+      "description": "隐瞒你毒杀丘芊娇。(10分)",
+      "scoring": 10
+    },
+    {
+      "id": "obj_sl_2",
+      "kind": "main",
+      "description": "找出大哥尚远死亡真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [
+    "在樊动征指使下引爆矿道炸药",
+    "用鼠毒药毒杀丘芊娇",
+    "与伊水有私情"
+  ],
+  "timeline": [
+    {
+      "time": "1910年5月17日",
+      "location": "旧矿道入口",
+      "action": "在樊动征指使下引爆炸药",
+      "isPublic": false
+    },
+    {
+      "time": "1914年8月20日",
+      "location": "洋馆厨房",
+      "action": "在芊娇药包中下毒",
+      "isPublic": false
+    },
+    {
+      "time": "1914年8月24日7:30",
+      "location": "丘宅",
+      "action": "被蒙面人(芳薇)迷晕",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "shangyuan",
+      "relation": "兄弟",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "yishui",
+      "relation": "暗恋",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "yijia",
+      "relation": "暗恋(误认)",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "fandongzheng",
+      "relation": "上下级",
+      "isPublic": false
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "马尚力, male, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

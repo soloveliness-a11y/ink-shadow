@@ -1,7 +1,8 @@
 import type { ClientIntent } from "@mmg/schema";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { THEORY_MAX } from '../../lib/limits.js';
 import { counterColor } from './ChatTab.js';
+import { pushToast } from '../../lib/toast.js';
 
 interface TheoryTabProps {
   myTheory?: string;
@@ -11,6 +12,18 @@ interface TheoryTabProps {
 export function TheoryTab({ myTheory, send }: TheoryTabProps) {
   const [text, setText] = useState('');
   const [submitted, setSubmitted] = useState(false);
+
+  // 乐观回退:submitted 为 true 但 myTheory 被清空(服务端拒绝)
+  useEffect(() => {
+    if (!submitted || myTheory) return;
+    const t = window.setTimeout(() => {
+      if (!myTheory) {
+        setSubmitted(false);
+        pushToast('推理提交未成功,请重试', 'warn', 2000);
+      }
+    }, 2000);
+    return () => window.clearTimeout(t);
+  }, [submitted, myTheory]);
 
   // 已提交：显示只读视图
   if (myTheory || submitted) {

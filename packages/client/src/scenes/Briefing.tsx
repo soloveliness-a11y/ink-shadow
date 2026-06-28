@@ -141,7 +141,7 @@ export function BriefingScene() {
                     </button>
                     {waitingPlayers.length > 0 && (
                       <div className="briefing-waiting">
-                        等待: {waitingPlayers.join('、')}
+                        等待 {waitingPlayers.length} 人完成阅读
                       </div>
                     )}
                   </>

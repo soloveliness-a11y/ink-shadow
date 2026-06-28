@@ -4,6 +4,7 @@ import { assetUrl } from '../../lib/asset.js';
 import { pushToast } from '../../lib/toast.js';
 import { SEARCH_COOLDOWN_MS } from '../../lib/limits.js';
 import { SearchClueRow } from './shared.js';
+import { ConfirmDialog } from '../../components/ConfirmDialog.js';
 import type { ClientStateView } from '@mmg/schema';
 
 interface SearchTabProps {
@@ -18,6 +19,9 @@ interface SearchTabProps {
 export function SearchTab({ view, myCharId, scriptId, canSearch, send, onLightbox }: SearchTabProps) {
   const [sceneId, setSceneId] = useState<string | null>(null);
   const [searchCooldown, setSearchCooldown] = useState<number>(0);
+  const [searchingId, setSearchingId] = useState<string | null>(null);
+  const [foundId, setFoundId] = useState<string | null>(null);
+  const [confirmTarget, setConfirmTarget] = useState<{ id: string; title: string } | null>(null);
 
   const scenes = view.publicScenes ?? [];
   const selectedSceneId = sceneId ?? scenes[0]?.id ?? null;
@@ -32,7 +36,7 @@ export function SearchTab({ view, myCharId, scriptId, canSearch, send, onLightbo
     return () => window.clearTimeout(t);
   }, [searchCooldown]);
 
-  // 监听 search_clue event 触发 toast
+  // 监听 search_clue event:触发成功动画
   const lastSeenSearchId = useRef<number>(-1);
   useEffect(() => {
     const recent = view.log?.filter((e) => e.type === 'search_clue').slice(-3) ?? [];
@@ -40,6 +44,12 @@ export function SearchTab({ view, myCharId, scriptId, canSearch, send, onLightbo
       if (e.ts > lastSeenSearchId.current && e.actorCharId === myCharId) {
         lastSeenSearchId.current = e.ts;
         const title = (e.payload as Record<string, string>)?.clueTitle ?? '线索';
+        const clueId = (e.payload as Record<string, string>)?.clueId;
+        setSearchingId(null);
+        if (clueId) {
+          setFoundId(clueId);
+          setTimeout(() => setFoundId(null), 1800);
+        }
         pushToast(`获得了线索:${title}`, 'success', 2200);
         break;
       }
@@ -51,13 +61,35 @@ export function SearchTab({ view, myCharId, scriptId, canSearch, send, onLightbo
       pushToast('操作太快,稍候再试', 'warn', 1400);
       return;
     }
-    send({ kind: 'searchClue', clueId });
-    setSearchCooldown(SEARCH_COOLDOWN_MS);
-    pushToast(`正在搜索:${title}`, 'info', 1200);
+    setConfirmTarget({ id: clueId, title });
   };
+
+  const executeSearch = () => {
+    if (!confirmTarget) return;
+    send({ kind: 'searchClue', clueId: confirmTarget.id });
+    setSearchCooldown(SEARCH_COOLDOWN_MS);
+    setSearchingId(confirmTarget.id);
+    pushToast(`正在搜索:${confirmTarget.title}`, 'info', 1200);
+    setConfirmTarget(null);
+  };
+
+  // 搜证轮次信息
+  const currentRound = (view.currentPhase?.round ?? 0) + 1;
+  const maxRounds = view.currentPhase?.maxRounds;
+  const searchedThisRound = view.self?.searchedThisRound;
 
   return (
     <div className="search-layout">
+      {/* 轮次指示器 */}
+      {maxRounds != null && maxRounds > 0 && (
+        <div className="search-round-indicator">
+          <span className="round-label">🔍 第 {currentRound}/{maxRounds} 轮</span>
+          <span className={`search-status ${searchedThisRound ? 'done' : 'pending'}`}>
+            {searchedThisRound ? '✓ 本轮已搜' : '● 本轮未搜'}
+          </span>
+        </div>
+      )}
+
       {scenes.length > 0 && (
         <div className="scene-list">
           {scenes.map((sc) => {
@@ -108,8 +140,10 @@ export function SearchTab({ view, myCharId, scriptId, canSearch, send, onLightbo
             key={cl.id}
             title={cl.title}
             onSearch={() => doSearchClue(cl.id, cl.title)}
-            canSearch={canSearch && !view.self?.searchedThisRound}
+            canSearch={canSearch && !searchedThisRound}
             cooldown={searchCooldown}
+            searching={searchingId === cl.id}
+            found={foundId === cl.id}
           />
         ))}
         {unscenedClues.length > 0 && (
@@ -120,8 +154,10 @@ export function SearchTab({ view, myCharId, scriptId, canSearch, send, onLightbo
                 key={cl.id}
                 title={cl.title}
                 onSearch={() => doSearchClue(cl.id, cl.title)}
-                canSearch={canSearch && !view.self?.searchedThisRound}
+                canSearch={canSearch && !searchedThisRound}
                 cooldown={searchCooldown}
+                searching={searchingId === cl.id}
+                found={foundId === cl.id}
               />
             ))}
           </>
@@ -132,6 +168,17 @@ export function SearchTab({ view, myCharId, scriptId, canSearch, send, onLightbo
       ) : (!view.searchableClues || view.searchableClues.length === 0) && !selectedScene ? (
         <div className="empty-state compact">此处已无可搜寻之物,换个地方看看</div>
       ) : null}
+
+      {/* 搜证确认弹窗 */}
+      <ConfirmDialog
+        open={!!confirmTarget}
+        title="确认搜索线索"
+        message={confirmTarget ? `搜索「${confirmTarget.title}」？\n搜索后本轮其他线索将不可再搜。` : ''}
+        confirmLabel="搜索"
+        cancelLabel="取消"
+        onConfirm={executeSearch}
+        onCancel={() => setConfirmTarget(null)}
+      />
     </div>
   );
 }

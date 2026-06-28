@@ -17,5 +17,11 @@
   },
   "schemaVersion": "1.0.0",
   "status": "draft",
-  "genre": "murder"
+  "genre": "murder",
+  "featureTags": [
+    "岳麓",
+    "爱情",
+    "夺宝",
+    "商战"
+  ]
 }

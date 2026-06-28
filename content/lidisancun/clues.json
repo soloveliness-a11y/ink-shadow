@@ -1,0 +1,60 @@
+[
+  {
+    "id": "cl_wangyuan_body",
+    "title": "旺远尸体",
+    "content": "旺远死在宝瑟庄东屋外，面容扭曲，死因不明。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_wangyuan"
+    ]
+  },
+  {
+    "id": "cl_zombie_sighting",
+    "title": "僵尸目击",
+    "content": "多人在义庄目睹僵尸从棺材中复活。",
+    "visibility": "searchable",
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_mother_death",
+    "title": "母亲之死",
+    "content": "麻氏被发现死在义庄附近的树林中，头上有伤。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_mother"
+    ]
+  },
+  {
+    "id": "cl_shixiang_body",
+    "title": "施香尸体",
+    "content": "在偃勾河石桥下发现穿着红衣裙的女尸，已肿胀腐烂。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_shixiang"
+    ]
+  },
+  {
+    "id": "cl_shisheng_body",
+    "title": "施升尸体",
+    "content": "在村西山峭壁下发现施升尸体，身穿孝衣，头部有伤。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_shisheng"
+    ]
+  },
+  {
+    "id": "cl_coffin_broken",
+    "title": "破棺",
+    "content": "施升的坟被刨开，棺材中没有尸骨。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_shisheng"
+    ]
+  }
+]

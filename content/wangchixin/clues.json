@@ -1,0 +1,110 @@
+[
+  {
+    "id": "cl_liushengji",
+    "title": "留声机",
+    "content": "一台手摇式留声机，放在花园亭子西南。唱片上录着一首名为《枉痴心》的歌曲，歌词开头是「酒急易醉色思人，财患难足气忿身」。唱片后面的音轨有所损毁，断断续续，越来越凄凉。太太每次听到这首歌都会情绪失控，将唱片扯下扔远。",
+    "sceneId": "s_huayuan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "truth_yinglu",
+      "truth_wanyurong"
+    ]
+  },
+  {
+    "id": "cl_changpian",
+    "title": "旧唱片",
+    "content": "一张旧唱片，装在写着《枉痴心》的旧纸袋里。这张唱片是从梅院东屋里找到的，东屋原本被锁上并贴了封贴。唱片的歌词与留声机播放的歌曲相同。",
+    "sceneId": "s_meiyuan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "truth_yinglu"
+    ]
+  },
+  {
+    "id": "cl_shuaidao",
+    "title": "留声机说明",
+    "content": "留声机可以通过转动摇把上弦，播放唱片时无需通电。这意味着任何人都可以在不引人注意的情况下播放唱片。",
+    "sceneId": "s_huayuan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_zhikesui",
+    "title": "止咳水药瓶",
+    "content": "一个贴着「止咳水」标签的药瓶，扔在花园竹林旁的地上。老爷就是喝了这瓶药后口吐白沫身亡的。药瓶是泛德从纤娣住的南屋拿出来的。",
+    "sceneId": "s_huayuan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "truth_guangqing_death"
+    ]
+  },
+  {
+    "id": "cl_shachong",
+    "title": "杀虫药",
+    "content": "一瓶杀虫药，遗落在厨房灶台旁。说明书上写着此药有剧毒，用十分之一的剂量就会致命，使用前要加很多水稀释。这瓶药是从经固房里拿出来的。",
+    "sceneId": "s_huayuan",
+    "visibility": "searchable",
+    "round": 2,
+    "isKey": true,
+    "pointsTo": [
+      "truth_poison",
+      "truth_xiandi_death"
+    ]
+  },
+  {
+    "id": "cl_shoupa",
+    "title": "绣字手帕",
+    "content": "一块湿手帕，掉在荷院水池旁的地上，上面绣着暗红色的字。这块手帕曾被用来蒙面——经固溺死时脸上就蒙着这块手帕。",
+    "sceneId": "s_heyuan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "truth_jinggu_death"
+    ]
+  },
+  {
+    "id": "cl_meiyuan_dongwu",
+    "title": "东屋封贴",
+    "content": "梅院东屋的门上原本锁着并贴了封贴，如今封贴被撕掉，门锁被打开。屋内挂着衣服仿佛人影，桌上曾有一张旧唱片。",
+    "sceneId": "s_meiyuan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": false,
+    "pointsTo": [
+      "truth_yinglu"
+    ]
+  },
+  {
+    "id": "cl_kuntong_zhuang",
+    "title": "昆僮的装扮",
+    "content": "小厮昆僮被发现吊死在梅院梅树上，脸画旦角妆，身穿粉色戏服，双脚离地。树下南边有倒下的凳子。脖子上绕着腰带。",
+    "sceneId": "s_meiyuan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "truth_kuntong_death"
+    ]
+  },
+  {
+    "id": "cl_jinggu_shiti",
+    "title": "经固的尸体",
+    "content": "经固躺在荷院水池旁，头溺在水里，双眼圆瞪，已经死亡。脸上蒙着一块绣字的白色旧手帕。",
+    "sceneId": "s_heyuan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "truth_jinggu_death"
+    ]
+  }
+]

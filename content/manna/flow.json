@@ -1,0 +1,25 @@
+{
+  "entry": "p_briefing",
+  "edges": [
+    {
+      "from": "p_briefing",
+      "to": "p_phase1"
+    },
+    {
+      "from": "p_phase1",
+      "to": "p_phase2"
+    },
+    {
+      "from": "p_phase2",
+      "to": "p_phase3"
+    },
+    {
+      "from": "p_phase3",
+      "to": "p_vote"
+    },
+    {
+      "from": "p_vote",
+      "to": "p_reveal"
+    }
+  ]
+}

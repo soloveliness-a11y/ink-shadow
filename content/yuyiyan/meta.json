@@ -1,0 +1,27 @@
+{
+  "id": "yuyiyan",
+  "title": "雨异妍",
+  "theme": "民国·江西鄱阳湖·翠藕岛·继承之争与连环命案",
+  "playerCount": {
+    "min": 6,
+    "max": 6
+  },
+  "difficulty": "hard",
+  "durationMin": 240,
+  "synopsis": "1914年9月28日，江西鄱阳湖翠藕岛。南京万家覆灭后，经理徐轻马带着万金英秘密遗孤的线索来到鄱阳湖。歌姬夏莲被勒死在碧荷庄，万茂林与陶尽恭在老宅被刺杀，纪方原溺毙于花园水池——六位各怀秘密的故人，谁是万金英的真正血脉？谁又是连环命案的真凶？",
+  "styleGuide": "1914 Jiangxi Poyang Lake island manor, Republican era, oil painting style, autumn rain, lotus pond",
+  "cover": {
+    "kind": "cover",
+    "prompt": "1914 Poyang Lake island manor with lotus pond, Republican era, murder mystery, oil painting style, autumn rain",
+    "aspect": "3:4"
+  },
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "genre": "murder",
+  "featureTags": [
+    "海岛",
+    "夺宝",
+    "身世",
+    "戏班"
+  ]
+}

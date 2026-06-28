@@ -1,0 +1,26 @@
+{
+  "id": "zujiazhuang",
+  "title": "诅家庄",
+  "theme": "民国三年·河南夏邑·豪门诅咒连环命案",
+  "playerCount": {
+    "min": 6,
+    "max": 6
+  },
+  "difficulty": "hard",
+  "durationMin": 240,
+  "synopsis": "1914年（民国三年）10月19日，河南夏邑附近的「祖家庄」——一座被诅咒的庄园，数年来亡者不断。庄主祖吴去年突然去世，长子传文在纳妾当晚遇害。次日，一位红衣女子在自出楼北侧上吊身亡，而已死的传文竟现身在尸体面前，向众人厉声问寻真相。六位在场之人各怀秘密——面罩男子传文、二少奶奶彩楠、护院振衣、大少奶奶绛兰、丁记伙计酬朋、少女银环。强盗的身份、多年前的灭门惨案、错综复杂的爱恨情仇，一切都在这座被诅咒的庄园中交织。谁是凶手？谁在说谎？",
+  "styleGuide": "1914 Republican era rural Henan, traditional Chinese courtyard mansion, dark and cursed atmosphere, oil painting style with sepia and muted tones",
+  "cover": {
+    "kind": "cover",
+    "prompt": "Vertical poster for a 1914 Henan rural mansion murder mystery. A grand but eerie traditional Chinese compound courtyard at dusk, red lanterns casting ominous glow, a masked figure standing before a hanging red-clothed woman, six silhouettes gathered in shadows, dark atmosphere, oil painting style, dramatic chiaroscuro lighting",
+    "aspect": "3:4"
+  },
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "genre": "murder",
+  "featureTags": [
+    "小镇",
+    "家族",
+    "身份悬疑"
+  ]
+}

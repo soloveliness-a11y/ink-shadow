@@ -1,0 +1,27 @@
+{
+  "id": "wangchixin",
+  "title": "枉痴心",
+  "theme": "民国杭州·盐商老宅连环命案",
+  "playerCount": {
+    "min": 6,
+    "max": 6
+  },
+  "difficulty": "hard",
+  "durationMin": 240,
+  "synopsis": "1914年中秋，杭州盐商田家老宅「仰松园」内，一首名为《枉痴心》的唱片歌声反复响起——小厮昆僮被发现吊死在梅院梅树上，义子经固溺死在荷院水池中，管家之母阿叶中毒身亡，大小姐纤娣也在众目睽睽下中毒而死，老爷田广顷更当着所有人的面口吐白沫毙命……六位各怀心事的年轻人，谁是真凶？",
+  "styleGuide": "1914 Hangzhou Chinese merchant mansion, Republican era, moonlit courtyard, oil painting style, warm sepia tones",
+  "cover": {
+    "kind": "cover",
+    "prompt": "1914 Hangzhou Chinese merchant mansion courtyard at night, moonlit garden with rockery and pond, murder mystery atmosphere, oil painting style",
+    "aspect": "3:4"
+  },
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "genre": "murder",
+  "featureTags": [
+    "大宅",
+    "家族",
+    "身世",
+    "多线叙事"
+  ]
+}

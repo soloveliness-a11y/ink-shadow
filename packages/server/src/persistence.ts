@@ -39,7 +39,7 @@ export function cancelDebouncedWrite(filePath: string): void {
  * 改为:写 .tmp → rename(同分区原子)→ 写成功后保留 .bak 备份。
  */
 export async function writeJsonFile(filePath: string, data: unknown): Promise<void> {
-  const json = JSON.stringify(data, null, 2);
+  const json = JSON.stringify(data);
   const tmpPath = `${filePath}.tmp`;
   const bakPath = `${filePath}.bak`;
   await writeFile(tmpPath, json, { mode: 0o600 });

@@ -76,7 +76,7 @@ export function ScriptBook() {
   const playerId = useGameStore((s) => s.playerId);
   const self = view?.self;
   const myChar = self ? view?.publicCharacters.find((c) => c.id === self.charId) : undefined;
-  const scriptId = view?.selectedScript?.id ?? '_mock';
+  const scriptId = view?.selectedScript?.id ?? 'mock';
 
   const [open, setOpen] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -96,12 +96,24 @@ export function ScriptBook() {
   const rightPageRef = useRef<HTMLDivElement>(null);
   const charId = self?.charId ?? '';
 
-  // Escape 关闭 + 锁定背景滚动
+  // Escape 关闭 + 锁定背景滚动 + 焦点陷阱
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+      if (e.key === 'Tab') {
+        const modal = modalRef.current;
+        if (!modal) return;
+        const focusable = modal.querySelectorAll<HTMLElement>('button, [tabindex]:not([tabindex="-1"]), input, select, textarea, a[href]');
+        if (focusable.length === 0) return;
+        const first = focusable[0]!;
+        const last = focusable[focusable.length - 1]!;
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
     document.addEventListener('keydown', onKey);
     modalRef.current?.focus();
     return () => {
@@ -330,7 +342,7 @@ export function ScriptBook() {
       {/* 仿纸质书弹窗 */}
       {open && (
         <div className="scriptbook-overlay" onClick={() => setOpen(false)}>
-          <div className="scriptbook-modal" ref={modalRef} tabIndex={-1} onClick={(e) => e.stopPropagation()}>
+          <div className="scriptbook-modal" ref={modalRef} tabIndex={-1} role="dialog" aria-modal="true" aria-label="我的剧本" onClick={(e) => e.stopPropagation()}>
             {/* 顶部工具栏 */}
             <div className="scriptbook-topbar">
               <div className="scriptbook-topbar-left">

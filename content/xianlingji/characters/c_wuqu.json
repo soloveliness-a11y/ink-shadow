@@ -1,0 +1,27 @@
+{
+  "id": "c_wuqu",
+  "name": "乌取",
+  "gender": "male",
+  "age": 55,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "男，约五十五岁，过岭之父。10月21日被骗入沼区深处洞穴，被先灵杀死。",
+  "privateScript": "",
+  "objectives": [],
+  "secrets": [],
+  "timeline": [
+    {
+      "time": "1914.10.21上午",
+      "location": "沼区",
+      "action": "被昭然骗入洞穴，被先灵杀死",
+      "isPublic": true
+    }
+  ],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese middle-aged man 55 years old, mountain village guardian, traditional clothes, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

@@ -1,0 +1,72 @@
+{
+  "id": "gaoshengxiang",
+  "name": "高襄生",
+  "gender": "male",
+  "age": 35,
+  "isVictim": false,
+  "isMurderer": true,
+  "publicProfile": "永信融经理，范裕庆的下属。外甥的舅舅。",
+  "privateScript": "你是永信融的经理，外甥之赋即将娶范裕庆的女儿禾珍。你当年杀了汤望之，又找人冒充外甥。你在范公馆向叶小姐求婚。",
+  "objectives": [
+    {
+      "id": "obj_gsx_1",
+      "kind": "main",
+      "description": "隐瞒你杀了汤望之。(10分)",
+      "scoring": 10
+    },
+    {
+      "id": "obj_gsx_2",
+      "kind": "main",
+      "description": "找出毁容女人死亡真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [
+    "杀害汤望之并掩埋",
+    "找人冒充外甥",
+    "向叶小姐求婚"
+  ],
+  "timeline": [
+    {
+      "time": "1908年农历六月十一",
+      "location": "树林",
+      "action": "杀害汤望之",
+      "isPublic": false
+    },
+    {
+      "time": "1914年8月27日",
+      "location": "范公馆",
+      "action": "向叶小姐求婚",
+      "isPublic": false
+    },
+    {
+      "time": "1914年8月28日凌晨",
+      "location": "范公馆客房一",
+      "action": "发现比利尸体并藏匿",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "yesheep",
+      "relation": "恋人",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "guzhong",
+      "relation": "同事",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "fanyuqing",
+      "relation": "老板",
+      "isPublic": false
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "高襄生, male, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

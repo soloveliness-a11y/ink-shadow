@@ -2,12 +2,7 @@ import { z } from 'zod';
 import { zActionKind, zPhaseKind } from './phase.js';
 import { zClue, zObjective, zScriptMeta } from './script.js';
 import { zRoomStatus, zGameEvent } from './runtime.js';
-
-/**
- * 协议版本号。每次改动 ClientIntent / ServerMessage / ClientStateView 结构时手动 +1。
- * client join 时上报,server 比对;不一致则提示玩家刷新页面(防旧前端发旧协议的静默故障)。
- */
-export const PROTOCOL_VERSION = 11;
+export { PROTOCOL_VERSION } from './constants.js';
 
 /**
  * 客户端 → 服务器:玩家意图。
@@ -26,7 +21,9 @@ export const zClientIntent = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('castVote'), targetCharId: z.string().max(128) }),
   z.object({ kind: z.literal('submitTheory'), text: z.string().max(2000) }),
   z.object({ kind: z.literal('hostAdvance') }),
-  z.object({ kind: z.literal('kickPlayer'), targetPlayerId: z.string().max(128) }), // 房主踢人(仅 lobby)
+  z.object({ kind: z.literal('kickPlayer'), targetPlayerId: z.string().max(128) }),
+  z.object({ kind: z.literal('pauseGame') }),
+  z.object({ kind: z.literal('resumeGame') }),
   z.object({ kind: z.literal('manualAdvance') }),
   z.object({ kind: z.literal('rollbackPhase') }),
   z.object({ kind: z.literal('makeChoice'), choiceId: z.string().max(128), optionId: z.string().max(128) }),
@@ -102,8 +99,12 @@ export const zClientStateView = z.object({
       connected: z.boolean(),
       ready: z.boolean(),
       isHost: z.boolean(),
+      isObserver: z.boolean().optional(),
+      disconnectedAt: z.number().optional(),
     }),
   ),
+  isObserver: z.boolean().optional(),
+  paused: z.boolean().optional(),
   self: z
     .object({
       charId: z.string(),
@@ -202,6 +203,13 @@ export const zClientStateView = z.object({
     .object({ title: z.string(), narrative: z.string(), truthReveal: z.string(), theories: z.record(z.string(), z.string()).optional() })
     .optional(), // 仅 finished 才有
   log: z.array(zGameEvent),
+  privateMessages: z.array(z.object({
+    id: z.string(),
+    fromCharId: z.string(),
+    toCharId: z.string(),
+    text: z.string(),
+    ts: z.number(),
+  })).optional(),
 });
 export type ClientStateView = z.infer<typeof zClientStateView>;
 

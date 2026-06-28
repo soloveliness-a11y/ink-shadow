@@ -57,6 +57,22 @@ export function VoteScene() {
     pushToast(`已投给 ${name}`, 'success', 2200);
   };
 
+  // 乐观回退:如果服务端拒绝投票(view 中无我的投票记录),重置 submitted
+  useEffect(() => {
+    if (!submitted) return;
+    if (hasVoted) return;
+    // submitted 为 true 但 view 中没有我的投票 → 服务端可能拒绝了
+    // 给一个短暂宽限期再检查,避免 stateSync 延迟误判
+    const t = window.setTimeout(() => {
+      const nowHasVoted = myCharId && view?.votesPublic?.[myCharId];
+      if (!nowHasVoted) {
+        setSubmitted(false);
+        pushToast('投票未成功,请重试', 'warn', 2000);
+      }
+    }, 2000);
+    return () => window.clearTimeout(t);
+  }, [submitted, hasVoted, myCharId, view?.votesPublic]);
+
   // P0-3: 倒数仅在"我投出且投完时恰为最后一人"触发,避免每个玩家都看到全屏倒数
   // 平票重投(pendingIds 从 0 变非空)时立即清理倒数,避免空窗
   useEffect(() => {
@@ -203,7 +219,7 @@ export function VoteScene() {
                       {url ? <img src={url} alt={c.name} loading="lazy" decoding="async" /> : <div className="portrait-fallback">{c.name.charAt(0)}</div>}
                       <div className="portrait-overlay">
                         <div className="portrait-name">{c.name}</div>
-                        <div className="portrait-sub">{c.publicProfile.slice(0, 36)}</div>
+                        <div className="portrait-sub portrait-sub-clamp">{c.publicProfile}</div>
                       </div>
                       {isSelected && (
                         <div className="portrait-check vote-check">✓</div>
@@ -285,7 +301,10 @@ export function VoteScene() {
               )}
             </div>
             {revealedVotes.length >= allVoteEntries.length && (
-              <div className="vote-tally-done">票型已全部揭示</div>
+              <div className="vote-tally-done">
+                <span>票型已全部揭示</span>
+                <button className="btn btn-primary btn-sm" onClick={() => setTallyPhase(false)}>关闭</button>
+              </div>
             )}
           </div>
         </div>

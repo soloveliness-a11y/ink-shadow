@@ -1,0 +1,27 @@
+{
+  "id": "npc_zuchuanwen",
+  "name": "祖传文",
+  "gender": "male",
+  "age": 35,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "祖传文，在祖家庄遇害",
+  "privateScript": "",
+  "objectives": [
+    {
+      "id": "obj_npc_zuchuanwen_1",
+      "kind": "main",
+      "description": "了解真相",
+      "scoring": 5
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese male 35 years old",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

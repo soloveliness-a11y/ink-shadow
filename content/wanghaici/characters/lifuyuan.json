@@ -8,19 +8,66 @@
   "publicProfile": "望海村大地主，38岁，戴镶玉帽子，穿缎子大褂。妻子刚去世，与丫鬟雅梅有私情。",
   "privateScript": "你名叫李福辕，生于清光绪三年（1877年），家住李宅，是望海村的大地主。你16岁时王渚寿改建望海祠。你娶了赵秀才的妹妹，生下女儿慧芯。你与丫鬟雅梅有私情，她已有身孕。你想要王渚寿的古玉。9月5日你赴约去望海祠，发现内院门被锁，听到惨叫后破门，看到王渚寿已死。9月7日你在望海祠书房遇害。",
   "objectives": [
-    {"id": "obj_lf_1", "kind": "main", "description": "查出王渚寿是否是自杀。(5分)", "scoring": 5},
-    {"id": "obj_lf_2", "kind": "side", "description": "隐瞒雅梅怀孕的事。(2分)", "scoring": 2}
+    {
+      "id": "obj_lf_1",
+      "kind": "main",
+      "description": "查出王渚寿是否是自杀。(5分)",
+      "scoring": 5
+    },
+    {
+      "id": "obj_lf_2",
+      "kind": "side",
+      "description": "隐瞒雅梅怀孕的事。(2分)",
+      "scoring": 2
+    }
   ],
-  "secrets": ["与雅梅有私情且她已怀孕", "想要王渚寿的古玉", "编造了赴约理由隐瞒古玉之事"],
+  "secrets": [
+    "与雅梅有私情且她已怀孕",
+    "想要王渚寿的古玉",
+    "编造了赴约理由隐瞒古玉之事"
+  ],
   "timeline": [
-    {"time": "9月5日 19:15", "location": "望海祠", "action": "赴约来到望海祠，发现内院门被锁", "isPublic": true},
-    {"time": "9月5日 19:20", "location": "望海祠", "action": "听到内院惨叫，破门后发现王渚寿尸体", "isPublic": true},
-    {"time": "9月7日 9:00", "location": "望海祠外", "action": "与众人寒暄", "isPublic": true},
-    {"time": "9月7日 约10:00", "location": "望海祠书房", "action": "在书房被杀", "isPublic": false}
+    {
+      "time": "9月5日 19:15",
+      "location": "望海祠",
+      "action": "赴约来到望海祠，发现内院门被锁",
+      "isPublic": true
+    },
+    {
+      "time": "9月5日 19:20",
+      "location": "望海祠",
+      "action": "听到内院惨叫，破门后发现王渚寿尸体",
+      "isPublic": true
+    },
+    {
+      "time": "9月7日 9:00",
+      "location": "望海祠外",
+      "action": "与众人寒暄",
+      "isPublic": true
+    },
+    {
+      "time": "9月7日 约10:00",
+      "location": "望海祠书房",
+      "action": "在书房被杀",
+      "isPublic": false
+    }
   ],
   "relationships": [
-    {"targetCharId": "zhangpeisheng", "relation": "同学兼货仓主管", "isPublic": true},
-    {"targetCharId": "lishenang", "relation": "侄子，寄居李宅", "isPublic": true}
+    {
+      "targetCharId": "zhangpeisheng",
+      "relation": "同学兼货仓主管",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "lishenang",
+      "relation": "侄子，寄居李宅",
+      "isPublic": true
+    }
   ],
-  "visual": {"kind": "avatar", "prompt": "Chinese landlord 38 years old, jade-inlaid hat, satin changshan, oil painting style", "aspect": "3:4"}
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese landlord 38 years old, jade-inlaid hat, satin changshan, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
 }

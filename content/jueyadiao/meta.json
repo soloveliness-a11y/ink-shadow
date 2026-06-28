@@ -17,5 +17,9 @@
   },
   "schemaVersion": "1.0.0",
   "status": "draft",
-  "genre": "murder"
+  "genre": "murder",
+  "featureTags": [
+    "太监隐居",
+    "夺宝"
+  ]
 }

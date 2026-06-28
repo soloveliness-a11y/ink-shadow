@@ -1,0 +1,42 @@
+[
+  {
+    "id": "s_zhangqiu",
+    "name": "涨秋园",
+    "description": "福州衣锦坊内的园林宅邸，多次命案发生地。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Late Qing dynasty Fuzhou traditional garden mansion, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_kitchen",
+    "name": "厨房",
+    "description": "涨秋园厨房，发现两具女尸。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese traditional kitchen, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_study",
+    "name": "书房",
+    "description": "涨秋园书房，林宗斐被杀之处。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese traditional study room, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_north_house",
+    "name": "北屋/拔步床",
+    "description": "涨秋园北院北屋，内有千工拔步床。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese traditional bedroom with elaborate bed, oil painting style",
+      "aspect": "16:9"
+    }
+  }
+]

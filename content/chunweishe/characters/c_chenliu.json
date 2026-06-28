@@ -1,0 +1,22 @@
+{
+  "id": "c_chenliu",
+  "name": "臣柳",
+  "gender": "male",
+  "age": 28,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "春味社团长，金陵望族出身。1908年与斌持、仰名合谋杀害悦绮。1914年被斌持杀死于花园亭中。",
+  "privateScript": "臣柳是春味社团长，秋瑟园主人。1908年排演《金羊毛》时，悦绮闯入听到反清台词要去告发，臣柳与斌持、仰名合力将她关入箱子闷死。1914年重组春味社，被斌持用细绳勒死并割头。",
+  "objectives": [],
+  "secrets": [
+    "1908年参与杀害悦绮"
+  ],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "1914 Chinese man, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

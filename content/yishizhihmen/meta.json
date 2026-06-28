@@ -17,5 +17,11 @@
   },
   "schemaVersion": "1.0.0",
   "status": "draft",
-  "genre": "murder"
+  "genre": "murder",
+  "featureTags": [
+    "海岛",
+    "神秘仪式",
+    "夺宝",
+    "祭祀主持"
+  ]
 }

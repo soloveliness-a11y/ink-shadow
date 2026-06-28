@@ -1,0 +1,67 @@
+{
+  "id": "zhaoluoyi",
+  "name": "赵洛意",
+  "gender": "female",
+  "age": 18,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "山西富商之女，上海圣约翰大学学生。来武汉讨债。",
+  "privateScript": "你是山西赵家的大小姐，父亲去世后家业困难，来武汉找范裕庆讨回父亲的投资。你在秋儿处收到神秘股票。",
+  "objectives": [
+    {
+      "id": "obj_zly_1",
+      "kind": "main",
+      "description": "找到祁风失联真相。(5分)",
+      "scoring": 5
+    },
+    {
+      "id": "obj_zly_2",
+      "kind": "main",
+      "description": "找到父亲投资去向。(2分)",
+      "scoring": 2
+    },
+    {
+      "id": "obj_zly_3",
+      "kind": "main",
+      "description": "找出每个命案真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [
+    "拿到了神秘股票",
+    "新闻原则:没有调查清楚的事不说"
+  ],
+  "timeline": [
+    {
+      "time": "1914年8月27日",
+      "location": "范公馆",
+      "action": "到达范公馆",
+      "isPublic": false
+    },
+    {
+      "time": "1914年8月27日",
+      "location": "歆生路",
+      "action": "调查祁家",
+      "isPublic": false
+    },
+    {
+      "time": "1914年8月28日凌晨",
+      "location": "范公馆",
+      "action": "发现命案",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "hezhen",
+      "relation": "求助对象",
+      "isPublic": false
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "赵洛意, female, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, memo } from 'react';
 import { useGameStore } from '../store/game.js';
 import { assetUrl } from '../lib/asset.js';
 
@@ -139,7 +139,7 @@ export function CharacterSidebar() {
   );
 }
 
-function CharacterCard({ char, owner, note, scriptId, allChars, expanded, isEditing, noteText, onToggle, onEdit, onSave, onCancel, onTextChange }: {
+const CharacterCard = memo(function CharacterCard({ char, owner, note, scriptId, allChars, expanded, isEditing, noteText, onToggle, onEdit, onSave, onCancel, onTextChange }: {
   char: {
     id: string;
     name: string;
@@ -166,8 +166,15 @@ function CharacterCard({ char, owner, note, scriptId, allChars, expanded, isEdit
   const url = assetUrl(scriptId, char.avatar);
   const timeline = char.publicTimeline ?? [];
   const relations = char.publicRelations ?? [];
+  const isOffline = owner && !owner.connected;
   return (
-    <div className={`board-card${expanded ? ' expanded' : ''}`}>
+    <div className={`board-card${expanded ? ' expanded' : ''}${isOffline ? ' offline-card' : ''}`}>
+      {isOffline && (
+        <span className="board-offline-tag">
+          <span className="offline-icon" />
+          已离线
+        </span>
+      )}
       <div className="board-card-head" role="button" tabIndex={0} onClick={onToggle}
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle(); } }}
         aria-expanded={expanded}
@@ -257,6 +264,5 @@ function CharacterCard({ char, owner, note, scriptId, allChars, expanded, isEdit
       )}
     </div>
   );
-}
-
+});
 

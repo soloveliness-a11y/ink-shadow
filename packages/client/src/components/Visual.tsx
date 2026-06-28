@@ -16,7 +16,7 @@ export function Avatar({ name, path, scriptId, className = '', onClick }: {
   if (url && imgOk) {
     return <img src={url} alt={name} title={name} className={`avatar avatar-img ${className}`} onClick={onClick} loading="lazy" decoding="async" onError={() => setImgOk(false)} />;
   }
-  return <div className={`avatar ${className}`} onClick={onClick}>{name.charAt(0)}</div>;
+  return <div className={`avatar ${className}`} role={onClick ? 'button' : undefined} tabIndex={onClick ? 0 : undefined} onClick={onClick} onKeyDown={onClick ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick(); } } : undefined}>{name.charAt(0)}</div>;
 }
 
 /** 角色立绘卡(3:4,名字浮底部渐变)。用于选角 / 投票。 */

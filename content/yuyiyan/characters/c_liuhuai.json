@@ -1,0 +1,85 @@
+{
+  "id": "c_liuhuai",
+  "name": "榴怀",
+  "gender": "male",
+  "age": 18,
+  "isVictim": false,
+  "isMurderer": true,
+  "publicProfile": "男，约十八岁，少年水夫。蒲怀的孪生弟弟，纪方原与曲氏琼娘之子。在青蕖舫做水夫，深爱夏莲。",
+  "privateScript": "你名叫榴怀，是纪方原与曲氏琼娘的次子（比姐姐蒲怀晚出生片刻）。你在青蕖舫做水夫。\n\n你深爱夏莲。你恨万茂林和陶尽恭——他们诬陷母亲偷钱，逼得母亲走投无路。\n\n1913年母亲死后，你一直在等待报仇的机会。你发现了一条旱季时露出的水下道路——可以从翠藕岛不坐船到达老宅。暴雨会冲掉所有脚印。\n\n9月27日，你通过水下道路到达老宅。在厨房用母亲的菜刀刺死了万茂林。陶尽恭从门口进来目睹一切，你又用鱼刀从背后刺死了他。暴雨冲掉了所有脚印和证据。\n\n你要隐瞒杀害万茂林和陶尽恭的事实。",
+  "objectives": [
+    {
+      "id": "obj_liuhuai_1",
+      "kind": "hidden",
+      "description": "隐瞒你杀害万茂林和陶尽恭的事实。（10分）",
+      "scoring": 10
+    },
+    {
+      "id": "obj_liuhuai_2",
+      "kind": "main",
+      "description": "找到夏莲的父亲。（5分）",
+      "scoring": 5
+    },
+    {
+      "id": "obj_liuhuai_3",
+      "kind": "side",
+      "description": "决定是否帮徐轻马找继承人。（3分）",
+      "scoring": 3
+    }
+  ],
+  "secrets": [
+    "9月27日在老宅用菜刀刺死万茂林，用鱼刀刺死陶尽恭",
+    "发现旱季水下道路可不坐船到达老宅",
+    "暴雨冲掉了所有脚印和证据",
+    "深爱夏莲，为母亲报仇"
+  ],
+  "timeline": [
+    {
+      "time": "1896年",
+      "location": "鄱阳湖",
+      "action": "出生，纪方原与曲氏琼娘之子",
+      "isPublic": true
+    },
+    {
+      "time": "1913年",
+      "location": "青蕖舫",
+      "action": "母亲琼娘死亡",
+      "isPublic": true
+    },
+    {
+      "time": "1914.9.27夜",
+      "location": "老宅",
+      "action": "通过水下道路到达老宅，刺杀万茂林和陶尽恭",
+      "isPublic": false
+    },
+    {
+      "time": "1914.9.28",
+      "location": "翠藕岛",
+      "action": "以水夫身份出席",
+      "isPublic": true
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "c_puhuai",
+      "relation": "孪生姐弟",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_xuqingma",
+      "relation": "叔叔（父亲的妹夫）",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_xialian",
+      "relation": "深爱之人",
+      "isPublic": false
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese young man 18 years old, water carrier, simple clothes, Republican era, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

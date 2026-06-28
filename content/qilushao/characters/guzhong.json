@@ -1,0 +1,70 @@
+{
+  "id": "guzhong",
+  "name": "谷重",
+  "gender": "male",
+  "age": 28,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "范裕庆的侄子，范公馆的常客。野心勃勃。",
+  "privateScript": "你是范裕庆的侄子，一直觊觎范家财产。你想继承范家的一切。",
+  "objectives": [
+    {
+      "id": "obj_gz_1",
+      "kind": "main",
+      "description": "找出每个命案真相。(5分)",
+      "scoring": 5
+    },
+    {
+      "id": "obj_gz_2",
+      "kind": "main",
+      "description": "不被当作真凶。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [
+    "觊觎范家财产"
+  ],
+  "timeline": [
+    {
+      "time": "1914年8月27日",
+      "location": "范公馆",
+      "action": "在大厅茶座闲聊",
+      "isPublic": false
+    },
+    {
+      "time": "1914年8月27日晚",
+      "location": "范公馆",
+      "action": "参加晚宴",
+      "isPublic": false
+    },
+    {
+      "time": "1914年8月28日凌晨",
+      "location": "范公馆大厅",
+      "action": "目睹范裕庆坠楼",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "fanyuqing",
+      "relation": "叔侄",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "hezhen",
+      "relation": "堂妹",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "gaoshengxiang",
+      "relation": "同事",
+      "isPublic": false
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "谷重, male, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

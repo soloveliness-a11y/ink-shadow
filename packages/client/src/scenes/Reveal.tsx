@@ -5,7 +5,7 @@ import { useTypewriter } from '../hooks/useTypewriter.js';
 import { useExcerptSelection } from '../hooks/useExcerptSelection.js';
 import { useCallback, useRef } from 'react';
 import { pushToast } from '../lib/toast.js';
-import { recordGame } from '../lib/achievements.js';
+import { recordGame, getAllAchievements } from '../lib/achievements.js';
 import { rateScript, getRating } from '../lib/ratings.js';
 import { EndingPaths } from '../components/EndingPaths.js';
 
@@ -76,8 +76,13 @@ export function RevealScene() {
 export function FinishedScene() {
   const view = useGameStore((s) => s.view);
   const playerId = useGameStore((s) => s.playerId);
+  const joinRoom = useGameStore((s) => s.joinRoom);
+  const roomCode = useGameStore((s) => s.roomCode);
+  const nickname = useGameStore((s) => s.nickname);
   const coverUrl = assetUrl(view?.selectedScript?.id, view?.selectedScript?.cover?.asset?.path);
   const [show, setShow] = useState(false);
+  const [unlockedAchs, setUnlockedAchs] = useState<Array<{ id: string; name: string; desc: string; icon: string }>>([]);
+  const [achDismissed, setAchDismissed] = useState(false);
   useEffect(() => { const t = setTimeout(() => setShow(true), 60); return () => clearTimeout(t); }, []);
 
   // 记录战绩（仅一次）
@@ -108,9 +113,17 @@ export function FinishedScene() {
       playedAt: Date.now(),
     });
     if (unlocked.length > 0) {
-      pushToast(`解锁新成就！`, 'success', 3000);
+      const allAch = getAllAchievements(unlocked);
+      const newAchs = allAch.filter(a => unlocked.includes(a.id));
+      setUnlockedAchs(newAchs);
     }
   }, [view, playerId]);
+
+  const handleReturnLobby = () => {
+    if (roomCode && nickname) {
+      joinRoom(roomCode, nickname);
+    }
+  };
 
   return (
     <div className={`reveal-stage finished${show ? ' show' : ''}`}>
@@ -133,9 +146,24 @@ export function FinishedScene() {
         <div className="reveal-thanks">感谢各位的精彩推理</div>
         <div className="reveal-actions">
           <RecapCardButton />
-          <button onClick={() => window.location.reload()} className="btn btn-secondary btn-lg">返回大厅</button>
+          <button onClick={handleReturnLobby} className="btn btn-secondary btn-lg">返回大厅</button>
         </div>
       </div>
+
+      {/* 成就解锁弹窗 */}
+      {unlockedAchs.length > 0 && !achDismissed && (
+        <div className="achievement-popup-overlay" onClick={() => setAchDismissed(true)}>
+          <div className="achievement-popup" onClick={(e) => e.stopPropagation()}>
+            <div className="achievement-popup-icon">{unlockedAchs[0]!.icon}</div>
+            <div className="achievement-popup-title">解锁新成就</div>
+            <div className="achievement-popup-name">{unlockedAchs[0]!.name}</div>
+            <div className="achievement-popup-desc">{unlockedAchs[0]!.desc}</div>
+            <button onClick={() => setAchDismissed(true)} className="btn btn-primary btn-sm">
+              {unlockedAchs.length > 1 ? `还有 ${unlockedAchs.length - 1} 个成就` : '太棒了'}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -210,6 +238,7 @@ function RevealRecap() {
 function TheoryComparison() {
   const view = useGameStore((s) => s.view);
   const playerId = useGameStore((s) => s.playerId);
+  const [truthExpanded, setTruthExpanded] = useState(false);
   if (!view) return null;
 
   const myCharId = view.players.find(p => p.playerId === playerId)?.charId;
@@ -285,7 +314,12 @@ function TheoryComparison() {
           </div>
           <div className="reveal-compare-card">
             <div className="reveal-compare-label">案件真相</div>
-            <p className="reveal-compare-value" style={{ fontSize: 13, fontWeight: 400, lineHeight: 1.6 }}>{ending.truthReveal.slice(0, 300)}{ending.truthReveal.length > 300 ? '…' : ''}</p>
+            <p className={`reveal-compare-value reveal-truth-text${truthExpanded ? '' : ' clamped'}`} style={{ fontSize: 13, fontWeight: 400, lineHeight: 1.6 }}>{ending.truthReveal}</p>
+            {ending.truthReveal.length > 120 && (
+              <button className="reveal-truth-toggle" onClick={() => setTruthExpanded(!truthExpanded)}>
+                {truthExpanded ? '收起' : '展开全文'}
+              </button>
+            )}
           </div>
         </div>
       )}

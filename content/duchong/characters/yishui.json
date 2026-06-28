@@ -1,0 +1,65 @@
+{
+  "id": "yishui",
+  "name": "伊水",
+  "gender": "female",
+  "age": 20,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "方仁亭之女，青笃之妻。温柔美丽。",
+  "privateScript": "你是方仁亭的长女，父亲在矿难中去世后被丘家收留，嫁给青笃。你与尚力有私情，被芳薇发现后遭杀害。",
+  "objectives": [
+    {
+      "id": "obj_ys_1",
+      "kind": "main",
+      "description": "找出矿难真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [
+    "与尚力有私情",
+    "父亲死于矿难"
+  ],
+  "timeline": [
+    {
+      "time": "1910年5月17日",
+      "location": "煤矿入口",
+      "action": "父亲方仁亭死于矿难",
+      "isPublic": false
+    },
+    {
+      "time": "1913年6月16日",
+      "location": "洋馆次卧",
+      "action": "嫁给青笃",
+      "isPublic": false
+    },
+    {
+      "time": "1914年8月24日",
+      "location": "洋馆杂物房",
+      "action": "被芳薇用猎枪射杀",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "qingdu",
+      "relation": "夫妻",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "shangli",
+      "relation": "情人",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "yijia",
+      "relation": "姐妹",
+      "isPublic": true
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "伊水, female, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

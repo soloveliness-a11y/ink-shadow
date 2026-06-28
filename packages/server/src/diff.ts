@@ -76,9 +76,9 @@ export function diffViews(
       continue;
     }
 
-    // 数组字段:检测纯追加（log 是最热路径）
-    if (Array.isArray(nextVal) && Array.isArray(prevVal) && key === 'log') {
-      if (isArrayAppend(prevVal, nextVal) && nextVal.length > prevVal.length) {
+    // 数组字段:仅 log 数组走 append-only 优化,其他数组全量替换
+    if (Array.isArray(nextVal) && Array.isArray(prevVal)) {
+      if (key === 'log' && isArrayAppend(prevVal, nextVal) && nextVal.length > prevVal.length) {
         patches[`/${key}/-`] = nextVal.slice(prevVal.length);
         continue;
       }

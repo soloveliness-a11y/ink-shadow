@@ -10,6 +10,14 @@ const NEEDS_REPAIR = [
   'daiyuesisha', 'exishangling', 'jinghun', 'jinyuan', 'liejing',
   'niandao', 'shuiqiang', 'shuixiu', 'xiaoyi', 'youling',
   'yuelu', 'yueluowa', 'zhulian', 'ziteng',
+  'wangchixin', 'guzhouying', 'manna',
+  'duchong', 'zhuyingezhuang', 'lidisancun', 'anboya', 'qilushao', 'shuangyinggongxiu',
+  'minghaizhuiyou',
+  'wangliangta',
+  'yuyiyan',
+  'xianlingji',
+  'zujiazhuang',
+  'chunweishe',
 ];
 
 function readJson(p: string) {

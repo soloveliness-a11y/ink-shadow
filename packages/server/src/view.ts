@@ -13,7 +13,7 @@ export function buildView(
   state: RuntimeState,
   forPlayerId: string,
   availableScripts: ScriptMeta[] = [],
-  extra?: { isTestMode?: boolean; dmEnabled?: boolean; pendingAdvance?: boolean; phaseHistory?: string[] },
+  extra?: { isTestMode?: boolean; dmEnabled?: boolean; pendingAdvance?: boolean; phaseHistory?: string[]; paused?: boolean },
   shared?: SharedParts,
 ): ClientStateView {
   const player = state.players.find((p) => p.playerId === forPlayerId);
@@ -81,6 +81,8 @@ export function buildView(
     availableScripts,
     players: pub.players,
     self,
+    isObserver: player?.isObserver || undefined,
+    paused: extra?.paused,
     currentPhase,
     phaseProgress,
     publicCharacters: pub.publicCharacters,
@@ -101,6 +103,11 @@ export function buildView(
     pendingAdvance: extra?.pendingAdvance,
     phaseHistory: extra?.phaseHistory,
     log: state.log,
+    privateMessages: charId
+      ? (state.privateMessages ?? []).filter(
+          (m) => m.fromCharId === charId || m.toCharId === charId,
+        )
+      : undefined,
   };
 }
 
@@ -113,6 +120,8 @@ function mapPlayerPublic(p: RuntimeState['players'][number]): ClientStateView['p
     connected: p.connected,
     ready: p.ready,
     isHost: p.isHost,
+    isObserver: p.isObserver || undefined,
+    disconnectedAt: p.disconnectedAt,
   };
 }
 
@@ -195,25 +204,62 @@ export function buildSharedParts(script: Script, state: RuntimeState): SharedPar
  * 公共部分(buildSharedParts)只算一次,每个玩家仅算其私有部分。
  * 输出与逐个调用 buildView 字节等价(view-parity.test.ts 守护)。
  */
+/**
+ * 脏标记缓存:上一次 buildViewBatch 的 state hash + 输出。
+ * 当 state 未变且 playerIds 相同时直接返回缓存,避免重复构建。
+ */
+let lastBatchHash = '';
+let lastBatchResult: Array<{ playerId: string; view: ClientStateView }> = [];
+
+/** 显式清除 batch 缓存(状态变更后调用)。 */
+export function clearViewBatchCache(): void {
+  lastBatchHash = '';
+  lastBatchResult = [];
+}
+
+function computeBatchHash(state: RuntimeState, playerIds: string[], extra: unknown): string {
+  // hash 所有影响 view 输出的状态字段,避免缓存脏读
+  return [
+    state.scriptId, state.status, state.currentPhaseId, state.log.length,
+    state.phaseRuntime.actedCharIds.length, state.phaseRuntime.turnIndex,
+    state.phaseRuntime.deadline, state.phaseRuntime.round,
+    state.phaseRuntime.searchedThisRound?.length ?? 0,
+    Object.keys(state.votes).length, Object.keys(state.theories).length,
+    Object.keys(state.flags).length, state.revealedClues.length,
+    Object.keys(state.acquiredClues).length, Object.keys(state.counters ?? {}).length,
+    playerIds.join(','), JSON.stringify(extra),
+  ].join(':');
+}
+
 export function buildViewBatch(
   script: Script | null,
   state: RuntimeState,
   playerIds: string[],
   availableScripts: ScriptMeta[] = [],
-  extra?: { isTestMode?: boolean; dmEnabled?: boolean; pendingAdvance?: boolean; phaseHistory?: string[] },
+  extra?: { isTestMode?: boolean; dmEnabled?: boolean; pendingAdvance?: boolean; phaseHistory?: string[]; paused?: boolean },
 ): Array<{ playerId: string; view: ClientStateView }> {
+  const hash = computeBatchHash(state, playerIds, extra);
+  if (hash === lastBatchHash && lastBatchResult.length > 0) {
+    // playerIds 内容相同(长度已入hash)且state未变,直接复用
+    return lastBatchResult;
+  }
   // 无剧本:每个玩家视图相同(无公共部分可共享的复杂计算),逐个构建即可
+  let result: Array<{ playerId: string; view: ClientStateView }>;
   if (!script) {
-    return playerIds.map((playerId) => ({
+    result = playerIds.map((playerId) => ({
       playerId,
       view: buildView(script, state, playerId, availableScripts, extra),
     }));
+  } else {
+    const shared = buildSharedParts(script, state);
+    result = playerIds.map((playerId) => ({
+      playerId,
+      view: buildView(script, state, playerId, availableScripts, extra, shared),
+    }));
   }
-  const shared = buildSharedParts(script, state);
-  return playerIds.map((playerId) => ({
-    playerId,
-    view: buildView(script, state, playerId, availableScripts, extra, shared),
-  }));
+  lastBatchHash = hash;
+  lastBatchResult = result;
+  return result;
 }
 
 function buildVotesPublic(

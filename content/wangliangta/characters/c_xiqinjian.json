@@ -1,0 +1,27 @@
+{
+  "id": "c_xiqinjian",
+  "name": "熙勤兼",
+  "gender": "male",
+  "age": 55,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "男，五十多岁，熙家家主。追捕大盗王两多年。10月19日在熙宅被发现死亡，脖子上有掐痕。",
+  "privateScript": "",
+  "objectives": [],
+  "secrets": [],
+  "timeline": [
+    {
+      "time": "1914.10.19",
+      "location": "熙宅",
+      "action": "被王两从阴影中现身掐死",
+      "isPublic": true
+    }
+  ],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese elderly man 55 years old, Republican era, stern official appearance, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

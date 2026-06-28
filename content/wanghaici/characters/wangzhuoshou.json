@@ -11,5 +11,10 @@
   "secrets": [],
   "timeline": [],
   "relationships": [],
-  "visual": {"kind": "avatar", "prompt": "Chinese man 40 years old, temple keeper, oil painting style", "aspect": "3:4"}
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese man 40 years old, temple keeper, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
 }

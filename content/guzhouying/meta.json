@@ -1,0 +1,24 @@
+{
+  "id": "guzhouying",
+  "title": "孤舟萤",
+  "theme": "民国·巢湖画舫命案",
+  "playerCount": {
+    "min": 6,
+    "max": 6
+  },
+  "difficulty": "hard",
+  "durationMin": 240,
+  "synopsis": "1914年10月16日，安徽巢湖畔崔庄庄主崔寿亨被发现死于家中，同日画舫上一具心口中箭的尸体浮出水面——六位各怀秘密的故人，二十年恩怨情仇，谁是真凶？",
+  "styleGuide": "1914 Anhui lakeside village, Republican era, oil painting style, autumn moonlight, fireflies on a painted boat",
+  "cover": {
+    "kind": "cover",
+    "prompt": "1914 Anhui lakeside painted boat murder mystery, oil painting style, autumn moonlight, fireflies",
+    "aspect": "3:4"
+  },
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "genre": "murder",
+  "featureTags": [
+    "画舫"
+  ]
+}

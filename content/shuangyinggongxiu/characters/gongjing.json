@@ -1,0 +1,53 @@
+{
+  "id": "gongjing",
+  "name": "功靖",
+  "gender": "male",
+  "age": 25,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "邬入舟与竺氏之子，嫦儿的丈夫。",
+  "privateScript": "你是邬家的少爷，娶了嫦儿，生了吉旺。你把银蟾客的病人送到灵应祠。",
+  "objectives": [
+    {
+      "id": "obj_gj_1",
+      "kind": "main",
+      "description": "找出每个命案真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [
+    "知道竺家惨案的一些细节"
+  ],
+  "timeline": [
+    {
+      "time": "1899年农历九月初一",
+      "location": "映天湖畔",
+      "action": "参与祭赛",
+      "isPublic": false
+    },
+    {
+      "time": "1914年10月16日",
+      "location": "灵应祠",
+      "action": "送病人来灵应祠",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "tonglang",
+      "relation": "养父子",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "niee",
+      "relation": "姑表亲",
+      "isPublic": false
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "功靖, male, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

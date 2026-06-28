@@ -58,5 +58,6 @@
       "action": "进入甲房(被杀害)",
       "isPublic": false
     }
-  ]
+  ],
+  "storyByPhase": {}
 }

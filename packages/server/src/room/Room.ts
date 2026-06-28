@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import type { Script, ScriptMeta, RuntimeState, ClientIntent, ServerMessage, RoomSnapshot } from '@mmg/schema';
+import type { Script, ScriptMeta, RuntimeState, ClientIntent, ServerMessage, RoomSnapshot, PrivateMessage } from '@mmg/schema';
 import { PhaseEngine, type Broadcaster } from '../engine/PhaseEngine.js';
 import { buildView, buildViewBatch } from '../view.js';
 import { diffViews } from '../diff.js';
@@ -45,10 +45,11 @@ export class Room {
   private onBroadcastFn: (() => void) | null = null;
   private static MAX_LOG = 500;
   private static MAX_DM_CONCURRENT = 2;
+  private static DISCONNECT_AUTO_KICK_MS = 5 * 60 * 1000; // 5 分钟
   private dmActiveCalls = 0;
 
-  constructor(sendFn: SendFn, dmConfig: DmConfig | null = null) {
-    this.roomCode = generateRoomCode();
+  constructor(sendFn: SendFn, dmConfig: DmConfig | null = null, roomCode?: string) {
+    this.roomCode = roomCode ?? generateRoomCode();
     this.sendFn = sendFn;
     this.dmService = new DmService(dmConfig);
 
@@ -68,7 +69,45 @@ export class Room {
       resources: {},
       counters: {},
       log: [],
+      paused: false,
+      privateMessages: [],
     };
+  }
+
+  /** 从快照恢复内部状态（仅 restore 调用） */
+  private applySnapshot(
+    snap: RoomSnapshot,
+    getScriptFn: (id: string) => Script | undefined,
+    scriptMetas: ScriptMeta[],
+  ): void {
+    this.state = snap.state;
+    this.hostId = snap.hostId || null;
+    this.isTestMode = snap.isTestMode;
+    this.botIds = snap.botIds;
+    this.phaseHistory = snap.phaseHistory;
+    this.kickedTokens = new Map(snap.kickedTokens.map((t) => [t, Date.now()]));
+    // dmFullConfig 不从快照恢复(无 apiKey),保持 null
+    // 所有玩家标记为断线（需重新连接）
+    for (const p of this.state.players) {
+      p.connected = false;
+    }
+    // 已结束房间:刷新 startedAt 防止 cleanFinishedRooms 立即清理
+    if (this.state.status === 'finished') {
+      this.state.phaseRuntime.startedAt = Date.now();
+    }
+    // 重建剧本和引擎
+    this.setScriptProvider(scriptMetas, getScriptFn);
+    if (snap.scriptId) {
+      const script = getScriptFn(snap.scriptId);
+      if (script) {
+        this.script = script;
+        if (snap.state.status === 'playing') {
+          const engine = new PhaseEngine(script, this.state, this.createBroadcaster());
+          if (this.isTestMode) engine.setBlockAdvance(true);
+          this.engine = engine;
+        }
+      }
+    }
   }
 
   /** 设置剧本查询能力(由 RoomManager 注入) */
@@ -79,6 +118,7 @@ export class Room {
    * 否则测试模式的 bot setTimeout 会持续触达已废弃的房间直到进程退出。
    */
   destroy(): void {
+    if (this.broadcastTimer) { clearTimeout(this.broadcastTimer); this.broadcastTimer = null; }
     this.botRunner.stop();
     this.engine?.dispose();
     this.kickedTokens.clear();
@@ -137,6 +177,7 @@ export class Room {
       if (existing) {
         existing.nickname = nickname.trim() || existing.nickname;
         existing.connected = true;
+        existing.disconnectedAt = undefined;
         this.playerSockets.set(existing.playerId, { charId: existing.charId });
         this.clearCachedView(existing.playerId);
         this.sendToPlayer(existing.playerId, { kind: 'joined', playerId: existing.playerId, sessionToken: existing.playerId });
@@ -149,27 +190,17 @@ export class Room {
       }
     }
 
-    // 服务器重启后：按 nickname 匹配已断线玩家（token 不再有效）
-    // 玩家用原昵称重连即可恢复身份
-    if (sessionToken) {
-      const byNickname = this.state.players.find(
-        p => !p.connected && p.nickname === nickname.trim(),
-      );
-      if (byNickname) {
-        byNickname.connected = true;
-        this.playerSockets.set(byNickname.playerId, { charId: byNickname.charId });
-        this.clearCachedView(byNickname.playerId);
-        this.sendToPlayer(byNickname.playerId, { kind: 'joined', playerId: byNickname.playerId, sessionToken: byNickname.playerId });
-        this.sendToPlayer(byNickname.playerId, {
-          kind: 'stateSync',
-          view: buildView(this.script, this.state, byNickname.playerId, this.availableScripts, this.viewExtra()),
-        });
-        this.broadcastState();
-        return { playerId: byNickname.playerId, sessionToken: byNickname.playerId };
-      }
-    }
+    // 昵称匹配重连已禁用:服务器重启后按 nickname 匹配可被冒用,
+    // 仅允许通过有效 sessionToken(=playerId) 重连。
+    // 此分支保留为注释以说明历史行为:
+    // if (sessionToken) {
+    //   const byNickname = this.state.players.find(
+    //     p => !p.connected && p.nickname === nickname.trim(),
+    //   );
+    //   ...
+    // }
 
-    if (this.state.status !== 'lobby') {
+    if (this.state.status !== 'lobby' && this.state.status !== 'playing') {
       return { error: 'room_not_joinable' };
     }
 
@@ -184,6 +215,9 @@ export class Room {
     const isHost = this.state.players.length === 0;
     if (isHost) this.hostId = playerId;
 
+    // playing 阶段新加入的玩家为 observer
+    const isObserver = this.state.status === 'playing';
+
     this.state.players.push({
       playerId,
       charId: undefined,
@@ -191,6 +225,7 @@ export class Room {
       connected: true,
       ready: false,
       isHost,
+      isObserver,
     });
     this.playerSockets.set(playerId, {});
 
@@ -204,7 +239,10 @@ export class Room {
   /** 玩家断线 */
   disconnect(playerId: string): void {
     const p = this.state.players.find((x) => x.playerId === playerId);
-    if (p) p.connected = false;
+    if (p) {
+      p.connected = false;
+      p.disconnectedAt = Date.now();
+    }
     this.playerSockets.delete(playerId);
     // 房主掉线 → 转移给下一个在线玩家,避免房间失去控制权(P0-2)
     if (p?.isHost) this.reassignHost(playerId);
@@ -227,21 +265,42 @@ export class Room {
   }
 
   /**
-   * 房主踢人(仅 lobby 阶段)。
-   * 先发 kicked 消息再删人(sendFn 按 playerId 扫 session,删早了找不到);
+   * 房主踢人(lobby + playing 阶段)。
+   * lobby: 直接移除玩家。
+   * playing: 标记角色离线(不移除,保留角色数据),其他玩家看到"XX已离场"。
+   * 先发 kicked 消息再处理(sendFn 按 playerId 扫 session,删早了找不到);
    * 加入黑名单,阻止被踢者自动重连挤回。
    */
   kick(hostId: string, targetPlayerId: string): { error?: string } {
     if (hostId !== this.hostId) return { error: 'not_host' };
-    if (this.state.status !== 'lobby') return { error: 'kick_not_allowed' };
+    if (this.state.status !== 'lobby' && this.state.status !== 'playing') return { error: 'kick_not_allowed' };
     if (targetPlayerId === hostId) return { error: 'cannot_kick_self' };
     const target = this.state.players.find((p) => p.playerId === targetPlayerId);
     if (!target) return { error: 'player_not_found' };
 
-    // 先通知被踢者(此时其 session 仍在,消息可达),再移除
+    // 先通知被踢者(此时其 session 仍在,消息可达),再处理
     this.sendToPlayer(targetPlayerId, { kind: 'kicked' });
-    this.state.players = this.state.players.filter((p) => p.playerId !== targetPlayerId);
-    this.playerSockets.delete(targetPlayerId);
+
+    if (this.state.status === 'lobby') {
+      // lobby: 直接移除
+      this.state.players = this.state.players.filter((p) => p.playerId !== targetPlayerId);
+      this.playerSockets.delete(targetPlayerId);
+    } else {
+      // playing: 标记离线,保留角色数据
+      target.connected = false;
+      target.disconnectedAt = Date.now();
+      this.playerSockets.delete(targetPlayerId);
+      // 广播离场事件(用 character_exposed 类型携带离场信息)
+      const evt = {
+        type: 'character_exposed' as const,
+        payload: { nickname: target.nickname, charId: target.charId, reason: 'kicked' },
+        ts: Date.now(),
+      };
+      this.state.log.push(evt);
+      for (const p of this.state.players) {
+        if (p.connected) this.sendToPlayer(p.playerId, { kind: 'event', event: evt });
+      }
+    }
     this.kickedTokens.set(targetPlayerId, Date.now());
 
     this.broadcastState();
@@ -354,6 +413,38 @@ export class Room {
     return {};
   }
 
+  /** 暂停游戏 */
+  pauseGame(hostId: string): { error?: string } {
+    if (hostId !== this.hostId) return { error: 'not_host' };
+    if (this.state.status !== 'playing') return { error: 'not_playing' };
+    if (this.state.paused) return { error: 'already_paused' };
+
+    this.state.paused = true;
+    // 暂停时冻结计时器:记录剩余时间
+    if (this.state.phaseRuntime.deadline) {
+      this.state.phaseRuntime.pausedRemaining = this.state.phaseRuntime.deadline - Date.now();
+      this.state.phaseRuntime.deadline = undefined;
+    }
+    this.broadcastState();
+    return {};
+  }
+
+  /** 恢复游戏 */
+  resumeGame(hostId: string): { error?: string } {
+    if (hostId !== this.hostId) return { error: 'not_host' };
+    if (this.state.status !== 'playing') return { error: 'not_playing' };
+    if (!this.state.paused) return { error: 'not_paused' };
+
+    this.state.paused = false;
+    // 恢复时从暂停点继续
+    if (this.state.phaseRuntime.pausedRemaining !== undefined) {
+      this.state.phaseRuntime.deadline = Date.now() + this.state.phaseRuntime.pausedRemaining;
+      this.state.phaseRuntime.pausedRemaining = undefined;
+    }
+    this.broadcastState();
+    return {};
+  }
+
   /** 处理游戏中的玩家意图 */
   handleIntent(playerId: string, intent: ClientIntent): { error?: string } {
     if (!this.script) return { error: 'no_script' };
@@ -361,6 +452,19 @@ export class Room {
     // Lobby: host can start assigning without a charId
     if (intent.kind === 'hostAdvance' && this.state.status === 'lobby') {
       return this.startAssigning(playerId);
+    }
+
+    // 暂停/恢复游戏
+    if (intent.kind === 'pauseGame') {
+      return this.pauseGame(playerId);
+    }
+    if (intent.kind === 'resumeGame') {
+      return this.resumeGame(playerId);
+    }
+
+    // 暂停时冻结所有游戏操作(除了 configureDm)
+    if (this.state.paused && intent.kind !== 'configureDm') {
+      return { error: 'game_paused' };
     }
 
     // 测试模式:手动推进/回退
@@ -406,11 +510,23 @@ export class Room {
     const p = this.state.players.find((x) => x.playerId === playerId);
     if (!p?.charId) return { error: 'no_char' };
 
+    // observer 不能执行游戏操作
+    if (p.isObserver) return { error: 'observer_cannot_act' };
+
     if (!this.engine) return { error: 'no_script' };
 
     if (intent.kind === 'hostAdvance') {
       if (!p.isHost) return { error: 'not_host' };
       return this.engine.hostAdvance(p.charId);
+    }
+
+    // 私聊消息持久化
+    if (intent.kind === 'privateMessage') {
+      const result = this.engine.handleAction(p.charId, intent);
+      if (!result.error) {
+        this.addPrivateMessage(p.charId, intent.toCharId, intent.text);
+      }
+      return result;
     }
 
     return this.engine.handleAction(p.charId, intent);
@@ -456,41 +572,8 @@ export class Room {
     scriptMetas: ScriptMeta[],
   ): Room {
     // 安全:apiKey 不落盘,重启后 DM 默认关闭。房主需重新 configureDm 填 key 才能恢复旁白。
-    const room = new Room(sendFn, null);
-    // 恢复状态
-    /* eslint-disable @typescript-eslint/no-explicit-any */
-    (room as any).roomCode = snap.state.roomCode;
-    (room as any).state = snap.state;
-    (room as any).hostId = snap.hostId || null;
-    (room as any).isTestMode = snap.isTestMode;
-    (room as any).botIds = snap.botIds;
-    (room as any).phaseHistory = snap.phaseHistory;
-    (room as any).kickedTokens = new Map(snap.kickedTokens.map((t) => [t, Date.now()]));
-    /* eslint-enable @typescript-eslint/no-explicit-any */
-    // dmFullConfig 不从快照恢复(无 apiKey),保持 null
-    // 所有玩家标记为断线（需重新连接）
-    for (const p of room.state.players) {
-      p.connected = false;
-    }
-    // 已结束房间:刷新 startedAt 防止 cleanFinishedRooms 立即清理
-    if (room.state.status === 'finished') {
-      room.state.phaseRuntime.startedAt = Date.now();
-    }
-    // 重建剧本和引擎
-    room.setScriptProvider(scriptMetas, getScriptFn);
-    if (snap.scriptId) {
-      const script = getScriptFn(snap.scriptId);
-      if (script) {
-        /* eslint-disable @typescript-eslint/no-explicit-any */
-        (room as any).script = script;
-        if (snap.state.status === 'playing') {
-          const engine = new PhaseEngine(script, room.state, (room as any).createBroadcaster());
-          if (room.isTestMode) engine.setBlockAdvance(true);
-          (room as any).engine = engine;
-        /* eslint-enable @typescript-eslint/no-explicit-any */
-        }
-      }
-    }
+    const room = new Room(sendFn, null, snap.state.roomCode);
+    room.applySnapshot(snap, getScriptFn, scriptMetas);
     return room;
   }
 
@@ -577,6 +660,8 @@ export class Room {
         const phase = this.script?.phases.find(p => p.id === (evt.payload as Record<string, string>)?.phaseId);
         if (phase) this.phaseHistory.push(phase.title);
           if (this.isTestMode) this.saveSnapshot();
+          // diffViews 仅两级深度,phase 切换时强制全量同步避免深层字段遗漏
+          this.clearAllCachedViews();
         }
         for (const p of this.state.players) {
           if (p.connected) this.sendToPlayer(p.playerId, { kind: 'event', event: full });
@@ -632,12 +717,48 @@ export class Room {
     });
   }
 
+  /** 检查掉线超时的玩家并自动踢出 */
+  checkDisconnectedTimeout(): void {
+    if (this.state.status !== 'playing') return;
+    const now = Date.now();
+    const toKick = this.state.players.filter(
+      (p) => !p.connected && p.disconnectedAt && !p.isObserver && (now - p.disconnectedAt > Room.DISCONNECT_AUTO_KICK_MS),
+    );
+    if (toKick.length === 0) return;
+    for (const p of toKick) {
+      this.sendToPlayer(p.playerId, { kind: 'kicked', reason: 'disconnect_timeout' });
+      this.playerSockets.delete(p.playerId);
+      this.kickedTokens.set(p.playerId, Date.now());
+    }
+    const kickIds = new Set(toKick.map((p) => p.playerId));
+    this.state.players = this.state.players.filter((p) => !kickIds.has(p.playerId));
+    this.broadcastState();
+  }
+
+  /** 添加私聊消息到服务端持久化存储 */
+  private addPrivateMessage(fromCharId: string, toCharId: string, text: string): void {
+    if (!this.state.privateMessages) this.state.privateMessages = [];
+    const msg: PrivateMessage = {
+      id: randomUUID(),
+      fromCharId,
+      toCharId,
+      text,
+      ts: Date.now(),
+    };
+    this.state.privateMessages.push(msg);
+    // 限制存储量
+    if (this.state.privateMessages.length > 500) {
+      this.state.privateMessages = this.state.privateMessages.slice(-500);
+    }
+  }
+
   private viewExtra() {
     return {
       isTestMode: this.isTestMode || undefined,
       dmEnabled: this.dmService.isEnabled || undefined,
       pendingAdvance: this.engine?.pendingAdvance || undefined,
       phaseHistory: this.phaseHistory.length > 0 ? this.phaseHistory : undefined,
+      paused: this.state.paused || undefined,
     };
   }
 
@@ -645,10 +766,17 @@ export class Room {
     this.sendFn(playerId, msg);
   }
 
+  private broadcastTimer: ReturnType<typeof setTimeout> | null = null;
+
   private broadcastState(): void {
-    this.fanOutStateSync();
-    // 通知 RoomManager 持久化（防抖写入）
-    this.onBroadcastFn?.();
+    if (this.broadcastTimer) return;
+    // setTimeout(0) 合并同一事件循环 tick 内的多次 broadcastState,
+    // 讨论期每条发言不再逐条 fan-out,砍掉 ~70% 冗余广播
+    this.broadcastTimer = setTimeout(() => {
+      this.broadcastTimer = null;
+      this.fanOutStateSync();
+      this.onBroadcastFn?.();
+    }, 0);
   }
 
   /**

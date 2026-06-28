@@ -1,0 +1,109 @@
+{
+  "id": "c_jingfan",
+  "name": "时景帆",
+  "gender": "male",
+  "age": 45,
+  "isVictim": false,
+  "isMurderer": true,
+  "publicProfile": "男，四十多岁，受伤男人。自称时景帆，实为大盗王两——庚子年重伤逃入古塔，借魍魉之力获四次复活。四次复活机会已全部用尽。",
+  "privateScript": "你真名年某，即大盗王两。庚子年（1900年）重伤逃入古塔，临死前唤醒魍魉，获四次复活。真正的景帆死于1904年内讧，此后你冒用景帆身份。\n\n你是自卓、艾柳、素梅的亲生父亲。你入赘别家后出走，与林氏生下素梅，与时成达结义。\n\n四次复活：第一次小节在古塔撞碎塑像救了你；第二次端午节雄黄酒中毒后素梅毁塑像救你；第三次1904年内讧中被杀后有人毁塑像；第四次1912年被杀后塑像被毁。\n\n10月19日，你从阴影中现身掐死熙勤兼——他是追捕你多年、杀害你结义兄弟时成达的仇人。四次复活机会已全部用尽。\n\n你持有玉饰，刻「我未老」「生未迟」——后来给了艾柳。你一直在寻找在世的亲人和传说中的宝藏。",
+  "objectives": [
+    {
+      "id": "obj_jingfan_1",
+      "kind": "hidden",
+      "description": "隐瞒你就是大盗王两。（10分）",
+      "scoring": 10
+    },
+    {
+      "id": "obj_jingfan_2",
+      "kind": "hidden",
+      "description": "隐瞒你杀害熙勤兼的事实。（10分）",
+      "scoring": 10
+    },
+    {
+      "id": "obj_jingfan_3",
+      "kind": "main",
+      "description": "找出别熙乡连环命案的真相。（5分）",
+      "scoring": 5
+    },
+    {
+      "id": "obj_jingfan_4",
+      "kind": "side",
+      "description": "找到在世的亲人。（3分）",
+      "scoring": 3
+    },
+    {
+      "id": "obj_jingfan_5",
+      "kind": "side",
+      "description": "找到传说中的宝藏。（3分）",
+      "scoring": 3
+    }
+  ],
+  "secrets": [
+    "你就是大盗王两——庚子年重伤逃入古塔借魍魉之力获四次复活",
+    "10月19日从阴影中现身掐死熙勤兼",
+    "四次复活机会已全部用尽",
+    "是自卓、艾柳、素梅三人的亲生父亲",
+    "1904年真正的景帆已死，你冒用其身份"
+  ],
+  "timeline": [
+    {
+      "time": "1900年",
+      "location": "古塔",
+      "action": "庚子年重伤逃入古塔，唤醒魍魉获四次复活",
+      "isPublic": false
+    },
+    {
+      "time": "1902年",
+      "location": "医馆",
+      "action": "端午节喝雄黄酒中毒（第二次死亡），素梅毁塑像复活",
+      "isPublic": false
+    },
+    {
+      "time": "1904年",
+      "location": "济南",
+      "action": "内讧中被杀（第三次死亡），有人毁塑像复活",
+      "isPublic": false
+    },
+    {
+      "time": "1912年",
+      "location": "济南",
+      "action": "被熙扬隆所杀时成达时一并遇害（第四次死亡）",
+      "isPublic": false
+    },
+    {
+      "time": "1914.10.19",
+      "location": "熙宅",
+      "action": "从阴影中现身掐死熙勤兼",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "c_zizhuo",
+      "relation": "亲生父子（自卓不知）",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "c_ailiu",
+      "relation": "亲生父女（艾柳不知）/旧情人",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "c_sumei",
+      "relation": "亲生父女（素梅不知）",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "c_xiaojie",
+      "relation": "深爱之人（小节深爱王两）",
+      "isPublic": false
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese middle-aged man 45 years old, wounded, mysterious aura, Republican era, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

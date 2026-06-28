@@ -12,5 +12,9 @@
   "styleGuide": "民国悬疑,法蓝庄废弃西洋老宅,暗调油画风,做旧质感",
   "schemaVersion": "1.0.0",
   "status": "validated",
-  "genre": "murder"
+  "genre": "murder",
+  "featureTags": [
+    "废墟",
+    "身份悬疑"
+  ]
 }

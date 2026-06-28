@@ -20,5 +20,6 @@
     "kind": "avatar",
     "prompt": "Chinese man, oil painting style",
     "aspect": "3:4"
-  }
+  },
+  "storyByPhase": {}
 }

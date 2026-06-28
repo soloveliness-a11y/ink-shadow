@@ -1,0 +1,132 @@
+{
+  "id": "c_shaoyi",
+  "name": "梢衣",
+  "gender": "female",
+  "age": 24,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "春味社成员，饰演「小珀利阿得斯」（1908）/「海伦」（1914）。南京昌庆商号大掌柜林昶顺之女，从小与悦绮相识。1906年入女子学堂，与晚弦、宜湘同班。家道中落后靠借债度日。",
+  "privateScript": "你全名林梢衣，生于1891年。父亲林昶顺是昌庆商号大掌柜，悦绮从小与你相识。1906年你入女子学堂，与晚弦、宜湘同班。1908年绰元邀请你和晚弦加入春味社，你又介绍悦绮加入。你曾在前院看到晚弦骂悦绮，楚梦帮悦绮解围——你因此对楚梦有好感。绰元曾约你去湖中亭谈生意回报，你感到失望。悦绮失踪后，你帮绰元在父亲面前说好话，父亲把生意交给他。1909年父亲提出让你嫁给绰元，你并不乐意。1911年绰元送来聘礼，婚期临近时武昌起义爆发，母亲病逝，婚事搁置。1913年战乱中父亲商号被劫掠破产，绰元拒绝帮忙并退婚，气病父亲。你向仰名借高利贷为父亲治病。1914年10月7日，仰名要求你趁彩排接近楚梦制造丑闻，作为交换免除借据利息。你在假山后向楚梦表白真心，随后掩饰为排练台词。约12点你打了宜湘一记耳光（因她提起你被退婚的事）。你在东院见到斌持从后院跑来喘气。约1点半花园发现无头尸体。",
+  "objectives": [
+    {
+      "id": "obj_shaoyi_1",
+      "kind": "main",
+      "description": "找出悦绮失踪的真相",
+      "scoring": 5
+    },
+    {
+      "id": "obj_shaoyi_2",
+      "kind": "main",
+      "description": "找出无头尸体的真相",
+      "scoring": 5
+    },
+    {
+      "id": "obj_shaoyi_3",
+      "kind": "hidden",
+      "description": "隐瞒你要勾引楚梦",
+      "scoring": 2
+    },
+    {
+      "id": "obj_shaoyi_4",
+      "kind": "hidden",
+      "description": "隐瞒你曾与绰元订婚",
+      "scoring": 2
+    },
+    {
+      "id": "obj_shaoyi_5",
+      "kind": "main",
+      "description": "找出每个命案的真相",
+      "scoring": 25
+    },
+    {
+      "id": "obj_shaoyi_6",
+      "kind": "main",
+      "description": "不被当作真凶",
+      "scoring": 5
+    },
+    {
+      "id": "obj_shaoyi_7",
+      "kind": "side",
+      "description": "触发全部3条回忆",
+      "scoring": 2
+    }
+  ],
+  "secrets": [
+    "向仰名借高利贷为父亲治病，被胁迫去勾引楚梦制造丑闻",
+    "曾与绰元订婚（父亲安排），后被退婚，家道中落",
+    "打过宜湘一记耳光（因宜湘提起被退婚的事）",
+    "在假山后向楚梦表白真心，随后掩饰为排练台词",
+    "看到斌持从后院跑来大口喘气，神色慌张"
+  ],
+  "timeline": [
+    {
+      "time": "1914年10月7日·约9点",
+      "location": "秋瑟园·前院/西院南屋",
+      "action": "领取麻布长袍，与晚弦一起换衣",
+      "isPublic": true
+    },
+    {
+      "time": "1914年10月7日·约10点",
+      "location": "秋瑟园·南院舞台",
+      "action": "观看彩排，目睹楚梦亮铜剑、团长相认、宜湘骂语桐",
+      "isPublic": true
+    },
+    {
+      "time": "1914年10月7日·约11点",
+      "location": "秋瑟园·西院北屋/南屋",
+      "action": "劝宜湘改态度反被嘲讽，打了宜湘一记耳光",
+      "isPublic": false
+    },
+    {
+      "time": "1914年10月7日·约12点",
+      "location": "秋瑟园·东院",
+      "action": "给清岷送剧本大纲，看到斌持从后院跑来喘气",
+      "isPublic": false
+    },
+    {
+      "time": "1914年10月7日·约13点",
+      "location": "秋瑟园·后院假山",
+      "action": "向楚梦表白，掩饰为排练台词",
+      "isPublic": false
+    },
+    {
+      "time": "1914年10月7日·约13点半",
+      "location": "秋瑟园·花园",
+      "action": "听到尖叫跑进花园，发现无头尸体",
+      "isPublic": true
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "c_chumeng",
+      "relation": "暗恋对象，1908年起有好感",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "c_wanxian",
+      "relation": "最亲近的同学好友",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_qingmin",
+      "relation": "悦绮的弟弟，两家有生意往来",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_binchi",
+      "relation": "社团成员，见到他从后院慌张跑来",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "c_yutong",
+      "relation": "社团成员，服装由她制作",
+      "isPublic": true
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Young Chinese woman, 24 years old, 1914 Republican era, wearing simple ancient Greek hemp robe costume, gentle but worried expression, fallen noble family, oil painting style, dramatic lighting",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

@@ -80,6 +80,19 @@
     }
   },
   {
+    "id": "p_vote",
+    "kind": "vote",
+    "title": "投票指认",
+    "instruction": "请投票指认你认为的凶手。",
+    "participants": "all",
+    "allowedActions": [
+      "castVote"
+    ],
+    "exit": {
+      "kind": "voteComplete"
+    }
+  },
+  {
     "id": "p_reveal",
     "kind": "reveal",
     "title": "真相揭晓",

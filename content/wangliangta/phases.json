@@ -1,0 +1,97 @@
+[
+  {
+    "id": "p_briefing",
+    "kind": "briefing",
+    "title": "阅读剧本",
+    "instruction": "阅读各自的角色剧本，了解你为什么会出现在别熙乡。",
+    "participants": "all",
+    "allowedActions": [
+      "readScript",
+      "ready"
+    ],
+    "exit": {
+      "kind": "allReady"
+    }
+  },
+  {
+    "id": "p_social",
+    "kind": "free",
+    "title": "第一幕·寒暄",
+    "instruction": "10月19日，别熙乡。众人相互寒暄、自我介绍，尝试完成各自的目的。此阶段是集体寒暄，可以隐瞒秘密。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "searchClue",
+      "revealClue",
+      "privateMessage"
+    ],
+    "maxRounds": 3,
+    "exit": {
+      "kind": "hostAdvance"
+    },
+    "unlocks": {
+      "clueIds": [
+        "cl_guta_01",
+        "cl_guta_02",
+        "cl_guta_03",
+        "cl_guta_04",
+        "cl_guta_05"
+      ]
+    }
+  },
+  {
+    "id": "p_investigate",
+    "kind": "free",
+    "title": "第二幕·搜证调查",
+    "instruction": "在别熙乡各处调查。可以私聊，从自卓开始，调查所有区域直到拿完线索。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "searchClue",
+      "revealClue",
+      "privateMessage"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    },
+    "unlocks": {
+      "clueIds": [
+        "cl_yiguan_01",
+        "cl_yiguan_02",
+        "cl_jiuguan_01",
+        "cl_jiuguan_02",
+        "cl_jiuguan_03",
+        "cl_kujing_01",
+        "cl_mimi_01",
+        "cl_mimi_02",
+        "cl_mimi_03"
+      ]
+    }
+  },
+  {
+    "id": "p_vote",
+    "kind": "vote",
+    "title": "谁是真凶？",
+    "instruction": "填写「你知道吗？」——指认凶手，完成任务，揭露秘密。",
+    "participants": "all",
+    "allowedActions": [
+      "castVote"
+    ],
+    "exit": {
+      "kind": "voteComplete"
+    }
+  },
+  {
+    "id": "p_reveal",
+    "kind": "reveal",
+    "title": "真相揭晓",
+    "instruction": "公布结果和真相。各角色根据游戏效果阅读对应结局。",
+    "participants": "all",
+    "allowedActions": [
+      "submitTheory"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    }
+  }
+]

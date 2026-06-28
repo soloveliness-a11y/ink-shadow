@@ -12,5 +12,8 @@
   "styleGuide": "简洁扁平风,红蓝对比色",
   "schemaVersion": "1.0.0",
   "status": "validated",
-  "genre": "faction"
+  "genre": "faction",
+  "featureTags": [
+    "阵营"
+  ]
 }

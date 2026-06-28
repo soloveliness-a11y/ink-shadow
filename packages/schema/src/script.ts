@@ -156,6 +156,8 @@ export const zScriptMeta = z.object({
   status: z.enum(['draft', 'validated', 'ready']),
   /** 玩法类型。决定校验分支与 UI 渲染。老剧本缺省 = 'murder'(向后兼容)。 */
   genre: z.enum(['murder', 'faction', 'mechanism', 'emotion', 'horror']).default('murder'),
+  /** 特色标签（不剧透凶手数量等敏感信息） */
+  featureTags: z.array(z.string()).optional(),
 });
 export type ScriptMeta = z.infer<typeof zScriptMeta>;
 

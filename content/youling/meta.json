@@ -17,5 +17,11 @@
   },
   "schemaVersion": "1.0.0",
   "status": "draft",
-  "genre": "murder"
+  "genre": "murder",
+  "featureTags": [
+    "武馆",
+    "家族",
+    "复仇",
+    "大宅"
+  ]
 }

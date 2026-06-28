@@ -1,5 +1,4 @@
 import type { ClientIntent, ServerMessage } from '@mmg/schema';
-import { zServerMessage } from '@mmg/schema';
 
 type Listener = (msg: ServerMessage) => void;
 type OpenListener = () => void;
@@ -105,10 +104,10 @@ export class GameConnection {
 
     this.ws.onmessage = (ev) => {
       try {
-        const parsed = JSON.parse(ev.data as string);
-        const result = zServerMessage.safeParse(parsed);
-        if (!result.success) return; // 丢弃畸形消息
-        this.listener(result.data);
+        const msg = JSON.parse(ev.data as string) as ServerMessage;
+        if (typeof msg === 'object' && msg !== null && 'kind' in msg) {
+          this.listener(msg);
+        }
       } catch {
         /* ignore malformed */
       }

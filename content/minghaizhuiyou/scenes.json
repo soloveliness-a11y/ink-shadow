@@ -1,0 +1,152 @@
+[
+  {
+    "id": "sc_bridge",
+    "name": "船长室/操舵台",
+    "description": "铁鲸号的核心控制区域。高处设有操舵台，可操控潜艇下潜上浮。室内有船长的床铺、怀表、注射器等私人物品。前窗可观察潜艇前方海域，右侧观景窗可看到海底景象。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Interior of a 1910s submarine command room. A raised helm platform with brass controls, iron riveted walls, dim yellow electric lights, a narrow bed, and small round portholes showing dark ocean water. Cramped and claustrophobic. Oil painting style, dark blue and rust palette.",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "sc_corridor",
+    "name": "走廊",
+    "description": "铁鲸号内部的狭窄走廊，连接各舱室。左侧设有观景窗，可看到外面深邃的海水。走廊拐弯处有视野盲区。天花板上方是通风管道。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "A narrow claustrophobic submarine corridor from the 1910s. Iron walls with rivets, pipes running along the ceiling, a small porthole on the left showing deep dark water. Dim yellow light from electric bulbs. Oil painting style.",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "sc_vip",
+    "name": "贵宾房",
+    "description": "为伊藤重工贵宾准备的单人房间。空间狭小，有一张床、一张桌子。灯光昏黄。门外是走廊。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "A tiny single-berth cabin in a 1910s submarine. A narrow bed, a small desk, dim yellow electric light, iron walls with rivets. A sense of claustrophobia. Oil painting style.",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "sc_double",
+    "name": "双人房",
+    "description": "樊宗楚和张辜仁的住处。两张单人床，空间极为狭窄。灯光昏黄。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "A cramped double-berth submarine cabin from the 1910s. Two narrow beds, dim lighting, iron walls, personal items scattered about. Oil painting style.",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "sc_diving_prep",
+    "name": "潜水准备室",
+    "description": "存放潜水装备的房间。墙上有消防斧、潜水服、铁鞋和封闭头盔。与潜水过渡舱之间有一扇密封门和观察窗。头盔被扣住后只能用钥匙打开。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "A submarine diving preparation room from the 1910s. Diving suits hanging on walls, heavy iron boots, brass diving helmets, a fire axe on the wall. A sealed door with a porthole leads to another chamber. Dim lighting. Oil painting style.",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "sc_diving_chamber",
+    "name": "潜水过渡舱",
+    "description": "连接潜艇内部与外部海底的舱室。设有注水阀门和排水装置，可注水后打开侧面出入门通向海底。上方空气管道连接长软管为潜水员供气。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "A flooded submarine airlock chamber from the 1910s. Seawater fills the space, a diving suit stands motionless in the water, connected to an air hose from above. A sealed side door leads to the dark ocean. Eerie and terrifying. Oil painting style.",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "sc_kitchen",
+    "name": "厨房",
+    "description": "铁鲸号的厨房。不能生火，只能用电加热管烧水。存放罐头食物和淡水。有一张临时简易床——有人曾藏身于此。罐中有一只活章鱼。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "A small submarine kitchen from the 1910s. Canned food stacked on shelves, an electric heating coil, a makeshift bed in the corner, a jar with a live octopus tentacle emerging. Dim yellow light. Oil painting style.",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "sc_meeting",
+    "name": "会议厅（餐厅）",
+    "description": "铁鲸号的多功能厅，兼作餐厅。船员在此用餐和开会。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "A small submarine meeting room doubling as a dining hall from the 1910s. A narrow table, metal chairs, dim electric lighting, iron walls. Oil painting style.",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "sc_crew",
+    "name": "船员舱",
+    "description": "王赶海和孙孟真的住处。极窄的上下铺，通风口在上方。空气混浊，没有多余活动空间。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "A cramped submarine crew cabin from the 1910s. Narrow bunk beds, a ventilation duct on the ceiling, barely enough room to stand. Dim lighting, iron walls. Oil painting style.",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "sc_bathroom",
+    "name": "卫生间",
+    "description": "铁鲸号的卫生间，关门后可保持密封。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "A tiny submarine bathroom from the 1910s. Minimal fixtures, iron walls, dim lighting. Oil painting style.",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "sc_brig",
+    "name": "禁闭室",
+    "description": "用于惩罚违反规定的船员。关门后密封，与卫生间和船员舱共用同一条通风管道。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "A dark submarine brig cell from the 1910s. A single bed, iron door, no windows. Oppressive and claustrophobic. Oil painting style.",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "sc_engine",
+    "name": "轮机舱",
+    "description": "铁鲸号的机械核心区域。存放柴油和各种机械部件。王赶海每天在此工作值班八小时。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "A submarine engine room from the 1910s. Large diesel machinery, pipes, gauges, oil stains. Dim industrial lighting. Oil painting style.",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "sc_power",
+    "name": "发电室",
+    "description": "铁鲸号的发电区域。存放发电机和通风管道图纸。孙孟真每天在此值班维护发电机。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "A submarine generator room from the 1910s. A large electrical generator, wiring, circuit panels, ventilation diagrams on the wall. Dim lighting. Oil painting style.",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "sc_cargo",
+    "name": "仓库",
+    "description": "铁鲸号的物资仓库。存放各种补给品。有一张吊床——颜睦宛曾藏身于此。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "A submarine cargo hold from the 1910s. Crates and supplies stacked around, a hammock strung up in the corner, dim lighting. Oil painting style.",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "sc_dock",
+    "name": "毗海村码头",
+    "description": "毗海村的临海码头，铁鲸号停泊之处。长约四十米的潜艇半浮在水面上，钢铁艇身严丝合缝，上方入口打开。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "A rural Chinese coastal dock in 1914. A large grey submarine floats in the water, about 40 meters long. A few people stand on the wooden dock. Overcast sky, yellow sea. Oil painting style.",
+      "aspect": "16:9"
+    }
+  }
+]

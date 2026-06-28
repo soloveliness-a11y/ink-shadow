@@ -1,0 +1,26 @@
+{
+  "id": "wangliangta",
+  "title": "魍魉塔",
+  "theme": "民国·山东别熙乡·古塔魍魉复活·连环命案",
+  "playerCount": {
+    "min": 6,
+    "max": 6
+  },
+  "difficulty": "hard",
+  "durationMin": 240,
+  "synopsis": "1914年10月19日，山东别熙乡。大盗王两庚子年重伤逃入古塔，借魍魉之力获四次复活。十余年后，熙勤兼父子携棺回乡追捕王两，三起命案接连发生——熙勤兼顾被从阴影中掐死，熙扬隆被水中下毒，守言被石头砸下问景山。六位各怀秘密的故人，四尊塑像的生死轮回，谁是真凶？",
+  "styleGuide": "1914 Shandong rural village, Republican era, ancient pagoda, oil painting style, dark supernatural atmosphere",
+  "cover": {
+    "kind": "cover",
+    "prompt": "1914 Shandong rural village with ancient dark pagoda, Republican era, supernatural murder mystery, oil painting style, moonlit night",
+    "aspect": "3:4"
+  },
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "genre": "murder",
+  "featureTags": [
+    "山村",
+    "灵异",
+    "复仇"
+  ]
+}

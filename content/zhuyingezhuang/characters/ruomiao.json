@@ -1,0 +1,63 @@
+{
+  "id": "ruomiao",
+  "name": "若缈(房远)",
+  "gender": "male",
+  "age": 31,
+  "isVictim": false,
+  "isMurderer": true,
+  "publicProfile": "身穿白洋裙少年装扮的访客，实为房家后人。表面文弱，实为连环杀手。",
+  "privateScript": "你本名房远，是涨秋园旧主之子。当年林宗斐和重实害你家破人亡，你潜入涨秋园杀死林宗斐，又勒死目击者张联升，毒杀武重实，掐死表姐卓氏。你冒充联升身份脱身。",
+  "objectives": [
+    {
+      "id": "obj_rm_1",
+      "kind": "main",
+      "description": "隐瞒你杀了林宗斐、张联升、武重实、卓氏。(4x10分)",
+      "scoring": 40
+    },
+    {
+      "id": "obj_rm_2",
+      "kind": "main",
+      "description": "找到并抓捕仟捌。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [
+    "本名房远，冒充联升身份",
+    "杀死林宗斐为父报仇",
+    "勒死张联升灭口",
+    "是朝廷密探/稽查"
+  ],
+  "timeline": [
+    {
+      "time": "1906年农历六月十七凌晨",
+      "location": "涨秋园书房",
+      "action": "用短刀刺杀林宗斐",
+      "isPublic": false
+    },
+    {
+      "time": "1906年农历六月十七凌晨",
+      "location": "涨秋园客房",
+      "action": "勒死张联升并纵火",
+      "isPublic": false
+    },
+    {
+      "time": "1914年10月22日",
+      "location": "涨秋园观池厅",
+      "action": "毒杀武重实",
+      "isPublic": false
+    },
+    {
+      "time": "1914年10月22日",
+      "location": "涨秋园",
+      "action": "掐死卓氏",
+      "isPublic": false
+    }
+  ],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "若缈(房远), male, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

@@ -1,0 +1,89 @@
+[
+  {
+    "id": "p_briefing",
+    "kind": "briefing",
+    "title": "阅读剧本",
+    "instruction": "阅读各自的角色剧本。",
+    "participants": "all",
+    "allowedActions": [
+      "readScript",
+      "ready"
+    ],
+    "exit": {
+      "kind": "allReady"
+    }
+  },
+  {
+    "id": "p_social",
+    "kind": "free",
+    "title": "寒暄阶段",
+    "instruction": "众人相互了解。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "searchClue",
+      "revealClue",
+      "privateMessage"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    },
+    "unlocks": {
+      "clueIds": [
+        "cl_fanyuqing_body"
+      ]
+    }
+  },
+  {
+    "id": "p_investigation",
+    "kind": "free",
+    "title": "调查阶段",
+    "instruction": "搜查相关区域。调查2轮后进入下一阶段。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "searchClue",
+      "revealClue",
+      "privateMessage"
+    ],
+    "maxRounds": 2,
+    "exit": {
+      "kind": "hostAdvance"
+    },
+    "unlocks": {
+      "clueIds": [
+        "cl_bili_body",
+        "cl_hanging_woman",
+        "cl_stocks",
+        "cl_missing_songqun",
+        "cl_rope_dig"
+      ]
+    }
+  },
+  {
+    "id": "p_vote",
+    "kind": "vote",
+    "title": "谁是真凶？",
+    "instruction": "投票指认凶手。",
+    "participants": "all",
+    "allowedActions": [
+      "castVote"
+    ],
+    "exit": {
+      "kind": "voteComplete"
+    }
+  },
+  {
+    "id": "p_reveal",
+    "kind": "reveal",
+    "title": "真相揭晓",
+    "instruction": "公布结果和真相。",
+    "participants": "all",
+    "allowedActions": [
+      "submitTheory"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    }
+  }
+]

@@ -1,0 +1,118 @@
+{
+  "id": "c_weitaitai",
+  "name": "韦太太",
+  "gender": "female",
+  "age": 35,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "女，中等身材，穿浅蓝色长袖上衣，深色丝绸长裙，戴银耳环。「韦家」少奶奶，谭太太的闺中好友。",
+  "privateScript": "【doc_1-2：身份背景】\n你全名吕采茜，生于1879年，原籍宁波。父亲吕守本是远亨罗氏在上海的经理。你3岁时母亲去世，弟弟吕名然同年出生。你11岁时随父亲迁居上海，在谭公馆的酒会上认识了谭仁昌——你们当时都是少年，在花园里玩得十分开心。你此后每次去谭公馆都找机会和谭仁昌相处。\n\n1895年，你跟随父亲去参加谭仁昌和罗明纱的婚礼——你在婚礼前就哭着逃走。你和谭仁昌真心相爱在先！\n\n你不敢得罪明纱，继续做她的玩伴。1896年明纱让你陪她玩曼娜仪式时，你听到吟诵中提到实现愿望，马上想到谭仁昌，暗中许愿希望谭家抛弃明纱……天亮后你把此事告诉谭仁昌，他大喜说可以借此休妻。但因罗亨理介入，此事很快平息。\n\n1897年，明纱给你介绍了韦家少爷为夫，你成了韦太太。婚后你和丈夫常去谭公馆拜访，你和谭仁昌找到了避人耳目的办法——在密室偷情。\n\n【doc_3-5：近期事件】\n你丈夫有大烟瘾，你对他失望后只盼弟弟能出人头地。1909年你求明纱帮弟弟当上远亨罗氏上海经理。\n\n去年9月末弟弟被撤职，你去谭公馆求助。今年9月5日你对明纱说了贷款的事。\n\n9月15日弟弟带来少年承格，谭仁昌认作义子。你看出弟弟没说实话。\n\n9月25日明纱回来。9月26日廖公子来催债。9月27日你陪弟弟去谭公馆，明纱让你和海悠陪她玩曼娜仪式。你留在海悠房过夜。\n\n9月28日凌晨，明纱叫醒你和海悠，三人沐浴换黑袍上楼进行仪式。约凌晨3点结束，你和海悠回海悠房睡。\n\n约9点你听到敲门声，带海悠梳妆换衣。约10点海悠出去请安，随后你听到她尖叫——你出来看到弟弟吕名然被吊死在大厅！你瘫坐在地。\n\n【doc_6-7：秘密】\n你和谭仁昌早有私情。你在明纱进行曼娜仪式时暗中许愿诅咒明纱。你和谭仁昌通过密室偷情多年，他给了你金色钥匙。\n\n弟弟死后你去家主房找谭仁昌想让他安慰你，却看到他胸口被尖锥刺死在小阳台……你尖叫着爬出来。\n\n【doc_8-9：后续】\n中午律师揭露遗嘱秘密。阿萍在客房三发现妇人尸体。\n\n你的目的：\n一、找出弟弟吕名然死亡的真相（5分）\n二、找出弟弟被撤职的真相（2分）\n三、找出每个命案的真相（5分×N）\n四、不被当作真凶（5分）\n五、触发全部3条回忆（2分）\n六、隐瞒你和谭仁昌的关系（2分）",
+  "storyByPhase": {
+    "phase1": "你最近见到弟弟时他都很高兴，不可能突然自杀。你和明纱关系非常好，很听她的话。",
+    "phase2": "你发现谭仁昌也死了，悲痛欲绝。你隐瞒了和他的关系。",
+    "phase3": "律师揭露遗嘱秘密，客房三又发现妇人尸体。你头脑混乱。"
+  },
+  "objectives": [
+    {
+      "id": "o_wt_1",
+      "kind": "main",
+      "description": "找出弟弟吕名然死亡的真相",
+      "scoring": 5
+    },
+    {
+      "id": "o_wt_2",
+      "kind": "side",
+      "description": "找出弟弟被撤职的真相",
+      "scoring": 2
+    },
+    {
+      "id": "o_wt_3",
+      "kind": "main",
+      "description": "找出每个命案的真相",
+      "scoring": 5
+    },
+    {
+      "id": "o_wt_4",
+      "kind": "main",
+      "description": "不被当作真凶",
+      "scoring": 5
+    },
+    {
+      "id": "o_wt_5",
+      "kind": "side",
+      "description": "触发全部3条回忆",
+      "scoring": 2
+    },
+    {
+      "id": "o_wt_6",
+      "kind": "hidden",
+      "description": "隐瞒你和谭仁昌的关系",
+      "scoring": 2
+    }
+  ],
+  "secrets": [
+    "与谭仁昌有多年私情，通过密室偷会",
+    "在曼娜仪式中暗中许愿诅咒明纱",
+    "持有金色钥匙（密室入口）",
+    "弟弟吕名然被撤职与明纱的嫉妒有关"
+  ],
+  "timeline": [
+    {
+      "time": "9月27日",
+      "location": "谭公馆",
+      "action": "陪弟弟来商量，在海悠房过夜",
+      "isPublic": true
+    },
+    {
+      "time": "9月28日 凌晨2-3点",
+      "location": "三层·客房一",
+      "action": "参与曼娜秘法仪式",
+      "isPublic": false
+    },
+    {
+      "time": "9月28日 约10点",
+      "location": "二层·走廊",
+      "action": "看到弟弟吕名然被吊死的尸体，瘫坐在地",
+      "isPublic": true
+    },
+    {
+      "time": "9月28日 约10点后",
+      "location": "二层·家主房",
+      "action": "去家主房找谭仁昌，发现他的尸体",
+      "isPublic": true
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "c_tantaitai",
+      "relation": "闺中好友",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_tanrenchang",
+      "relation": "情人（秘密）",
+      "isPublic": false,
+      "sharedSecret": "两人通过密室偷偷相会多年"
+    },
+    {
+      "targetCharId": "c_haiyou",
+      "relation": "堂婶",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_shangzhi",
+      "relation": "相识",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_liaogongzi",
+      "relation": "访客",
+      "isPublic": true
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese woman 35 years old, medium build, light blue long-sleeved top, dark silk skirt, silver earrings, Republican era Shanghai, oil painting style",
+    "aspect": "3:4"
+  }
+}

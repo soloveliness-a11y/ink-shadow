@@ -1,11 +1,11 @@
 import { create } from 'zustand';
 import type { ClientStateView, ClientIntent, GameEvent, ServerMessage } from '@mmg/schema';
-import { PROTOCOL_VERSION } from '@mmg/schema';
+import { PROTOCOL_VERSION } from '@mmg/schema/constants';
 import { GameConnection, createGameUrl, type ConnectionStatus } from '../net/connection.js';
 import { pushToast } from '../lib/toast.js';
 import { friendlyError } from '../lib/errorMap.js';
 import { assetUrl } from '../lib/asset.js';
-import { setByPath, deleteByPath } from '../lib/patch.js';
+import { setByPath, deleteByPath, immutableSetByPath, immutableDeleteByPath } from '../lib/patch.js';
 
 interface GameState {
   connected: boolean;
@@ -123,11 +123,37 @@ export function handleServerMessage(
             pushToast(`${p.title} · ${p.instruction}`, 'info', 4500);
           }, 350);
         }
+        // observer 提示
+        if (newView.isObserver && !s.view?.isObserver) {
+          pushToast('你正在观战模式', 'info', 3000);
+        }
+        // 暂停/恢复提示
+        if (newView.paused && !s.view?.paused) {
+          pushToast('游戏已暂停', 'warn', 3000);
+        } else if (!newView.paused && s.view?.paused) {
+          pushToast('游戏已恢复', 'success', 2000);
+        }
+        // 从服务端恢复私聊历史
+        const serverPm = newView.privateMessages;
+        let privateMessages = s.privateMessages;
+        if (serverPm && serverPm.length > 0) {
+          const existingIds = new Set(s.privateMessages.map((m) => `${m.fromCharId}:${m.toCharId}:${m.ts}`));
+          const newPm = serverPm.filter((m) => !existingIds.has(`${m.fromCharId}:${m.toCharId}:${m.ts}`));
+          if (newPm.length > 0) {
+            privateMessages = [...s.privateMessages, ...newPm.map((m) => ({
+              fromCharId: m.fromCharId,
+              toCharId: m.toCharId,
+              text: m.text,
+              ts: m.ts,
+            }))].slice(-MAX_PRIVATE);
+          }
+        }
         return {
           view: newView,
           roomCode: newView.roomCode,
           error: null,
           seenPhaseKey: phaseKey ?? s.seenPhaseKey,
+          privateMessages,
         };
       });
       // 大厅阶段有剧本选择时即后台预加载资源,不等到 playing 才开始
@@ -143,12 +169,12 @@ export function handleServerMessage(
     case 'statePatch': {
       setState((s) => {
         if (!s.view) return {};
-        const view = structuredClone(s.view) as unknown as Record<string, unknown>;
+        let view = s.view as unknown as Record<string, unknown>;
         for (const [path, value] of Object.entries(msg.patches)) {
-          setByPath(view, path, value);
+          view = immutableSetByPath(view, path, value);
         }
         for (const path of msg.removes ?? []) {
-          deleteByPath(view, path);
+          view = immutableDeleteByPath(view, path) as Record<string, unknown>;
         }
         return { view: view as ClientStateView };
       });

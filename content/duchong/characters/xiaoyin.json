@@ -1,0 +1,65 @@
+{
+  "id": "xiaoyin",
+  "name": "小茵",
+  "gender": "female",
+  "age": 22,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "丘家丫鬟，后被樊动征纳为小妾。",
+  "privateScript": "你原是丘家丫鬟，照顾二少爷，后被樊动征纳为小妾。你知道很多丘家的秘密。",
+  "objectives": [
+    {
+      "id": "obj_xy_1",
+      "kind": "main",
+      "description": "找出每个命案真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [
+    "知道樊动征的许多秘密",
+    "曾目睹一些关键事件"
+  ],
+  "timeline": [
+    {
+      "time": "1910年",
+      "location": "丘宅",
+      "action": "作为丫鬟在丘家生活",
+      "isPublic": false
+    },
+    {
+      "time": "1911年",
+      "location": "洋馆",
+      "action": "被樊动征纳为小妾",
+      "isPublic": false
+    },
+    {
+      "time": "1914年8月24日",
+      "location": "丘宅/洋馆",
+      "action": "参加葬礼",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "fandongzheng",
+      "relation": "妾室",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "zhichang",
+      "relation": "主仆",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "qingdu",
+      "relation": "主仆",
+      "isPublic": false
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "小茵, female, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

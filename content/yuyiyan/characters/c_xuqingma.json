@@ -1,0 +1,85 @@
+{
+  "id": "c_xuqingma",
+  "name": "徐轻马",
+  "gender": "male",
+  "age": 42,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "男，四十多岁，南京万家经理。纪方原的妹夫（娶了纪方原的妹妹，已故）。收到大掌柜的信得知万金英有秘密遗孤，来鄱阳湖寻找继承人。",
+  "privateScript": "你名叫徐轻马，四十多岁，南京万家经理。你父亲徐安本是万家的老掌柜。你从年轻时就跟着万金英做事。\n\n1895年，万金英怂恿你追求曲氏琼娘——她是你的类型。你在鄱阳湖与琼娘有过一段情。你还在五月舫上与一个歌姬有过一夜情（可能是若芙的父亲？——存疑）。\n\n你娶了纪方原的妹妹（已故）。你收到大掌柜的信，信中提到万金英有一个秘密遗孤。你带着蒲怀来到鄱阳湖寻找继承人。\n\n你要找到万金英的真正孩子（有证据证明），找到所有命案的真相，同时隐瞒你与琼娘的旧情和五月舫的一夜情。",
+  "objectives": [
+    {
+      "id": "obj_xuqingma_1",
+      "kind": "main",
+      "description": "找到万金英的真正继承人（有证据）。（10分）",
+      "scoring": 10
+    },
+    {
+      "id": "obj_xuqingma_2",
+      "kind": "main",
+      "description": "找到所有命案的真相。（5分）",
+      "scoring": 5
+    },
+    {
+      "id": "obj_xuqingma_3",
+      "kind": "hidden",
+      "description": "隐瞒你与曲氏琼娘的旧情。（3分）",
+      "scoring": 3
+    }
+  ],
+  "secrets": [
+    "1895年与曲氏琼娘有过一段情",
+    "在五月舫与歌姬有过一夜情（可能是若芙的父亲）",
+    "收到大掌柜的信得知万金英有秘密遗孤",
+    "来鄱阳湖的真正目的是找继承人"
+  ],
+  "timeline": [
+    {
+      "time": "1872年",
+      "location": "南京",
+      "action": "出生，徐安本之子",
+      "isPublic": true
+    },
+    {
+      "time": "1895年",
+      "location": "鄱阳湖",
+      "action": "与曲氏琼娘有过一段情",
+      "isPublic": false
+    },
+    {
+      "time": "1913年",
+      "location": "南京",
+      "action": "万金英在战乱中被杀",
+      "isPublic": true
+    },
+    {
+      "time": "1914年",
+      "location": "鄱阳湖",
+      "action": "带蒲怀来翠藕岛寻找继承人",
+      "isPublic": true
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "c_puhuai",
+      "relation": "侄女（纪方原之女）",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_liuhuai",
+      "relation": "侄子（纪方原之子）",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_ruofu",
+      "relation": "可能是他的女儿（存疑）",
+      "isPublic": false
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese middle-aged man 42 years old, business manager, Republican era, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

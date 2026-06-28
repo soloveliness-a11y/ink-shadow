@@ -1,0 +1,72 @@
+{
+  "id": "xiaoxian",
+  "name": "孝先",
+  "gender": "male",
+  "age": 27,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "陶山德与娇娇之子，催眠师。在上海演出。",
+  "privateScript": "你是陶山德和娇娇的儿子，从小没娘，由外婆韩二姑和师父照顾。你学会了催眠术，帮助仙仪治疗噩梦。你偶然想用仙仪的身体召唤母亲灵魂，但及时停止。",
+  "objectives": [
+    {
+      "id": "obj_xx_1",
+      "kind": "main",
+      "description": "找出母亲娇娇死亡真相。(5分)",
+      "scoring": 5
+    },
+    {
+      "id": "obj_xx_2",
+      "kind": "main",
+      "description": "找出崔山道死亡真相。(5分)",
+      "scoring": 5
+    },
+    {
+      "id": "obj_xx_3",
+      "kind": "main",
+      "description": "帮助仙仪回想起一切。(2分)",
+      "scoring": 2
+    }
+  ],
+  "secrets": [
+    "曾想用仙仪身体召唤母亲灵魂",
+    "使用催眠术和药物治疗仙仪"
+  ],
+  "timeline": [
+    {
+      "time": "1901年",
+      "location": "应宅",
+      "action": "第一次见仙仪",
+      "isPublic": false
+    },
+    {
+      "time": "1907年",
+      "location": "异法馆客厅",
+      "action": "给仙仪催眠治疗",
+      "isPublic": false
+    },
+    {
+      "time": "1914年10月2日",
+      "location": "异法馆",
+      "action": "目睹崔山道死亡",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "xiaoyi_anbo",
+      "relation": "治疗对象/搭档",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "yingjiujin",
+      "relation": "师伯",
+      "isPublic": false
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "孝先, male, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

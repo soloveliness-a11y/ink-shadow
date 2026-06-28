@@ -51,7 +51,7 @@
       "isPublic": false
     }
   ],
-  "sceneId": "s_assistant",
+  "sceneId": "s_lobby",
   "visual": {
     "kind": "avatar",
     "prompt": "韩芸, 经理助理,戴红色面具,二十多岁,爱打听事情。",
@@ -88,5 +88,6 @@
       "action": "与桥牧野一同下楼",
       "isPublic": true
     }
-  ]
+  ],
+  "storyByPhase": {}
 }

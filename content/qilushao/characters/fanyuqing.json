@@ -1,0 +1,42 @@
+{
+  "id": "fanyuqing",
+  "name": "范裕庆",
+  "gender": "male",
+  "age": 50,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "永信融老板，范公馆主人。坠楼身亡。",
+  "privateScript": "你是永信融的老板，公司即将破产。你在婚礼当晚从二层坠下，死在婚礼用品桌上。",
+  "objectives": [],
+  "secrets": [
+    "公司即将破产",
+    "对叶小姐有意"
+  ],
+  "timeline": [
+    {
+      "time": "1914年8月27日",
+      "location": "范公馆",
+      "action": "接待赵小姐",
+      "isPublic": false
+    },
+    {
+      "time": "1914年8月27日晚",
+      "location": "范公馆餐厅",
+      "action": "举办晚宴",
+      "isPublic": false
+    },
+    {
+      "time": "1914年8月28日凌晨",
+      "location": "范公馆",
+      "action": "从二层坠楼身亡",
+      "isPublic": false
+    }
+  ],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "范裕庆, male, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

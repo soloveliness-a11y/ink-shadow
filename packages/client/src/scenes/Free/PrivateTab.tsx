@@ -69,17 +69,6 @@ export function PrivateTab({
         </div>
         <span className="badge badge-muted">{currentThread.length} 条</span>
       </div>
-      <select className="input pm-select" value={pmTarget} onChange={(e) => selectTarget(e.target.value)}>
-        <option value="">选择对象...</option>
-        {pmCandidates.map((c) => {
-          const stat = pmStats.get(c.id);
-          return (
-            <option key={c.id} value={c.id}>
-              {stat ? `${c.name} · ${stat.count}条` : c.name}
-            </option>
-          );
-        })}
-      </select>
       <div className="pm-target-row">
         {pmCandidates.map((c) => {
           const stat = pmStats.get(c.id);

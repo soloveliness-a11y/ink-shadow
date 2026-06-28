@@ -1,0 +1,59 @@
+{
+  "id": "yijia",
+  "name": "伊佳",
+  "gender": "female",
+  "age": 16,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "方仁亭幼女，伊水之妹。天真活泼。",
+  "privateScript": "你是方仁亭的小女儿，父亲在矿难中去世后与姐姐相依为命。",
+  "objectives": [
+    {
+      "id": "obj_yj_1",
+      "kind": "main",
+      "description": "找出每个命案真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [
+    "知道姐姐的一些秘密"
+  ],
+  "timeline": [
+    {
+      "time": "1910年5月17日",
+      "location": "煤矿入口",
+      "action": "父亲死于矿难",
+      "isPublic": false
+    },
+    {
+      "time": "1913年6月16日",
+      "location": "洋馆",
+      "action": "姐姐嫁给青笃",
+      "isPublic": false
+    },
+    {
+      "time": "1914年8月24日",
+      "location": "洋馆",
+      "action": "参加葬礼",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "yishui",
+      "relation": "姐妹",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "fangwei",
+      "relation": "长辈",
+      "isPublic": false
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "伊佳, female, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

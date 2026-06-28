@@ -1,0 +1,135 @@
+{
+  "murdererCharIds": [
+    "c_cainan",
+    "c_jianglan",
+    "c_yinhuan"
+  ],
+  "method": "多起连环命案：1) 彩楠用生回散通过良心壶毒杀祖吴；2) 绛兰用酒坛砸死祖传文（小咬金）；3) 绛兰用麻布腰带勒死祖显武；4) 银环用匕首刺死丁晋发；5) 银环用喜绳勒死容芳后伪装上吊自杀",
+  "motive": "彩楠：保护银环不被公公祖吴纳妾玷污；绛兰：传文发现她与显武私情欲杀人灭口，显武威胁儿子继承权；银环：为被丁晋发陷害致死的爷爷和爹报仇，并将容芳视为间接仇人",
+  "crimeTimeline": [
+    {
+      "time": "1913-08-20 傍晚",
+      "location": "",
+      "action": "",
+      "isPublic": false
+    },
+    {
+      "time": "1914-10-18 傍晚",
+      "location": "",
+      "action": "",
+      "isPublic": false
+    },
+    {
+      "time": "1914-10-18 晚",
+      "location": "",
+      "action": "",
+      "isPublic": false
+    },
+    {
+      "time": "1914-10-18 深夜",
+      "location": "",
+      "action": "",
+      "isPublic": false
+    },
+    {
+      "time": "1914-10-18 深夜",
+      "location": "",
+      "action": "",
+      "isPublic": false
+    },
+    {
+      "time": "1914-10-18 深夜",
+      "location": "",
+      "action": "",
+      "isPublic": false
+    },
+    {
+      "time": "1914-10-18 深夜",
+      "location": "",
+      "action": "",
+      "isPublic": false
+    },
+    {
+      "time": "1914-10-19 天亮前",
+      "location": "",
+      "action": "",
+      "isPublic": false
+    },
+    {
+      "time": "1914-10-19 上午",
+      "location": "",
+      "action": "",
+      "isPublic": false
+    },
+    {
+      "time": "1914-10-19 上午",
+      "location": "",
+      "action": "",
+      "isPublic": false
+    }
+  ],
+  "solutionChain": [
+    "clue_jiuxing_hu",
+    "clue_shenghuisan",
+    "clue_piqiao_bishou",
+    "clue_hong_sheng",
+    "clue_dijiao_shiti",
+    "clue_jiubian_dingjinf",
+    "clue_huajiu_sui",
+    "clue_mabu_yaodai",
+    "clue_ranxue_bishou",
+    "clue_liupai_weizhi",
+    "clue_cizhijuan"
+  ],
+  "reveal": "祖家庄实际上是强盗冒名顶替的巢穴。诸葛之左化名祖吴、小咬金化名祖传文、诸葛之左之子化名祖显武，三人强盗霸占了真正的祖家庄。彩楠为保护银环毒杀祖吴；绛兰因私情败露杀死传文和显武；银环为报家仇杀死丁晋发和容芳。韩传文是真正的韩家遗孤，来此寻找爱人容芳，却被丁晋发打昏。护院振衣实为钱振衣，一直在寻找杀害大哥的最后一名强盗——三当家胡关强（彩楠的父亲）。",
+  "endings": [
+    {
+      "id": "c_chuanwen",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "c_chuanwen",
+      "narrative": ""
+    },
+    {
+      "id": "c_cainan",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "c_cainan",
+      "narrative": ""
+    },
+    {
+      "id": "c_zhenyi",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "c_zhenyi",
+      "narrative": ""
+    },
+    {
+      "id": "c_jianglan",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "c_jianglan",
+      "narrative": ""
+    },
+    {
+      "id": "c_choupeng",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "c_choupeng",
+      "narrative": ""
+    },
+    {
+      "id": "c_yinhuan",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "c_yinhuan",
+      "narrative": ""
+    }
+  ]
+}

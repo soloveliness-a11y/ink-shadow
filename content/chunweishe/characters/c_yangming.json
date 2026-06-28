@@ -1,0 +1,22 @@
+{
+  "id": "c_yangming",
+  "name": "仰名",
+  "gender": "male",
+  "age": 25,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "春味社成员，跟随臣柳。1914年被斌持杀死并肢解。",
+  "privateScript": "仰名跟随臣柳，1908年参与杀害悦绮。1914年被斌持在厨房勒死并肢解，尸体放入大铁锅焚烧。",
+  "objectives": [],
+  "secrets": [
+    "1908年参与杀害悦绮"
+  ],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "1914 Chinese man, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

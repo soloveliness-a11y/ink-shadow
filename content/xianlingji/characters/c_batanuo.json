@@ -1,0 +1,33 @@
+{
+  "id": "c_batanuo",
+  "name": "巴傩沼",
+  "gender": "male",
+  "age": 60,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "男，约六十岁，世代主持先灵祭祀的祓仆。掌握「引导」秘法。10月21日被发现死于祭楼，死因是中毒（毒矿粉掺入桂花糊）。",
+  "privateScript": "",
+  "objectives": [],
+  "secrets": [],
+  "timeline": [
+    {
+      "time": "1914.10.21约11点",
+      "location": "巴家",
+      "action": "喝下银钥掺毒的桂花糊，毒发身亡",
+      "isPublic": false
+    },
+    {
+      "time": "1914.10.21约12点",
+      "location": "祭楼",
+      "action": "被发现死亡，过岭用短刀伪造死因",
+      "isPublic": true
+    }
+  ],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese elderly man 60 years old, village ritual master, traditional robes, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

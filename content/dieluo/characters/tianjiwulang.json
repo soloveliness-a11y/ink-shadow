@@ -103,5 +103,6 @@
       "action": "宣布有人做了不该做的事",
       "isPublic": true
     }
-  ]
+  ],
+  "storyByPhase": {}
 }

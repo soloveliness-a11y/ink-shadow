@@ -1,0 +1,135 @@
+[
+  {
+    "id": "p_briefing",
+    "kind": "briefing",
+    "title": "第一幕·1908年餐堂寒暄",
+    "instruction": "1908年彩排当日早餐。众人在餐堂等候失踪的悦绮。每位角色按剧本做出「表现」，可询问想知道的事。梢衣提议去寻找悦绮后进入调查。",
+    "participants": "all",
+    "allowedActions": [
+      "readScript",
+      "speak",
+      "ready"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    }
+  },
+  {
+    "id": "p_investigation_1",
+    "kind": "free",
+    "title": "第二幕·1914年花园调查（第一轮）",
+    "instruction": "众人从花园出发调查秋瑟园。每人按剧本编号依次调查，最多隐藏1张线索卡。回忆触发：当其他玩家提到关键词时可翻开对应回忆。调查2轮（到不了最远的北院）。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "searchClue",
+      "revealClue",
+      "privateMessage"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    },
+    "unlocks": {
+      "clueIds": [
+        "clue_xisheng",
+        "clue_liren",
+        "clue_datieguo",
+        "clue_nongsuan",
+        "clue_citao",
+        "clue_jinsi_shiwu",
+        "clue_xinjian",
+        "clue_jueju",
+        "clue_qiantiao",
+        "clue_meidiya_zuzhou",
+        "clue_jumu_dagang_simu",
+        "clue_xiuzhang",
+        "clue_helong_jinhuan",
+        "clue_xueyi",
+        "clue_xiangchuan_shouxiang",
+        "clue_yongren_zhengci",
+        "clue_yuanding_zhengci",
+        "clue_zhishu_zhengci",
+        "clue_ji_zhong_wu",
+        "clue_huopeng_zhici",
+        "clue_pizhi",
+        "clue_nie_zhi",
+        "clue_xi_zhengci",
+        "clue_jiuyi_chenxiang",
+        "clue_san_ying_hui"
+      ]
+    }
+  },
+  {
+    "id": "p_investigation_2",
+    "kind": "free",
+    "title": "第二幕·1914年秋瑟园调查（第二轮）",
+    "instruction": "继续调查秋瑟园各处，可到达所有区域。揭开更多秘密。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "searchClue",
+      "revealClue",
+      "privateMessage"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    },
+    "unlocks": {
+      "clueIds": [
+        "clue_xisheng",
+        "clue_liren",
+        "clue_datieguo",
+        "clue_nongsuan",
+        "clue_citao",
+        "clue_jinsi_shiwu",
+        "clue_xinjian",
+        "clue_jueju",
+        "clue_qiantiao",
+        "clue_meidiya_zuzhou",
+        "clue_jumu_dagang_simu",
+        "clue_xiuzhang",
+        "clue_helong_jinhuan",
+        "clue_xueyi",
+        "clue_xiangchuan_shouxiang",
+        "clue_yongren_zhengci",
+        "clue_yuanding_zhengci",
+        "clue_zhishu_zhengci",
+        "clue_ji_zhong_wu",
+        "clue_huopeng_zhici",
+        "clue_pizhi",
+        "clue_nie_zhi",
+        "clue_xi_zhengci",
+        "clue_jiuyi_chenxiang",
+        "clue_san_ying_hui",
+        "clue_jumu_dagang_sanmu"
+      ]
+    }
+  },
+  {
+    "id": "p_vote",
+    "kind": "vote",
+    "title": "第三幕·谁是真凶",
+    "instruction": "讨论并指认真凶。每位玩家回答五个问题：悦绮下落？无头尸体是谁？还有谁死了？最信任谁？其他人隐瞒什么？投票指认杀害悦绮、臣柳、仰名、绰元、宜湘的凶手。",
+    "participants": "all",
+    "allowedActions": [
+      "speak",
+      "castVote"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    }
+  },
+  {
+    "id": "p_reveal",
+    "kind": "reveal",
+    "title": "真相揭晓",
+    "instruction": "公布真相，阅读各角色结局。根据投票结果和目的完成情况确定结局。",
+    "participants": "all",
+    "allowedActions": [
+      "submitTheory"
+    ],
+    "exit": {
+      "kind": "hostAdvance"
+    }
+  }
+]

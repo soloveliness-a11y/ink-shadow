@@ -1,0 +1,25 @@
+{
+  "id": "minghaizhuiyou",
+  "title": "冥海缒幽",
+  "theme": "民国·深海潜艇密室命案",
+  "playerCount": {
+    "min": 5,
+    "max": 5
+  },
+  "difficulty": "hard",
+  "durationMin": 240,
+  "synopsis": "1914年10月，新型潜艇「铁鲸号」载着六人从毗海村出发，前往太平洋深海首航。数日潜行后，潜艇被困海底无法上浮，船员接连死亡——在与世隔绝的铁棺材中，五位各怀秘密的乘客必须在氧气耗尽前找出真凶，找到逃生之路。",
+  "styleGuide": "1914 Republican era Chinese submarine, deep ocean, dim yellow electric lights, iron corridors, portholes showing dark abyss, claustrophobic atmosphere, oil painting style",
+  "cover": {
+    "kind": "cover",
+    "prompt": "1914 Chinese submarine interior, dim yellow lights, iron corridor with porthole showing deep dark ocean, mysterious atmosphere, oil painting style",
+    "aspect": "3:4"
+  },
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "genre": "murder",
+  "featureTags": [
+    "潜艇",
+    "科技"
+  ]
+}

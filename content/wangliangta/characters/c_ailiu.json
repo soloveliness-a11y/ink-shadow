@@ -1,0 +1,115 @@
+{
+  "id": "c_ailiu",
+  "name": "付艾柳",
+  "gender": "female",
+  "age": 27,
+  "isVictim": false,
+  "isMurderer": true,
+  "publicProfile": "女，二十多岁，医馆助手。庚子年家破人亡被熙勤兼带回别熙乡，在医馆工作。曾失踪多年，1913年回来后装失忆。",
+  "privateScript": "你名叫付艾柳，生于1887年。庚子年（1900年）家破人亡——父亲付长烈被大盗王两灭门杀害。你和哥哥守言被熙勤兼带回别熙乡，投奔别家。\n\n你在医馆当助手，爱上时成达（时老板）。1904年与王两私奔至济南。1912年，你亲眼目睹熙扬隆杀害时成达——熙勤兼父子追捕王两时发现时成达是同伙，熙扬隆将其杀害。\n\n1913年，你返回别熙乡装失忆，伺机为时成达报仇。你从王两处获得玉饰，刻「我未老」「生未迟」。\n\n10月19日，熙扬隆要水喝，你趁机在水中下毒（医馆毒药），将其毒杀后用血写「王两」二字在现场——企图嫁祸给大盗王两。\n\n你一直在寻找王两的下落，既要为兄报仇（王两杀了你父亲），又要为爱人时成达报仇（熙扬隆杀了时成达）。",
+  "objectives": [
+    {
+      "id": "obj_ailiu_1",
+      "kind": "hidden",
+      "description": "隐瞒你毒杀熙扬隆的事实。（10分）",
+      "scoring": 10
+    },
+    {
+      "id": "obj_ailiu_2",
+      "kind": "hidden",
+      "description": "隐瞒你假装失忆的事实。（5分）",
+      "scoring": 5
+    },
+    {
+      "id": "obj_ailiu_3",
+      "kind": "main",
+      "description": "找出别熙乡连环命案的真相。（5分）",
+      "scoring": 5
+    },
+    {
+      "id": "obj_ailiu_4",
+      "kind": "side",
+      "description": "找到王两的下落。（3分）",
+      "scoring": 3
+    }
+  ],
+  "secrets": [
+    "1914年10月19日趁熙扬隆要水喝，在水中下毒将其毒杀，用血写「王两」嫁祸",
+    "1913年返回别熙乡装失忆，实则伺机为时成达报仇",
+    "1912年亲眼目睹熙扬隆杀害时成达",
+    "1904年与王两私奔至济南",
+    "父亲付长烈被大盗王两灭门杀害"
+  ],
+  "timeline": [
+    {
+      "time": "1887年",
+      "location": "付家",
+      "action": "出生",
+      "isPublic": true
+    },
+    {
+      "time": "1900年",
+      "location": "别熙乡",
+      "action": "庚子国难，家破人亡，被熙勤兼带回别熙乡",
+      "isPublic": true
+    },
+    {
+      "time": "1901年",
+      "location": "医馆",
+      "action": "在医馆当助手，爱上时成达",
+      "isPublic": true
+    },
+    {
+      "time": "1904年",
+      "location": "济南",
+      "action": "与王两私奔至济南",
+      "isPublic": false
+    },
+    {
+      "time": "1912年",
+      "location": "济南",
+      "action": "目睹熙扬隆杀害时成达",
+      "isPublic": false
+    },
+    {
+      "time": "1913年",
+      "location": "别熙乡",
+      "action": "返回别熙乡装失忆",
+      "isPublic": true
+    },
+    {
+      "time": "1914.10.19",
+      "location": "熙宅",
+      "action": "趁熙扬隆要水喝，在水中下毒将其毒杀",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "c_shouyan",
+      "relation": "兄妹",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_jingfan",
+      "relation": "仇人之子（王两杀了她父亲）/旧情人",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "c_zizhuo",
+      "relation": "表兄妹",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_liangzhen",
+      "relation": "医馆同事",
+      "isPublic": true
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese young woman 27 years old, Republican era, medicine clinic assistant, simple dress, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

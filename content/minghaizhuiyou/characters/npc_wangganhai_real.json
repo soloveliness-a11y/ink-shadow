@@ -1,0 +1,71 @@
+{
+  "id": "npc_wangganhai_real",
+  "name": "王赶海",
+  "gender": "male",
+  "age": 18,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "颜承古教授的外甥，原籍临沂。14岁辍学加入吞万公司，从张辜仁助手升为机械师。在浦诚学指导下学会技术。与孙孟真同住船员舱。10月23日被孙孟真用被子堵住通风口导致缺氧窒息，死于禁闭室。",
+  "privateScript": "",
+  "objectives": [],
+  "secrets": [],
+  "timeline": [
+    {
+      "time": "1897年",
+      "location": "临沂",
+      "action": "出生于临沂",
+      "isPublic": true
+    },
+    {
+      "time": "1912年",
+      "location": "毗海村",
+      "action": "辍学加入吞万公司",
+      "isPublic": true
+    },
+    {
+      "time": "1914年10月18日",
+      "location": "铁鲸号",
+      "action": "随铁鲸号出发",
+      "isPublic": true
+    },
+    {
+      "time": "1914年10月23日",
+      "location": "铁鲸号禁闭室",
+      "action": "被船长注射镇静剂后关入禁闭室，后被孙孟真堵住通风口窒息而亡",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "c_yanmuwan",
+      "relation": "表姐弟",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "npc_fanzongchu",
+      "relation": "老板",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "npc_puchengxue",
+      "relation": "指导恩师",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "npc_zhangguren",
+      "relation": "上司",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_sunmengzhen",
+      "relation": "室友/杀害他的人",
+      "isPublic": false
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "An 18-year-old Chinese young man in mechanic's work clothes, 1910s Republic era, eager and earnest expression. Oil painting style.",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

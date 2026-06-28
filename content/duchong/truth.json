@@ -1,0 +1,70 @@
+{
+  "murdererCharIds": [
+    "fangwei",
+    "shangli"
+  ],
+  "method": "芳薇用注射器迷晕尚远后用厨刀刺杀，又在鞭炮声中用猎枪射杀伊水；尚力用鼠毒药毒杀丘芊娇。",
+  "motive": "芳薇发现丈夫尚远与伊水的婚外情，尚力为保护暗恋的伊水毒杀虐待她的丘芊娇。",
+  "crimeTimeline": [
+    {
+      "time": "1910年5月17日",
+      "location": "3号矿道",
+      "action": "尚力在樊动征指使下引爆炸药造成塌方",
+      "isPublic": true
+    },
+    {
+      "time": "1914年8月20日晚",
+      "location": "洋馆厨房",
+      "action": "尚力在芊娇药包中下毒",
+      "isPublic": false
+    },
+    {
+      "time": "1914年8月21日",
+      "location": "洋馆主卧",
+      "action": "芊娇毒发身亡，樊动征断定病死",
+      "isPublic": true
+    },
+    {
+      "time": "1914年8月24日7:00",
+      "location": "丘宅饭堂",
+      "action": "芳薇用注射器迷晕尚远后刺死",
+      "isPublic": false
+    },
+    {
+      "time": "1914年8月24日8:00",
+      "location": "洋馆杂物房",
+      "action": "芳薇在鞭炮声中用猎枪射杀伊水",
+      "isPublic": false
+    },
+    {
+      "time": "1914年8月24日10:00",
+      "location": "丘宅",
+      "action": "尚力发现尚远尸体",
+      "isPublic": true
+    }
+  ],
+  "solutionChain": [
+    "cl_syringe",
+    "cl_rifle",
+    "cl_medicine"
+  ],
+  "reveal": "芳薇因发现丈夫尚远与伊水的婚外情，在葬礼当天趁鞭炮声掩护先后杀死二人。尚力则因暗恋伊水，早在8月20日毒杀了虐待伊水的丘芊娇。1910年的矿难也是尚力在樊动征指使下造成的。",
+  "endings": [
+    {
+      "id": "end_good",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "真相揭晓",
+      "narrative": "凶手被找出，丘家的秘密被揭开。"
+    },
+    {
+      "id": "end_bad",
+      "condition": {
+        "kind": "always"
+      },
+      "title": "真相掩埋",
+      "narrative": "真相被掩埋，蠹虫继续蛀蚀丘家。"
+    }
+  ]
+}

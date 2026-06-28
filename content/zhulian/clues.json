@@ -2,7 +2,7 @@
   {
     "id": "clue_main",
     "title": "主要线索",
-    "content": "",
+    "content": "主要线索",
     "visibility": "searchable",
     "isKey": false,
     "pointsTo": []

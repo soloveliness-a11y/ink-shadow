@@ -2,7 +2,7 @@
   {
     "id": "clue_manor",
     "title": "庄园线索",
-    "content": "",
+    "content": "庄园线索",
     "visibility": "searchable",
     "isKey": false,
     "pointsTo": []

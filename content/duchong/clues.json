@@ -1,0 +1,80 @@
+[
+  {
+    "id": "cl_mine_collapse",
+    "title": "煤矿塌方",
+    "content": "1910年5月17日，3号矿道发生爆炸塌方，蔡总管和方经理遇难。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_mine"
+    ]
+  },
+  {
+    "id": "cl_syringe",
+    "title": "注射器",
+    "content": "在丘宅饭堂附近发现一支注射器，上面有麻醉剂残留。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_shangyuan"
+    ]
+  },
+  {
+    "id": "cl_kitchen_knife",
+    "title": "染血厨刀",
+    "content": "丘宅饭堂发现一把染血的厨刀，是杀死尚远的凶器。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_shangyuan"
+    ]
+  },
+  {
+    "id": "cl_rifle",
+    "title": "猎枪",
+    "content": "洋馆陈列柜中的猎枪，曾被用于射杀伊水。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_yishui"
+    ]
+  },
+  {
+    "id": "cl_painting",
+    "title": "被移动的水墨画",
+    "content": "丘宅走廊上一副水墨画被移动过，下面墙上刻着字。",
+    "visibility": "searchable",
+    "isKey": false,
+    "pointsTo": [
+      "truth_shangli"
+    ]
+  },
+  {
+    "id": "cl_will",
+    "title": "遗嘱",
+    "content": "芊娇生前留下的遗嘱，只与两位少爷有关，没有樊动征的名字。",
+    "visibility": "searchable",
+    "isKey": false,
+    "pointsTo": []
+  },
+  {
+    "id": "cl_medicine",
+    "title": "药包",
+    "content": "芊娇每天服用的药包被发现有异常，疑似被下毒。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_qianjiao"
+    ]
+  },
+  {
+    "id": "cl_letter",
+    "title": "纸条",
+    "content": "从伊水处发现的纸条，写着要去亦亭约会的内容。",
+    "visibility": "searchable",
+    "isKey": false,
+    "pointsTo": [
+      "truth_affair"
+    ]
+  }
+]

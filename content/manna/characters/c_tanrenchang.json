@@ -1,0 +1,65 @@
+{
+  "id": "c_tanrenchang",
+  "name": "谭仁昌",
+  "gender": "male",
+  "age": 38,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "男，约三十八岁。「吉才药行」老板，谭公馆主人，热衷跑马与社交。",
+  "privateScript": "你是谭仁昌，上海「吉才药行」的老板，「谭公馆」的主人。\n\n你的妻子罗明纱（谭太太）是宁波「远亨罗氏」老板罗亨理的妹妹，1895年嫁到谭公馆。你们没有孩子。\n\n你年轻时热衷跑马与社交，经常喝醉回家。你曾对妻子的侍女欣雅动了邪念，导致她怀孕后跳海自杀（被人救起）。你的母亲目睹此事受惊病逝，父亲也因此卧床不起。\n\n你与吕采茜（韦太太）有多年的私情，通过密室偷偷相会。你给了她一把金色钥匙。\n\n近年来你身体不佳，记忆衰退。你曾立下遗嘱，让侄子尚致继承吉才和谭公馆，还有一份秘密委托——指定吕采茜为另一部分财产的继承人。\n\n你从吕名然口中得知欣雅当年怀了你的孩子，便让他去找。9月15日，吕名然带回一个少年（承格），你高兴地认他为义子。\n\n你打算立新遗嘱，让承格取代尚致成为继承人，并把保险受益人也改掉——你想把「罗刹」（罗明纱）赶走。\n\n9月28日清晨，你像往常一样去小阳台盘腿静坐……",
+  "objectives": [],
+  "secrets": [
+    "曾侵犯侍女欣雅导致其怀孕跳海",
+    "与吕采茜有多年私情",
+    "打算更改遗嘱赶走罗明纱"
+  ],
+  "timeline": [
+    {
+      "time": "9月26日",
+      "location": "谭公馆",
+      "action": "接待廖公子催债，派吕名然联系律师",
+      "isPublic": true
+    },
+    {
+      "time": "9月27日 下午",
+      "location": "谭公馆",
+      "action": "带承格外出喝酒，晚上被吕名然送回家",
+      "isPublic": true
+    },
+    {
+      "time": "9月28日 清晨",
+      "location": "家主房小阳台",
+      "action": "盘腿静坐时被延时机关射出的尖锥刺死",
+      "isPublic": true
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "c_tantaitai",
+      "relation": "妻子",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_weitaitai",
+      "relation": "情人（秘密）",
+      "isPublic": false,
+      "sharedSecret": "两人通过密室偷偷相会多年"
+    },
+    {
+      "targetCharId": "c_shangzhi",
+      "relation": "侄子（堂叔）",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_chengge",
+      "relation": "义子（假冒）",
+      "isPublic": true
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese man late 30s, wealthy merchant, Republican era Shanghai, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

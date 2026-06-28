@@ -1,0 +1,27 @@
+{
+  "id": "npc_zuwu",
+  "name": "祖吴",
+  "gender": "male",
+  "age": 50,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "祖吴，在祖家庄遇害",
+  "privateScript": "",
+  "objectives": [
+    {
+      "id": "obj_npc_zuwu_1",
+      "kind": "main",
+      "description": "了解真相",
+      "scoring": 5
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese male 50 years old",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "cl_kitchen_bodies",
+    "title": "厨房女尸",
+    "content": "涨秋园厨房内发现两具女尸，一为丫鬟碧彩，一为蓝衣少女。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_kitchen"
+    ]
+  },
+  {
+    "id": "cl_study_body",
+    "title": "书房尸体",
+    "content": "涨秋园书房内发现林宗斐的尸体，胸口被短刀刺入。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_lin"
+    ]
+  },
+  {
+    "id": "cl_fire_ruins",
+    "title": "客房废墟",
+    "content": "涨秋园客房被烧毁，废墟下发现两具男尸，为利志和若缈(张联升)。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_fire"
+    ]
+  },
+  {
+    "id": "cl_jade_token",
+    "title": "玉腰牌",
+    "content": "刻有「书僮联升」的玉腰牌，是证明身份的物件。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_identity"
+    ]
+  },
+  {
+    "id": "cl_newspaper_ad",
+    "title": "报纸广告",
+    "content": "报纸上刊登的广告《锦坊庄院，出售千工八步床》，内含暗号。",
+    "visibility": "searchable",
+    "isKey": false,
+    "pointsTo": [
+      "truth_qianba"
+    ]
+  },
+  {
+    "id": "cl_poison_bottle",
+    "title": "密封瓶",
+    "content": "一个空的密封瓶，曾装有毒药。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_wuzhongshi"
+    ]
+  },
+  {
+    "id": "cl_hanging_body",
+    "title": "吊死女人",
+    "content": "涨秋园梅花林中发现一个被吊起的毁容女人。",
+    "visibility": "searchable",
+    "isKey": true,
+    "pointsTo": [
+      "truth_hanging"
+    ]
+  }
+]

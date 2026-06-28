@@ -17,5 +17,11 @@
   },
   "schemaVersion": "1.0.0",
   "status": "draft",
-  "genre": "murder"
+  "genre": "murder",
+  "featureTags": [
+    "山村大宅",
+    "灵异",
+    "身份悬疑",
+    "密室"
+  ]
 }

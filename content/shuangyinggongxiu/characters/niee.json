@@ -1,0 +1,60 @@
+{
+  "id": "niee",
+  "name": "霓娥",
+  "gender": "female",
+  "age": 47,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "竺江善之妾，识字晓礼。住在竺家女眷房。",
+  "privateScript": "你是竺江善的妾室，被白姐卖给竺家。你在祭赛当天被发现浮尸湖中。你当年曾许愿让鲛婵除掉贾氏。",
+  "objectives": [
+    {
+      "id": "obj_ne_1",
+      "kind": "main",
+      "description": "找出每个命案真相。(5分)",
+      "scoring": 5
+    }
+  ],
+  "secrets": [
+    "曾许愿除掉贾氏",
+    "被银蟾客利用"
+  ],
+  "timeline": [
+    {
+      "time": "1881年",
+      "location": "竺家",
+      "action": "被卖给竺江善为妾",
+      "isPublic": false
+    },
+    {
+      "time": "1893年农历七月初二",
+      "location": "竺家",
+      "action": "许愿除掉贾氏",
+      "isPublic": false
+    },
+    {
+      "time": "1899年农历九月初一",
+      "location": "映天湖",
+      "action": "被发现浮尸湖中",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "suier",
+      "relation": "义妹",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "tonglang",
+      "relation": "母子",
+      "isPublic": true
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "霓娥, female, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

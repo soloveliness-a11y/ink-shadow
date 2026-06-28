@@ -1,0 +1,338 @@
+[
+  {
+    "id": "clue_jiuxing_hu",
+    "title": "寿星酒壶（子母壶）",
+    "content": "一个大寿星酒壶，又名「良心壶」（两心壶），内藏暗仓，可装两种酒。堵住暗仓气孔只能倒出一种酒，不按住时会倒出混合酒。此壶原为柳家之物，后被丁晋发送给韩大户，再被胡关强掠走作为嫁妆送到祖家庄。",
+    "sceneId": "s_neiyuan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "c_cainan"
+    ],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_shenghuisan",
+    "title": "生回散瓷瓶",
+    "content": "一个撕去标签的瓷瓶，内装「生回散」——能治金疮刀伤的灵药，但一定剂量加酒服用就是杀人毒药，中毒后像心疾，不易察觉。此药产自卫风邑。",
+    "sceneId": "s_houyuan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "c_cainan"
+    ],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_piqiao_bishou",
+    "title": "皮鞘匕首",
+    "content": "一把约18厘米的匕首，能放入皮鞘。是胡关强留给女儿彩楠防身用的。匕首上有血迹——被银环从彩楠梳妆台偷走，用于刺杀丁晋发。",
+    "sceneId": "s_neiyuan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "c_yinhuan"
+    ],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_hong_sheng",
+    "title": "红色喜绳",
+    "content": "原本用来捆喜被的红色喜绳。容芳昨晚一夜未睡，不会动喜被——喜被压到了红盖头上，说明在容芳摘下红盖头后有人动过，就是进过洞房的银环解开后拿走红绳。",
+    "sceneId": "s_zichulou_north",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "c_yinhuan"
+    ],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_mianzhao",
+    "title": "面罩",
+    "content": "一副遮挡伤痕的面罩，死者脸上也戴着。面罩上有血迹和新伤痕迹。",
+    "sceneId": "s_neiyuan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": false,
+    "pointsTo": [
+      "c_chuanwen"
+    ],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_tieyaochi",
+    "title": "铁钥匙",
+    "content": "一把铁钥匙，是祖显武随身携带的，用于打开地窖铁锁。",
+    "sceneId": "s_huayuan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "c_cainan",
+      "c_jianglan",
+      "c_yinhuan"
+    ],
+    "type": "key"
+  },
+  {
+    "id": "clue_dijiao_shiti",
+    "title": "地窖内的尸体",
+    "content": "地窖内有一具被毁容、戴面罩的尸体，是真正的祖传文（小咬金）的尸体，被祖显武藏于此处。",
+    "sceneId": "s_dijiao",
+    "visibility": "searchable",
+    "round": 2,
+    "isKey": true,
+    "pointsTo": [
+      "c_jianglan"
+    ],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_jiubian_dingjinf",
+    "title": "灵堂内的尸体",
+    "content": "灵堂内停灵的尸体穿着祖传文的衣服，但实际上是丁晋发的尸体——被祖显武毁容后戴上祖传文的面罩冒充。",
+    "sceneId": "s_neiyuan",
+    "visibility": "searchable",
+    "round": 2,
+    "isKey": true,
+    "pointsTo": [
+      "c_yinhuan",
+      "c_jianglan"
+    ],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_huajiu_sui",
+    "title": "酒坛碎片",
+    "content": "库房地上的酒坛碎片，上面有血迹和头发——这是杀死祖传文（小咬金）的凶器。",
+    "sceneId": "s_neiyuan",
+    "visibility": "searchable",
+    "round": 2,
+    "isKey": true,
+    "pointsTo": [
+      "c_jianglan"
+    ],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_mabu_yaodai",
+    "title": "麻布腰带",
+    "content": "一条麻布腰带，是祖显武丧服上的。被绛兰用来勒死显武。尸体在花园墙外被发现。",
+    "sceneId": "s_huayuan",
+    "visibility": "searchable",
+    "round": 2,
+    "isKey": true,
+    "pointsTo": [
+      "c_jianglan"
+    ],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_ranxue_bishou",
+    "title": "染血匕首",
+    "content": "花园内发现的一把染血匕首，是祖显武从背后被勒住时掏出的，来不及自救，死亡时掉落在花园内。",
+    "sceneId": "s_huayuan",
+    "visibility": "searchable",
+    "round": 2,
+    "isKey": true,
+    "pointsTo": [
+      "c_jianglan"
+    ],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_qiangdong_touming",
+    "title": "投名状与海捕文书",
+    "content": "多份海捕文书和通缉告示，记录了大盗王两及其手下在河南、山东两地的劫掠罪行。有年轻差官钱展裳重创强盗的记录。",
+    "sceneId": "s_dijiao",
+    "visibility": "searchable",
+    "round": 2,
+    "isKey": false,
+    "pointsTo": [
+      "c_zhenyi"
+    ],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_liupai_weizhi",
+    "title": "两个牌位",
+    "content": "两个木制牌位，上面刻着柳淳安和柳义贤的名字——是银环暗中为爷爷和爹刻的灵位。",
+    "sceneId": "s_houyuan",
+    "visibility": "searchable",
+    "round": 2,
+    "isKey": true,
+    "pointsTo": [
+      "c_yinhuan"
+    ],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_zupu",
+    "title": "祖氏族谱",
+    "content": "一本族谱，记载祖家庄是从卫辉府迁徙来的范阳祖氏后裔。但如今住在里面的并非真正的祖家后人。",
+    "sceneId": "s_neiyuan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": false,
+    "pointsTo": [],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_duilianshanglian",
+    "title": "自出楼对联匾额",
+    "content": "「出示自且」读作「且自示出」，其中「自出」源自「自出机杼」的典故。「示」+「且」=「祖」，「诸葛之左」姓「言」，成为庄主后，「祖家庄」成了「诅家庄」。",
+    "sceneId": "s_zichulou_north",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": false,
+    "pointsTo": [],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_heima_a拉伯",
+    "title": "黑色阿拉伯马",
+    "content": "一匹黑色的阿拉伯马，原是韩家的马，被强盗掠走后用来拉车，没有单独养在马圈里。",
+    "sceneId": "s_qianyuan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": false,
+    "pointsTo": [
+      "c_chuanwen"
+    ],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_jie_luo",
+    "title": "狗窝上的刻字",
+    "content": "狗窝木板上刻着两行字，有「结萝」与「容芳」的名字。暗示容芳要嫁韩家（韩门容芳），是韩传文所刻。",
+    "sceneId": "s_qianyuan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": false,
+    "pointsTo": [
+      "c_chuanwen"
+    ],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_jiujian_jiuxiang",
+    "title": "兰陵酒坛",
+    "content": "数坛兰陵美酒，是丁晋发从山东兰陵进货送来「祖家庄」的。兰陵酒清香远达，色复金黄。",
+    "sceneId": "s_neiyuan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": false,
+    "pointsTo": [],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_daopu",
+    "title": "劈山刀谱",
+    "content": "一本刀谱，记录「泰华刀」（劈山单刀）的招式，「泰恒嵩华衡」指招式方向（东北→中→西南），从右上劈向左下。胡关强和钱展裳都练熟了，伤痕相似。",
+    "sceneId": "s_neiyuan",
+    "visibility": "searchable",
+    "round": 2,
+    "isKey": false,
+    "pointsTo": [
+      "c_zhenyi"
+    ],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_cizhijuan",
+    "title": "莲花笺纸纸卷",
+    "content": "印有莲花的笺纸上的纸卷，写着「妾身情愿自己身死，换回夫君传文平安」。但这不是遗书——此笺纸是当初容芳在辉县丁记四海铺子暂住时写的祈祷文。",
+    "sceneId": "s_zichulou_north",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "c_yinhuan"
+    ],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_chengh_jiuhu",
+    "title": "二层桌上的酒壶",
+    "content": "自出楼二层桌上的酒壶倒翻，酒还未干——是银环在桌边行凶时碰翻倒下的。",
+    "sceneId": "s_zichulou_north",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": false,
+    "pointsTo": [
+      "c_yinhuan"
+    ],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_touyu_shitou",
+    "title": "行李旁的石头",
+    "content": "花园假山附近有一块石头，旁边有行李——这块石头就是丁晋发用来打昏韩传文的凶器。",
+    "sceneId": "s_huayuan",
+    "visibility": "searchable",
+    "round": 2,
+    "isKey": true,
+    "pointsTo": [
+      "c_cainan",
+      "c_jianglan",
+      "c_yinhuan"
+    ],
+    "type": "key"
+  },
+  {
+    "id": "clue_qinglangjun_cixiang",
+    "title": "青郎君瓷像",
+    "content": "一尊瓷像，底部有烧制时留下的洞，里面塞着纸卷。这是胡关强给女儿带回的，被彩楠当作「青郎君」，后送给容芳。容芳在瓷像内藏了写给传文的祈祷文。",
+    "sceneId": "s_neiyuan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": false,
+    "pointsTo": [
+      "c_cainan",
+      "c_yinhuan"
+    ],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_yuhuan_jiazhuang",
+    "title": "银环的嫁妆匣子",
+    "content": "一个贴着封条的匣子，写着「银环的嫁妆」，内有玉镯等物。玉镯原本是韩家娶妻准备的（刻着「韩祖联姻」），被胡关强掠走当作银环的嫁妆。",
+    "sceneId": "s_houyuan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": false,
+    "pointsTo": [],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_jianru_jian",
+    "title": "箭弩",
+    "content": "库房中发现一把箭弩——「诸葛之左」喜欢暗箭伤人惯用弩，这是他当强盗时养成的习惯。",
+    "sceneId": "s_neiyuan",
+    "visibility": "searchable",
+    "round": 2,
+    "isKey": false,
+    "pointsTo": [],
+    "type": "searchable"
+  },
+  {
+    "id": "clue_changshan",
+    "title": "长衫（丁晋发的衣服）",
+    "content": "杂物房中发现的长衫，是丁晋发的衣服——被祖显武穿上冒充丁晋发天亮前离开，之后在杂物房脱下换上丧服。",
+    "sceneId": "s_neiyuan",
+    "visibility": "searchable",
+    "round": 2,
+    "isKey": true,
+    "pointsTo": [
+      "c_cainan",
+      "c_jianglan",
+      "c_yinhuan"
+    ],
+    "type": "key"
+  }
+]

@@ -1,5 +1,6 @@
 import type { Script, ScriptMeta } from '@mmg/schema';
 import type { ServerMessage, RoomSnapshot } from '@mmg/schema';
+import { zRoomSnapshot } from '@mmg/schema';
 import { Room } from './Room.js';
 import type { DmConfig } from '../dm/DmService.js';
 import { ensureDir, debouncedWrite, readJsonFile, scanDirectory, deleteFile, cancelDebouncedWrite } from '../persistence.js';
@@ -28,6 +29,9 @@ export class RoomManager {
     this.cleanupHandle = setInterval(() => this.cleanFinishedRooms(), 5 * 60_000);
   }
 
+  /** 持久化数据目录（供优雅关机等外部场景使用） */
+  get dataDirectory(): string { return this.dataDir; }
+
   /** 初始化持久化（异步）：创建目录 + 从磁盘恢复房间 */
   async initPersistence(): Promise<void> {
     await ensureDir(this.dataDir);
@@ -45,6 +49,9 @@ export class RoomManager {
     let room = new Room(this.sendFn, this.dmConfig);
     for (let i = 0; i < 10 && this.rooms.has(room.roomCode); i++) {
       room = new Room(this.sendFn, this.dmConfig);
+    }
+    if (this.rooms.has(room.roomCode)) {
+      throw new Error('Failed to generate unique room code after 10 retries');
     }
     this.wirePersistence(room);
     this.rooms.set(room.roomCode, room);
@@ -91,11 +98,15 @@ export class RoomManager {
   /** 遍历所有房间（优雅关机时用） */
   *allRooms(): IterableIterator<[string, Room]> { yield* this.rooms; }
 
-  /** 清理已结束 + 无在线玩家的房间 */
+  /** 清理已结束 + 无在线玩家的房间,并检查掉线超时 */
   private cleanFinishedRooms(): void {
     const now = Date.now();
     for (const [code, room] of this.rooms) {
       const state = room.getState();
+      // 检查掉线超时自动踢出
+      if (state.status === 'playing') {
+        room.checkDisconnectedTimeout();
+      }
       if (state.status !== 'finished') continue;
       const anyOnline = state.players.some(p => p.connected);
       if (!anyOnline || (now - state.phaseRuntime.startedAt > FINISHED_ROOM_TTL_MS)) {
@@ -133,7 +144,12 @@ export class RoomManager {
       const data = await readJsonFile(filePath);
       if (!data) continue;
       try {
-        const snap = data as RoomSnapshot;
+        const parsed = zRoomSnapshot.safeParse(data);
+        if (!parsed.success) {
+          console.warn(`    ✗ ${filePath}: invalid snapshot — ${parsed.error.issues.map(i => i.message).join(', ')}`);
+          continue;
+        }
+        const snap = parsed.data;
         if (snap.version > 2) continue; // 拒绝未来版本;version 1(老)和 2(当前)都 restore(新字段全 optional,向前兼容)
         const room = Room.restore(snap, this.sendFn, (id) => this.getScript(id), this.listScriptMetas());
         this.wirePersistence(room);

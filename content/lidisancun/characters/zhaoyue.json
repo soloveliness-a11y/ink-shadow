@@ -1,0 +1,71 @@
+{
+  "id": "zhaoyue",
+  "name": "照月",
+  "gender": "male",
+  "age": 20,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "野芦次子，比哥哥机灵。暗恋灵姝。",
+  "privateScript": "你是照阳的弟弟，喜欢灵姝。你帮助大哥调查义庄中的各种怪事。",
+  "objectives": [
+    {
+      "id": "obj_zy2_1",
+      "kind": "main",
+      "description": "找出每个命案真相。(5分)",
+      "scoring": 5
+    },
+    {
+      "id": "obj_zy2_2",
+      "kind": "main",
+      "description": "触发全部回忆。(2分)",
+      "scoring": 2
+    }
+  ],
+  "secrets": [
+    "暗恋灵姝",
+    "知道盗矿之事"
+  ],
+  "timeline": [
+    {
+      "time": "1911年农历三月",
+      "location": "义庄",
+      "action": "目睹僵尸复活",
+      "isPublic": false
+    },
+    {
+      "time": "1914年农历三月廿三",
+      "location": "石桥",
+      "action": "发现施香的尸体",
+      "isPublic": false
+    },
+    {
+      "time": "1914年11月2日",
+      "location": "义庄",
+      "action": "被晨枝叫去宝瑟庄",
+      "isPublic": false
+    }
+  ],
+  "relationships": [
+    {
+      "targetCharId": "zhaoyang",
+      "relation": "兄弟",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "chenzhi",
+      "relation": "堂妹",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "lingshu",
+      "relation": "暗恋",
+      "isPublic": false
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "照月, male, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

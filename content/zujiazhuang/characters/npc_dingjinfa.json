@@ -1,0 +1,27 @@
+{
+  "id": "npc_dingjinfa",
+  "name": "丁晋发",
+  "gender": "male",
+  "age": 40,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "丁晋发，在祖家庄遇害",
+  "privateScript": "",
+  "objectives": [
+    {
+      "id": "obj_npc_dingjinfa_1",
+      "kind": "main",
+      "description": "了解真相",
+      "scoring": 5
+    }
+  ],
+  "secrets": [],
+  "timeline": [],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese male 40 years old",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

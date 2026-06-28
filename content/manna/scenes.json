@@ -1,0 +1,222 @@
+[
+  {
+    "id": "s_hall",
+    "name": "一层·大厅",
+    "description": "谭公馆一层的大厅，联通二层，可从二层走廊俯视。四盏大吊灯牢牢固定在二层房顶上，桌椅靠墙摆放。吕名然的尸体就悬吊在东北侧的吊灯上。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion grand hall with high ceiling, chandelier, Republican era Shanghai, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_kitchen",
+    "name": "一层·厨房",
+    "description": "谭公馆的厨房，佣人们在此准备餐食。今天早上只来得及做简单的三明治。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion kitchen, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_servant_m",
+    "name": "一层·男仆房",
+    "description": "男仆的住所。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion servant quarters, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_laundry",
+    "name": "一层·盥洗室",
+    "description": "盥洗室，佣人在此清洗衣物。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion laundry room, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_garden",
+    "name": "一层·花园",
+    "description": "谭公馆的花园，种着许多曼陀罗花。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion garden with datura flowers, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_master_bedroom",
+    "name": "二层·家主房",
+    "description": "谭仁昌与罗明纱的卧室，内有浴室和小阳台。小阳台上有单人榻，谭仁昌的尸体就盘腿坐在此处。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion master bedroom with balcony, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_haiyou_room",
+    "name": "二层·海悠房",
+    "description": "海悠的房间，位于家主房隔壁。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion bedroom, young woman's room, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_shangzhi_room",
+    "name": "二层·尚致房",
+    "description": "尚致的房间。戴面具的女尸就倒在此处地面上，窗户从内锁上。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion study bedroom, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_chengge_room",
+    "name": "二层·承格房",
+    "description": "承格的房间。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion bedroom, young man's room, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_balcony",
+    "name": "二层·大阳台",
+    "description": "二层的大阳台，能看到峭壁和大海。海鸟在此啄食地上的面包渣。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion balcony overlooking cliff and sea, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_servant_f",
+    "name": "三层·女佣房",
+    "description": "女佣的住所。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion servant room, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_medicine",
+    "name": "三层·药品房",
+    "description": "存放各种药物的房间，其中有贴着外文标签的黄色药瓶（麻醉药/曼陀罗制剂）。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion medicine room with bottles, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_storage",
+    "name": "三层·杂物房",
+    "description": "存放杂物的房间，有竹制雀笼、洋火、蜡烛和绳子。西侧有一个上锁的柜子，通向密室。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion storage room, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_secret_room",
+    "name": "三层·密室",
+    "description": "杂物房西侧暗门后的密室，内有一张凌乱的结实大床，两侧都有暗门。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion secret room with bed, hidden doors, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_guest1",
+    "name": "三层·客房一",
+    "description": "已被搬空家具的房间，地上用朱砂画着七角形图案，七个角上有烧完的蜡迹，中间放着开膛的小鸟尸体。还有一把空火铳。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion room with occult pentagram on floor, candles, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_guest2",
+    "name": "三层·客房二",
+    "description": "客房，桌上有一份三明治。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion guest room, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_guest3",
+    "name": "三层·客房三",
+    "description": "客房，妇人（欣雅）的尸体倒在此处，太阳穴有圆孔伤口。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion guest room with body on floor, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_collection",
+    "name": "三层·收藏室",
+    "description": "存放古董和遗物的房间，有匣子（内含火铳和黑火药）以及锋利的刀具。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion collection room with antiques, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_shrine",
+    "name": "三层·灵堂",
+    "description": "灵堂，用传统油灯和蜡烛照明，有浸油棉线作灯芯。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion ancestral shrine, oil lamps and candles, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_library",
+    "name": "三层·书库",
+    "description": "藏有各种翻译书籍，包括化学、神秘学、宗教、医学解剖等，其中有手抄本和Dr. Zebub的论文。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion library with books and manuscripts, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_study",
+    "name": "三层·书房",
+    "description": "书房，书桌内有遗嘱草稿和保险文件。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion study room with desk, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_parking",
+    "name": "馆外·停车处",
+    "description": "谭公馆门外的停车处，车夫们在此等候。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mansion exterior parking area with horse carriage, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  }
+]

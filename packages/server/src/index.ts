@@ -186,13 +186,16 @@ export async function startServer(): Promise<void> {
 
   // 2. Room manager
   const playerIdx = new Map<string, Session>();
+  const pendingRoomIdx = new Map<string, Session>(); // pendingRoomCode → Session 索引
   const sendFn = (playerId: string, msg: ServerMessage) => {
     let session = playerIdx.get(playerId);
-    // Pending join: playerId not yet indexed — scan by pendingRoomCode
+    // Pending join: playerId not yet indexed — lookup by pendingRoomCode
     if (!session) {
-      session = [...sessions.values()].find(s => s.playerId === null && s.pendingRoomCode);
-      if (session) {
+      const pending = pendingRoomIdx.values().next().value as Session | undefined;
+      if (pending) {
+        session = pending;
         session.playerId = playerId;
+        pendingRoomIdx.delete(session.pendingRoomCode!);
         session.pendingRoomCode = null;
         playerIdx.set(playerId, session);
       }
@@ -207,7 +210,15 @@ export async function startServer(): Promise<void> {
   const server = createServer(serveStatic);
 
   // maxPayload 64KB:挡住超大帧(最长文本 2000 字 + 协议开销绰绰有余)。
-  const wss = new WebSocketServer({ noServer: true, perMessageDeflate: true, maxPayload: 64 * 1024 });
+  const wss = new WebSocketServer({
+    noServer: true,
+    perMessageDeflate: {
+      threshold: 1024,           // <1KB 的消息不压缩(减少小帧 CPU 开销)
+      serverMaxWindowBits: 15,   // 最大窗口(提升压缩比)
+      clientMaxWindowBits: 15,
+    },
+    maxPayload: 64 * 1024,
+  });
   const sessions = new Map<WebSocket, Session>();
 
   server.on('upgrade', (req, socket, head) => {
@@ -264,12 +275,13 @@ export async function startServer(): Promise<void> {
           return;
         }
       }
-      handleIntent(manager, session, intent, firstScriptId, playerIdx);
+      handleIntent(manager, session, intent, firstScriptId, playerIdx, pendingRoomIdx);
     });
 
     ws.on('close', () => {
       sessions.delete(ws);
       if (session.playerId) playerIdx.delete(session.playerId);
+      if (session.pendingRoomCode) pendingRoomIdx.delete(session.pendingRoomCode);
       if (session.roomCode && session.playerId) {
         manager.getRoom(session.roomCode)?.disconnect(session.playerId);
       }
@@ -300,7 +312,7 @@ export async function startServer(): Promise<void> {
   const gracefulShutdown = async (signal: string) => {
     console.log(`\n${signal}: persisting rooms before exit...`);
     for (const [code, room] of manager.allRooms()) {
-      const filePath = join('data/rooms', `${code}.json`);
+      const filePath = join(manager.dataDirectory, `${code}.json`);
       try {
         await writeJsonFile(filePath, room.snapshot());
         console.log(`  saved ${code}`);
@@ -335,7 +347,7 @@ interface Session { ws: WebSocket; playerId: string | null; roomCode: string | n
 const RATE_LIMIT_WINDOW = 10_000; // 10s 窗口
 const RATE_LIMIT_MAX = 40; // 窗口内最大消息数
 
-function handleIntent(manager: RoomManager, session: Session, intent: ClientIntent, _fallbackScriptId: string, playerIdx: Map<string, Session>): void {
+function handleIntent(manager: RoomManager, session: Session, intent: ClientIntent, _fallbackScriptId: string, playerIdx: Map<string, Session>, pendingRoomIdx: Map<string, Session>): void {
   switch (intent.kind) {
     case 'listRooms': {
       const rooms = manager.listPublicRooms();
@@ -363,8 +375,10 @@ function handleIntent(manager: RoomManager, session: Session, intent: ClientInte
       // Pre-set roomCode + pendingRoomCode so sendFn can find this session during room.join()
       session.roomCode = roomCode;
       session.pendingRoomCode = roomCode;
+      pendingRoomIdx.set(roomCode, session);
 
       const result = room.join(intent.nickname, intent.sessionToken);
+      pendingRoomIdx.delete(roomCode);
       session.pendingRoomCode = null;
       if ('error' in result) {
         session.roomCode = null;

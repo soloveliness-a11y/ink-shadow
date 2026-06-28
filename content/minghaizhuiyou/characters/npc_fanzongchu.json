@@ -1,0 +1,46 @@
+{
+  "id": "npc_fanzongchu",
+  "name": "樊宗楚",
+  "gender": "male",
+  "age": 27,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "吞万有限公司老板，铁鲸号潜艇的拥有者。年轻有为，通过颜承古教授与德国人结交做生意，积极推动潜艇研究。为人苛刻，急于将研究成果变现。",
+  "privateScript": "",
+  "objectives": [
+    {
+      "id": "obj_npc_1",
+      "kind": "main",
+      "description": "了解真相",
+      "scoring": 5
+    }
+  ],
+  "secrets": [
+    "樊宗楚有意将潜艇卖给外国用于战争",
+    "樊宗楚可能故意导致小诺号事故，使浦诚学陷入绝境"
+  ],
+  "timeline": [],
+  "relationships": [
+    {
+      "targetCharId": "c_yuyueyang",
+      "relation": "雇主",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_yanmuwan",
+      "relation": "单方面爱慕",
+      "isPublic": false
+    },
+    {
+      "targetCharId": "npc_puchengxue",
+      "relation": "雇主/利用关系",
+      "isPublic": true
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "A well-dressed young Chinese businessman in his late 20s, wearing a 1910s Republic-era suit, confident expression, standing in front of a submarine factory. Oil painting style.",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

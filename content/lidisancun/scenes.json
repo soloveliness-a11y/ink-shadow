@@ -1,0 +1,42 @@
+[
+  {
+    "id": "s_yizhuang",
+    "name": "义庄",
+    "description": "陵下村义庄，停放尸体之处，有僵尸传说。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese rural funeral house, eerie atmosphere, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_baosezhuang",
+    "name": "宝瑟庄",
+    "description": "覃巧丽的宅院，分为北中南三院。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese rural courtyard house, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_village",
+    "name": "陵下村",
+    "description": "湘南零陵东的小山村。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Southern Chinese mountain village, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_graveyard",
+    "name": "坟山",
+    "description": "村中的墓地，旺远和施升都葬在此处。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese mountain graveyard, moonlight, oil painting style",
+      "aspect": "16:9"
+    }
+  }
+]

@@ -1,0 +1,167 @@
+[
+  {
+    "id": "cl_guta_01",
+    "title": "古塔四尊塑像",
+    "content": "古塔内有四尊塑像，石台上分别刻着「因月毁之」「因年毁之」等字样。传说每毁一尊塑像，魍魉可令死者复活一次。如今四尊塑像全部损毁。",
+    "sceneId": "s_guta",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "truth_wangliang_revival"
+    ]
+  },
+  {
+    "id": "cl_guta_02",
+    "title": "熙宅门上纸条",
+    "content": "熙宅门上钉着一张纸条：「大盗王两，死而复生，有仇当报，不死难休」。字迹仓促，像是连夜钉上去的。",
+    "sceneId": "s_xizhai",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "truth_wangliang_threat"
+    ]
+  },
+  {
+    "id": "cl_guta_03",
+    "title": "熙勤兼顾尸体",
+    "content": "熙勤兼侧卧在床上，脖子上有明显掐痕，脸色发紫。门从里面上了门闩，窗户紧闭。看似被人掐死，但凶手如何离开密室？",
+    "sceneId": "s_xizhai",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "truth_xiqinjian_death"
+    ]
+  },
+  {
+    "id": "cl_guta_04",
+    "title": "熙扬隆尸体",
+    "content": "熙扬隆倒在桌旁，口吐白沫，身旁有一个空水碗。桌上用血写着「王两」二字。经检查是中毒身亡。",
+    "sceneId": "s_xizhai",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "truth_xiyanglong_death"
+    ]
+  },
+  {
+    "id": "cl_guta_05",
+    "title": "守言尸体",
+    "content": "守言倒在问景山脚下，头部有钝器伤痕，看似从山上坠落。但伤痕位置与失足坠落不符。",
+    "sceneId": "s_wenjingshan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "truth_shouyan_death"
+    ]
+  },
+  {
+    "id": "cl_yiguan_01",
+    "title": "药房「慎用」瓷瓶",
+    "content": "医馆药房中标着「慎用」的瓷瓶，内有剧毒药物。瓶中药量明显减少。",
+    "sceneId": "s_yiguan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "truth_poison_source"
+    ]
+  },
+  {
+    "id": "cl_yiguan_02",
+    "title": "问景山亭子",
+    "content": "问景山亭子后面有一处隐蔽的山洞。亭子附近地面上有拖拽痕迹和血迹。",
+    "sceneId": "s_wenjingshan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "truth_shouyan_death"
+    ]
+  },
+  {
+    "id": "cl_jiuguan_01",
+    "title": "银鱼信物",
+    "content": "自卓持有一枚银鱼（年年有余），刻「年」字。良真也持有一枚类似银鱼。这是大盗王两留下的信物。",
+    "sceneId": "s_jiuguan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "truth_wangliang_identity"
+    ]
+  },
+  {
+    "id": "cl_jiuguan_02",
+    "title": "王两信笺",
+    "content": "小节持有的信笺：「年年岁岁无相忘，时时刻刻在心中。破封救我死又生，有缘黄泉亦可通」。字迹与熙宅门上纸条不同。",
+    "sceneId": "s_jiuguan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "truth_wangliang_love"
+    ]
+  },
+  {
+    "id": "cl_jiuguan_03",
+    "title": "玉饰",
+    "content": "艾柳持有的玉饰，刻「我未老」「生未迟」。据说是从一个神秘人处获得。",
+    "sceneId": "s_jiuguan",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": true,
+    "pointsTo": [
+      "truth_wangliang_identity"
+    ]
+  },
+  {
+    "id": "cl_kujing_01",
+    "title": "枯井秘道",
+    "content": "熙宅附近的枯井，传说通向地下秘道。井口有铁链锁着的木板。",
+    "sceneId": "s_kujing",
+    "visibility": "searchable",
+    "round": 1,
+    "isKey": false,
+    "pointsTo": [
+      "truth_secret_passage"
+    ]
+  },
+  {
+    "id": "cl_mimi_01",
+    "title": "秘密线索·王两复活",
+    "content": "庚子年王两重伤逃入古塔，临死前唤醒魍魉获四次复活。每次复活需毁一尊塑像，且有时间限制（三时辰→三日→三月→三年）。四次复活机会已全部用尽。",
+    "visibility": "private",
+    "ownerCharId": "c_jingfan",
+    "isKey": true,
+    "pointsTo": [
+      "truth_wangliang_revival"
+    ]
+  },
+  {
+    "id": "cl_mimi_02",
+    "title": "秘密线索·熙励辛之死",
+    "content": "1902年五月初六，熙励辛（熙郎中）被发现在新坟旁死亡。经检查是中毒身亡，毒药来自医馆药房标着「慎用」的瓷瓶。",
+    "visibility": "private",
+    "ownerCharId": "c_sumei",
+    "isKey": true,
+    "pointsTo": [
+      "truth_xilibin_death"
+    ]
+  },
+  {
+    "id": "cl_mimi_03",
+    "title": "秘密线索·时成达之死",
+    "content": "1912年，熙勤兼父子追捕王两时发现时成达是同伙，熙扬隆将其杀害。艾柳目睹了这一切。",
+    "visibility": "private",
+    "ownerCharId": "c_ailiu",
+    "isKey": true,
+    "pointsTo": [
+      "truth_shichengda_death"
+    ]
+  }
+]

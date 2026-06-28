@@ -25,17 +25,18 @@ export function RevealClueButton({ title, onConfirm }: { title: string; onConfir
   );
 }
 
-export function SearchClueRow({ title, canSearch, onSearch, cooldown }: { title: string; canSearch: boolean; onSearch: () => void; cooldown: number }) {
-  const disabled = !canSearch || cooldown > 0;
+export function SearchClueRow({ title, canSearch, onSearch, cooldown, searching, found }: { title: string; canSearch: boolean; onSearch: () => void; cooldown: number; searching?: boolean; found?: boolean }) {
+  const disabled = !canSearch || cooldown > 0 || searching;
+  const rowClass = `search-clue-row${searching ? ' searching' : ''}${found ? ' search-success' : ''}`;
   return (
-    <div className="search-clue-row">
+    <div className={rowClass}>
       <div>
         <div className="search-clue-title">{title}</div>
         <div className="search-clue-sub">
-          {cooldown > 0 ? `冷却中 ${Math.ceil(cooldown / 100) / 10}s` : (canSearch ? '可行动' : '等待行动权限')}
+          {searching ? '搜索中…' : found ? '✓ 获得线索' : cooldown > 0 ? `冷却中 ${Math.ceil(cooldown / 100) / 10}s` : (canSearch ? '可行动' : '等待行动权限')}
         </div>
       </div>
-      {canSearch && <button onClick={onSearch} disabled={disabled} className="btn btn-secondary btn-sm">搜索</button>}
+      {canSearch && !searching && !found && <button onClick={onSearch} disabled={disabled} className="btn btn-secondary btn-sm">搜索</button>}
     </div>
   );
 }
@@ -53,7 +54,7 @@ export function ClueCard({ title, content, image, badge, action, onImage, isSecr
     <div className="clue-card">
       <div className="clue-card-main">
         <div className="clue-card-content">
-          {image && <img src={image} alt={title} className="clue-thumb" onClick={onImage} loading="lazy" decoding="async" />}
+          {image && <button type="button" className="clue-thumb-btn" onClick={onImage} aria-label={`查看线索图片：${title}`}><img src={image} alt={title} className="clue-thumb" loading="lazy" decoding="async" /></button>}
           <div>
             <div className="clue-card-head">
               <div className="clue-card-title">{title}</div>

@@ -1,0 +1,32 @@
+{
+  "entry": "p_brief",
+  "edges": [
+    {
+      "from": "p_brief",
+      "to": "p_social"
+    },
+    {
+      "from": "p_social",
+      "to": "p_meiyuan"
+    },
+    {
+      "from": "p_meiyuan",
+      "to": "p_heyuan"
+    },
+    {
+      "from": "p_heyuan",
+      "to": "p_discuss"
+    },
+    {
+      "from": "p_discuss",
+      "to": "p_vote"
+    },
+    {
+      "from": "p_vote",
+      "to": "p_reveal",
+      "condition": {
+        "kind": "always"
+      }
+    }
+  ]
+}

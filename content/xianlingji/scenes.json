@@ -1,0 +1,62 @@
+[
+  {
+    "id": "s_shiqiao",
+    "name": "石桥西",
+    "description": "「祓赐垭」入口处的石桥西边，是众人汇合的地方。桥下溪水流淌，周围山峦叠嶂，远处可见沼区的迷雾。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Ancient stone bridge in Chinese mountain ravine, misty swamps in background, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_bajia",
+    "name": "巴家",
+    "description": "「巴家」是世代担任「祓仆」的家族宅邸，有一座「吊脚楼」（主楼），一层有客厅和畜栏，二层是住处。旁边有坟场。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese traditional wooden stilted house in mountain village, ancient ritual family mansion, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_jilou",
+    "name": "祭楼",
+    "description": "远离民居的「祭楼」是一座三层吊脚楼。一层有厅、修行房、杂物房，二层有库房和南北卧室，三层是禁区。平时只有祓仆和祀女能进入。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Ancient Chinese ritual temple tower in deep mountain forest, three-story wooden building, mysterious atmosphere, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_pengjia",
+    "name": "彭家",
+    "description": "「彭家」是乌取为彭须藏准备的吊脚楼。一层有灶台和畜栏，二层有主人房、书房、姐妹房和侧屋。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese traditional wooden house in mountain village, simple rural dwelling, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_zhaoqu",
+    "name": "沼区",
+    "description": "位于巴家和祭楼中途西侧的沼泽地带，生人勿进。深处有洞穴，洞中有瘴气弥漫，「先灵」沉睡其中。未经许可的闯入者会成为祭品。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Dangerous dark swamp in Chinese mountain ravine, poisonous mist, dead trees, ominous atmosphere, oil painting style",
+      "aspect": "16:9"
+    }
+  },
+  {
+    "id": "s_wujia",
+    "name": "乌家/丹矿",
+    "description": "「乌家」世代守卫祭祀，拥有农田和出产朱砂的「丹矿」。家中有厨房和里屋。",
+    "visual": {
+      "kind": "scene",
+      "prompt": "Chinese traditional compound with cinnabar mine entrance in mountain, Republican era, oil painting style",
+      "aspect": "16:9"
+    }
+  }
+]

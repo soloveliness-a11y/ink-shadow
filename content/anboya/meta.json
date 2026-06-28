@@ -1,0 +1,24 @@
+{
+  "id": "anboya",
+  "title": "暗波崖",
+  "theme": "清末无锡·异法馆连环命案",
+  "playerCount": {
+    "min": 6,
+    "max": 6
+  },
+  "difficulty": "hard",
+  "durationMin": 240,
+  "synopsis": "1914年10月2日，无锡惠山「暗波崖」上的异法馆内，戏法大师应动金展示新绝技「消失术」后神秘消失。随后崔山道死于落石逃生表演的机关中，多条人命交织——真相在戏法与催眠中浮现。",
+  "styleGuide": "Late Qing dynasty Wuxi magic theater, oil painting style",
+  "cover": {
+    "kind": "cover",
+    "prompt": "暗波崖 murder mystery, oil painting style",
+    "aspect": "3:4"
+  },
+  "schemaVersion": "1.0.0",
+  "status": "draft",
+  "genre": "murder",
+  "featureTags": [
+    "奇术"
+  ]
+}

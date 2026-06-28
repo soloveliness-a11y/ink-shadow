@@ -1,0 +1,44 @@
+{
+  "id": "npc_puchengxue",
+  "name": "浦诚学",
+  "gender": "male",
+  "age": 27,
+  "isVictim": true,
+  "isMurderer": false,
+  "publicProfile": "浦澄裳的大哥，颜承古教授的优秀学生，吞万公司工程师。1913年7月与老板樊宗楚驾驶实验潜艇「小诺号」前往太平洋深海，在第八天潜艇被吸附海底无法上浮，樊宗楚靠潜水服逃生，浦诚学留在潜艇内检查后下落不明，被认定死亡。",
+  "privateScript": "",
+  "objectives": [],
+  "secrets": [
+    "浦诚学反对将潜艇研究成果用于军事用途，与老板樊宗楚产生根本分歧"
+  ],
+  "timeline": [],
+  "relationships": [
+    {
+      "targetCharId": "c_puchengshang",
+      "relation": "兄妹",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_yanmuwan",
+      "relation": "恋人",
+      "isPublic": false,
+      "sharedSecret": "两人秘密恋爱，颜父知情但未反对"
+    },
+    {
+      "targetCharId": "c_yuyueyang",
+      "relation": "同学兼好友（后产生分歧）",
+      "isPublic": true
+    },
+    {
+      "targetCharId": "c_wangganhai",
+      "relation": "指导其成为机械师",
+      "isPublic": true
+    }
+  ],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "A thin, gaunt young Chinese man in his late 20s, wearing a 1910s Republic-era work uniform, dark circles under his eyes from overwork, standing in a dimly lit factory. Oil painting style.",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

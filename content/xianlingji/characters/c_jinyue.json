@@ -1,0 +1,34 @@
+{
+  "id": "c_jinyue",
+  "name": "金钥",
+  "gender": "female",
+  "age": 20,
+  "isVictim": false,
+  "isMurderer": false,
+  "publicProfile": "女，约二十岁，彭须藏之女，银钥的孪生姐姐。已成为祀女，被困在祭楼中。",
+  "privateScript": "",
+  "objectives": [
+    {
+      "id": "obj_jy_1",
+      "kind": "main",
+      "description": "了解自己的身世和命运",
+      "scoring": 5
+    }
+  ],
+  "secrets": [],
+  "timeline": [
+    {
+      "time": "1910年",
+      "location": "祓赐垭",
+      "action": "牺牲自己让妹妹银钥去武汉念书，成为祀女",
+      "isPublic": true
+    }
+  ],
+  "relationships": [],
+  "visual": {
+    "kind": "avatar",
+    "prompt": "Chinese young woman 20 years old, twin sister, sacrificial maiden, traditional robes, oil painting style",
+    "aspect": "3:4"
+  },
+  "storyByPhase": {}
+}

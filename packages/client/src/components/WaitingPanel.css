@@ -6,7 +6,7 @@
   right: 16px;
   bottom: 16px;
   pointer-events: auto;
-  font-family: var(--f);
+  font-family: var(--fb);
   transition: all 0.25s ease;
 }
 
@@ -243,7 +243,7 @@
   align-self: flex-start;
 }
 .wp-pm-thread .pm-msg.mine {
-  background: var(--accent-dim, rgba(100, 140, 200, 0.15));
+  background: var(--accent-m);
   align-self: flex-end;
 }
 .wp-pm-thread .pm-author {
@@ -256,6 +256,11 @@
   display: flex;
   gap: 6px;
   align-items: center;
+  position: sticky;
+  bottom: 0;
+  background: var(--s1);
+  z-index: 2;
+  padding-top: 6px;
 }
 .wp-pm-bar .input { flex: 1; font-size: 12px; padding: 6px 8px; }
 

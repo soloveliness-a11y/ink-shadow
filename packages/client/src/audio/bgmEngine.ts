@@ -13,8 +13,34 @@
  *   - 用户优先: 必须在用户首次交互后才尝试播放 (浏览器 autoplay policy)
  */
 
-import { Howl } from 'howler';
 import { BGM_SLOTS, BgmSlot, pickTrack, pickNextTrack, type BgmTrack, type BgmSlotConfig } from './bgmSlots.js';
+
+type HowlInstance = {
+  playing(): boolean;
+  volume(): number;
+  volume(v: number): void;
+  play(): void;
+  pause(): void;
+  fade(from: number, to: number, ms: number): void;
+  unload(): void;
+  once(event: string, fn: () => void): void;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let Howl: (new (opts: any) => HowlInstance) | null = null;
+let howlPromise: Promise<void> | null = null;
+
+async function ensureHowl(): Promise<new (opts: any) => HowlInstance> {
+  if (!Howl) {
+    if (!howlPromise) {
+      howlPromise = import('howler').then((mod) => {
+        Howl = mod.Howl;
+      });
+    }
+    await howlPromise;
+  }
+  return Howl!;
+}
 
 const STORAGE_KEY_VOLUME = 'mmg:bgm:volume';
 const STORAGE_KEY_MUTED = 'mmg:bgm:muted';
@@ -31,7 +57,7 @@ export interface BgmEngineState {
 type Listener = (s: BgmEngineState) => void;
 
 class BgmEngine {
-  private howl: Howl | null = null;
+  private howl: HowlInstance | null = null;
   private currentSlot: BgmSlot | null = null;
   private currentTrack: BgmTrack | null = null;
   private volume: number;
@@ -128,7 +154,7 @@ class BgmEngine {
     }
 
     const cfg = BGM_SLOTS[slot];
-    this._crossfade(slot, track, cfg);
+    void this._crossfade(slot, track, cfg);
   }
 
   /**
@@ -142,11 +168,11 @@ class BgmEngine {
     const { track, changed } = pickNextTrack(slot, this.currentTrack?.id ?? '');
     if (!track || !changed) return;
     const cfg = BGM_SLOTS[slot];
-    this._crossfade(slot, track, cfg);
+    void this._crossfade(slot, track, cfg);
   }
 
   /** 淡出旧音 → 加载并淡入新音 */
-  private _crossfade(slot: BgmSlot, track: BgmTrack, cfg: BgmSlotConfig) {
+  private async _crossfade(slot: BgmSlot, track: BgmTrack, cfg: BgmSlotConfig) {
     // #2: 快速连续切歌时,先丢弃上一轮未执行的淡出/暂停回调,避免误伤新 howl
     this.cancelPendingTimers();
     if (this.howl && this.howl.playing()) {
@@ -159,7 +185,8 @@ class BgmEngine {
 
     this.currentSlot = slot;
     this.currentTrack = track;
-    const newHowl = new Howl({
+    const HowlCls = await ensureHowl();
+    const newHowl = new HowlCls({
       src: [track.src],
       loop: cfg.loop,
       volume: 0,
