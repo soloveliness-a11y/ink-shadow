@@ -16,6 +16,23 @@ temp_images/
 # 版权剧本资源（不入库）
 content/danshui/
 
+# 豪门系列适配脚本（改编剧本，不入库）
+content/anboya/
+content/chunweishe/
+content/duchong/
+content/guzhouying/
+content/lidisancun/
+content/manna/
+content/minghaizhuiyou/
+content/qilushao/
+content/shuangyinggongxiu/
+content/wangchixin/
+content/wangliangta/
+content/xianlingji/
+content/yuyiyan/
+content/zhuyingezhuang/
+content/zujiazhuang/
+
 # 房间持久化快照
 data/
 
